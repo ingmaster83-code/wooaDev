@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://devkit.wooahouse.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://devkit.wooahouse.com/base64.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://devkit.wooahouse.com/url-encoder.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://devkit.wooahouse.com/hash-generator.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://devkit.wooahouse.com/jwt-decoder.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://devkit.wooahouse.com/uuid-generator.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://devkit.wooahouse.com/json-formatter.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://devkit.wooahouse.com/json-yaml.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://devkit.wooahouse.com/regex-tester.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://devkit.wooahouse.com/diff-viewer.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://devkit.wooahouse.com/timestamp.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://devkit.wooahouse.com/cron-generator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://devkit.wooahouse.com/lorem-ipsum.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://devkit.wooahouse.com/case-converter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://devkit.wooahouse.com/number-base.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://devkit.wooahouse.com/password-generator.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+</urlset>

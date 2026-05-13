@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+  <meta name="naver-site-verification" content="7396a327607b884b9bef1283dfd3a5c6115a2b50">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON 포맷터/검증기 - JSON 들여쓰기 압축 무료 | WooaDev</title>
+  <meta name="description" content="JSON을 보기 좋게 들여쓰기하거나 압축하고 유효성을 검사하세요. 브라우저에서 무료로 즉시 처리됩니다.">
+  <meta name="keywords" content="JSON포맷터,JSON검증기,JSON들여쓰기,JSON압축,JSON정렬,온라인JSON">
+  <link rel="canonical" href="https://devkit.wooahouse.com/json-formatter.html">
+  <meta property="og:title" content="JSON 포맷터/검증기 | WooaDev">
+  <meta property="og:description" content="JSON을 들여쓰기하거나 압축하고 유효성을 검사하세요.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://devkit.wooahouse.com/json-formatter.html">
+  <meta property="og:locale" content="ko_KR">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON 포맷터","url":"https://devkit.wooahouse.com/json-formatter.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .json-output { font-family:'Consolas','Monaco',monospace; font-size:0.84rem; background:#1E293B; color:#E2E8F0; border-radius:10px; padding:16px; min-height:300px; white-space:pre; overflow:auto; line-height:1.6; position:relative; }
+    .json-key { color:#93C5FD; }
+    .json-str { color:#86EFAC; }
+    .json-num { color:#FCD34D; }
+    .json-bool { color:#F9A8D4; }
+    .json-null { color:#94A3B8; }
+    .json-stats { display:flex; gap:16px; flex-wrap:wrap; font-size:0.78rem; color:#9CA3AF; margin-top:8px; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+  </div>
+</header>
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://chromekit.wooahouse.com/" target="_blank" rel="noopener">🧩 WooaChrome</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://devkit.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+  </div>
+</div>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON 포맷터</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📋</span>
+    <h1>JSON 포맷터 / 검증기</h1>
+    <p>JSON을 보기 좋게 들여쓰기하거나 압축하고 유효성을 검사합니다.</p>
+  </div>
+
+  <div class="dev-panel">
+    <div class="dev-label">JSON 입력</div>
+    <textarea class="dev-textarea" id="inputJson" placeholder='{"name":"WooaDev","tools":15}' style="min-height:160px" oninput="autoFormat()"></textarea>
+    <div class="dev-btn-row">
+      <button class="dev-btn" onclick="format(2)">들여쓰기 2칸</button>
+      <button class="dev-btn" onclick="format(4)">들여쓰기 4칸</button>
+      <button class="dev-btn" onclick="minify()">압축</button>
+      <button class="dev-btn secondary" onclick="sortKeys()">키 정렬</button>
+      <button class="dev-btn secondary" onclick="clearAll()">지우기</button>
+    </div>
+  </div>
+
+  <div id="errorMsg" class="alert alert-error" style="display:none"></div>
+  <div id="successMsg" class="alert alert-success" style="display:none"></div>
+
+  <div class="dev-panel" id="outputPanel" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div class="dev-label" style="margin:0">결과</div>
+      <button class="dev-btn secondary" style="padding:5px 12px;font-size:0.78rem" onclick="copyOutput()">복사</button>
+    </div>
+    <div class="json-output" id="jsonOutput"></div>
+    <div class="json-stats" id="jsonStats"></div>
+  </div>
+</div>
+<aside class="tool-sidebar">
+  <div class="ad-card"><div class="ad-card-label">AD</div>
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card"><script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script></div>
+</aside>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand"><span class="logo-footer">WooaDev</span><p>개발자 도구를 브라우저에서 무료로 사용하세요.</p></div>
+      <div class="footer-links"><h4>인코딩 · 해시</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL 인코더</a><a href="hash-generator.html">Hash 생성기</a><a href="jwt-decoder.html">JWT 디코더</a></div>
+      <div class="footer-links"><h4>포맷 · 생성</h4><a href="json-formatter.html">JSON 포맷터</a><a href="json-yaml.html">JSON↔YAML</a><a href="regex-tester.html">Regex 테스터</a><a href="diff-viewer.html">Diff 비교기</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev. 모든 권리 보유.</p><div class="footer-bottom-links"><a href="privacy.html">개인정보처리방침</a><a href="about.html">소개</a></div></div>
+    <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+  </div>
+</footer>
+<script>
+let lastParsed = null;
+let lastIndent = 2;
+
+function autoFormat() {
+  const t = document.getElementById('inputJson').value.trim();
+  if (!t) { hide(); return; }
+  try { lastParsed = JSON.parse(t); format(lastIndent); } catch(e) { showErr(e); }
+}
+
+function format(indent) {
+  lastIndent = indent;
+  const t = document.getElementById('inputJson').value.trim();
+  if (!t) return;
+  try {
+    const obj = JSON.parse(t);
+    lastParsed = obj;
+    const str = JSON.stringify(obj, null, indent);
+    showOutput(str, obj);
+    document.getElementById('errorMsg').style.display='none';
+    document.getElementById('successMsg').textContent='✅ 유효한 JSON입니다.';
+    document.getElementById('successMsg').style.display='block';
+  } catch(e) { showErr(e); }
+}
+
+function minify() {
+  const t = document.getElementById('inputJson').value.trim();
+  if (!t) return;
+  try {
+    const obj = JSON.parse(t);
+    const str = JSON.stringify(obj);
+    showOutput(str, obj);
+  } catch(e) { showErr(e); }
+}
+
+function sortKeys() {
+  const t = document.getElementById('inputJson').value.trim();
+  if (!t) return;
+  try {
+    const sorted = sortObj(JSON.parse(t));
+    document.getElementById('inputJson').value = JSON.stringify(sorted, null, lastIndent);
+    format(lastIndent);
+  } catch(e) { showErr(e); }
+}
+
+function sortObj(obj) {
+  if (Array.isArray(obj)) return obj.map(sortObj);
+  if (obj && typeof obj === 'object') {
+    return Object.keys(obj).sort().reduce((r, k) => { r[k] = sortObj(obj[k]); return r; }, {});
+  }
+  return obj;
+}
+
+function showOutput(str, obj) {
+  document.getElementById('jsonOutput').innerHTML = highlight(str);
+  document.getElementById('outputPanel').style.display='block';
+  const keys = countKeys(obj);
+  document.getElementById('jsonStats').textContent =
+    `문자 ${str.length.toLocaleString()}자 · 키 ${keys}개`;
+}
+
+function countKeys(obj, n=0) {
+  if (!obj || typeof obj !== 'object') return n;
+  return Object.keys(obj).reduce((s, k) => countKeys(obj[k], s+1), n);
+}
+
+function highlight(str) {
+  return str
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"((?:[^"\\]|\\.)*)"\s*:/g, '<span class="json-key">"$1"</span>:')
+    .replace(/:\s*"((?:[^"\\]|\\.)*)"/g, ': <span class="json-str">"$1"</span>')
+    .replace(/:\s*(-?\d+\.?\d*([eE][+-]?\d+)?)/g, ': <span class="json-num">$1</span>')
+    .replace(/:\s*(true|false)/g, ': <span class="json-bool">$1</span>')
+    .replace(/:\s*(null)/g, ': <span class="json-null">$1</span>');
+}
+
+function showErr(e) {
+  document.getElementById('errorMsg').textContent = '❌ JSON 오류: ' + e.message;
+  document.getElementById('errorMsg').style.display='block';
+  document.getElementById('successMsg').style.display='none';
+  document.getElementById('outputPanel').style.display='none';
+}
+
+function hide() {
+  document.getElementById('outputPanel').style.display='none';
+  document.getElementById('errorMsg').style.display='none';
+  document.getElementById('successMsg').style.display='none';
+}
+
+function clearAll() {
+  document.getElementById('inputJson').value=''; hide();
+}
+
+function copyOutput() {
+  const t = document.getElementById('inputJson').value.trim();
+  if (!t) return;
+  try {
+    const str = JSON.stringify(JSON.parse(t), null, lastIndent);
+    navigator.clipboard.writeText(str);
+  } catch(e) {}
+}
+</script>
+<script src="js/pwa-install.js"></script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+  <meta name="naver-site-verification" content="7396a327607b884b9bef1283dfd3a5c6115a2b50">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>타임스탬프 변환기 - Unix timestamp 날짜 변환 무료 | WooaDev</title>
+  <meta name="description" content="Unix timestamp를 날짜로, 날짜를 Unix timestamp로 변환하세요. 현재 시각도 실시간으로 확인할 수 있습니다.">
+  <meta name="keywords" content="타임스탬프변환,Unix timestamp,epoch변환,날짜변환,timestamp to date">
+  <link rel="canonical" href="https://devkit.wooahouse.com/timestamp.html">
+  <meta property="og:title" content="타임스탬프 변환기 - Unix timestamp 날짜 변환 | WooaDev">
+  <meta property="og:description" content="Unix timestamp를 날짜로 변환하거나 날짜를 timestamp로 변환하세요.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://devkit.wooahouse.com/timestamp.html">
+  <meta property="og:locale" content="ko_KR">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"타임스탬프 변환기","url":"https://devkit.wooahouse.com/timestamp.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .now-card { background:linear-gradient(135deg,#C4956A,#E8C49A); border-radius:14px; padding:24px; color:white; text-align:center; margin-bottom:20px; }
+    .now-ts { font-size:2rem; font-weight:700; font-family:monospace; letter-spacing:1px; margin-bottom:4px; }
+    .now-date { font-size:1rem; opacity:0.9; }
+    .now-ms { font-size:0.85rem; opacity:0.75; margin-top:4px; }
+    .ts-result-row { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid #F3F4F6; }
+    .ts-result-label { font-size:0.78rem; color:#9CA3AF; width:100px; flex-shrink:0; }
+    .ts-result-val { font-family:monospace; font-size:0.88rem; color:#1A1A2E; flex:1; font-weight:500; }
+    .ts-copy { padding:3px 8px; background:#C4956A; color:white; border:none; border-radius:4px; font-size:0.7rem; cursor:pointer; }
+    .ts-copy:hover { background:#A87850; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+  </div>
+</header>
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://chromekit.wooahouse.com/" target="_blank" rel="noopener">🧩 WooaChrome</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://devkit.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+  </div>
+</div>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>타임스탬프 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🕐</span>
+    <h1>타임스탬프 변환기</h1>
+    <p>Unix timestamp와 날짜·시간을 상호 변환합니다.</p>
+  </div>
+
+  <div class="now-card">
+    <div class="now-ts" id="nowTs">-</div>
+    <div class="now-date" id="nowDate">-</div>
+    <div class="now-ms" id="nowMs">-</div>
+  </div>
+
+  <div class="dev-panel">
+    <div class="dev-label">Timestamp → 날짜 변환</div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <input type="text" class="dev-input" id="tsInput" placeholder="1700000000" style="max-width:220px" oninput="tsToDate()">
+      <label class="dev-checkbox-row"><input type="checkbox" id="chkMs" onchange="tsToDate()"> 밀리초(ms)</label>
+    </div>
+    <div id="tsResult" style="display:none;margin-top:14px">
+      <div class="ts-result-row"><span class="ts-result-label">로컬 시간</span><span class="ts-result-val" id="r-local"></span><button class="ts-copy" onclick="cp('r-local')">복사</button></div>
+      <div class="ts-result-row"><span class="ts-result-label">UTC</span><span class="ts-result-val" id="r-utc"></span><button class="ts-copy" onclick="cp('r-utc')">복사</button></div>
+      <div class="ts-result-row"><span class="ts-result-label">ISO 8601</span><span class="ts-result-val" id="r-iso"></span><button class="ts-copy" onclick="cp('r-iso')">복사</button></div>
+      <div class="ts-result-row"><span class="ts-result-label">상대 시간</span><span class="ts-result-val" id="r-rel"></span></div>
+    </div>
+  </div>
+
+  <div class="dev-panel">
+    <div class="dev-label">날짜 → Timestamp 변환</div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <input type="datetime-local" class="dev-input" id="dateInput" style="max-width:260px" onchange="dateToTs()">
+      <button class="dev-btn" onclick="setNow()">지금</button>
+    </div>
+    <div id="dateResult" style="display:none;margin-top:14px">
+      <div class="ts-result-row"><span class="ts-result-label">초 (s)</span><span class="ts-result-val" id="d-sec"></span><button class="ts-copy" onclick="cp('d-sec')">복사</button></div>
+      <div class="ts-result-row"><span class="ts-result-label">밀리초 (ms)</span><span class="ts-result-val" id="d-ms"></span><button class="ts-copy" onclick="cp('d-ms')">복사</button></div>
+    </div>
+  </div>
+</div>
+<aside class="tool-sidebar">
+  <div class="ad-card"><div class="ad-card-label">AD</div>
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card"><script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script></div>
+</aside>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand"><span class="logo-footer">WooaDev</span><p>개발자 도구를 브라우저에서 무료로 사용하세요.</p></div>
+      <div class="footer-links"><h4>인코딩 · 해시</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL 인코더</a><a href="hash-generator.html">Hash 생성기</a><a href="jwt-decoder.html">JWT 디코더</a></div>
+      <div class="footer-links"><h4>생성 · 변환</h4><a href="uuid-generator.html">UUID 생성기</a><a href="timestamp.html">타임스탬프</a><a href="number-base.html">진법 변환</a><a href="cron-generator.html">Cron 생성기</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev. 모든 권리 보유.</p><div class="footer-bottom-links"><a href="privacy.html">개인정보처리방침</a><a href="about.html">소개</a></div></div>
+    <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+  </div>
+</footer>
+<script>
+function pad(n){return String(n).padStart(2,'0');}
+function fmt(d){return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;}
+function rel(ms){
+  const s=Math.abs(Math.round((Date.now()-ms)/1000));
+  if(s<60) return s+'초 '+(ms<Date.now()?'전':'후');
+  if(s<3600) return Math.round(s/60)+'분 '+(ms<Date.now()?'전':'후');
+  if(s<86400) return Math.round(s/3600)+'시간 '+(ms<Date.now()?'전':'후');
+  return Math.round(s/86400)+'일 '+(ms<Date.now()?'전':'후');
+}
+function tsToDate(){
+  const v=document.getElementById('tsInput').value.trim();
+  const isMs=document.getElementById('chkMs').checked;
+  if(!v){document.getElementById('tsResult').style.display='none';return;}
+  let ms=parseInt(v);
+  if(isNaN(ms)){document.getElementById('tsResult').style.display='none';return;}
+  if(!isMs) ms*=1000;
+  const d=new Date(ms);
+  document.getElementById('r-local').textContent=fmt(d);
+  document.getElementById('r-utc').textContent=d.toUTCString();
+  document.getElementById('r-iso').textContent=d.toISOString();
+  document.getElementById('r-rel').textContent=rel(ms);
+  document.getElementById('tsResult').style.display='block';
+}
+function dateToTs(){
+  const v=document.getElementById('dateInput').value;
+  if(!v){document.getElementById('dateResult').style.display='none';return;}
+  const ms=new Date(v).getTime();
+  document.getElementById('d-sec').textContent=Math.floor(ms/1000);
+  document.getElementById('d-ms').textContent=ms;
+  document.getElementById('dateResult').style.display='block';
+}
+function setNow(){
+  const d=new Date();
+  const local=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  document.getElementById('dateInput').value=local;
+  dateToTs();
+}
+function cp(id){navigator.clipboard.writeText(document.getElementById(id).textContent);}
+function tick(){
+  const n=new Date();
+  document.getElementById('nowTs').textContent=Math.floor(n.getTime()/1000);
+  document.getElementById('nowDate').textContent=fmt(n);
+  document.getElementById('nowMs').textContent='밀리초: '+n.getTime();
+}
+tick(); setInterval(tick,1000);
+</script>
+<script src="js/pwa-install.js"></script>
+</body>
+</html>

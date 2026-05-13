@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+  <meta name="naver-site-verification" content="7396a327607b884b9bef1283dfd3a5c6115a2b50">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JWT 디코더 - JWT 토큰 분석 무료 | WooaDev</title>
+  <meta name="description" content="JWT 토큰의 헤더, 페이로드, 만료 시간을 브라우저에서 무료로 디코드하세요. 토큰은 서버로 전송되지 않아 안전합니다.">
+  <meta name="keywords" content="JWT디코더,JWT분석,JWT토큰,JWT페이로드,JWT헤더,온라인JWT">
+  <link rel="canonical" href="https://devkit.wooahouse.com/jwt-decoder.html">
+  <meta property="og:title" content="JWT 디코더 - JWT 토큰 분석 | WooaDev">
+  <meta property="og:description" content="JWT 토큰의 헤더와 페이로드를 브라우저에서 무료로 디코드하세요.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://devkit.wooahouse.com/jwt-decoder.html">
+  <meta property="og:locale" content="ko_KR">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JWT 디코더","url":"https://devkit.wooahouse.com/jwt-decoder.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .jwt-section { margin-bottom:16px; }
+    .jwt-section-title { font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; padding:4px 10px; border-radius:4px; display:inline-block; }
+    .jwt-header-title { background:#DBEAFE; color:#1E40AF; }
+    .jwt-payload-title { background:#D1FAE5; color:#065F46; }
+    .jwt-sig-title { background:#FEE2E2; color:#991B1B; }
+    .jwt-code { font-family:monospace; font-size:0.84rem; background:#F8F9FA; border:1px solid #E5E7EB; border-radius:8px; padding:14px; white-space:pre-wrap; word-break:break-all; line-height:1.6; }
+    .jwt-expiry { padding:10px 14px; border-radius:8px; font-size:0.85rem; font-weight:600; margin-bottom:12px; }
+    .jwt-valid { background:#D1FAE5; color:#065F46; }
+    .jwt-expired { background:#FEE2E2; color:#991B1B; }
+    .jwt-no-exp { background:#FEF3E8; color:#92400E; }
+    .jwt-parts { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:16px; font-size:0.8rem; font-family:monospace; word-break:break-all; }
+    .jwt-part-h { color:#1E40AF; }
+    .jwt-part-p { color:#065F46; }
+    .jwt-part-s { color:#991B1B; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+  </div>
+</header>
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://chromekit.wooahouse.com/" target="_blank" rel="noopener">🧩 WooaChrome</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://devkit.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+  </div>
+</div>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JWT 디코더</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🎫</span>
+    <h1>JWT 디코더</h1>
+    <p>JWT 토큰을 붙여넣으면 헤더·페이로드를 즉시 디코드합니다. 토큰은 서버로 전송되지 않습니다.</p>
+  </div>
+
+  <div class="dev-panel">
+    <div class="dev-label">JWT 토큰</div>
+    <textarea class="dev-textarea" id="jwtInput" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." style="min-height:90px;word-break:break-all" oninput="decode()"></textarea>
+    <div class="dev-btn-row">
+      <button class="dev-btn" onclick="decode()">디코드</button>
+      <button class="dev-btn secondary" onclick="document.getElementById('jwtInput').value='';decode()">지우기</button>
+    </div>
+  </div>
+
+  <div id="errorMsg" class="alert alert-error" style="display:none"></div>
+
+  <div id="resultPanel" style="display:none">
+    <div id="expiryBadge" class="jwt-expiry"></div>
+    <div class="dev-panel">
+      <div class="jwt-parts" id="jwtParts"></div>
+      <div class="jwt-section">
+        <div class="jwt-section-title jwt-header-title">Header</div>
+        <div class="jwt-code" id="jwtHeader"></div>
+      </div>
+      <div class="jwt-section">
+        <div class="jwt-section-title jwt-payload-title">Payload</div>
+        <div class="jwt-code" id="jwtPayload"></div>
+      </div>
+      <div class="jwt-section">
+        <div class="jwt-section-title jwt-sig-title">Signature</div>
+        <div class="jwt-code" id="jwtSig" style="color:#9CA3AF;font-size:0.78rem">서명은 표시되지만 검증되지 않습니다.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<aside class="tool-sidebar">
+  <div class="ad-card"><div class="ad-card-label">AD</div>
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card"><script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script></div>
+</aside>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand"><span class="logo-footer">WooaDev</span><p>개발자 도구를 브라우저에서 무료로 사용하세요.</p></div>
+      <div class="footer-links"><h4>인코딩 · 해시</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL 인코더</a><a href="hash-generator.html">Hash 생성기</a><a href="jwt-decoder.html">JWT 디코더</a></div>
+      <div class="footer-links"><h4>포맷 · 생성</h4><a href="json-formatter.html">JSON 포맷터</a><a href="regex-tester.html">Regex 테스터</a><a href="uuid-generator.html">UUID 생성기</a><a href="timestamp.html">타임스탬프</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev. 모든 권리 보유.</p><div class="footer-bottom-links"><a href="privacy.html">개인정보처리방침</a><a href="about.html">소개</a></div></div>
+    <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+  </div>
+</footer>
+<script>
+function b64url(str) {
+  str = str.replace(/-/g,'+').replace(/_/g,'/');
+  while (str.length % 4) str += '=';
+  return decodeURIComponent(escape(atob(str)));
+}
+function decode() {
+  const token = document.getElementById('jwtInput').value.trim();
+  const err = document.getElementById('errorMsg');
+  const res = document.getElementById('resultPanel');
+  if (!token) { err.style.display='none'; res.style.display='none'; return; }
+  const parts = token.split('.');
+  if (parts.length !== 3) { err.textContent='유효한 JWT 형식이 아닙니다. header.payload.signature 구조여야 합니다.'; err.style.display='block'; res.style.display='none'; return; }
+  try {
+    const header = JSON.parse(b64url(parts[0]));
+    const payload = JSON.parse(b64url(parts[1]));
+    document.getElementById('jwtHeader').textContent = JSON.stringify(header, null, 2);
+    document.getElementById('jwtPayload').textContent = JSON.stringify(payload, null, 2);
+    document.getElementById('jwtSig').textContent = parts[2] + '\n\n※ 서명은 표시되지만 검증되지 않습니다.';
+    document.getElementById('jwtParts').innerHTML =
+      `<span class="jwt-part-h">${parts[0]}</span><span>.</span><span class="jwt-part-p">${parts[1]}</span><span>.</span><span class="jwt-part-s">${parts[2]}</span>`;
+    const badge = document.getElementById('expiryBadge');
+    if (payload.exp) {
+      const exp = new Date(payload.exp * 1000);
+      const now = new Date();
+      if (exp > now) {
+        badge.className='jwt-expiry jwt-valid';
+        badge.textContent = '✅ 유효 · 만료: ' + exp.toLocaleString('ko-KR');
+      } else {
+        badge.className='jwt-expiry jwt-expired';
+        badge.textContent = '❌ 만료됨 · 만료 시각: ' + exp.toLocaleString('ko-KR');
+      }
+    } else {
+      badge.className='jwt-expiry jwt-no-exp';
+      badge.textContent = '⚠️ exp 클레임 없음 (만료 시간 미설정)';
+    }
+    err.style.display='none'; res.style.display='block';
+  } catch(e) { err.textContent='파싱 오류: ' + e.message; err.style.display='block'; res.style.display='none'; }
+}
+</script>
+<script src="js/pwa-install.js"></script>
+</body>
+</html>

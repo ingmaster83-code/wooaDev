@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+  <meta name="naver-site-verification" content="7396a327607b884b9bef1283dfd3a5c6115a2b50">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>진법 변환기 - 2진수 8진수 16진수 변환 무료 | WooaDev</title>
+  <meta name="description" content="숫자를 2진수(Binary), 8진수(Octal), 10진수(Decimal), 16진수(Hexadecimal)로 즉시 변환합니다. 브라우저에서 무료로 사용하세요.">
+  <meta name="keywords" content="진법변환,2진수변환,16진수변환,Binary,Hex,Octal,Decimal,진수변환기">
+  <link rel="canonical" href="https://devkit.wooahouse.com/number-base.html">
+  <meta property="og:title" content="진법 변환기 - 2진수 8진수 16진수 변환 | WooaDev">
+  <meta property="og:description" content="숫자를 2진수, 8진수, 10진수, 16진수로 즉시 변환합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://devkit.wooahouse.com/number-base.html">
+  <meta property="og:locale" content="ko_KR">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"진법 변환기","url":"https://devkit.wooahouse.com/number-base.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .base-row { display:flex; align-items:center; gap:12px; padding:14px 0; border-bottom:1px solid #F3F4F6; flex-wrap:wrap; }
+    .base-row:last-child { border-bottom:none; }
+    .base-label { font-size:0.78rem; font-weight:700; color:#9CA3AF; width:90px; flex-shrink:0; }
+    .base-badge { font-size:0.65rem; background:#E5E7EB; color:#6B7280; border-radius:4px; padding:2px 5px; margin-left:4px; }
+    .base-input { flex:1; font-family:'Consolas','Monaco',monospace; font-size:1rem; padding:9px 12px; border:1.5px solid #E5E7EB; border-radius:8px; outline:none; color:#1A1A2E; min-width:0; transition:border-color 0.15s; }
+    .base-input:focus { border-color:#C4956A; }
+    .base-input.error { border-color:#EF4444; background:#FEF2F2; }
+    .base-copy { padding:5px 12px; background:#C4956A; color:white; border:none; border-radius:6px; font-size:0.75rem; cursor:pointer; flex-shrink:0; transition:background 0.15s; }
+    .base-copy:hover { background:#A87850; }
+    .bit-display { display:flex; gap:4px; flex-wrap:wrap; margin-top:10px; }
+    .bit-group { font-family:monospace; font-size:0.82rem; background:#F3F4F6; border-radius:4px; padding:2px 6px; color:#374151; letter-spacing:1px; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+  </div>
+</header>
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://chromekit.wooahouse.com/" target="_blank" rel="noopener">🧩 WooaChrome</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://devkit.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+  </div>
+</div>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>진법 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔢</span>
+    <h1>진법 변환기</h1>
+    <p>어느 진법이든 입력하면 2·8·10·16진수로 동시에 변환합니다.</p>
+  </div>
+
+  <div class="dev-panel">
+    <div class="base-row">
+      <span class="base-label">2진수<span class="base-badge">BIN</span></span>
+      <input type="text" class="base-input" id="bin" placeholder="예: 1010" oninput="convert('bin')" spellcheck="false">
+      <button class="base-copy" onclick="cp('bin')">복사</button>
+    </div>
+    <div class="base-row">
+      <span class="base-label">8진수<span class="base-badge">OCT</span></span>
+      <input type="text" class="base-input" id="oct" placeholder="예: 12" oninput="convert('oct')" spellcheck="false">
+      <button class="base-copy" onclick="cp('oct')">복사</button>
+    </div>
+    <div class="base-row">
+      <span class="base-label">10진수<span class="base-badge">DEC</span></span>
+      <input type="text" class="base-input" id="dec" placeholder="예: 10" oninput="convert('dec')" spellcheck="false">
+      <button class="base-copy" onclick="cp('dec')">복사</button>
+    </div>
+    <div class="base-row">
+      <span class="base-label">16진수<span class="base-badge">HEX</span></span>
+      <input type="text" class="base-input" id="hex" placeholder="예: A or 0xA" oninput="convert('hex')" spellcheck="false">
+      <button class="base-copy" onclick="cp('hex')">복사</button>
+    </div>
+    <div id="errMsg" style="display:none;color:#EF4444;font-size:0.82rem;margin-top:8px"></div>
+  </div>
+
+  <div class="dev-panel" id="bitPanel" style="display:none">
+    <div class="dev-label" style="margin-bottom:10px">비트 시각화 (4비트 그룹)</div>
+    <div class="bit-display" id="bitDisplay"></div>
+    <div style="font-size:0.78rem;color:#9CA3AF;margin-top:8px" id="bitInfo"></div>
+  </div>
+</div>
+<aside class="tool-sidebar">
+  <div class="ad-card"><div class="ad-card-label">AD</div>
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card"><script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script></div>
+</aside>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand"><span class="logo-footer">WooaDev</span><p>개발자 도구를 브라우저에서 무료로 사용하세요.</p></div>
+      <div class="footer-links"><h4>숫자 · 시간</h4><a href="number-base.html">진법 변환기</a><a href="timestamp.html">타임스탬프</a><a href="cron-generator.html">Cron 생성기</a></div>
+      <div class="footer-links"><h4>인코딩 · 해시</h4><a href="base64.html">Base64</a><a href="hash-generator.html">Hash 생성기</a><a href="url-encoder.html">URL 인코더</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev. 모든 권리 보유.</p><div class="footer-bottom-links"><a href="privacy.html">개인정보처리방침</a><a href="about.html">소개</a></div></div>
+    <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+  </div>
+</footer>
+<script>
+const RADIX = { bin: 2, oct: 8, dec: 10, hex: 16 };
+let updating = false;
+
+function convert(src) {
+  if (updating) return;
+  updating = true;
+  const errEl = document.getElementById('errMsg');
+  const raw = document.getElementById(src).value.trim();
+  document.querySelectorAll('.base-input').forEach(el => el.classList.remove('error'));
+  errEl.style.display = 'none';
+
+  if (!raw) {
+    ['bin','oct','dec','hex'].filter(k=>k!==src).forEach(k => document.getElementById(k).value = '');
+    document.getElementById('bitPanel').style.display = 'none';
+    updating = false;
+    return;
+  }
+
+  let cleanRaw = raw.replace(/^0x/i,'').replace(/\s/g,'');
+  let n;
+  try {
+    n = parseInt(cleanRaw, RADIX[src]);
+    if (isNaN(n) || n < 0) throw new Error();
+  } catch(e) {
+    document.getElementById(src).classList.add('error');
+    errEl.textContent = '올바르지 않은 값입니다.';
+    errEl.style.display = 'block';
+    document.getElementById('bitPanel').style.display = 'none';
+    updating = false;
+    return;
+  }
+
+  if (src !== 'bin') document.getElementById('bin').value = n.toString(2);
+  if (src !== 'oct') document.getElementById('oct').value = n.toString(8);
+  if (src !== 'dec') document.getElementById('dec').value = n.toString(10);
+  if (src !== 'hex') document.getElementById('hex').value = n.toString(16).toUpperCase();
+
+  const binStr = n.toString(2);
+  const padded = binStr.padStart(Math.ceil(binStr.length/4)*4, '0');
+  const groups = padded.match(/.{1,4}/g) || [];
+  document.getElementById('bitDisplay').innerHTML = groups.map(g=>`<span class="bit-group">${g}</span>`).join('');
+  document.getElementById('bitInfo').textContent = `${binStr.length}비트 · 부호없는 정수`;
+  document.getElementById('bitPanel').style.display = 'block';
+  updating = false;
+}
+
+function cp(id) {
+  const val = document.getElementById(id).value;
+  if (!val) return;
+  navigator.clipboard.writeText(val);
+  const btn = document.querySelectorAll('.base-copy')[[...document.querySelectorAll('.base-input')].findIndex(el=>el.id===id)];
+  const orig = btn.textContent;
+  btn.textContent = '복사됨!';
+  setTimeout(()=>{ btn.textContent = orig; }, 1200);
+}
+</script>
+<script src="js/pwa-install.js"></script>
+</body>
+</html>

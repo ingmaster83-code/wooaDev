@@ -1,0 +1,16 @@
+{
+  "name": "WooaDev - 개발자 도구 모음",
+  "short_name": "WooaDev",
+  "description": "Base64, Hash, JWT, Regex, UUID 등 개발자가 자주 쓰는 유틸리티를 브라우저에서 무료로 사용하세요.",
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "background_color": "#1A1A2E",
+  "theme_color": "#C4956A",
+  "lang": "ko",
+  "orientation": "portrait-primary",
+  "categories": ["utilities", "productivity", "developer"],
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
