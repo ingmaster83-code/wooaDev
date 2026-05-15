@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+  <meta name="naver-site-verification" content="7396a327607b884b9bef1283dfd3a5c6115a2b50">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS·JS·HTML 압축·포맷터 - 코드 Minify·Beautify 용량 줄이기 무료 | WooaDev</title>
+  <meta name="description" content="CSS, JavaScript, HTML 코드를 무료로 압축(Minify)해 용량을 줄이거나 보기 좋게 정렬(Beautify)하세요. 압축 전후 크기 비교 표시. 브라우저에서 즉시 처리, 서버 전송 없음.">
+  <meta name="keywords" content="CSS압축, JS압축, HTML압축, Minify, Beautify, 코드압축, 코드포맷, CSS미니파이, JS미니파이, HTML미니파이, JavaScript압축, 코드최소화, 웹코드압축">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/minifier.html">
+  <meta property="og:title" content="CSS·JS·HTML 압축·포맷터 - Minify·Beautify 무료 | WooaDev">
+  <meta property="og:description" content="CSS, JavaScript, HTML을 압축(Minify)하거나 정렬(Beautify)하세요. 압축 전후 크기 비교 표시. 브라우저에서 무료, 서버 전송 없음.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/minifier.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSS·JS·HTML 압축/포맷터","url":"https://wooadev.wooahouse.com/minifier.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .tab-bar { display:flex; gap:4px; margin-bottom:16px; border-bottom:2px solid #E5E7EB; }
+    .tab-btn { padding:8px 20px; border:none; background:none; cursor:pointer; font-size:0.9rem; color:#6B7280; border-bottom:3px solid transparent; margin-bottom:-2px; transition:all .2s; font-weight:500; }
+    .tab-btn.active { color:#C4956A; border-bottom-color:#C4956A; font-weight:700; }
+    .tab-btn:hover:not(.active) { color:#374151; }
+    .tab-content { display:none; }
+    .tab-content.active { display:block; }
+    .size-stats { display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; font-size:0.82rem; color:#6B7280; }
+    .size-stats span { background:#F3F4F6; padding:4px 10px; border-radius:20px; }
+    .size-stats .ratio { background:#DEF7EC; color:#065F46; font-weight:600; }
+    .size-stats .ratio.bigger { background:#FEE2E2; color:#991B1B; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+  </div>
+</header>
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+  </div>
+</div>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CSS·JS·HTML 압축/포맷터</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🗜️</span>
+    <h1>CSS · JS · HTML 압축 / 포맷터</h1>
+    <p>코드를 압축(Minify)하거나 보기 좋게 정렬(Beautify)합니다. 모든 처리는 브라우저 안에서만 이루어집니다.</p>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('css')">CSS</button>
+    <button class="tab-btn" onclick="switchTab('js')">JavaScript</button>
+    <button class="tab-btn" onclick="switchTab('html')">HTML</button>
+  </div>
+
+  <!-- CSS Tab -->
+  <div class="tab-content active" id="tab-css">
+    <div class="dev-panel">
+      <div class="dev-label">CSS 입력</div>
+      <textarea class="dev-textarea" id="cssInput" placeholder=".container { margin: 0 auto; padding: 16px; }" style="min-height:180px"></textarea>
+      <div class="dev-btn-row">
+        <button class="dev-btn" onclick="runCSS('minify')">압축 (Minify)</button>
+        <button class="dev-btn" onclick="runCSS('beautify')">정렬 (Beautify)</button>
+        <button class="dev-btn secondary" onclick="clearTab('css')">지우기</button>
+      </div>
+    </div>
+    <div class="dev-panel" id="cssOutputPanel" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div class="dev-label" style="margin:0">결과</div>
+        <button class="dev-btn secondary" style="padding:5px 12px;font-size:0.78rem" onclick="copyResult('cssOutput')">복사</button>
+      </div>
+      <textarea class="dev-textarea" id="cssOutput" readonly style="min-height:180px;font-family:'Consolas','Monaco',monospace;font-size:0.84rem;background:#1E293B;color:#E2E8F0;border-color:#334155"></textarea>
+      <div class="size-stats" id="cssStats"></div>
+    </div>
+  </div>
+
+  <!-- JS Tab -->
+  <div class="tab-content" id="tab-js">
+    <div class="dev-panel">
+      <div class="dev-label">JavaScript 입력</div>
+      <textarea class="dev-textarea" id="jsInput" placeholder="function hello(name) { console.log('Hello, ' + name); }" style="min-height:180px"></textarea>
+      <div class="dev-btn-row">
+        <button class="dev-btn" onclick="runJS('minify')">압축 (Minify)</button>
+        <button class="dev-btn" onclick="runJS('beautify')">정렬 (Beautify)</button>
+        <button class="dev-btn secondary" onclick="clearTab('js')">지우기</button>
+      </div>
+    </div>
+    <div class="dev-panel" id="jsOutputPanel" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div class="dev-label" style="margin:0">결과</div>
+        <button class="dev-btn secondary" style="padding:5px 12px;font-size:0.78rem" onclick="copyResult('jsOutput')">복사</button>
+      </div>
+      <textarea class="dev-textarea" id="jsOutput" readonly style="min-height:180px;font-family:'Consolas','Monaco',monospace;font-size:0.84rem;background:#1E293B;color:#E2E8F0;border-color:#334155"></textarea>
+      <div class="size-stats" id="jsStats"></div>
+    </div>
+  </div>
+
+  <!-- HTML Tab -->
+  <div class="tab-content" id="tab-html">
+    <div class="dev-panel">
+      <div class="dev-label">HTML 입력</div>
+      <textarea class="dev-textarea" id="htmlInput" placeholder="<!DOCTYPE html><html>  <head>    <title>Hello</title>  </head>  <body>    <p>World</p>  </body></html>" style="min-height:180px"></textarea>
+      <div class="dev-btn-row">
+        <button class="dev-btn" onclick="runHTML('minify')">압축 (Minify)</button>
+        <button class="dev-btn" onclick="runHTML('beautify')">정렬 (Beautify)</button>
+        <button class="dev-btn secondary" onclick="clearTab('html')">지우기</button>
+      </div>
+    </div>
+    <div class="dev-panel" id="htmlOutputPanel" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div class="dev-label" style="margin:0">결과</div>
+        <button class="dev-btn secondary" style="padding:5px 12px;font-size:0.78rem" onclick="copyResult('htmlOutput')">복사</button>
+      </div>
+      <textarea class="dev-textarea" id="htmlOutput" readonly style="min-height:180px;font-family:'Consolas','Monaco',monospace;font-size:0.84rem;background:#1E293B;color:#E2E8F0;border-color:#334155"></textarea>
+      <div class="size-stats" id="htmlStats"></div>
+    </div>
+  </div>
+</div>
+<aside class="tool-sidebar">
+  <div class="ad-card"><div class="ad-card-label">AD</div>
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card"><script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script></div>
+</aside>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand"><span class="logo-footer">WooaDev</span><p>개발자 도구를 브라우저에서 무료로 사용하세요.</p></div>
+      <div class="footer-links"><h4>인코딩 · 해시</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL 인코더</a><a href="hash-generator.html">Hash 생성기</a><a href="jwt-decoder.html">JWT 디코더</a></div>
+      <div class="footer-links"><h4>포맷 · 변환</h4><a href="json-formatter.html">JSON 포맷터</a><a href="minifier.html">CSS·JS·HTML 압축</a><a href="sql-formatter.html">SQL 포맷터</a><a href="diff-viewer.html">Diff 비교기</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev. 모든 권리 보유.</p><div class="footer-bottom-links"><a href="privacy.html">개인정보처리방침</a><a href="about.html">소개</a></div></div>
+    <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+  </div>
+</footer>
+<script>
+// ── Tab switching ──
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', ['css','js','html'][i] === name);
+  });
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+// ── Stats display ──
+function showStats(statsEl, origLen, resultLen) {
+  const saved = origLen - resultLen;
+  const ratio = origLen > 0 ? Math.round((saved / origLen) * 100) : 0;
+  const isSmaller = saved >= 0;
+  statsEl.innerHTML =
+    `<span>원본 ${formatBytes(origLen)}</span>` +
+    `<span>결과 ${formatBytes(resultLen)}</span>` +
+    `<span class="ratio${isSmaller ? '' : ' bigger'}">${isSmaller ? '▼' : '▲'} ${Math.abs(ratio)}% ${isSmaller ? '절감' : '증가'}</span>`;
+}
+
+function formatBytes(n) {
+  if (n < 1024) return n + 'B';
+  return (n / 1024).toFixed(1) + 'KB';
+}
+
+// ── CSS ──
+function minifyCSS(css) {
+  return css
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/\s*\{\s*/g, '{')
+    .replace(/\s*\}\s*/g, '}')
+    .replace(/\s*:\s*/g, ':')
+    .replace(/\s*;\s*/g, ';')
+    .replace(/;\}/g, '}')
+    .trim();
+}
+
+function beautifyCSS(css) {
+  // Remove existing extra whitespace
+  let s = css.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').trim();
+  let result = '';
+  let indent = 0;
+  let i = 0;
+  while (i < s.length) {
+    const ch = s[i];
+    if (ch === '{') {
+      result = result.trimEnd() + ' {\n';
+      indent = 2;
+      i++;
+    } else if (ch === '}') {
+      result = result.trimEnd() + '\n}\n\n';
+      indent = 0;
+      i++;
+    } else if (ch === ';') {
+      result += ';\n' + ' '.repeat(indent);
+      i++;
+    } else {
+      result += ch;
+      i++;
+    }
+  }
+  // Clean up multiple blank lines
+  return result.replace(/\n{3,}/g, '\n\n').trim();
+}
+
+function runCSS(mode) {
+  const input = document.getElementById('cssInput').value;
+  if (!input.trim()) return;
+  const result = mode === 'minify' ? minifyCSS(input) : beautifyCSS(input);
+  document.getElementById('cssOutput').value = result;
+  document.getElementById('cssOutputPanel').style.display = 'block';
+  showStats(document.getElementById('cssStats'), input.length, result.length);
+}
+
+// ── JavaScript ──
+function minifyJS(js) {
+  // Remove single-line comments (not inside strings)
+  let result = '';
+  let i = 0;
+  let inStr = false;
+  let strChar = '';
+  while (i < js.length) {
+    // String detection
+    if (!inStr && (js[i] === '"' || js[i] === "'" || js[i] === '`')) {
+      inStr = true;
+      strChar = js[i];
+      result += js[i++];
+      continue;
+    }
+    if (inStr) {
+      if (js[i] === '\\') { result += js[i] + js[i+1]; i += 2; continue; }
+      if (js[i] === strChar) { inStr = false; }
+      result += js[i++];
+      continue;
+    }
+    // Single-line comment
+    if (js[i] === '/' && js[i+1] === '/') {
+      while (i < js.length && js[i] !== '\n') i++;
+      continue;
+    }
+    // Multi-line comment
+    if (js[i] === '/' && js[i+1] === '*') {
+      i += 2;
+      while (i < js.length && !(js[i] === '*' && js[i+1] === '/')) i++;
+      i += 2;
+      continue;
+    }
+    result += js[i++];
+  }
+  return result
+    .replace(/\n\s+/g, '\n')
+    .replace(/\n{2,}/g, '\n')
+    .replace(/[ \t]{2,}/g, ' ')
+    .replace(/\n/g, '')
+    .trim();
+}
+
+function beautifyJS(js) {
+  let result = '';
+  let indent = 0;
+  let inStr = false;
+  let strChar = '';
+  let i = 0;
+  const pad = () => '  '.repeat(indent);
+
+  while (i < js.length) {
+    const ch = js[i];
+    // String
+    if (!inStr && (ch === '"' || ch === "'" || ch === '`')) {
+      inStr = true; strChar = ch; result += ch; i++; continue;
+    }
+    if (inStr) {
+      if (ch === '\\') { result += ch + js[i+1]; i += 2; continue; }
+      if (ch === strChar) inStr = false;
+      result += ch; i++; continue;
+    }
+    // Single-line comment
+    if (ch === '/' && js[i+1] === '/') {
+      let comment = '';
+      while (i < js.length && js[i] !== '\n') { comment += js[i++]; }
+      result += comment + '\n' + pad();
+      continue;
+    }
+    // Multi-line comment
+    if (ch === '/' && js[i+1] === '*') {
+      let comment = '';
+      i += 2;
+      while (i < js.length && !(js[i] === '*' && js[i+1] === '/')) comment += js[i++];
+      i += 2;
+      result += '/*' + comment + '*/\n' + pad();
+      continue;
+    }
+    if (ch === '{') {
+      result += ' {\n';
+      indent++;
+      result += pad();
+      i++;
+    } else if (ch === '}') {
+      indent = Math.max(0, indent - 1);
+      result = result.trimEnd() + '\n' + pad() + '}\n' + pad();
+      i++;
+    } else if (ch === ';') {
+      result += ';\n' + pad();
+      i++;
+    } else if (ch === '\n') {
+      i++; // skip existing newlines
+    } else {
+      result += ch; i++;
+    }
+  }
+  return result.replace(/\n{3,}/g, '\n\n').replace(/[ \t]+\n/g, '\n').trim();
+}
+
+function runJS(mode) {
+  const input = document.getElementById('jsInput').value;
+  if (!input.trim()) return;
+  const result = mode === 'minify' ? minifyJS(input) : beautifyJS(input);
+  document.getElementById('jsOutput').value = result;
+  document.getElementById('jsOutputPanel').style.display = 'block';
+  showStats(document.getElementById('jsStats'), input.length, result.length);
+}
+
+// ── HTML ──
+function minifyHTML(html) {
+  return html
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/>\s+</g, '><')
+    .trim();
+}
+
+function beautifyHTML(html) {
+  // Normalize
+  let s = html.replace(/>\s*</g, '><').trim();
+  let result = '';
+  let indent = 0;
+  const voidTags = new Set(['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr']);
+  const inlineTags = new Set(['a','abbr','b','bdi','bdo','cite','code','data','dfn','em','i','kbd','mark','q','rp','rt','ruby','s','samp','small','span','strong','sub','sup','time','u','var','wbr']);
+
+  // Split by tags
+  const parts = s.split(/(<[^>]+>)/);
+  parts.forEach(part => {
+    if (!part) return;
+    if (part.startsWith('</')) {
+      // Closing tag
+      indent = Math.max(0, indent - 1);
+      result += '\n' + '  '.repeat(indent) + part;
+    } else if (part.startsWith('<')) {
+      const tagName = (part.match(/<([a-zA-Z][a-zA-Z0-9]*)/)||['',''])[1].toLowerCase();
+      result += '\n' + '  '.repeat(indent) + part;
+      if (!voidTags.has(tagName) && !part.endsWith('/>') && !inlineTags.has(tagName)) {
+        indent++;
+      }
+    } else {
+      const text = part.trim();
+      if (text) result += '\n' + '  '.repeat(indent) + text;
+    }
+  });
+  return result.replace(/^\n/, '').replace(/\n{3,}/g, '\n\n').trim();
+}
+
+function runHTML(mode) {
+  const input = document.getElementById('htmlInput').value;
+  if (!input.trim()) return;
+  const result = mode === 'minify' ? minifyHTML(input) : beautifyHTML(input);
+  document.getElementById('htmlOutput').value = result;
+  document.getElementById('htmlOutputPanel').style.display = 'block';
+  showStats(document.getElementById('htmlStats'), input.length, result.length);
+}
+
+// ── Utils ──
+function clearTab(type) {
+  document.getElementById(type + 'Input').value = '';
+  document.getElementById(type + 'Output').value = '';
+  document.getElementById(type + 'OutputPanel').style.display = 'none';
+}
+
+function copyResult(id) {
+  const el = document.getElementById(id);
+  if (!el.value) return;
+  navigator.clipboard.writeText(el.value).then(() => {
+    const btn = el.closest('.dev-panel').querySelector('button.dev-btn.secondary');
+    const orig = btn.textContent;
+    btn.textContent = '복사됨!';
+    setTimeout(() => btn.textContent = orig, 1500);
+  });
+}
+</script>
+<script src="js/pwa-install.js"></script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+  <meta name="naver-site-verification" content="7396a327607b884b9bef1283dfd3a5c6115a2b50">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 단위 변환기 - px rem em pt vw % 즉시 상호 변환 무료 | WooaDev</title>
+  <meta name="description" content="CSS 단위 px, rem, em, pt, vw, %를 즉시 변환하세요. 기준 폰트 크기와 뷰포트 너비를 설정하고 값을 입력하면 모든 단위로 동시에 변환됩니다. 반응형 웹 개발 필수 도구.">
+  <meta name="keywords" content="CSS단위변환, px to rem, rem to px, px em변환, CSS vw변환, CSS pt변환, 단위계산기, px rem em변환, CSS반응형단위, CSS단위계산기, 프론트엔드개발도구">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/css-units.html">
+  <meta property="og:title" content="CSS 단위 변환기 - px rem em pt vw % 즉시 상호 변환 | WooaDev">
+  <meta property="og:description" content="CSS 단위 px, rem, em, pt, vw, %를 즉시 변환하세요. 기준 폰트·뷰포트 설정 가능. 브라우저에서 무료, 서버 전송 없음.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/css-units.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSS 단위 변환기","url":"https://wooadev.wooahouse.com/css-units.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .unit-settings { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:20px; }
+    .unit-setting-group { display:flex; flex-direction:column; gap:4px; }
+    .unit-setting-group label { font-size:0.78rem; color:#6B7280; font-weight:600; }
+    .unit-setting-group input { width:120px; padding:8px 10px; border:1.5px solid #E5E7EB; border-radius:8px; font-size:0.9rem; }
+    .unit-input-row { display:flex; gap:8px; align-items:center; margin-bottom:20px; flex-wrap:wrap; }
+    .unit-input-row input[type=number] { flex:1; min-width:120px; padding:12px 14px; border:2px solid #C4956A; border-radius:10px; font-size:1.1rem; font-weight:600; }
+    .unit-select { padding:10px 12px; border:1.5px solid #E5E7EB; border-radius:8px; font-size:0.95rem; background:#fff; cursor:pointer; }
+    .units-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; margin-top:8px; }
+    .unit-card { background:#F8FAFC; border:1.5px solid #E5E7EB; border-radius:12px; padding:16px 14px; text-align:center; cursor:pointer; transition:all .15s; }
+    .unit-card:hover { border-color:#C4956A; background:#FFF8F2; }
+    .unit-card .unit-label { font-size:0.78rem; color:#6B7280; font-weight:600; text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px; }
+    .unit-card .unit-value { font-size:1.4rem; font-weight:700; color:#1F2937; }
+    .unit-card .unit-copy-hint { font-size:0.7rem; color:#9CA3AF; margin-top:4px; }
+    .quick-btns { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+    .quick-btn { padding:5px 12px; border:1.5px solid #E5E7EB; border-radius:20px; background:#fff; cursor:pointer; font-size:0.82rem; color:#374151; transition:all .15s; }
+    .quick-btn:hover { border-color:#C4956A; color:#C4956A; }
+    .copied-toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:#1F2937; color:#fff; padding:8px 20px; border-radius:20px; font-size:0.85rem; opacity:0; pointer-events:none; transition:opacity .2s; z-index:9999; }
+    .copied-toast.show { opacity:1; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+  </div>
+</header>
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+  </div>
+</div>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CSS 단위 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📐</span>
+    <h1>CSS 단위 변환기</h1>
+    <p>px, rem, em, pt, vw, % 단위를 즉시 변환합니다. 카드를 클릭하면 값이 복사됩니다.</p>
+  </div>
+
+  <div class="dev-panel">
+    <div class="dev-label">기준 설정</div>
+    <div class="unit-settings">
+      <div class="unit-setting-group">
+        <label>기준 폰트 크기 (px)</label>
+        <input type="number" id="baseFontSize" value="16" min="1" max="100" oninput="convert()">
+      </div>
+      <div class="unit-setting-group">
+        <label>뷰포트 너비 (px)</label>
+        <input type="number" id="viewportWidth" value="1440" min="100" max="7680" oninput="convert()">
+      </div>
+      <div class="unit-setting-group">
+        <label>부모 요소 크기 (px) — % 기준</label>
+        <input type="number" id="parentSize" value="1440" min="1" max="7680" oninput="convert()">
+      </div>
+    </div>
+
+    <div class="dev-label">빠른 선택 (px)</div>
+    <div class="quick-btns">
+      <button class="quick-btn" onclick="setQuick(10)">10</button>
+      <button class="quick-btn" onclick="setQuick(12)">12</button>
+      <button class="quick-btn" onclick="setQuick(14)">14</button>
+      <button class="quick-btn" onclick="setQuick(16)">16</button>
+      <button class="quick-btn" onclick="setQuick(18)">18</button>
+      <button class="quick-btn" onclick="setQuick(20)">20</button>
+      <button class="quick-btn" onclick="setQuick(24)">24</button>
+      <button class="quick-btn" onclick="setQuick(32)">32</button>
+      <button class="quick-btn" onclick="setQuick(48)">48</button>
+      <button class="quick-btn" onclick="setQuick(64)">64</button>
+      <button class="quick-btn" onclick="setQuick(96)">96</button>
+      <button class="quick-btn" onclick="setQuick(128)">128</button>
+    </div>
+
+    <div class="dev-label">변환할 값 입력</div>
+    <div class="unit-input-row">
+      <input type="number" id="inputValue" placeholder="16" step="any" oninput="convert()">
+      <select class="unit-select" id="inputUnit" onchange="convert()">
+        <option value="px">px</option>
+        <option value="rem">rem</option>
+        <option value="em">em</option>
+        <option value="pt">pt</option>
+        <option value="vw">vw</option>
+        <option value="pct">%</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="dev-panel" id="resultsPanel" style="display:none">
+    <div class="dev-label">변환 결과 <small style="color:#9CA3AF;font-weight:400">(클릭하면 복사)</small></div>
+    <div class="units-grid" id="unitsGrid"></div>
+  </div>
+</div>
+<aside class="tool-sidebar">
+  <div class="ad-card"><div class="ad-card-label">AD</div>
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card"><script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script></div>
+</aside>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand"><span class="logo-footer">WooaDev</span><p>개발자 도구를 브라우저에서 무료로 사용하세요.</p></div>
+      <div class="footer-links"><h4>인코딩 · 해시</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL 인코더</a><a href="hash-generator.html">Hash 생성기</a><a href="jwt-decoder.html">JWT 디코더</a></div>
+      <div class="footer-links"><h4>개발 도구</h4><a href="css-units.html">CSS 단위 변환</a><a href="minifier.html">CSS·JS·HTML 압축</a><a href="chmod.html">Chmod 계산기</a><a href="http-status.html">HTTP 상태코드</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev. 모든 권리 보유.</p><div class="footer-bottom-links"><a href="privacy.html">개인정보처리방침</a><a href="about.html">소개</a></div></div>
+    <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+  </div>
+</footer>
+<div class="copied-toast" id="toast">클립보드에 복사됨!</div>
+<script>
+function getBasePx() { return parseFloat(document.getElementById('baseFontSize').value) || 16; }
+function getViewport() { return parseFloat(document.getElementById('viewportWidth').value) || 1440; }
+function getParent() { return parseFloat(document.getElementById('parentSize').value) || 1440; }
+
+// Convert any unit to px
+function toPx(val, unit) {
+  const base = getBasePx();
+  const vw = getViewport();
+  const parent = getParent();
+  switch(unit) {
+    case 'px':  return val;
+    case 'rem': return val * base;
+    case 'em':  return val * base;
+    case 'pt':  return val / 0.75;
+    case 'vw':  return (val / 100) * vw;
+    case 'pct': return (val / 100) * parent;
+    default:    return val;
+  }
+}
+
+function fromPx(px, unit) {
+  const base = getBasePx();
+  const vw = getViewport();
+  const parent = getParent();
+  switch(unit) {
+    case 'px':  return px;
+    case 'rem': return px / base;
+    case 'em':  return px / base;
+    case 'pt':  return px * 0.75;
+    case 'vw':  return (px / vw) * 100;
+    case 'pct': return (px / parent) * 100;
+    default:    return px;
+  }
+}
+
+function fmt(n) {
+  if (n === null || isNaN(n)) return '—';
+  // Up to 4 significant decimal places, strip trailing zeros
+  return parseFloat(n.toFixed(4)).toString();
+}
+
+function convert() {
+  const rawVal = parseFloat(document.getElementById('inputValue').value);
+  const unit = document.getElementById('inputUnit').value;
+  if (isNaN(rawVal)) {
+    document.getElementById('resultsPanel').style.display = 'none';
+    return;
+  }
+  const px = toPx(rawVal, unit);
+  const units = [
+    { key:'px',  label:'px',  suffix:'px' },
+    { key:'rem', label:'rem', suffix:'rem' },
+    { key:'em',  label:'em',  suffix:'em' },
+    { key:'pt',  label:'pt',  suffix:'pt' },
+    { key:'vw',  label:'vw',  suffix:'vw' },
+    { key:'pct', label:'%',   suffix:'%' }
+  ];
+  const grid = document.getElementById('unitsGrid');
+  grid.innerHTML = units.map(u => {
+    const converted = fromPx(px, u.key);
+    const display = fmt(converted);
+    const copyVal = display + u.suffix;
+    return `<div class="unit-card" onclick="copyValue('${copyVal}')">
+      <div class="unit-label">${u.label}</div>
+      <div class="unit-value">${display}<span style="font-size:0.7em;color:#9CA3AF">${u.suffix}</span></div>
+      <div class="unit-copy-hint">클릭하여 복사</div>
+    </div>`;
+  }).join('');
+  document.getElementById('resultsPanel').style.display = 'block';
+}
+
+function setQuick(val) {
+  document.getElementById('inputValue').value = val;
+  document.getElementById('inputUnit').value = 'px';
+  convert();
+}
+
+function copyValue(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const toast = document.getElementById('toast');
+    toast.textContent = '"' + text + '" 복사됨!';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1800);
+  });
+}
+</script>
+<script src="js/pwa-install.js"></script>
+</body>
+</html>
