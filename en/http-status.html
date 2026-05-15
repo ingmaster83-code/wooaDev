@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+  <meta name="naver-site-verification" content="7396a327607b884b9bef1283dfd3a5c6115a2b50">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTTP Status Codes Reference – 1xx 2xx 3xx 4xx 5xx Full List with Search | WooaDev</title>
+  <meta name="description" content="Look up all HTTP status codes from 1xx to 5xx with plain-English descriptions. Quickly search by code number. Essential reference for REST API developers. Free, instant.">
+  <meta name="keywords" content="HTTP status codes, HTTP 200, HTTP 404, HTTP 500, HTTP 301, status code reference, REST API status codes, HTTP status list, HTTP error codes, 4xx 5xx codes">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/http-status.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/http-status.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/http-status.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/http-status.html">
+  <meta property="og:title" content="HTTP Status Codes Reference – Full 1xx–5xx List | WooaDev">
+  <meta property="og:description" content="Full HTTP status code reference from 1xx to 5xx with plain-English descriptions and instant search. Free, always available.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/http-status.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"HTTP 상태코드 참조표","url":"https://wooadev.wooahouse.com/http-status.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .http-search { width:100%; padding:12px 16px; border:2px solid #C4956A; border-radius:10px; font-size:1rem; margin-bottom:20px; box-sizing:border-box; }
+    .http-category { margin-bottom:24px; }
+    .http-category-title { font-size:1rem; font-weight:700; padding:8px 14px; border-radius:8px 8px 0 0; display:flex; align-items:center; gap:8px; }
+    .cat-1xx .http-category-title { background:#E0F2FE; color:#0369A1; }
+    .cat-2xx .http-category-title { background:#DCFCE7; color:#166534; }
+    .cat-3xx .http-category-title { background:#DBEAFE; color:#1D4ED8; }
+    .cat-4xx .http-category-title { background:#FEF3C7; color:#92400E; }
+    .cat-5xx .http-category-title { background:#FEE2E2; color:#991B1B; }
+    .http-code-list { border:1.5px solid #E5E7EB; border-radius:0 0 8px 8px; overflow:hidden; }
+    .http-code-item { display:flex; align-items:flex-start; gap:12px; padding:12px 14px; border-bottom:1px solid #F3F4F6; cursor:pointer; transition:background .12s; }
+    .http-code-item:last-child { border-bottom:none; }
+    .http-code-item:hover { background:#F9FAFB; }
+    .http-code-badge { font-size:1rem; font-weight:700; min-width:44px; text-align:center; padding:4px 8px; border-radius:6px; font-family:'Consolas','Monaco',monospace; flex-shrink:0; }
+    .cat-1xx .http-code-badge { background:#E0F2FE; color:#0369A1; }
+    .cat-2xx .http-code-badge { background:#DCFCE7; color:#166534; }
+    .cat-3xx .http-code-badge { background:#DBEAFE; color:#1D4ED8; }
+    .cat-4xx .http-code-badge { background:#FEF3C7; color:#92400E; }
+    .cat-5xx .http-code-badge { background:#FEE2E2; color:#991B1B; }
+    .http-code-info { flex:1; }
+    .http-code-name { font-weight:700; font-size:0.9rem; color:#1F2937; }
+    .http-code-desc { font-size:0.82rem; color:#6B7280; margin-top:2px; line-height:1.4; }
+    .http-code-detail { font-size:0.82rem; color:#374151; background:#F8FAFC; border:1px solid #E5E7EB; border-radius:6px; padding:10px 12px; margin-top:8px; line-height:1.5; display:none; }
+    .http-code-item.expanded .http-code-detail { display:block; }
+    .no-results { text-align:center; color:#9CA3AF; padding:40px; font-size:0.9rem; }
+    .cat-filter { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+    .cat-filter-btn { padding:5px 14px; border-radius:20px; border:1.5px solid #E5E7EB; background:#fff; cursor:pointer; font-size:0.82rem; font-weight:600; transition:all .15s; }
+    .cat-filter-btn.active, .cat-filter-btn:hover { color:#fff; }
+    .cat-filter-btn[data-cat="all"].active { background:#374151; border-color:#374151; }
+    .cat-filter-btn[data-cat="1xx"].active { background:#0369A1; border-color:#0369A1; }
+    .cat-filter-btn[data-cat="2xx"].active { background:#166534; border-color:#166534; }
+    .cat-filter-btn[data-cat="3xx"].active { background:#1D4ED8; border-color:#1D4ED8; }
+    .cat-filter-btn[data-cat="4xx"].active { background:#92400E; border-color:#92400E; }
+    .cat-filter-btn[data-cat="5xx"].active { background:#991B1B; border-color:#991B1B; }
+    .lang-switcher { display:flex; align-items:center; gap:4px; }
+    .lang-switcher a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.8rem; font-weight:600; padding:3px 8px; border-radius:12px; transition:background 0.15s; }
+    .lang-switcher a.active { color:white; background:rgba(255,255,255,0.25); }
+    .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
+    .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../http-status.html">KO</a>
+        <span>|</span>
+        <a href="http-status.html" class="active">EN</a>
+      </div>
+      <a href="../about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://wooadev.wooahouse.com/en/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+  </div>
+</div>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>HTTP Status Code Reference</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🌐</span>
+    <h1>HTTP Status Code Reference</h1>
+    <p>1xx~5xx 전체 HTTP 상태코드를 검색하고 상세 설명을 확인하세요. 코드를 클릭하면 자세한 설명이 펼쳐집니다.</p>
+  </div>
+
+  <div class="dev-panel">
+    <input type="search" class="http-search" id="searchInput" placeholder="코드(404) 또는 키워드(Not Found, 리다이렉트) 검색..." oninput="filterCodes()">
+    <div class="cat-filter" id="catFilter">
+      <button class="cat-filter-btn active" data-cat="all" onclick="filterByCat('all')">전체</button>
+      <button class="cat-filter-btn" data-cat="1xx" onclick="filterByCat('1xx')">1xx 정보</button>
+      <button class="cat-filter-btn" data-cat="2xx" onclick="filterByCat('2xx')">2xx 성공</button>
+      <button class="cat-filter-btn" data-cat="3xx" onclick="filterByCat('3xx')">3xx 리다이렉트</button>
+      <button class="cat-filter-btn" data-cat="4xx" onclick="filterByCat('4xx')">4xx 클라이언트 오류</button>
+      <button class="cat-filter-btn" data-cat="5xx" onclick="filterByCat('5xx')">5xx 서버 오류</button>
+    </div>
+    <div id="codeList"></div>
+  </div>
+</div>
+<aside class="tool-sidebar">
+  <div class="ad-card"><div class="ad-card-label">AD</div>
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card"></div>
+</aside>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand"><span class="logo-footer">WooaDev</span><p>Free developer tools in your browser.</p></div>
+      <div class="footer-links"><h4>Encoding · Hash</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL Encoder</a><a href="hash-generator.html">Hash Generator</a><a href="jwt-decoder.html">JWT Decoder</a></div>
+      <div class="footer-links"><h4>개발 도구</h4><a href="css-units.html">CSS 단위 변환</a><a href="minifier.html">CSS·JS·HTML 압축</a><a href="chmod.html">Chmod 계산기</a><a href="http-status.html">HTTP 상태코드</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev. All rights reserved.</p><div class="footer-bottom-links"><a href="../privacy.html">Privacy Policy</a><a href="../about.html">About</a></div></div>
+    
+  </div>
+</footer>
+<script>
+const HTTP_CODES = [
+  // 1xx
+  {code:100,name:'Continue',desc:'요청의 첫 부분을 받았으며, 계속 진행해도 됩니다.',detail:'클라이언트가 요청 헤더를 전송한 후, 서버가 요청 본문을 계속 전송해도 된다는 신호입니다. PUT 또는 POST 요청에서 큰 본문을 보내기 전에 서버가 허용하는지 확인할 때 사용합니다.'},
+  {code:101,name:'Switching Protocols',desc:'서버가 프로토콜 전환 요청을 수락했습니다.',detail:'클라이언트의 Upgrade 헤더 요청에 따라 서버가 프로토콜을 변경합니다. 주로 HTTP에서 WebSocket으로 업그레이드할 때 사용됩니다.'},
+  {code:102,name:'Processing',desc:'서버가 요청을 수신하고 처리 중이지만 아직 응답이 준비되지 않았습니다.',detail:'WebDAV에서 사용됩니다. 서버가 장시간 처리가 필요한 요청을 처리 중임을 알려, 클라이언트가 타임아웃 에러를 발생시키지 않도록 합니다.'},
+  {code:103,name:'Early Hints',desc:'주로 Link 헤더와 함께 사용되어 리소스를 미리 불러올 수 있게 합니다.',detail:'서버가 최종 응답을 준비하는 동안 미리 CSS, JS 등의 리소스를 preload 또는 preconnect하도록 힌트를 제공합니다. 페이지 로딩 속도 최적화에 활용됩니다.'},
+  // 2xx
+  {code:200,name:'OK',desc:'요청 성공. 응답 본문에 결과가 포함됩니다.',detail:'가장 일반적인 성공 응답입니다. GET 요청의 경우 요청된 리소스가, POST 요청의 경우 작업 결과가 본문에 포함됩니다.'},
+  {code:201,name:'Created',desc:'새 리소스가 성공적으로 생성되었습니다.',detail:'주로 POST 또는 PUT 요청 후 반환됩니다. 응답의 Location 헤더에 새로 생성된 리소스의 URL이 포함될 수 있습니다. REST API에서 리소스 생성 성공 시 자주 사용됩니다.'},
+  {code:202,name:'Accepted',desc:'요청이 수락되었지만 아직 처리가 완료되지 않았습니다.',detail:'비동기 처리를 나타냅니다. 서버가 요청을 받아 처리 대기열에 넣었지만 즉시 완료할 수 없는 경우(예: 이메일 발송, 파일 변환) 반환됩니다.'},
+  {code:203,name:'Non-Authoritative Information',desc:'요청은 성공했지만 응답이 원본 서버의 내용과 다를 수 있습니다.',detail:'프록시 서버가 200 OK를 받았지만 응답을 수정한 경우 반환합니다. 원본 서버의 응답과 동일하지 않을 수 있음을 나타냅니다.'},
+  {code:204,name:'No Content',desc:'요청은 성공했지만 반환할 콘텐츠가 없습니다.',detail:'DELETE 요청 후나 업데이트 요청 후 본문 없이 성공을 알릴 때 자주 사용됩니다. 클라이언트가 현재 페이지를 유지해야 하는 경우에 적합합니다.'},
+  {code:205,name:'Reset Content',desc:'요청 성공. 클라이언트가 폼을 Seconds기화해야 합니다.',detail:'서버가 클라이언트에게 문서 뷰를 재설정하도록 요청합니다. 예를 들어 폼 제출 후 폼 내용을 지워야 할 때 사용됩니다.'},
+  {code:206,name:'Partial Content',desc:'Range 헤더로 요청된 일부 콘텐츠만 전송합니다.',detail:'클라이언트가 요청한 파일의 특정 범위만 반환합니다. 비디오 스트리밍, 다운로드 재개(Resume Download) 등에서 사용됩니다. 응답에 Content-Range 헤더가 포함됩니다.'},
+  {code:207,name:'Multi-Status',desc:'여러 리소스에 대한 다중 상태 응답입니다.',detail:'WebDAV에서 사용됩니다. 여러 하위 요청에 대한 결과를 XML 형식으로 포함합니다.'},
+  {code:208,name:'Already Reported',desc:'DAV 바인딩의 내부 멤버가 이미 이전 응답에서 나열되었습니다.',detail:'WebDAV에서 사용됩니다. 동일한 컬렉션에 대한 중복 응답을 방지합니다.'},
+  {code:226,name:'IM Used',desc:'서버가 리소스에 대한 델타 인코딩 요청을 수행했습니다.',detail:'HTTP Delta Encoding에서 사용됩니다. 클라이언트가 보낸 A-IM 헤더에 따라 변환된 응답을 나타냅니다.'},
+  // 3xx
+  {code:300,name:'Multiple Choices',desc:'요청에 대해 여러 응답이 가능합니다.',detail:'클라이언트가 여러 옵션 중 하나를 선택해야 합니다. 자동 리다이렉트를 적용할 최선의 옵션이 없을 때 사용됩니다.'},
+  {code:301,name:'Moved Permanently',desc:'요청한 리소스의 URL이 영구적으로 변경되었습니다.',detail:'검색엔진(SEO)에 유리한 영구 리다이렉트입니다. 브라우저와 검색엔진 모두 새 URL을 캐시합니다. 사이트 이전이나 URL 구조 변경 시 사용합니다.'},
+  {code:302,name:'Found',desc:'요청한 리소스가 임시로 다른 URI에 있습니다.',detail:'임시 리다이렉트입니다. 검색엔진은 원래 URL을 유지합니다. POST 요청 후 리다이렉트할 때 주로 사용되지만, GET으로 메서드가 변경될 수 있습니다.'},
+  {code:303,name:'See Other',desc:'요청한 작업의 결과를 GET으로 다른 URI에서 가져오세요.',detail:'POST 요청 처리 후 결과 페이지로 리다이렉트할 때 사용합니다. 폼 제출 후 새로고침 문제를 방지하는 PRG(Post-Redirect-Get) 패턴에서 사용됩니다.'},
+  {code:304,name:'Not Modified',desc:'캐시된 버전을 사용할 수 있습니다.',detail:'조건부 GET 요청에서 리소스가 변경되지 않았을 때 반환됩니다. 응답 본문 없이 클라이언트의 캐시를 사용하도록 합니다. If-Modified-Since 또는 If-None-Match 헤더와 함께 사용됩니다.'},
+  {code:307,name:'Temporary Redirect',desc:'요청을 임시 URI로 리다이렉트합니다. HTTP 메서드는 변경되지 않습니다.',detail:'302와 유사하지만 POST 메서드가 유지됩니다. 302는 일부 클라이언트가 GET으로 변경하는 반면, 307은 원래 메서드(POST 등)를 그대로 유지합니다.'},
+  {code:308,name:'Permanent Redirect',desc:'리소스가 영구적으로 이동했으며 HTTP 메서드는 변경되지 않습니다.',detail:'301과 유사하지만 HTTP 메서드가 유지됩니다. POST 요청을 영구 리다이렉트해야 하면서 메서드를 변경하고 싶지 않을 때 사용합니다.'},
+  // 4xx
+  {code:400,name:'Bad Request',desc:'잘못된 요청 구문, Valid하지 않은 요청 메시지 형식.',detail:'클라이언트가 잘못된 형식의 요청을 보냈습니다. JSON 파싱 오류, 필수 파라미터 누락, Valid하지 않은 요청 본문 등이 원인입니다. 요청 자체를 수정해야 합니다.'},
+  {code:401,name:'Unauthorized',desc:'인증이 필요합니다. 로그인 정보가 없거나 Valid하지 않습니다.',detail:'WWW-Authenticate 헤더와 함께 반환됩니다. 올바른 인증 자격 증명(토큰, API 키, 쿠키 등)을 제공하면 요청이 성공할 수 있습니다. 403과 달리 인증 후 재시도가 가능합니다.'},
+  {code:402,name:'Payment Required',desc:'결제가 필요합니다.',detail:'공식적으로는 미래 사용을 위해 예약되어 있습니다. 일부 서비스에서 유료 API 한도 Seconds과 시 사용합니다.'},
+  {code:403,name:'Forbidden',desc:'서버가 요청을 이해했지만 권한이 없어 거부합니다.',detail:'401과 달리 인증해도 접근이 불가능합니다. 파일 시스템 권한 문제, IP 차단, 역할 기반 접근 제어(RBAC) 실패 등이 원인입니다. 리소스의 존재 자체를 숨기려면 404를 대신 사용하기도 합니다.'},
+  {code:404,name:'Not Found',desc:'요청한 리소스를 서버에서 찾을 수 없습니다.',detail:'URL이 잘못되었거나 리소스가 삭제된 경우 반환됩니다. 보안상 권한 없는 리소스의 존재를 숨기기 위해 403 대신 404를 사용하기도 합니다.'},
+  {code:405,name:'Method Not Allowed',desc:'요청 메서드가 해당 리소스에서 허용되지 않습니다.',detail:'예를 들어 GET만 허용되는 엔드포인트에 POST 요청을 보낸 경우입니다. 응답에 Allow 헤더가 포함되어 허용된 메서드 목록을 알려줍니다.'},
+  {code:406,name:'Not Acceptable',desc:'클라이언트가 요청한 콘텐츠 형식을 서버가 제공할 수 없습니다.',detail:'Accept 헤더에 지정된 미디어 타입을 서버가 지원하지 않을 때 반환됩니다.'},
+  {code:407,name:'Proxy Authentication Required',desc:'프록시 서버 인증이 필요합니다.',detail:'401과 유사하지만 프록시 서버에서 인증을 요구합니다. Proxy-Authenticate 헤더와 함께 반환됩니다.'},
+  {code:408,name:'Request Timeout',desc:'서버가 요청을 기다리는 시간이 Seconds과되었습니다.',detail:'클라이언트가 서버가 준비된 시간 내에 요청을 완료하지 못했습니다. 서버가 연결을 종료하겠다는 신호입니다. 네트워크 문제나 클라이언트 측 지연이 원인일 수 있습니다.'},
+  {code:409,name:'Conflict',desc:'요청이 서버의 현재 상태와 충돌합니다.',detail:'중복 데이터 삽입, 낙관적 잠금 충돌, 동시 편집 충돌 등이 원인입니다. REST API에서 이미 존재하는 리소스를 생성하려 할 때 자주 사용됩니다.'},
+  {code:410,name:'Gone',desc:'요청한 리소스가 영구적으로 삭제되었습니다.',detail:'404와 달리 리소스가 의도적으로 영구 삭제된 경우입니다. 검색엔진에 해당 URL을 인덱스에서 제거하도록 알리는 용도로 사용됩니다.'},
+  {code:411,name:'Length Required',desc:'Content-Length 헤더가 필요합니다.',detail:'서버가 Content-Length 헤더 없이 요청을 처리하지 않으려 할 때 반환됩니다.'},
+  {code:412,name:'Precondition Failed',desc:'클라이언트 헤더에 명시된 사전 조건이 충족되지 않았습니다.',detail:'If-Match 또는 If-Unmodified-Since 같은 조건부 요청 헤더의 조건이 실패했을 때 반환됩니다.'},
+  {code:413,name:'Payload Too Large',desc:'요청 본문이 서버가 처리할 수 있는 한도를 Seconds과했습니다.',detail:'파일 업로드 시 크기 제한을 Seconds과한 경우가 대표적입니다. Retry-After 헤더가 포함될 수 있습니다.'},
+  {code:414,name:'URI Too Long',desc:'요청 URI가 서버가 처리할 수 있는 길이를 Seconds과했습니다.',detail:'매우 긴 쿼리 스트링이나 POST 대신 GET으로 전송된 데이터가 원인일 수 있습니다.'},
+  {code:415,name:'Unsupported Media Type',desc:'서버가 지원하지 않는 미디어 타입으로 요청되었습니다.',detail:'Content-Type 헤더가 서버에서 처리할 수 없는 형식인 경우입니다. 예: JSON을 기대하는 API에 XML을 전송.'},
+  {code:416,name:'Range Not Satisfiable',desc:'Range 헤더에 지정된 범위가 Valid하지 않습니다.',detail:'클라이언트가 파일의 실제 크기를 벗어난 범위를 요청했을 때 반환됩니다.'},
+  {code:417,name:'Expectation Failed',desc:'Expect 요청 헤더의 요구사항을 서버가 충족할 수 없습니다.',detail:'100-continue를 기대한 클라이언트에게 서버가 해당 기대를 충족할 수 없음을 알립니다.'},
+  {code:418,name:"I'm a teapot",desc:"서버는 티팟이므로 커피를 끓이는 것을 거부합니다.",detail:"1998년 만우절 농담으로 RFC 2324에 정의된 상태코드입니다. HTCPCP(Hyper Text Coffee Pot Control Protocol)에서 사용됩니다. 일부 개발자 문화에서 '이 요청은 처리하지 않을 것'을 표현하는 유머로 사용됩니다."},
+  {code:422,name:'Unprocessable Entity',desc:'요청 형식은 올바르지만 의미론적 오류로 처리할 수 없습니다.',detail:'WebDAV 및 REST API에서 많이 사용됩니다. JSON/XML 파싱은 성공했지만 데이터 Valid성 검사에 실패한 경우(예: 필수 필드 누락, 형식 불일치)에 반환됩니다.'},
+  {code:423,name:'Locked',desc:'접근하려는 리소스가 잠겨 있습니다.',detail:'WebDAV에서 사용됩니다. 리소스에 잠금이 걸려 있어 접근할 수 없음을 나타냅니다.'},
+  {code:424,name:'Failed Dependency',desc:'이전 요청의 실패로 인해 이 요청도 실패했습니다.',detail:'WebDAV에서 사용됩니다. 일괄 처리에서 이전 작업의 실패가 현재 작업에 영향을 미친 경우입니다.'},
+  {code:425,name:'Too Early',desc:'서버가 재전송될 수 있는 요청을 처리하지 않으려 합니다.',detail:'TLS 1.3의 0-RTT(Seconds기 데이터) 기능과 관련됩니다. 재생 공격(replay attack) 위험이 있는 요청을 거부할 때 사용됩니다.'},
+  {code:426,name:'Upgrade Required',desc:'클라이언트는 다른 프로토콜로 업그레이드해야 합니다.',detail:'서버가 현재 프로토콜로 요청을 처리하지 않겠다는 의사를 표시합니다. Upgrade 헤더에 필요한 프로토콜이 명시됩니다.'},
+  {code:428,name:'Precondition Required',desc:'서버는 요청이 조건부이어야 함을 요구합니다.',detail:'동시 업데이트 문제를 방지하기 위해 If-Match 같은 조건부 헤더를 요구합니다.'},
+  {code:429,name:'Too Many Requests',desc:'클라이언트가 일정 시간 동안 너무 많은 요청을 보냈습니다.',detail:'API 속도 제한(Rate Limiting)에서 흔히 사용됩니다. Retry-After 헤더가 포함되어 언제 다시 시도할 수 있는지 알려줍니다. API 키 관리 시 주의해야 합니다.'},
+  {code:431,name:'Request Header Fields Too Large',desc:'요청 헤더 필드가 너무 커서 서버가 처리할 수 없습니다.',detail:'쿠키가 너무 많거나 헤더 값이 너무 긴 경우 발생합니다.'},
+  {code:451,name:'Unavailable For Legal Reasons',desc:'법적 이유로 접근이 차단되었습니다.',detail:'소설 "화씨 451"에서 따온 상태코드입니다. 저작권 침해, 정부 검열, 법원 명령 등으로 콘텐츠에 접근이 제한된 경우 사용됩니다.'},
+  // 5xx
+  {code:500,name:'Internal Server Error',desc:'서버에 내부 오류가 발생하여 요청을 처리할 수 없습니다.',detail:'서버 측 예외 처리되지 않은 오류입니다. 코드 버그, 데이터베이스 연결 실패, 설정 오류 등이 원인입니다. 서버 로그를 확인하여 원인을 파악해야 합니다.'},
+  {code:501,name:'Not Implemented',desc:'서버가 요청 메서드를 인식하지 못하거나 지원하지 않습니다.',detail:'서버가 요청을 처리할 기능을 지원하지 않습니다. 미래에 구현될 기능에 대한 플레이스홀더로 사용되기도 합니다.'},
+  {code:502,name:'Bad Gateway',desc:'게이트웨이 또는 프록시 서버가 업스트림에서 Valid하지 않은 응답을 받았습니다.',detail:'Nginx나 Apache 같은 리버스 프록시가 백엔드 서버(Node.js, Python 등)로부터 잘못된 응답을 받을 때 발생합니다. 백엔드 서버가 다운된 경우 자주 발생합니다.'},
+  {code:503,name:'Service Unavailable',desc:'서버가 일시적으로 요청을 처리할 수 없습니다.',detail:'서버가 과부하 상태이거나 점검 중인 경우 반환됩니다. Retry-After 헤더로 서비스 복구 예상 시간을 알릴 수 있습니다.'},
+  {code:504,name:'Gateway Timeout',desc:'게이트웨이가 업스트림 서버로부터 시간 내에 응답을 받지 못했습니다.',detail:'프록시 또는 게이트웨이가 백엔드 서버의 응답을 일정 시간 내에 받지 못한 경우입니다. 502와 달리 응답 자체를 받지 못한(타임아웃) 상황입니다.'},
+  {code:505,name:'HTTP Version Not Supported',desc:'서버가 요청에 사용된 HTTP 버전을 지원하지 않습니다.',detail:'클라이언트가 사용한 HTTP 버전(예: HTTP/3)을 서버가 지원하지 않는 경우입니다.'},
+  {code:506,name:'Variant Also Negotiates',desc:'서버에 내부 설정 오류가 있어 콘텐츠 협상에 실패했습니다.',detail:'서버의 콘텐츠 협상(Content Negotiation) 설정에 순환 참조 오류가 있는 경우입니다.'},
+  {code:507,name:'Insufficient Storage',desc:'서버에 요청을 처리하기 위한 저장 공간이 부족합니다.',detail:'WebDAV에서 사용됩니다. 파일 업로드 시 서버의 디스크 공간이 부족할 때 반환됩니다.'},
+  {code:508,name:'Loop Detected',desc:'서버가 요청을 처리하는 중 무한 루프를 감지했습니다.',detail:'WebDAV에서 사용됩니다. PROPFIND와 같은 심층 요청에서 무한 루프가 발견된 경우입니다.'},
+  {code:510,name:'Not Extended',desc:'서버가 요청을 처리하려면 추가 확장이 필요합니다.',detail:'HTTP 확장 프레임워크에서 사용됩니다. 서버가 요청의 확장 정책을 만족시킬 수 없을 때 반환됩니다.'},
+  {code:511,name:'Network Authentication Required',desc:'네트워크 접속 전 인증이 필요합니다.',detail:'Wi-Fi 공용 핫스팟 같은 네트워크 포털에서 사용됩니다. 인터넷 접속 전에 약관 동의나 로그인을 요구하는 캡티브 포털(Captive Portal)에서 발생합니다.'},
+];
+
+const categories = {
+  '1xx': { label:'1xx 정보', items: HTTP_CODES.filter(c => c.code >= 100 && c.code < 200) },
+  '2xx': { label:'2xx 성공', items: HTTP_CODES.filter(c => c.code >= 200 && c.code < 300) },
+  '3xx': { label:'3xx 리다이렉트', items: HTTP_CODES.filter(c => c.code >= 300 && c.code < 400) },
+  '4xx': { label:'4xx 클라이언트 오류', items: HTTP_CODES.filter(c => c.code >= 400 && c.code < 500) },
+  '5xx': { label:'5xx 서버 오류', items: HTTP_CODES.filter(c => c.code >= 500 && c.code < 600) },
+};
+
+let currentCat = 'all';
+
+function getCatKey(code) {
+  if (code < 200) return '1xx';
+  if (code < 300) return '2xx';
+  if (code < 400) return '3xx';
+  if (code < 500) return '4xx';
+  return '5xx';
+}
+
+function renderCodes(filtered) {
+  const container = document.getElementById('codeList');
+  if (!filtered.length) {
+    container.innerHTML = '<div class="no-results">검색 결과가 없습니다.</div>';
+    return;
+  }
+  // Group by category
+  const grouped = {};
+  filtered.forEach(c => {
+    const key = getCatKey(c.code);
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(c);
+  });
+  let html = '';
+  Object.keys(grouped).forEach(key => {
+    const cat = categories[key];
+    html += `<div class="http-category cat-${key}">
+      <div class="http-category-title">${cat.label}</div>
+      <div class="http-code-list">`;
+    grouped[key].forEach(item => {
+      html += `<div class="http-code-item" onclick="toggleDetail(this)">
+        <div class="http-code-badge">${item.code}</div>
+        <div class="http-code-info">
+          <div class="http-code-name">${item.name}</div>
+          <div class="http-code-desc">${item.desc}</div>
+          <div class="http-code-detail">${item.detail}</div>
+        </div>
+      </div>`;
+    });
+    html += '</div></div>';
+  });
+  container.innerHTML = html;
+}
+
+function toggleDetail(el) {
+  el.classList.toggle('expanded');
+}
+
+function filterCodes() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  let list = currentCat === 'all' ? HTTP_CODES : categories[currentCat].items;
+  if (q) {
+    list = list.filter(c =>
+      String(c.code).includes(q) ||
+      c.name.toLowerCase().includes(q) ||
+      c.desc.toLowerCase().includes(q) ||
+      c.detail.toLowerCase().includes(q)
+    );
+  }
+  renderCodes(list);
+}
+
+function filterByCat(cat) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.cat === cat);
+  });
+  filterCodes();
+}
+
+// Initial render
+renderCodes(HTTP_CODES);
+</script>
+<script src="../js/pwa-install.js"></script>
+</body>
+</html>

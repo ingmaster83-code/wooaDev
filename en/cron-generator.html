@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+  <meta name="naver-site-verification" content="7396a327607b884b9bef1283dfd3a5c6115a2b50">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cron Expression Generator – Visual Cron Builder & English Description Free | WooaDev</title>
+  <meta name="description" content="Build cron expressions visually or parse existing cron expressions into plain English. Preview the next 5 execution times. Supports every minute, hourly, daily, weekly, monthly schedules.">
+  <meta name="keywords" content="cron generator, cron expression, cron builder, cron parser, cron online, cron schedule, cron job, cron syntax, free cron generator, cron expression tool">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/cron-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/cron-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/cron-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/cron-generator.html">
+  <meta property="og:title" content="Cron Expression Generator – Free Visual Builder | WooaDev">
+  <meta property="og:description" content="Build cron expressions visually or parse existing ones. Preview next 5 runs. Free, browser-based.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/cron-generator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Cron 표현식 생성기","url":"https://wooadev.wooahouse.com/cron-generator.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .cron-display { font-family:monospace; font-size:1.6rem; font-weight:700; text-align:center; background:#1E293B; color:#C4956A; border-radius:12px; padding:20px; letter-spacing:3px; margin-bottom:16px; cursor:pointer; transition:opacity 0.15s; }
+    .cron-display:hover { opacity:0.85; }
+    .cron-desc { text-align:center; font-size:0.95rem; color:#6B7280; margin-bottom:20px; min-height:24px; }
+    .cron-field { margin-bottom:14px; }
+    .cron-field-label { font-size:0.78rem; font-weight:700; color:#6B7280; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:6px; }
+    .cron-presets { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+    .cron-preset { padding:6px 14px; border:1.5px solid #E5E7EB; border-radius:20px; font-size:0.82rem; cursor:pointer; background:white; font-family:inherit; transition:all 0.15s; }
+    .cron-preset:hover { border-color:#C4956A; color:#C4956A; }
+    .next-times { list-style:none; margin-top:8px; }
+    .next-times li { font-family:monospace; font-size:0.84rem; padding:4px 0; border-bottom:1px solid #F3F4F6; color:#374151; }
+    .lang-switcher { display:flex; align-items:center; gap:4px; }
+    .lang-switcher a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.8rem; font-weight:600; padding:3px 8px; border-radius:12px; transition:background 0.15s; }
+    .lang-switcher a.active { color:white; background:rgba(255,255,255,0.25); }
+    .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
+    .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../cron-generator.html">KO</a>
+        <span>|</span>
+        <a href="cron-generator.html" class="active">EN</a>
+      </div>
+      <a href="../about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://wooadev.wooahouse.com/en/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+  </div>
+</div>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Cron 표현식 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">⏰</span>
+    <h1>Cron Expression Generator</h1>
+    <p>Cron 표현식을 시각적으로 생성하거나 기존 표현식을 한국어로 해석합니다.</p>
+  </div>
+
+  <div class="dev-panel">
+    <div class="cron-display" id="cronDisplay" onclick="copyCron()" title="클릭하여 복사">* * * * *</div>
+    <div class="cron-desc" id="cronDesc">Every minute마다 Execute</div>
+
+    <div class="dev-label" style="margin-bottom:10px">빠른 선택</div>
+    <div class="cron-presets">
+      <button class="cron-preset" onclick="setPreset('* * * * *','Every minute마다')">Every minute</button>
+      <button class="cron-preset" onclick="setPreset('0 * * * *','Every hour 정각')">Every hour</button>
+      <button class="cron-preset" onclick="setPreset('0 0 * * *','Every day at midnight')">Every day at midnight</button>
+      <button class="cron-preset" onclick="setPreset('0 9 * * *','매일 오전 9시')">매일 오전 9시</button>
+      <button class="cron-preset" onclick="setPreset('0 0 * * 1','Every Monday 자정')">Every Monday</button>
+      <button class="cron-preset" onclick="setPreset('0 0 1 * *','1st of every month 자정')">1st of every month</button>
+      <button class="cron-preset" onclick="setPreset('*/5 * * * *','5분마다')">5분마다</button>
+      <button class="cron-preset" onclick="setPreset('*/15 * * * *','15분마다')">15분마다</button>
+      <button class="cron-preset" onclick="setPreset('0 0 * * 1-5','평일 자정')">평일 자정</button>
+      <button class="cron-preset" onclick="setPreset('0 9-18 * * 1-5','평일 9-18시 Every hour')">평일 업무시간</button>
+    </div>
+
+    <div class="dev-grid-2">
+      <div class="cron-field">
+        <div class="cron-field-label">분 (0-59)</div>
+        <input type="text" class="dev-input" id="f-min" value="*" oninput="buildCron()">
+      </div>
+      <div class="cron-field">
+        <div class="cron-field-label">시 (0-23)</div>
+        <input type="text" class="dev-input" id="f-hour" value="*" oninput="buildCron()">
+      </div>
+      <div class="cron-field">
+        <div class="cron-field-label">일 (1-31)</div>
+        <input type="text" class="dev-input" id="f-day" value="*" oninput="buildCron()">
+      </div>
+      <div class="cron-field">
+        <div class="cron-field-label">월 (1-12)</div>
+        <input type="text" class="dev-input" id="f-month" value="*" oninput="buildCron()">
+      </div>
+      <div class="cron-field">
+        <div class="cron-field-label">요일 (0=일, 6=토)</div>
+        <input type="text" class="dev-input" id="f-dow" value="*" oninput="buildCron()">
+      </div>
+    </div>
+  </div>
+
+  <div class="dev-panel">
+    <div class="dev-label">표현식 직접 입력 & 해석</div>
+    <div style="display:flex;gap:10px">
+      <input type="text" class="dev-input" id="cronInput" placeholder="0 9 * * 1-5" oninput="parseCron()">
+      <button class="dev-btn" onclick="parseCron()">Parse</button>
+    </div>
+    <div id="parseResult" class="alert alert-info" style="display:none;margin-top:10px"></div>
+  </div>
+</div>
+<aside class="tool-sidebar">
+  <div class="ad-card"><div class="ad-card-label">AD</div>
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card"></div>
+</aside>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand"><span class="logo-footer">WooaDev</span><p>Free developer tools in your browser.</p></div>
+      <div class="footer-links"><h4>생성 · 변환</h4><a href="uuid-generator.html">UUID Generator</a><a href="timestamp.html">Timestamp</a><a href="number-base.html">진법 변환</a><a href="cron-generator.html">Cron Generator</a></div>
+      <div class="footer-links"><h4>포맷 · 분석</h4><a href="json-formatter.html">JSON Formatter</a><a href="regex-tester.html">Regex Tester</a><a href="diff-viewer.html">Diff Viewer</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev. All rights reserved.</p><div class="footer-bottom-links"><a href="../privacy.html">Privacy Policy</a><a href="../about.html">About</a></div></div>
+    
+  </div>
+</footer>
+<script>
+const DAYS = ['일','월','화','수','목','금','토'];
+const MONTHS = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+
+function buildCron() {
+  const m = v('f-min'), h = v('f-hour'), d = v('f-day'), mo = v('f-month'), dw = v('f-dow');
+  const expr = `${m} ${h} ${d} ${mo} ${dw}`;
+  document.getElementById('cronDisplay').textContent = expr;
+  document.getElementById('cronDesc').textContent = describe(m, h, d, mo, dw);
+}
+
+function v(id) { return document.getElementById(id).value.trim() || '*'; }
+
+function describe(min, hour, day, month, dow) {
+  const parts = [];
+  if (min === '*' && hour === '*') parts.push('Every minute마다');
+  else if (min.startsWith('*/')) parts.push(`${min.slice(2)}분마다`);
+  else if (hour === '*') parts.push(`Every hour ${min}분`);
+  else parts.push(`${hour}시 ${min}분`);
+  if (dow !== '*') { const days = dow.split(',').map(d=>d.includes('-') ? d : (DAYS[parseInt(d)]||d)); parts.push(days.join('·')+'요일'); }
+  if (day !== '*') parts.push(`${day}일`);
+  if (month !== '*') parts.push(`${month}월`);
+  return parts.join(' ') + ' Execute';
+}
+
+function setPreset(expr, desc) {
+  const parts = expr.split(' ');
+  document.getElementById('f-min').value = parts[0];
+  document.getElementById('f-hour').value = parts[1];
+  document.getElementById('f-day').value = parts[2];
+  document.getElementById('f-month').value = parts[3];
+  document.getElementById('f-dow').value = parts[4];
+  document.getElementById('cronDisplay').textContent = expr;
+  document.getElementById('cronDesc').textContent = desc;
+}
+
+function parseCron() {
+  const expr = document.getElementById('cronInput').value.trim();
+  if (!expr) { document.getElementById('parseResult').style.display='none'; return; }
+  const parts = expr.split(/\s+/);
+  if (parts.length !== 5) { document.getElementById('parseResult').textContent='5개 필드가 필요합니다 (분 시 일 월 요일)'; document.getElementById('parseResult').style.display='block'; return; }
+  const [min,hour,day,month,dow] = parts;
+  document.getElementById('f-min').value=min; document.getElementById('f-hour').value=hour;
+  document.getElementById('f-day').value=day; document.getElementById('f-month').value=month;
+  document.getElementById('f-dow').value=dow;
+  const desc = describe(min,hour,day,month,dow);
+  document.getElementById('parseResult').textContent = '🕐 ' + desc;
+  document.getElementById('parseResult').style.display='block';
+  document.getElementById('cronDisplay').textContent = expr;
+  document.getElementById('cronDesc').textContent = desc;
+}
+
+function copyCron() {
+  const expr = document.getElementById('cronDisplay').textContent;
+  navigator.clipboard.writeText(expr).then(() => {
+    const el = document.getElementById('cronDisplay');
+    const orig = el.textContent;
+    el.textContent = '✅ Copied!';
+    setTimeout(() => el.textContent = orig, 1200);
+  });
+}
+</script>
+<script src="../js/pwa-install.js"></script>
+</body>
+</html>
