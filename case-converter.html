@@ -31,6 +31,12 @@
     .case-val { font-family:'Consolas','Monaco',monospace; font-size:0.9rem; color:#1A1A2E; font-weight:600; word-break:break-all; margin-bottom:8px; min-height:22px; }
     .case-copy { padding:3px 10px; background:#C4956A; color:white; border:none; border-radius:4px; font-size:0.72rem; cursor:pointer; transition:background 0.15s; }
     .case-copy:hover { background:#A87850; }
+  
+    .lang-switcher { display:flex; align-items:center; gap:4px; }
+    .lang-switcher a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.8rem; font-weight:600; padding:3px 8px; border-radius:12px; transition:background 0.15s; }
+    .lang-switcher a.active { color:white; background:rgba(255,255,255,0.25); }
+    .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
+    .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
   </style>
 </head>
 <body>
@@ -42,6 +48,14 @@
       <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
       <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
     </nav>
+  <div class="header-right">
+    <div class="lang-switcher">
+      <a href="case-converter.html" class="active">KO</a>
+      <span>|</span>
+      <a href="en/case-converter.html">EN</a>
+    </div>
+    <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
   </div>
 </header>
 <div class="our-sites-bar">

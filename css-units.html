@@ -42,6 +42,12 @@
     .quick-btn:hover { border-color:#C4956A; color:#C4956A; }
     .copied-toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:#1F2937; color:#fff; padding:8px 20px; border-radius:20px; font-size:0.85rem; opacity:0; pointer-events:none; transition:opacity .2s; z-index:9999; }
     .copied-toast.show { opacity:1; }
+  
+    .lang-switcher { display:flex; align-items:center; gap:4px; }
+    .lang-switcher a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.8rem; font-weight:600; padding:3px 8px; border-radius:12px; transition:background 0.15s; }
+    .lang-switcher a.active { color:white; background:rgba(255,255,255,0.25); }
+    .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
+    .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
   </style>
 </head>
 <body>
@@ -53,6 +59,14 @@
       <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
       <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
     </nav>
+  <div class="header-right">
+    <div class="lang-switcher">
+      <a href="css-units.html" class="active">KO</a>
+      <span>|</span>
+      <a href="en/css-units.html">EN</a>
+    </div>
+    <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
   </div>
 </header>
 <div class="our-sites-bar">

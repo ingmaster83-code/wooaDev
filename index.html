@@ -49,6 +49,13 @@
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#C4956A">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lang-switcher { display:flex; align-items:center; gap:4px; }
+    .lang-switcher a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.8rem; font-weight:600; padding:3px 8px; border-radius:12px; transition:background 0.15s; }
+    .lang-switcher a.active { color:white; background:rgba(255,255,255,0.25); }
+    .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
+    .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
+  </style>
 </head>
 <body>
 
@@ -64,7 +71,12 @@
       <a href="index.html">전체 도구 ›</a>
     </nav>
     <div class="header-right">
-      <a href="about.html" style="color:rgba(255,255,255,0.85);font-size:0.85rem;text-decoration:none;">소개</a>
+      <div class="lang-switcher">
+        <a href="index.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/index.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
     </div>
   </div>
 </header>
