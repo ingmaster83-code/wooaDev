@@ -26,4 +26,6 @@
   <url><loc>https://wooadev.wooahouse.com/en/minifier.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/sql-formatter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/en/sql-formatter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/xml-formatter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/en/xml-formatter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
