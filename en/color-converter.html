@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+<meta charset="UTF-8">
+<meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+<meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Color Converter — HEX RGB HSL Color Code Converter Online | WooaDev</title>
+<meta name="description" content="Convert color codes between HEX, RGB, and HSL instantly. Use the color picker or type values directly. Real-time preview. Free, browser-only, no server upload.">
+<meta name="keywords" content="color converter, HEX to RGB, RGB to HSL, HEX RGB HSL converter, color code converter, online color tool, CSS color, color picker, free color converter">
+<link rel="canonical" href="https://wooadev.wooahouse.com/en/color-converter.html">
+<link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/color-converter.html">
+<link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/color-converter.html">
+<link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/color-converter.html">
+<meta property="og:title" content="Free Color Converter — HEX RGB HSL Color Code Converter | WooaDev">
+<meta property="og:description" content="Convert HEX, RGB, and HSL color codes instantly. Color picker included. Real-time preview. Free, browser-only.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wooadev.wooahouse.com/en/color-converter.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+<meta property="og:site_name" content="WooaDev">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Color Code Converter","url":"https://wooadev.wooahouse.com/en/color-converter.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="https://ads-partners.coupang.com/g.js"></script>
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#C4956A">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .color-preview { width:100%; height:120px; border-radius:12px; margin-bottom:20px; border:1px solid rgba(0,0,0,0.1); transition:background 0.2s; }
+  .color-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:16px; }
+  @media(max-width:600px){ .color-row { grid-template-columns:1fr; } }
+  .color-box { background:var(--panel-bg,#F8FAFC); border:1px solid var(--border,#E2E8F0); border-radius:10px; padding:14px; }
+  .color-box-label { font-size:0.72rem; font-weight:700; color:var(--text-light,#64748B); letter-spacing:.06em; text-transform:uppercase; margin-bottom:8px; }
+  .color-input-wrap { display:flex; gap:6px; align-items:center; }
+  .color-text-input { flex:1; font-family:'Consolas','Monaco',monospace; font-size:0.9rem; border:1px solid var(--border,#E2E8F0); border-radius:6px; padding:7px 10px; background:#fff; color:var(--text,#1E293B); }
+  .color-text-input:focus { outline:none; border-color:#C4956A; }
+  .btn-copy-sm { padding:5px 10px; font-size:0.75rem; background:#C4956A; color:#fff; border:none; border-radius:6px; cursor:pointer; white-space:nowrap; transition:opacity .15s; }
+  .btn-copy-sm:hover { opacity:.85; }
+  .picker-wrap { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+  .picker-wrap input[type=color] { width:56px; height:56px; border:none; border-radius:10px; cursor:pointer; padding:2px; background:none; }
+  .picker-label { font-size:0.85rem; color:var(--text-light,#64748B); }
+  .slider-row { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .slider-row label { width:18px; font-size:0.8rem; font-weight:700; color:var(--text-light,#64748B); flex-shrink:0; }
+  .slider-row input[type=range] { flex:1; accent-color:#C4956A; }
+  .slider-row input[type=number] { width:54px; text-align:center; border:1px solid var(--border,#E2E8F0); border-radius:6px; padding:4px 6px; font-size:0.82rem; }
+  .lang-switcher { display:flex; align-items:center; gap:4px; }
+  .lang-switcher a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.8rem; font-weight:600; padding:3px 8px; border-radius:12px; transition:background 0.15s; }
+  .lang-switcher a.active { color:white; background:rgba(255,255,255,0.25); }
+  .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
+  .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="json-formatter.html">JSON</a>
+      <a href="xml-formatter.html">XML</a>
+      <a href="color-converter.html">Color</a>
+      <a href="regex-tester.html">Regex</a>
+      <a href="hash-generator.html">Hash</a>
+      <a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../color-converter.html">KO</a>
+        <span>|</span>
+        <a href="color-converter.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85);font-size:0.85rem;text-decoration:none;margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<div class="our-sites-bar"><span class="our-sites-label">WooaHouse Services</span><div class="our-sites-links"><a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a><a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a><a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a><a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a><a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a><a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a><a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a><a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a><a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a><a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a><a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a><a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a><a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a></div></div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">🏠 Home</a><span>›</span><span>Color Converter</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🎨</span>
+    <h1>Color Code Converter</h1>
+    <p>Convert color codes between HEX, RGB, and HSL in real time. Use the color picker or type values directly. All processing is done in your browser.</p>
+  </div>
+
+  <div class="dev-panel">
+    <div class="picker-wrap">
+      <input type="color" id="colorPicker" value="#C4956A" oninput="fromPicker()">
+      <div>
+        <div style="font-size:0.95rem;font-weight:600;color:var(--text)">Color Picker</div>
+        <div class="picker-label">Click to choose a color</div>
+      </div>
+    </div>
+
+    <div id="colorPreview" class="color-preview" style="background:#C4956A"></div>
+
+    <div class="color-row">
+      <div class="color-box">
+        <div class="color-box-label">HEX</div>
+        <div class="color-input-wrap">
+          <input class="color-text-input" id="hexInput" type="text" value="#C4956A" oninput="fromHex()" placeholder="#RRGGBB">
+          <button class="btn-copy-sm" onclick="copyVal('hexInput')">Copy</button>
+        </div>
+      </div>
+      <div class="color-box">
+        <div class="color-box-label">RGB</div>
+        <div class="color-input-wrap">
+          <input class="color-text-input" id="rgbInput" type="text" value="rgb(196, 149, 106)" readonly>
+          <button class="btn-copy-sm" onclick="copyVal('rgbInput')">Copy</button>
+        </div>
+      </div>
+      <div class="color-box">
+        <div class="color-box-label">HSL</div>
+        <div class="color-input-wrap">
+          <input class="color-text-input" id="hslInput" type="text" value="hsl(28, 43%, 59%)" readonly>
+          <button class="btn-copy-sm" onclick="copyVal('hslInput')">Copy</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dev-label" style="margin-bottom:10px">RGB Sliders</div>
+    <div class="slider-row">
+      <label style="color:#EF4444">R</label>
+      <input type="range" id="rSlider" min="0" max="255" value="196" oninput="fromSliders()">
+      <input type="number" id="rNum" min="0" max="255" value="196" oninput="fromNumbers()">
+    </div>
+    <div class="slider-row">
+      <label style="color:#22C55E">G</label>
+      <input type="range" id="gSlider" min="0" max="255" value="149" oninput="fromSliders()">
+      <input type="number" id="gNum" min="0" max="255" value="149" oninput="fromNumbers()">
+    </div>
+    <div class="slider-row">
+      <label style="color:#3B82F6">B</label>
+      <input type="range" id="bSlider" min="0" max="255" value="106" oninput="fromSliders()">
+      <input type="number" id="bNum" min="0" max="255" value="106" oninput="fromNumbers()">
+    </div>
+  </div>
+
+  <div class="tips-panel">
+    <h3>💡 Color Format Tips</h3>
+    <ul>
+      <li><strong>HEX</strong>: #RRGGBB format. Most common in CSS. 3-digit shorthand (#RGB) is also supported.</li>
+      <li><strong>RGB</strong>: Red(0-255) · Green(0-255) · Blue(0-255). Additive color mixing.</li>
+      <li><strong>HSL</strong>: Hue(0-360°) · Saturation(0-100%) · Lightness(0-100%). Great for intuitive color adjustments.</li>
+      <li>Click the color picker or type a HEX value to update all formats instantly.</li>
+    </ul>
+  </div>
+
+  <section class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <div class="faq-q">Does it support 3-digit HEX codes (#RGB)?</div>
+      <div class="faq-a">Yes. Entering a 3-digit HEX code like #F5A automatically expands it to #FF55AA before converting.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Which format should I use in CSS?</div>
+      <div class="faq-a">HEX is the most common and widely supported. HSL is great for intuitive adjustments, and RGB is preferred when you need to add transparency (rgba).</div>
+    </div>
+  </section>
+</div>
+
+<aside class="tool-sidebar">
+  <div class="ad-card"><div class="ad-card-label">AD</div>
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card"><script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script></div>
+</aside>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand"><span class="logo-footer">WooaDev</span><p>Free developer tools. Use them directly in your browser.</p></div>
+      <div class="footer-links"><h4>Encoding · Hash</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL Encoder</a><a href="hash-generator.html">Hash Generator</a><a href="jwt-decoder.html">JWT Decoder</a></div>
+      <div class="footer-links"><h4>Format · Convert</h4><a href="json-formatter.html">JSON Formatter</a><a href="xml-formatter.html">XML Formatter</a><a href="color-converter.html">Color Converter</a><a href="markdown-preview.html">Markdown Preview</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev. All rights reserved.</p><div class="footer-bottom-links"><a href="privacy.html">Privacy Policy</a><a href="about.html">About</a></div></div>
+    <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+  </div>
+</footer>
+
+<script>
+function hexToRgb(hex) {
+  hex = hex.replace(/^#/, '');
+  if (hex.length === 3) hex = hex.split('').map(c => c+c).join('');
+  if (!/^[0-9a-fA-F]{6}$/.test(hex)) return null;
+  const n = parseInt(hex, 16);
+  return { r: (n>>16)&255, g: (n>>8)&255, b: n&255 };
+}
+function rgbToHex(r,g,b) {
+  return '#' + [r,g,b].map(v => Math.round(v).toString(16).padStart(2,'0')).join('');
+}
+function rgbToHsl(r,g,b) {
+  r/=255; g/=255; b/=255;
+  const max=Math.max(r,g,b), min=Math.min(r,g,b);
+  let h,s,l=(max+min)/2;
+  if(max===min){ h=s=0; } else {
+    const d=max-min;
+    s=l>0.5?d/(2-max-min):d/(max+min);
+    switch(max){
+      case r: h=((g-b)/d+(g<b?6:0))/6; break;
+      case g: h=((b-r)/d+2)/6; break;
+      case b: h=((r-g)/d+4)/6; break;
+    }
+  }
+  return { h:Math.round(h*360), s:Math.round(s*100), l:Math.round(l*100) };
+}
+function updateAll(r,g,b) {
+  r=Math.max(0,Math.min(255,Math.round(r)));
+  g=Math.max(0,Math.min(255,Math.round(g)));
+  b=Math.max(0,Math.min(255,Math.round(b)));
+  const hex = rgbToHex(r,g,b);
+  const hsl = rgbToHsl(r,g,b);
+  document.getElementById('hexInput').value = hex;
+  document.getElementById('rgbInput').value = 'rgb('+r+', '+g+', '+b+')';
+  document.getElementById('hslInput').value = 'hsl('+hsl.h+', '+hsl.s+'%, '+hsl.l+'%)';
+  document.getElementById('colorPicker').value = hex;
+  document.getElementById('colorPreview').style.background = hex;
+  document.getElementById('rSlider').value = r;
+  document.getElementById('gSlider').value = g;
+  document.getElementById('bSlider').value = b;
+  document.getElementById('rNum').value = r;
+  document.getElementById('gNum').value = g;
+  document.getElementById('bNum').value = b;
+}
+function fromPicker() { const hex=document.getElementById('colorPicker').value; const rgb=hexToRgb(hex); if(rgb) updateAll(rgb.r,rgb.g,rgb.b); }
+function fromHex() { let v=document.getElementById('hexInput').value.trim(); if(!v.startsWith('#')) v='#'+v; const rgb=hexToRgb(v); if(rgb) updateAll(rgb.r,rgb.g,rgb.b); }
+function fromSliders() { updateAll(+document.getElementById('rSlider').value,+document.getElementById('gSlider').value,+document.getElementById('bSlider').value); }
+function fromNumbers() { updateAll(+document.getElementById('rNum').value,+document.getElementById('gNum').value,+document.getElementById('bNum').value); }
+function copyVal(id) {
+  const val=document.getElementById(id).value;
+  navigator.clipboard.writeText(val).then(function() {
+    const btns=document.querySelectorAll('.btn-copy-sm');
+    btns.forEach(btn=>{ if(btn.getAttribute('onclick')==="copyVal('"+id+"')") { btn.textContent='Copied!'; setTimeout(()=>btn.textContent='Copy',1500); }});
+  });
+}
+</script>
+<script src="../js/pwa-install.js"></script>
+</body>
+</html>

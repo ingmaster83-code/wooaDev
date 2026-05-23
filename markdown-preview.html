@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+<meta charset="UTF-8">
+<meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+<meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Markdown 미리보기 - 실시간 Markdown HTML 변환 무료 온라인 | WooaDev</title>
+<meta name="description" content="Markdown을 실시간으로 HTML로 변환해서 미리보기하세요. 제목·굵게·기울임·링크·코드블록·표 등 지원. 브라우저에서 무료, 서버 저장 없음.">
+<meta name="keywords" content="Markdown미리보기, 마크다운변환, Markdown HTML변환, 마크다운에디터, 온라인Markdown, Markdown렌더러, 마크다운뷰어, 무료마크다운">
+<link rel="canonical" href="https://wooadev.wooahouse.com/markdown-preview.html">
+<link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/markdown-preview.html">
+<link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/markdown-preview.html">
+<link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/markdown-preview.html">
+<meta property="og:title" content="Markdown 미리보기 - 실시간 Markdown HTML 변환 무료 | WooaDev">
+<meta property="og:description" content="Markdown을 실시간 HTML로 변환. 제목·굵게·코드블록·표 지원. 브라우저에서 무료, 서버 저장 없음.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wooadev.wooahouse.com/markdown-preview.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+<meta property="og:site_name" content="WooaDev">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Markdown 미리보기","url":"https://wooadev.wooahouse.com/markdown-preview.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="https://ads-partners.coupang.com/g.js"></script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#C4956A">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .md-wrap { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media(max-width:700px){ .md-wrap { grid-template-columns:1fr; } }
+  .md-pane { display:flex; flex-direction:column; }
+  .md-pane-label { font-size:0.75rem; font-weight:700; color:var(--text-light,#64748B); letter-spacing:.06em; text-transform:uppercase; margin-bottom:6px; }
+  .md-textarea { flex:1; min-height:400px; font-family:'Consolas','Monaco',monospace; font-size:0.84rem; border:1px solid var(--border,#E2E8F0); border-radius:10px; padding:14px; resize:vertical; line-height:1.6; background:#FAFAFA; color:var(--text,#1E293B); }
+  .md-textarea:focus { outline:none; border-color:#C4956A; }
+  .md-preview { flex:1; min-height:400px; border:1px solid var(--border,#E2E8F0); border-radius:10px; padding:18px; overflow:auto; background:#fff; line-height:1.75; color:var(--text,#1E293B); font-size:0.92rem; }
+  .md-preview h1 { font-size:1.6rem; border-bottom:2px solid #E2E8F0; padding-bottom:6px; margin:0 0 14px; }
+  .md-preview h2 { font-size:1.3rem; border-bottom:1px solid #E2E8F0; padding-bottom:4px; margin:18px 0 10px; }
+  .md-preview h3 { font-size:1.1rem; margin:14px 0 8px; }
+  .md-preview h4,.md-preview h5,.md-preview h6 { margin:12px 0 6px; }
+  .md-preview code { background:#F1F5F9; padding:2px 5px; border-radius:4px; font-family:'Consolas','Monaco',monospace; font-size:0.85em; color:#C4956A; }
+  .md-preview pre { background:#1E293B; color:#E2E8F0; border-radius:10px; padding:14px; overflow:auto; margin:12px 0; }
+  .md-preview pre code { background:none; color:inherit; padding:0; font-size:0.84rem; }
+  .md-preview blockquote { border-left:4px solid #C4956A; margin:12px 0; padding:8px 14px; background:#FEF9F5; color:#78716C; border-radius:0 6px 6px 0; }
+  .md-preview table { border-collapse:collapse; width:100%; margin:12px 0; }
+  .md-preview th,.md-preview td { border:1px solid #E2E8F0; padding:7px 12px; text-align:left; }
+  .md-preview th { background:#F8FAFC; font-weight:700; }
+  .md-preview ul,.md-preview ol { padding-left:22px; margin:8px 0; }
+  .md-preview li { margin:3px 0; }
+  .md-preview hr { border:none; border-top:2px solid #E2E8F0; margin:16px 0; }
+  .md-preview a { color:#C4956A; }
+  .md-preview img { max-width:100%; border-radius:6px; }
+  .md-preview p { margin:8px 0; }
+  .md-stats { font-size:0.77rem; color:var(--text-light,#64748B); margin-top:6px; }
+  .btn-row-top { display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
+  .lang-switcher { display:flex; align-items:center; gap:4px; }
+  .lang-switcher a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.8rem; font-weight:600; padding:3px 8px; border-radius:12px; transition:background 0.15s; }
+  .lang-switcher a.active { color:white; background:rgba(255,255,255,0.25); }
+  .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
+  .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="json-formatter.html">JSON</a>
+      <a href="xml-formatter.html">XML</a>
+      <a href="diff-viewer.html">Diff</a>
+      <a href="regex-tester.html">Regex</a>
+      <a href="markdown-preview.html">Markdown</a>
+      <a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="markdown-preview.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/markdown-preview.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85);font-size:0.85rem;text-decoration:none;margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<div class="our-sites-bar"><span class="our-sites-label">WooaHouse Services</span><div class="our-sites-links"><a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a><a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a><a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a><a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a><a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a><a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a><a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a><a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a><a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a><a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a><a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a><a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a><a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a></div></div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Markdown 미리보기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📝</span>
+    <h1>Markdown 미리보기</h1>
+    <p>Markdown을 실시간으로 HTML로 변환해서 미리봅니다. 제목·굵게·기울임·코드블록·표·링크 등 지원.</p>
+  </div>
+
+  <div class="dev-panel">
+    <div class="btn-row-top">
+      <button class="dev-btn secondary" onclick="copyHtml()">HTML 복사</button>
+      <button class="dev-btn secondary" onclick="clearAll()">지우기</button>
+      <button class="dev-btn secondary" onclick="loadSample()">샘플 불러오기</button>
+    </div>
+    <div class="md-wrap">
+      <div class="md-pane">
+        <div class="md-pane-label">Markdown 입력</div>
+        <textarea class="md-textarea" id="mdInput" placeholder="# 제목을 입력하세요&#10;&#10;**굵은 글씨**, *기울임*, `인라인 코드`&#10;&#10;- 목록 항목 1&#10;- 목록 항목 2" oninput="render()"></textarea>
+        <div class="md-stats" id="mdStats"></div>
+      </div>
+      <div class="md-pane">
+        <div class="md-pane-label">미리보기</div>
+        <div class="md-preview" id="mdPreview"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tips-panel">
+    <h3>💡 Markdown 문법 빠른 참조</h3>
+    <ul>
+      <li><code># 제목1</code> <code>## 제목2</code> <code>### 제목3</code> — 제목 (H1~H6)</li>
+      <li><code>**굵게**</code> <code>*기울임*</code> <code>~~취소선~~</code> — 텍스트 스타일</li>
+      <li><code>`인라인 코드`</code> — 인라인 코드, <code>```언어명</code>으로 코드블록</li>
+      <li><code>- 항목</code> 또는 <code>1. 항목</code> — 목록, <code>&gt; 인용구</code> — 인용</li>
+      <li><code>[텍스트](URL)</code> — 링크, <code>![대체텍스트](이미지URL)</code> — 이미지</li>
+      <li><code>---</code> — 구분선, <code>| 열1 | 열2 |</code> 형식으로 표 작성</li>
+    </ul>
+  </div>
+
+  <section class="faq-section">
+    <h2>자주 묻는 질문</h2>
+    <div class="faq-item">
+      <div class="faq-q">변환된 HTML을 어디에 쓸 수 있나요?</div>
+      <div class="faq-a">블로그 포스팅, GitHub README, 노션 등 Markdown을 지원하는 모든 플랫폼에 활용할 수 있습니다. HTML 복사 버튼으로 변환된 코드를 바로 사용할 수도 있습니다.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">입력한 내용이 서버에 저장되나요?</div>
+      <div class="faq-a">아니요. 모든 처리는 브라우저 내에서만 이루어지며 서버로 전송되지 않습니다.</div>
+    </div>
+  </section>
+</div>
+
+<aside class="tool-sidebar">
+  <div class="ad-card"><div class="ad-card-label">AD</div>
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card"><script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script></div>
+</aside>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand"><span class="logo-footer">WooaDev</span><p>개발자 도구를 브라우저에서 무료로 사용하세요.</p></div>
+      <div class="footer-links"><h4>인코딩 · 해시</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL 인코더</a><a href="hash-generator.html">Hash 생성기</a><a href="jwt-decoder.html">JWT 디코더</a></div>
+      <div class="footer-links"><h4>포맷 · 변환</h4><a href="json-formatter.html">JSON 포맷터</a><a href="xml-formatter.html">XML 포맷터</a><a href="color-converter.html">색상 변환기</a><a href="markdown-preview.html">Markdown 미리보기</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev. 모든 권리 보유.</p><div class="footer-bottom-links"><a href="privacy.html">개인정보처리방침</a><a href="about.html">소개</a></div></div>
+    <p class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+  </div>
+</footer>
+
+<script>
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function parseMarkdown(md) {
+  // Fenced code blocks
+  md = md.replace(/```(\w*)\n?([\s\S]*?)```/g, function(m, lang, code) {
+    return '<pre><code>' + escHtml(code.trim()) + '</code></pre>';
+  });
+  // Inline code (protect before other transforms)
+  const codes = [];
+  md = md.replace(/`([^`\n]+)`/g, function(m, c) {
+    codes.push('<code>' + escHtml(c) + '</code>');
+    return '\x00code' + (codes.length-1) + '\x00';
+  });
+  // Headings
+  md = md.replace(/^(#{1,6})\s+(.+)$/gm, function(m, h, t) {
+    const n = h.length;
+    return '<h'+n+'>'+t+'</h'+n+'>';
+  });
+  // HR
+  md = md.replace(/^[-*_]{3,}\s*$/gm, '<hr>');
+  // Blockquote
+  md = md.replace(/^&gt;\s?(.*)$/gm, '<blockquote>$1</blockquote>');
+  // Bold + italic
+  md = md.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+  md = md.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  md = md.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  md = md.replace(/~~(.+?)~~/g, '<del>$1</del>');
+  // Images before links
+  md = md.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+  // Links
+  md = md.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  // Tables
+  md = md.replace(/((?:^[\t ]*\|.+\|\s*\n)+)/gm, function(block) {
+    const rows = block.trim().split('\n');
+    if (rows.length < 2) return block;
+    const isAlignRow = (r) => /^\s*\|[-:\s|]+\|\s*$/.test(r);
+    let html = '<table>';
+    let header = true;
+    rows.forEach(function(row, i) {
+      if (isAlignRow(row)) { html += '</thead><tbody>'; header=false; return; }
+      const cells = row.split('|').slice(1,-1);
+      const tag = header ? 'th' : 'td';
+      if (i===0) html += '<thead>';
+      html += '<tr>' + cells.map(c=>'<'+tag+'>'+c.trim()+'</'+tag+'>').join('') + '</tr>';
+    });
+    html += '</tbody></table>';
+    return html;
+  });
+  // Unordered lists
+  md = md.replace(/((?:^[\t ]*[-*+]\s+.+\n?)+)/gm, function(block) {
+    const items = block.trim().split('\n').map(l => '<li>'+l.replace(/^[\t ]*[-*+]\s+/,'')+'</li>').join('');
+    return '<ul>'+items+'</ul>';
+  });
+  // Ordered lists
+  md = md.replace(/((?:^[\t ]*\d+\.\s+.+\n?)+)/gm, function(block) {
+    const items = block.trim().split('\n').map(l => '<li>'+l.replace(/^[\t ]*\d+\.\s+/,'')+'</li>').join('');
+    return '<ol>'+items+'</ol>';
+  });
+  // Paragraphs: wrap lines not already wrapped
+  md = md.split('\n\n').map(function(block) {
+    block = block.trim();
+    if (!block) return '';
+    if (/^<(h[1-6]|ul|ol|li|pre|blockquote|table|hr|thead|tbody)/.test(block)) return block;
+    return '<p>' + block.replace(/\n/g, '<br>') + '</p>';
+  }).join('\n');
+  // Restore inline codes
+  md = md.replace(/\x00code(\d+)\x00/g, function(m,i) { return codes[+i]; });
+  return md;
+}
+
+function render() {
+  const input = document.getElementById('mdInput').value;
+  document.getElementById('mdPreview').innerHTML = parseMarkdown(input);
+  const chars = input.length;
+  const words = input.trim() ? input.trim().split(/\s+/).length : 0;
+  const lines = input.split('\n').length;
+  document.getElementById('mdStats').textContent = chars+'자 · '+words+'단어 · '+lines+'줄';
+}
+
+function copyHtml() {
+  const html = document.getElementById('mdPreview').innerHTML;
+  navigator.clipboard.writeText(html).then(function() {
+    const btn = document.querySelector('.dev-btn.secondary[onclick="copyHtml()"]');
+    if(btn){ btn.textContent='복사됨!'; setTimeout(()=>btn.textContent='HTML 복사',1500); }
+  });
+}
+
+function clearAll() {
+  document.getElementById('mdInput').value='';
+  document.getElementById('mdPreview').innerHTML='';
+  document.getElementById('mdStats').textContent='';
+}
+
+function loadSample() {
+  document.getElementById('mdInput').value =
+`# Markdown 미리보기 샘플
+
+## 텍스트 스타일
+**굵은 글씨**, *기울임*, ~~취소선~~, \`인라인 코드\`
+
+## 목록
+- 항목 1
+- 항목 2
+  - 하위 항목
+
+1. 첫 번째
+2. 두 번째
+
+## 코드 블록
+\`\`\`javascript
+function hello(name) {
+  console.log('Hello, ' + name);
+}
+\`\`\`
+
+## 인용구
+> 좋은 코드는 그 자체로 문서가 된다.
+
+## 표
+| 이름 | 역할 | 언어 |
+|------|------|------|
+| Alice | 프론트엔드 | JavaScript |
+| Bob | 백엔드 | Python |
+
+## 링크
+[WooaDev 바로가기](https://wooadev.wooahouse.com)
+
+---
+수평선 위의 내용입니다.`;
+  render();
+}
+
+render();
+</script>
+<script src="js/pwa-install.js"></script>
+</body>
+</html>

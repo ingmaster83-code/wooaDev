@@ -28,4 +28,10 @@
   <url><loc>https://wooadev.wooahouse.com/en/sql-formatter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/xml-formatter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/en/xml-formatter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/color-converter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/en/color-converter.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/markdown-preview.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/en/markdown-preview.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/ip-lookup.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/en/ip-lookup.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
