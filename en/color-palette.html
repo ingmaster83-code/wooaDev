@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <title>Color Palette Generator - Complementary & Scheme Colors Online | WooaDev</title>
+  <meta name="description" content="Generate beautiful color palettes from any base color. Complementary, analogous, triadic, monochromatic schemes. Click to copy HEX codes. Free online color palette tool.">
+  <meta name="keywords" content="color palette generator, color scheme, complementary colors, analogous colors, triadic colors, color picker, HEX color palette">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/color-palette.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/color-palette.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/color-palette.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/color-palette.html">
+  <meta property="og:title" content="Color Palette Generator | WooaDev">
+  <meta property="og:description" content="Generate color palettes from any base color. Complementary, analogous, triadic schemes. Click to copy HEX.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/color-palette.html">
+  <meta property="og:locale" content="en_US">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <style>
+    .color-input-row { display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap; }
+    input[type=color].big-picker { width:64px; height:48px; border:2px solid #d0b896; border-radius:10px; padding:2px; cursor:pointer; background:none; }
+    .hex-input { border:1px solid #d0b896; border-radius:8px; padding:8px 12px; font-size:16px; font-family:monospace; width:110px; }
+    .scheme-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:16px; }
+    .scheme-tab { padding:7px 14px; border-radius:20px; border:1px solid #d0b896; background:#fff; cursor:pointer; font-size:13px; font-weight:600; transition:all 0.15s; }
+    .scheme-tab.active, .scheme-tab:hover { background:#C4956A; color:#fff; border-color:#C4956A; }
+    .swatches { display:flex; gap:10px; flex-wrap:wrap; }
+    .swatch { width:80px; height:80px; border-radius:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; transition:transform 0.15s, box-shadow 0.15s; position:relative; flex-shrink:0; }
+    .swatch:hover { transform:scale(1.1); box-shadow:0 4px 16px rgba(0,0,0,0.18); }
+    .swatch-label { font-family:monospace; font-size:11px; text-align:center; margin-top:4px; color:#555; }
+    .swatch-wrap { display:flex; flex-direction:column; align-items:center; }
+    .copy-badge { position:absolute; top:4px; right:4px; background:rgba(0,0,0,0.3); color:#fff; border-radius:4px; font-size:10px; padding:1px 4px; opacity:0; transition:opacity 0.2s; pointer-events:none; }
+    .swatch:hover .copy-badge { opacity:1; }
+    .notify { position:fixed; bottom:24px; right:24px; background:#333; color:#fff; border-radius:10px; padding:10px 20px; font-size:14px; z-index:9999; opacity:0; transition:opacity 0.3s; pointer-events:none; }
+    .notify.show { opacity:1; }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">🛠️ WooaDev</a>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="color-converter.html">Color Converter</a>
+      <a href="color-contrast.html">Contrast</a>
+      <a href="css-gradient.html">Gradient</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../color-palette.html">KO</a>
+        <a href="color-palette.html" class="active">EN</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+    <a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a>
+    <a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a>
+    <a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a>
+  </div>
+</div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+  <div class="tool-page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; Color Palette Generator</div>
+    <div class="tool-header">
+      <div class="tool-icon-lg">🎨</div>
+      <div>
+        <h1>Color Palette Generator</h1>
+        <p>Pick a base color and generate beautiful color schemes instantly</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="color-input-row">
+        <input type="color" class="big-picker" id="colorPicker" value="#C4956A" oninput="syncHex(this.value)">
+        <input type="text" class="hex-input" id="hexInput" value="#C4956A" maxlength="7" oninput="syncPicker(this.value)" placeholder="#C4956A">
+        <button class="dev-btn" onclick="random()">🎲 Random</button>
+      </div>
+
+      <div class="scheme-tabs" id="schemeTabs">
+        <div class="scheme-tab active" data-scheme="complementary" onclick="selectScheme(this)">Complementary</div>
+        <div class="scheme-tab" data-scheme="analogous" onclick="selectScheme(this)">Analogous</div>
+        <div class="scheme-tab" data-scheme="triadic" onclick="selectScheme(this)">Triadic</div>
+        <div class="scheme-tab" data-scheme="tetradic" onclick="selectScheme(this)">Tetradic</div>
+        <div class="scheme-tab" data-scheme="monochromatic" onclick="selectScheme(this)">Monochromatic</div>
+        <div class="scheme-tab" data-scheme="shades" onclick="selectScheme(this)">Shades</div>
+      </div>
+
+      <div class="swatches" id="swatchesArea"></div>
+    </div>
+
+    <div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li>Click any swatch to copy its HEX code to clipboard</li>
+        <li><b>Complementary</b>: high contrast, best for call-to-action buttons</li>
+        <li><b>Analogous</b>: harmonious, natural feel, great for backgrounds</li>
+        <li><b>Triadic</b>: vibrant and balanced, ideal for colorful UI</li>
+        <li><b>Monochromatic</b>: minimal and elegant, easy to maintain consistency</li>
+      </ul>
+    </div>
+
+    <section class="faq-section">
+      <h2>FAQ</h2>
+      <div class="faq-item">
+        <div class="faq-q">What is a complementary color?</div>
+        <div class="faq-a">A complementary color is directly opposite on the color wheel (180° away in hue). It creates the highest visual contrast and is commonly used to highlight important elements like CTA buttons against a background.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Which color scheme is best for UI design?</div>
+        <div class="faq-a">Analogous and monochromatic schemes tend to look most professional and are easiest to work with. Use complementary or triadic colors for accent elements when you want something to stand out.</div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="tool-sidebar">
+    <div class="ad-card">
+      <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+    </div>
+    <div class="ad-card">
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">🛠️ WooaDev</div>
+      <p>Free online developer tools</p>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">Color Tools</div>
+      <a href="color-palette.html">Color Palette</a>
+      <a href="color-converter.html">Color Converter</a>
+      <a href="color-contrast.html">Color Contrast</a>
+      <a href="css-gradient.html">CSS Gradient</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 WooaDev. All rights reserved. | <a href="https://wooahouse.com/" target="_blank" rel="noopener">WooaHouse</a></p>
+  </div>
+  <div class="coupang-notice">This post is part of the Coupang Partners activity, and a certain commission is provided accordingly.</div>
+</footer>
+<div class="notify" id="notify">Copied!</div>
+
+<script src="../js/pwa-install.js"></script>
+<script>
+  let currentScheme = 'complementary';
+
+  function hexToHsl(hex) {
+    let r=parseInt(hex.slice(1,3),16)/255, g=parseInt(hex.slice(3,5),16)/255, b=parseInt(hex.slice(5,7),16)/255;
+    const max=Math.max(r,g,b), min=Math.min(r,g,b), d=max-min;
+    let h=0,s=0,l=(max+min)/2;
+    if(d){s=l>0.5?d/(2-max-min):d/(max+min);switch(max){case r:h=((g-b)/d+(g<b?6:0))/6;break;case g:h=((b-r)/d+2)/6;break;case b:h=((r-g)/d+4)/6;break;}}
+    return [h*360,s*100,l*100];
+  }
+
+  function hslToHex(h,s,l) {
+    h=((h%360)+360)%360; s/=100; l/=100;
+    const a=s*Math.min(l,1-l);
+    const f=n=>{const k=(n+h/30)%12;return l-a*Math.max(-1,Math.min(k-3,9-k,1));};
+    return '#'+[f(0),f(8),f(4)].map(v=>Math.round(v*255).toString(16).padStart(2,'0')).join('');
+  }
+
+  function luminance(hex) {
+    return [1,3,5].map(i=>{let c=parseInt(hex.slice(i,i+2),16)/255;return c<=0.03928?c/12.92:((c+0.055)/1.055)**2.4;}).reduce((a,c,i)=>[0.2126,0.7152,0.0722][i]*c+a,0);
+  }
+
+  function getSchemeColors(hex, scheme) {
+    const [h,s,l] = hexToHsl(hex);
+    const base = {h,s,l};
+    switch(scheme){
+      case 'complementary': return [base,{h:h+180,s,l},{h,s,l:Math.max(10,l-20)},{h:h+180,s,l:Math.min(90,l+15)},{h,s:Math.max(10,s-30),l}];
+      case 'analogous': return [{h:h-40,s,l},{h:h-20,s,l},base,{h:h+20,s,l},{h:h+40,s,l}];
+      case 'triadic': return [base,{h:h+120,s,l},{h:h+240,s,l},{h,s,l:Math.min(85,l+20)},{h:h+120,s,l:Math.max(15,l-15)}];
+      case 'tetradic': return [base,{h:h+90,s,l},{h:h+180,s,l},{h:h+270,s,l},{h,s,l:Math.max(20,l-20)}];
+      case 'monochromatic': return [{h,s,l:Math.max(10,l-40)},{h,s,l:Math.max(10,l-20)},base,{h,s,l:Math.min(90,l+20)},{h,s,l:Math.min(90,l+40)}];
+      case 'shades': return [10,30,50,70,90].map(ll=>({h,s:ll<50?s:Math.max(10,s-20),l:ll}));
+    }
+  }
+
+  function render() {
+    const hex = document.getElementById('hexInput').value;
+    if(!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
+    const colors = getSchemeColors(hex, currentScheme);
+    const area = document.getElementById('swatchesArea');
+    area.innerHTML = '';
+    colors.forEach(c=>{
+      const h=hslToHex(c.h,c.s,c.l);
+      const lum=luminance(h);
+      const textColor=lum>0.179?'#222':'#fff';
+      const wrap=document.createElement('div');
+      wrap.className='swatch-wrap';
+      wrap.innerHTML=`<div class="swatch" style="background:${h};color:${textColor}" onclick="copySwatch('${h}')">
+        <span class="copy-badge">copy</span></div>
+        <div class="swatch-label">${h.toUpperCase()}</div>`;
+      area.appendChild(wrap);
+    });
+  }
+
+  function copySwatch(hex) {
+    navigator.clipboard.writeText(hex).then(()=>{
+      const n=document.getElementById('notify');
+      n.textContent='Copied '+hex.toUpperCase();
+      n.classList.add('show');
+      setTimeout(()=>n.classList.remove('show'),1500);
+    });
+  }
+
+  function syncHex(v) { document.getElementById('hexInput').value=v; render(); }
+  function syncPicker(v) { if(/^#[0-9a-fA-F]{6}$/.test(v)){document.getElementById('colorPicker').value=v;render();} }
+  function selectScheme(el) {
+    document.querySelectorAll('.scheme-tab').forEach(t=>t.classList.remove('active'));
+    el.classList.add('active');
+    currentScheme=el.dataset.scheme;
+    render();
+  }
+  function random() {
+    const hex='#'+Math.floor(Math.random()*0xFFFFFF).toString(16).padStart(6,'0');
+    document.getElementById('hexInput').value=hex;
+    document.getElementById('colorPicker').value=hex;
+    render();
+  }
+
+  render();
+</script>
+</body>
+</html>

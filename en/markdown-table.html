@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <title>Markdown Table Generator - Create Tables Online Free | WooaDev</title>
+  <meta name="description" content="Generate Markdown tables visually. Add rows and columns, set column alignment, import from CSV. Works with GitHub, Notion, VS Code. Free online Markdown table generator.">
+  <meta name="keywords" content="markdown table generator, markdown table, GitHub markdown, table to markdown, CSV to markdown, markdown formatter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/markdown-table.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/markdown-table.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/markdown-table.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/markdown-table.html">
+  <meta property="og:title" content="Markdown Table Generator | WooaDev">
+  <meta property="og:description" content="Generate Markdown tables visually with CSV import support.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/markdown-table.html">
+  <meta property="og:locale" content="en_US">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <style>
+    .table-controls { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+    .md-table-wrapper { overflow-x:auto; margin-bottom:16px; }
+    .md-table { border-collapse:collapse; width:100%; min-width:400px; }
+    .md-table th, .md-table td { border:1px solid #d0b896; padding:6px 8px; }
+    .md-table th { background:#f5ede0; font-weight:600; }
+    .md-table input { width:100%; border:none; background:transparent; font-size:14px; color:#333; outline:none; font-family:inherit; }
+    .md-table input:focus { background:#fffaf5; }
+    .md-table .align-sel { width:90px; border:none; background:transparent; font-size:13px; cursor:pointer; }
+    .col-del-btn, .row-del-btn { background:#e74c3c; color:#fff; border:none; border-radius:4px; padding:2px 7px; cursor:pointer; font-size:12px; }
+    .output-area { font-family:monospace; font-size:13px; background:#1e1e2e; color:#cdd6f4; border-radius:8px; padding:16px; white-space:pre; overflow-x:auto; min-height:80px; }
+    .copy-row { display:flex; gap:8px; align-items:center; margin-top:8px; }
+    .csv-area { width:100%; min-height:80px; font-family:monospace; font-size:13px; border:1px solid #d0b896; border-radius:8px; padding:10px; resize:vertical; box-sizing:border-box; }
+    .section-label { font-weight:600; color:#a07850; margin:12px 0 6px; font-size:14px; }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">🛠️ WooaDev</a>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="json-formatter.html">JSON</a>
+      <a href="regex-tester.html">Regex</a>
+      <a href="markdown-preview.html">Markdown</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../markdown-table.html">KO</a>
+        <a href="markdown-table.html" class="active">EN</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+    <a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a>
+    <a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a>
+    <a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a>
+  </div>
+</div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+  <div class="tool-page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; Markdown Table Generator</div>
+    <div class="tool-header">
+      <div class="tool-icon-lg">📋</div>
+      <div>
+        <h1>Markdown Table Generator</h1>
+        <p>Create and edit tables visually, then copy as Markdown code</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="table-controls">
+        <button class="dev-btn" onclick="addRow()">+ Add Row</button>
+        <button class="dev-btn" onclick="addCol()">+ Add Column</button>
+        <button class="dev-btn" onclick="clearTable()">Reset</button>
+      </div>
+
+      <div class="md-table-wrapper">
+        <table class="md-table" id="editorTable">
+          <thead id="thead"></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="section-label">📤 Import from CSV</div>
+      <textarea class="csv-area" id="csvInput" placeholder="Paste CSV here — first row becomes headers&#10;Example: Name,Age,Role&#10;Alice,30,Developer"></textarea>
+      <div style="margin-top:6px;">
+        <button class="dev-btn" onclick="importCSV()">CSV → Table</button>
+      </div>
+
+      <div class="section-label">📝 Markdown Output</div>
+      <div class="output-area" id="mdOutput"></div>
+      <div class="copy-row">
+        <button class="dev-btn" onclick="copyMd()">📋 Copy</button>
+        <span id="copyMsg" style="color:#4caf50;font-size:13px;display:none">Copied!</span>
+      </div>
+    </div>
+
+    <div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li>Set column alignment (left / center / right) in the header row</li>
+        <li>CSV import: first row becomes headers automatically</li>
+        <li>Click <b>×</b> to delete a column or row</li>
+        <li>Generated Markdown works in GitHub, Notion, VS Code, and Obsidian</li>
+      </ul>
+    </div>
+
+    <section class="faq-section">
+      <h2>FAQ</h2>
+      <div class="faq-item">
+        <div class="faq-q">Where can I use Markdown tables?</div>
+        <div class="faq-a">Markdown tables are supported in GitHub README files, GitLab, Notion, Obsidian, VS Code, Discord, and any platform that renders CommonMark or GFM (GitHub Flavored Markdown).</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How does column alignment work?</div>
+        <div class="faq-a">The separator row uses colons to indicate alignment: <code>:---</code> for left, <code>:---:</code> for center, <code>---:</code> for right. The generator handles this automatically based on your selection.</div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="tool-sidebar">
+    <div class="ad-card">
+      <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+    </div>
+    <div class="ad-card">
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">🛠️ WooaDev</div>
+      <p>Free online developer tools</p>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">Format · Convert</div>
+      <a href="json-formatter.html">JSON Formatter</a>
+      <a href="markdown-preview.html">Markdown Preview</a>
+      <a href="markdown-table.html">Markdown Table</a>
+      <a href="sql-formatter.html">SQL Formatter</a>
+      <a href="xml-formatter.html">XML Formatter</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 WooaDev. All rights reserved. | <a href="https://wooahouse.com/" target="_blank" rel="noopener">WooaHouse</a></p>
+  </div>
+  <div class="coupang-notice">This post is part of the Coupang Partners activity, and a certain commission is provided accordingly.</div>
+</footer>
+
+<script src="../js/pwa-install.js"></script>
+<script>
+  let alignments = [];
+
+  function initTable(cols, rows) {
+    alignments = Array(cols).fill('left');
+    document.getElementById('thead').innerHTML = '';
+    document.getElementById('tbody').innerHTML = '';
+    const htr = document.createElement('tr');
+    for (let c = 0; c < cols; c++) {
+      const th = document.createElement('th');
+      th.innerHTML = `<input type="text" placeholder="Header ${c+1}" oninput="renderMd()">
+        <br><select class="align-sel" onchange="alignments[${c}]=this.value;renderMd()">
+          <option value="left">Left</option>
+          <option value="center">Center</option>
+          <option value="right">Right</option>
+        </select>`;
+      htr.appendChild(th);
+    }
+    const delTh = document.createElement('th'); delTh.textContent = '';
+    htr.appendChild(delTh);
+    document.getElementById('thead').appendChild(htr);
+    for (let r = 0; r < rows; r++) addBodyRow(cols);
+    renderMd();
+  }
+
+  function addBodyRow(cols) {
+    cols = cols || getColCount();
+    const tbody = document.getElementById('tbody');
+    const tr = document.createElement('tr');
+    for (let c = 0; c < cols; c++) {
+      const td = document.createElement('td');
+      td.innerHTML = `<input type="text" placeholder="Cell" oninput="renderMd()">`;
+      tr.appendChild(td);
+    }
+    const delTd = document.createElement('td');
+    delTd.innerHTML = `<button class="row-del-btn" onclick="this.closest('tr').remove();renderMd()">×</button>`;
+    tr.appendChild(delTd);
+    tbody.appendChild(tr);
+  }
+
+  function getColCount() { return Math.max(0, document.querySelectorAll('#thead tr th').length - 1); }
+  function addRow() { addBodyRow(); renderMd(); }
+
+  function addCol() {
+    const cols = getColCount();
+    alignments.push('left');
+    const htr = document.querySelector('#thead tr');
+    const lastTh = htr.lastElementChild;
+    const idx = cols;
+    const newTh = document.createElement('th');
+    newTh.innerHTML = `<input type="text" placeholder="Header ${idx+1}" oninput="renderMd()">
+      <br><select class="align-sel" onchange="alignments[${idx}]=this.value;renderMd()">
+        <option value="left">Left</option><option value="center">Center</option><option value="right">Right</option>
+      </select>`;
+    htr.insertBefore(newTh, lastTh);
+    document.querySelectorAll('#tbody tr').forEach(tr => {
+      const lastTd = tr.lastElementChild;
+      const td = document.createElement('td');
+      td.innerHTML = `<input type="text" placeholder="Cell" oninput="renderMd()">`;
+      tr.insertBefore(td, lastTd);
+    });
+    renderMd();
+  }
+
+  function clearTable() { initTable(3, 3); }
+
+  function renderMd() {
+    const cols = getColCount();
+    if (cols === 0) { document.getElementById('mdOutput').textContent = ''; return; }
+    const headers = Array.from(document.querySelectorAll('#thead tr th input[type=text]')).map(i=>i.value||' ');
+    const sepRow = alignments.slice(0,cols).map(a=>a==='center'?':---:':a==='right'?'---:':':---');
+    const rows = Array.from(document.querySelectorAll('#tbody tr')).map(tr=>Array.from(tr.querySelectorAll('input[type=text]')).map(i=>i.value||' '));
+    const colWidths = Array(cols).fill(3);
+    [headers,...rows].forEach(row=>row.slice(0,cols).forEach((c,ci)=>{colWidths[ci]=Math.max(colWidths[ci],c.length);}));
+    const pad=(v,l)=>v.padEnd(l);
+    const fmtRow=cells=>'| '+cells.slice(0,cols).map((c,ci)=>pad(c,colWidths[ci])).join(' | ')+' |';
+    const fmtSep=()=>'| '+sepRow.slice(0,cols).map((s,ci)=>{const l=colWidths[ci];return s===':---:'?':'+(('-'.repeat(l-2)))+':':s==='---:':'-'.repeat(l-1)+':':':'+'-'.repeat(l-1);}).join(' | ')+' |';
+    document.getElementById('mdOutput').textContent=[fmtRow(headers),fmtSep(),...rows.map(fmtRow)].join('\n');
+  }
+
+  function importCSV() {
+    const raw = document.getElementById('csvInput').value.trim();
+    if (!raw) return;
+    const lines = raw.split('\n').map(l=>l.split(',').map(c=>c.trim().replace(/^"|"$/g,'')));
+    if (!lines.length) return;
+    const cols = Math.max(...lines.map(l=>l.length));
+    initTable(cols, 0);
+    const headerInputs = Array.from(document.querySelectorAll('#thead tr th input[type=text]'));
+    lines[0].forEach((v,i)=>{if(headerInputs[i])headerInputs[i].value=v;});
+    for (let r=1;r<lines.length;r++){
+      addBodyRow(cols);
+      const rows=document.querySelectorAll('#tbody tr');
+      const last=rows[rows.length-1];
+      const inputs=last.querySelectorAll('input[type=text]');
+      lines[r].forEach((v,i)=>{if(inputs[i])inputs[i].value=v;});
+    }
+    renderMd();
+  }
+
+  function copyMd() {
+    const text=document.getElementById('mdOutput').textContent;
+    if(!text)return;
+    navigator.clipboard.writeText(text).then(()=>{
+      const msg=document.getElementById('copyMsg');
+      msg.style.display='inline';
+      setTimeout(()=>msg.style.display='none',2000);
+    });
+  }
+
+  initTable(3, 3);
+</script>
+</body>
+</html>

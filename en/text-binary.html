@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <title>Text to Binary Converter - Binary to Text Decoder Online | WooaDev</title>
+  <meta name="description" content="Convert text to binary code or decode binary back to text. 8-bit ASCII encoding, space-separated bytes, UTF-16 Unicode support. Free online text-binary converter.">
+  <meta name="keywords" content="text to binary, binary to text, binary converter, ASCII binary, binary decoder, binary encoder, 01 code converter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/text-binary.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/text-binary.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/text-binary.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/text-binary.html">
+  <meta property="og:title" content="Text ↔ Binary Converter | WooaDev">
+  <meta property="og:description" content="Convert text to binary or binary to text instantly. ASCII and UTF-16 encoding support.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/text-binary.html">
+  <meta property="og:locale" content="en_US">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <style>
+    .convert-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    @media(max-width:600px){.convert-grid{grid-template-columns:1fr;}}
+    .side-label { font-weight:600; color:#a07850; font-size:14px; margin-bottom:6px; }
+    .io-area { width:100%; height:150px; border:1px solid #d0b896; border-radius:8px; padding:10px; font-family:monospace; font-size:13px; resize:vertical; box-sizing:border-box; }
+    .opts-row { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:12px; align-items:center; }
+    .opt-label { font-size:13px; display:flex; align-items:center; gap:4px; }
+    .opt-label input { accent-color:#C4956A; }
+    .stat-bar { font-size:12px; color:#888; margin-top:4px; }
+    .copy-row { display:flex; gap:8px; align-items:center; margin-top:8px; }
+    .ref-table { width:100%; border-collapse:collapse; font-size:13px; margin-top:12px; }
+    .ref-table th { background:#f5ede0; padding:6px 8px; text-align:left; border:1px solid #e0cdb0; }
+    .ref-table td { padding:5px 8px; border:1px solid #e0cdb0; font-family:monospace; }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">🛠️ WooaDev</a>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="base64.html">Base64</a>
+      <a href="number-base.html">Number Base</a>
+      <a href="html-entity.html">HTML Entity</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../text-binary.html">KO</a>
+        <a href="text-binary.html" class="active">EN</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+    <a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a>
+    <a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a>
+    <a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a>
+  </div>
+</div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+  <div class="tool-page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; Text ↔ Binary Converter</div>
+    <div class="tool-header">
+      <div class="tool-icon-lg">01</div>
+      <div>
+        <h1>Text ↔ Binary Converter</h1>
+        <p>Convert text to binary code or decode binary back to readable text</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="opts-row">
+        <label class="opt-label"><input type="checkbox" id="spaceSep" checked> Space between bytes</label>
+        <label class="opt-label"><input type="checkbox" id="newlineSep"> Newline per character</label>
+        <label class="opt-label">
+          Encoding:
+          <select id="encoding" style="border:1px solid #d0b896;border-radius:6px;padding:3px 6px;font-size:13px;">
+            <option value="ascii">ASCII</option>
+            <option value="utf16">UTF-16 (Unicode)</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="convert-grid">
+        <div>
+          <div class="side-label">📝 Text</div>
+          <textarea class="io-area" id="textIn" placeholder="Enter text to convert" oninput="textToBin()"></textarea>
+          <div class="stat-bar" id="textStat"></div>
+        </div>
+        <div>
+          <div class="side-label">💾 Binary</div>
+          <textarea class="io-area" id="binIn" placeholder="01001000 01100101 ..." oninput="binToText()"></textarea>
+          <div class="stat-bar" id="binStat"></div>
+        </div>
+      </div>
+
+      <div class="copy-row">
+        <button class="dev-btn" onclick="copyText()">📋 Copy Text</button>
+        <button class="dev-btn" onclick="copyBin()">📋 Copy Binary</button>
+        <button class="dev-btn" onclick="clearAll()">Clear</button>
+        <span id="copyMsg" style="color:#4caf50;font-size:13px;display:none">Copied!</span>
+      </div>
+
+      <details style="margin-top:20px;">
+        <summary style="cursor:pointer;font-weight:600;color:#a07850;font-size:14px;margin-bottom:8px;">ASCII Reference Table (printable characters)</summary>
+        <div style="overflow-x:auto;">
+          <table class="ref-table" id="refTable"></table>
+        </div>
+      </details>
+    </div>
+
+    <div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li>Type in the text area to automatically convert to binary</li>
+        <li>Type binary in the right area to automatically decode to text</li>
+        <li>Use UTF-16 mode for multi-byte characters (accented letters, CJK, etc.)</li>
+        <li>Each byte is represented as 8 bits (00000000–11111111)</li>
+      </ul>
+    </div>
+
+    <section class="faq-section">
+      <h2>FAQ</h2>
+      <div class="faq-item">
+        <div class="faq-q">What is binary code?</div>
+        <div class="faq-a">Binary code represents data using only 0s and 1s. Computers process all data internally in binary. ASCII characters are each represented by 7–8 bits of binary data.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What is the difference between ASCII and UTF-16?</div>
+        <div class="faq-a">ASCII covers 128 characters (English letters, digits, symbols) in 7 bits. UTF-16 encodes Unicode characters using 16 bits per character, supporting over 65,000 characters including alphabets worldwide.</div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="tool-sidebar">
+    <div class="ad-card">
+      <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+    </div>
+    <div class="ad-card">
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">🛠️ WooaDev</div>
+      <p>Free online developer tools</p>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">Encoding · Convert</div>
+      <a href="base64.html">Base64</a>
+      <a href="url-encoder.html">URL Encoder</a>
+      <a href="html-entity.html">HTML Entity</a>
+      <a href="image-to-base64.html">Image to Base64</a>
+      <a href="json-to-ts.html">JSON to TypeScript</a>
+      <a href="text-binary.html">Text ↔ Binary</a>
+      <a href="number-base.html">Number Base</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 WooaDev. All rights reserved. | <a href="https://wooahouse.com/" target="_blank" rel="noopener">WooaHouse</a></p>
+  </div>
+  <div class="coupang-notice">This post is part of the Coupang Partners activity, and a certain commission is provided accordingly.</div>
+</footer>
+
+<script src="../js/pwa-install.js"></script>
+<script>
+  let converting=false;
+  function getSep(){const s=document.getElementById('spaceSep').checked,n=document.getElementById('newlineSep').checked;return n?'\n':s?' ':'';}
+  function charToBin(ch){const enc=document.getElementById('encoding').value;if(enc==='utf16'){const code=ch.charCodeAt(0);return[(code>>8).toString(2).padStart(8,'0'),(code&0xFF).toString(2).padStart(8,'0')].join(' ');}return ch.charCodeAt(0).toString(2).padStart(8,'0');}
+  function textToBin(){if(converting)return;converting=true;const text=document.getElementById('textIn').value;const sep=getSep();const bins=text.split('').map(charToBin);document.getElementById('binIn').value=bins.join(sep);document.getElementById('textStat').textContent=`Characters: ${text.length}`;document.getElementById('binStat').textContent=`Bytes: ${bins.length}`;converting=false;}
+  function binToText(){if(converting)return;converting=true;const raw=document.getElementById('binIn').value.trim();if(!raw){document.getElementById('textIn').value='';converting=false;return;}const enc=document.getElementById('encoding').value;const bytes=raw.replace(/[^01\s]/g,'').trim().split(/\s+/).filter(b=>b.length>0);let result='';try{if(enc==='utf16'){for(let i=0;i<bytes.length-1;i+=2){const code=(parseInt(bytes[i],2)<<8)|parseInt(bytes[i+1],2);result+=String.fromCharCode(code);}}else{result=bytes.map(b=>String.fromCharCode(parseInt(b,2))).join('');}}catch(e){result='Error: invalid binary';}document.getElementById('textIn').value=result;document.getElementById('binStat').textContent=`Bytes: ${bytes.length}`;document.getElementById('textStat').textContent=`Characters: ${result.length}`;converting=false;}
+  function copyText(){navigator.clipboard.writeText(document.getElementById('textIn').value).then(showCopy);}
+  function copyBin(){navigator.clipboard.writeText(document.getElementById('binIn').value).then(showCopy);}
+  function clearAll(){document.getElementById('textIn').value='';document.getElementById('binIn').value='';document.getElementById('textStat').textContent='';document.getElementById('binStat').textContent='';}
+  function showCopy(){const msg=document.getElementById('copyMsg');msg.style.display='inline';setTimeout(()=>msg.style.display='none',2000);}
+
+  const tbl=document.getElementById('refTable');
+  tbl.innerHTML='<tr><th>Char</th><th>Dec</th><th>Binary</th><th>Char</th><th>Dec</th><th>Binary</th></tr>';
+  for(let i=32;i<127;i+=2){const tr=document.createElement('tr');const c1=String.fromCharCode(i),c2=i+1<127?String.fromCharCode(i+1):'';tr.innerHTML=`<td>${c1==' '?'(space)':c1}</td><td>${i}</td><td>${i.toString(2).padStart(8,'0')}</td><td>${c2==' '?'(space)':c2}</td><td>${i+1<127?i+1:''}</td><td>${i+1<127?(i+1).toString(2).padStart(8,'0'):''}</td>`;tbl.appendChild(tr);}
+
+  document.getElementById('spaceSep').addEventListener('change',textToBin);
+  document.getElementById('newlineSep').addEventListener('change',textToBin);
+  document.getElementById('encoding').addEventListener('change',textToBin);
+</script>
+</body>
+</html>

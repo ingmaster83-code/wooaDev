@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <title>JWT Generator - Create & Decode JSON Web Tokens Online | WooaDev</title>
+  <meta name="description" content="Generate and decode JWT (JSON Web Token) entirely in the browser. Supports HS256, HS384, HS512 signing. Edit claims, set expiry, verify signatures. Free online JWT tool.">
+  <meta name="keywords" content="JWT generator, JSON Web Token, JWT decoder, HS256, JWT create, JWT verify, token generator, JWT online">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/jwt-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/jwt-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/jwt-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/jwt-generator.html">
+  <meta property="og:title" content="JWT Generator | WooaDev">
+  <meta property="og:description" content="Generate and decode JWTs in the browser. HS256/384/512 signing, claim editing, signature verification.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/jwt-generator.html">
+  <meta property="og:locale" content="en_US">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <style>
+    .jwt-tabs { display:flex; gap:4px; margin-bottom:16px; }
+    .jwt-tab { padding:8px 20px; border-radius:8px 8px 0 0; border:1px solid #d0b896; border-bottom:none; background:#f5ede0; cursor:pointer; font-size:14px; font-weight:600; }
+    .jwt-tab.active { background:#C4956A; color:#fff; border-color:#C4956A; }
+    .tab-panel { display:none; }
+    .tab-panel.active { display:block; }
+    .section-card { background:#fdf8f3; border:1px solid #e0cdb0; border-radius:10px; padding:16px; margin-bottom:14px; }
+    .sc-title { font-weight:700; font-size:13px; color:#a07850; margin-bottom:10px; }
+    .form-row { display:grid; grid-template-columns:140px 1fr; align-items:center; gap:8px; margin-bottom:8px; }
+    .form-row label { font-size:13px; font-weight:600; color:#555; }
+    .form-row input, .form-row select { border:1px solid #d0b896; border-radius:6px; padding:7px 10px; font-size:13px; width:100%; box-sizing:border-box; }
+    .claim-area { font-family:monospace; font-size:13px; border:1px solid #d0b896; border-radius:8px; padding:10px; width:100%; min-height:120px; resize:vertical; box-sizing:border-box; }
+    .jwt-output { font-family:monospace; font-size:12px; background:#1e1e2e; color:#cdd6f4; border-radius:8px; padding:14px; word-break:break-all; min-height:60px; margin-bottom:8px; line-height:1.6; }
+    .jwt-output .part-header { color:#f38ba8; }
+    .jwt-output .part-payload { color:#a6e3a1; }
+    .jwt-output .part-sig { color:#89b4fa; }
+    .copy-row { display:flex; gap:8px; align-items:center; margin-bottom:12px; }
+    .decode-area { font-family:monospace; font-size:13px; border:1px solid #d0b896; border-radius:8px; padding:10px; width:100%; min-height:80px; resize:vertical; box-sizing:border-box; }
+    .decode-result { background:#fdf8f3; border:1px solid #e0cdb0; border-radius:8px; padding:12px; font-family:monospace; font-size:13px; min-height:80px; white-space:pre-wrap; }
+    .badge-valid { display:inline-block; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:700; }
+    .badge-valid.ok { background:#d4edda; color:#155724; }
+    .badge-valid.err { background:#f8d7da; color:#721c24; }
+    .exp-row { display:flex; gap:8px; flex-wrap:wrap; }
+    .exp-btn { padding:5px 12px; border-radius:6px; border:1px solid #d0b896; background:#fff; font-size:12px; cursor:pointer; }
+    .exp-btn:hover { background:#C4956A; color:#fff; border-color:#C4956A; }
+    .warn-box { background:#fff8e1; border:1px solid #ffe082; border-radius:8px; padding:10px 14px; font-size:13px; color:#7a5f00; margin-bottom:12px; }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">🛠️ WooaDev</a>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="jwt-decoder.html">JWT Decoder</a>
+      <a href="hash-generator.html">Hash</a>
+      <a href="base64.html">Base64</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../jwt-generator.html">KO</a>
+        <a href="jwt-generator.html" class="active">EN</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+    <a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a>
+    <a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a>
+    <a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a>
+  </div>
+</div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+  <div class="tool-page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; JWT Generator</div>
+    <div class="tool-header">
+      <div class="tool-icon-lg">🔐</div>
+      <div>
+        <h1>JWT Generator</h1>
+        <p>Create and verify JSON Web Tokens entirely in your browser</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="warn-box">⚠️ For learning and testing only. All processing runs in the browser — nothing is sent to a server. Never enter real production secret keys.</div>
+
+      <div class="jwt-tabs">
+        <div class="jwt-tab active" onclick="switchTab('generate')">🔨 Generate</div>
+        <div class="jwt-tab" onclick="switchTab('decode')">🔍 Decode</div>
+      </div>
+
+      <div class="tab-panel active" id="tab-generate">
+        <div class="section-card">
+          <div class="sc-title">HEADER</div>
+          <div class="form-row">
+            <label>Algorithm</label>
+            <select id="algorithm">
+              <option value="HS256" selected>HS256 (HMAC-SHA256)</option>
+              <option value="HS384">HS384 (HMAC-SHA384)</option>
+              <option value="HS512">HS512 (HMAC-SHA512)</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>Type</label>
+            <input type="text" value="JWT" readonly style="background:#f5f5f5;">
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="sc-title">PAYLOAD (Claims)</div>
+          <div class="form-row">
+            <label>sub (subject)</label>
+            <input type="text" id="sub" placeholder="user ID or username" value="user123">
+          </div>
+          <div class="form-row">
+            <label>iss (issuer)</label>
+            <input type="text" id="iss" placeholder="Token issuer" value="wooadev.wooahouse.com">
+          </div>
+          <div class="form-row">
+            <label>Expiry</label>
+            <div>
+              <div class="exp-row" style="margin-bottom:6px;">
+                <button class="exp-btn" onclick="setExp(3600)">1 hour</button>
+                <button class="exp-btn" onclick="setExp(86400)">1 day</button>
+                <button class="exp-btn" onclick="setExp(604800)">7 days</button>
+                <button class="exp-btn" onclick="setExp(2592000)">30 days</button>
+              </div>
+              <input type="number" id="expSec" placeholder="seconds (e.g. 3600)" value="3600" min="0">
+            </div>
+          </div>
+          <div style="margin-top:10px;">
+            <div style="font-size:13px;font-weight:600;color:#555;margin-bottom:6px;">Extra Claims (JSON)</div>
+            <textarea class="claim-area" id="customClaims" placeholder='{"role": "admin", "name": "Alice"}'>{}</textarea>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="sc-title">SIGNATURE (Secret Key)</div>
+          <div class="form-row">
+            <label>Secret Key</label>
+            <input type="text" id="secret" placeholder="your-secret-key" value="wooadev-secret-key">
+          </div>
+        </div>
+
+        <button class="dev-btn" onclick="generateJWT()" style="width:100%;margin-bottom:14px;">🔨 Generate JWT</button>
+
+        <div class="sc-title">Generated JWT</div>
+        <div class="jwt-output" id="jwtOutput"><span style="color:#666;">JWT will appear here</span></div>
+        <div class="copy-row">
+          <button class="dev-btn" onclick="copyJWT()">📋 Copy</button>
+          <span id="copyMsg" style="color:#4caf50;font-size:13px;display:none">Copied!</span>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-decode">
+        <div style="margin-bottom:12px;">
+          <div style="font-size:13px;font-weight:600;color:#555;margin-bottom:6px;">Paste JWT Token</div>
+          <textarea class="decode-area" id="jwtInput" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." oninput="decodeJWT()"></textarea>
+        </div>
+        <div style="margin-bottom:10px;">
+          <div style="font-size:13px;font-weight:600;color:#555;margin-bottom:6px;">Verify Key (optional)</div>
+          <input type="text" id="verifySecret" style="width:100%;border:1px solid #d0b896;border-radius:8px;padding:8px 10px;font-size:13px;box-sizing:border-box;" placeholder="Secret key for signature verification (leave blank to decode only)">
+        </div>
+        <button class="dev-btn" onclick="decodeJWT()" style="width:100%;margin-bottom:14px;">🔍 Decode</button>
+        <div id="decodeStatus" style="margin-bottom:8px;"></div>
+        <div class="sc-title">Header</div>
+        <div class="decode-result" id="decHeader" style="margin-bottom:10px;"></div>
+        <div class="sc-title">Payload</div>
+        <div class="decode-result" id="decPayload" style="margin-bottom:10px;"></div>
+        <div class="sc-title">Signature</div>
+        <div class="decode-result" id="decSig"></div>
+      </div>
+    </div>
+
+    <div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li><b>sub</b>: subject (user ID), <b>iss</b>: issuer, <b>exp</b>: expiry (Unix timestamp)</li>
+        <li>JWT payload is Base64URL encoded — it is NOT encrypted, just signed</li>
+        <li>Never put sensitive data (passwords, credit cards) in the payload</li>
+        <li>HS256 uses a shared secret; RS256 uses a public/private key pair</li>
+      </ul>
+    </div>
+
+    <section class="faq-section">
+      <h2>FAQ</h2>
+      <div class="faq-item">
+        <div class="faq-q">How does JWT work?</div>
+        <div class="faq-a">A JWT consists of three parts: Header.Payload.Signature. The server signs the token with a secret key. Clients send the JWT with each request, and the server verifies the signature to confirm authenticity without a database lookup.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can anyone read the JWT payload?</div>
+        <div class="faq-a">Yes — the payload is Base64URL encoded, not encrypted, so anyone can decode it. JWT security relies on signature verification, not secrecy. Never put sensitive information in the payload.</div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="tool-sidebar">
+    <div class="ad-card">
+      <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+    </div>
+    <div class="ad-card">
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">🛠️ WooaDev</div>
+      <p>Free online developer tools</p>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">Security · Auth</div>
+      <a href="jwt-decoder.html">JWT Decoder</a>
+      <a href="jwt-generator.html">JWT Generator</a>
+      <a href="hash-generator.html">Hash Generator</a>
+      <a href="password-generator.html">Password Generator</a>
+      <a href="uuid-generator.html">UUID Generator</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 WooaDev. All rights reserved. | <a href="https://wooahouse.com/" target="_blank" rel="noopener">WooaHouse</a></p>
+  </div>
+  <div class="coupang-notice">This post is part of the Coupang Partners activity, and a certain commission is provided accordingly.</div>
+</footer>
+
+<script src="../js/pwa-install.js"></script>
+<script>
+  function switchTab(tab){document.querySelectorAll('.jwt-tab').forEach((t,i)=>{t.classList.toggle('active',['generate','decode'][i]===tab);});document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.getElementById('tab-'+tab).classList.add('active');}
+  function base64urlEncode(str){return btoa(str).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');}
+  function base64urlEncodeUint8(arr){let b='';arr.forEach(v=>b+=String.fromCharCode(v));return btoa(b).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');}
+  function base64urlDecode(str){str=str.replace(/-/g,'+').replace(/_/g,'/');while(str.length%4)str+='=';try{return atob(str);}catch(e){return null;}}
+  function setExp(sec){document.getElementById('expSec').value=sec;}
+  async function hmacSign(key,data,alg){const hm={'HS256':'SHA-256','HS384':'SHA-384','HS512':'SHA-512'};const enc=new TextEncoder();const ck=await crypto.subtle.importKey('raw',enc.encode(key),{name:'HMAC',hash:hm[alg]},false,['sign']);const sig=await crypto.subtle.sign('HMAC',ck,enc.encode(data));return base64urlEncodeUint8(new Uint8Array(sig));}
+  async function hmacVerify(key,data,sig,alg){const hm={'HS256':'SHA-256','HS384':'SHA-384','HS512':'SHA-512'};const enc=new TextEncoder();const ck=await crypto.subtle.importKey('raw',enc.encode(key),{name:'HMAC',hash:hm[alg]},false,['verify']);let sb;try{const b64=sig.replace(/-/g,'+').replace(/_/g,'/');const bin=atob(b64.padEnd(b64.length+(4-b64.length%4)%4,'='));sb=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)sb[i]=bin.charCodeAt(i);}catch(e){return false;}return crypto.subtle.verify('HMAC',ck,sb,enc.encode(data));}
+  async function generateJWT(){const alg=document.getElementById('algorithm').value;const sub=document.getElementById('sub').value;const iss=document.getElementById('iss').value;const expSec=parseInt(document.getElementById('expSec').value)||0;const secret=document.getElementById('secret').value||'secret';const now=Math.floor(Date.now()/1000);let custom={};try{custom=JSON.parse(document.getElementById('customClaims').value||'{}');}catch(e){}const header={alg,typ:'JWT'};const payload={sub,iss,iat:now,...custom};if(expSec>0)payload.exp=now+expSec;const h=base64urlEncode(JSON.stringify(header));const p=base64urlEncode(JSON.stringify(payload));const sig=await hmacSign(secret,h+'.'+p,alg);const token=h+'.'+p+'.'+sig;const el=document.getElementById('jwtOutput');el.innerHTML=`<span class="part-header">${h}</span>.<span class="part-payload">${p}</span>.<span class="part-sig">${sig}</span>`;el.dataset.raw=token;}
+  function copyJWT(){const token=document.getElementById('jwtOutput').dataset.raw||'';if(!token)return;navigator.clipboard.writeText(token).then(()=>{const msg=document.getElementById('copyMsg');msg.style.display='inline';setTimeout(()=>msg.style.display='none',2000);});}
+  async function decodeJWT(){const raw=document.getElementById('jwtInput').value.trim();if(!raw)return;const parts=raw.split('.');if(parts.length!==3){document.getElementById('decodeStatus').innerHTML='<span class="badge-valid err">❌ Not a valid JWT</span>';return;}const h=base64urlDecode(parts[0]),p=base64urlDecode(parts[1]);let header,payload;try{header=JSON.parse(h);}catch(e){header=null;}try{payload=JSON.parse(p);}catch(e){payload=null;}document.getElementById('decHeader').textContent=header?JSON.stringify(header,null,2):'Parse error';document.getElementById('decPayload').textContent=payload?JSON.stringify(payload,null,2):'Parse error';document.getElementById('decSig').textContent=parts[2];const vs=document.getElementById('verifySecret').value;if(vs&&header&&header.alg){try{const valid=await hmacVerify(vs,parts[0]+'.'+parts[1],parts[2],header.alg);const now=Math.floor(Date.now()/1000);const expired=payload&&payload.exp&&payload.exp<now;let msg=valid?(expired?'⏰ Signature valid (expired)':'✅ Signature valid'):'❌ Signature mismatch';document.getElementById('decodeStatus').innerHTML=`<span class="badge-valid ${valid&&!expired?'ok':'err'}">${msg}</span>`;}catch(e){document.getElementById('decodeStatus').innerHTML='<span class="badge-valid err">❌ Verification failed</span>';}}else{document.getElementById('decodeStatus').innerHTML='<span class="badge-valid ok">✅ Decoded (signature not verified)</span>';}}
+</script>
+</body>
+</html>

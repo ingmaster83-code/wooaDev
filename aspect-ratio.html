@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <title>화면비 계산기 - Aspect Ratio Calculator 온라인 | WooaDev</title>
+  <meta name="description" content="화면비(Aspect Ratio) 계산기로 너비/높이를 입력하면 비율을 계산합니다. 16:9, 4:3, 1:1 등 표준 비율로 크기 변환. CSS 코드 자동 생성. 무료 도구.">
+  <meta name="keywords" content="화면비 계산기, aspect ratio calculator, 16:9 계산, 비율 변환, 해상도 계산, CSS aspect-ratio">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/aspect-ratio.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/aspect-ratio.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/aspect-ratio.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/aspect-ratio.html">
+  <meta property="og:title" content="화면비 계산기 | WooaDev">
+  <meta property="og:description" content="너비·높이 입력으로 화면비 계산, 표준 비율 변환, CSS 코드 생성.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/aspect-ratio.html">
+  <meta property="og:locale" content="ko_KR">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="manifest" href="/manifest.json">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "화면비 계산기",
+    "url": "https://wooadev.wooahouse.com/aspect-ratio.html",
+    "description": "화면비를 계산하고 표준 비율로 크기 변환 및 CSS 코드 생성",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" }
+  }
+  </script>
+  <style>
+    .calc-grid { display:grid; grid-template-columns:1fr auto 1fr; align-items:start; gap:16px; }
+    @media(max-width:600px){.calc-grid{grid-template-columns:1fr;}}
+    .calc-card { background:#fdf8f3; border:1px solid #e0cdb0; border-radius:10px; padding:16px; }
+    .calc-card h3 { font-size:14px; color:#a07850; margin:0 0 12px; }
+    .inp-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+    .inp-row label { width:50px; font-size:13px; color:#555; font-weight:600; }
+    .inp-row input { flex:1; border:1px solid #d0b896; border-radius:6px; padding:7px 10px; font-size:14px; }
+    .eq-col { display:flex; align-items:center; justify-content:center; font-size:28px; color:#C4956A; font-weight:700; padding-top:40px; }
+    .ratio-display { font-size:36px; font-weight:800; color:#C4956A; text-align:center; margin:16px 0 4px; }
+    .ratio-decimal { text-align:center; font-size:13px; color:#888; margin-bottom:12px; }
+    .presets-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:8px; margin:16px 0; }
+    .preset-btn { padding:10px 6px; border-radius:8px; border:1px solid #d0b896; background:#fff; cursor:pointer; text-align:center; transition:all 0.15s; }
+    .preset-btn:hover { background:#C4956A; color:#fff; border-color:#C4956A; }
+    .preset-ratio { font-weight:700; font-size:14px; }
+    .preset-name { font-size:11px; color:#888; }
+    .preset-btn:hover .preset-name { color:#ffe; }
+    .preview-box { width:100%; border-radius:10px; background:#e0d0bc; display:flex; align-items:center; justify-content:center; font-size:13px; color:#a07850; font-weight:600; overflow:hidden; transition:all 0.3s; }
+    .css-block { font-family:monospace; font-size:12px; background:#1e1e2e; color:#cdd6f4; border-radius:8px; padding:12px; margin-top:12px; }
+    .copy-row { display:flex; gap:8px; align-items:center; margin-top:8px; }
+    .result-table { width:100%; border-collapse:collapse; font-size:13px; margin-top:12px; }
+    .result-table th { background:#f5ede0; padding:6px 8px; border:1px solid #e0cdb0; text-align:left; }
+    .result-table td { padding:5px 8px; border:1px solid #e0cdb0; }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="/index.html" class="logo">🛠️ WooaDev</a>
+    <nav class="nav">
+      <a href="/index.html">홈</a>
+      <a href="/css-units.html">CSS 단위</a>
+      <a href="/border-radius.html">Border Radius</a>
+      <a href="/grid-generator.html">Grid 생성기</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="/aspect-ratio.html" class="active">KO</a>
+        <a href="/en/aspect-ratio.html">EN</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+    <a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a>
+    <a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a>
+    <a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a>
+  </div>
+</div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+  <div class="tool-page">
+    <div class="breadcrumb"><a href="/index.html">홈</a> &rsaquo; 화면비 계산기</div>
+    <div class="tool-header">
+      <div class="tool-icon-lg">📐</div>
+      <div>
+        <h1>화면비 계산기</h1>
+        <p>너비와 높이를 입력하면 화면비를 계산하고 크기를 변환합니다</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <!-- Main Calculator -->
+      <div class="calc-grid">
+        <div class="calc-card">
+          <h3>📏 크기 입력</h3>
+          <div class="inp-row">
+            <label>너비</label>
+            <input type="number" id="inW" placeholder="1920" value="1920" min="1" oninput="calcFromSize()">
+          </div>
+          <div class="inp-row">
+            <label>높이</label>
+            <input type="number" id="inH" placeholder="1080" value="1080" min="1" oninput="calcFromSize()">
+          </div>
+        </div>
+        <div class="eq-col">=</div>
+        <div class="calc-card">
+          <h3>📊 계산된 비율</h3>
+          <div class="ratio-display" id="ratioDisplay">16:9</div>
+          <div class="ratio-decimal" id="ratioDecimal">1.7778</div>
+          <div style="font-size:12px;color:#888;text-align:center;" id="ratioDesc">와이드스크린 / HD</div>
+        </div>
+      </div>
+
+      <!-- Presets -->
+      <p style="font-weight:600;color:#a07850;font-size:14px;margin:16px 0 8px;">표준 화면비 프리셋</p>
+      <div class="presets-grid" id="presetsGrid"></div>
+
+      <!-- Size converter -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
+        <div class="calc-card">
+          <h3>↔ 너비로 높이 계산</h3>
+          <div class="inp-row">
+            <label>너비</label>
+            <input type="number" id="convW" placeholder="1280" min="1" oninput="calcH()">
+          </div>
+          <div class="inp-row">
+            <label>높이</label>
+            <input type="number" id="convH" placeholder="결과" readonly style="background:#f5f5f5;">
+          </div>
+        </div>
+        <div class="calc-card">
+          <h3>↔ 높이로 너비 계산</h3>
+          <div class="inp-row">
+            <label>높이</label>
+            <input type="number" id="convH2" placeholder="720" min="1" oninput="calcW()">
+          </div>
+          <div class="inp-row">
+            <label>너비</label>
+            <input type="number" id="convW2" placeholder="결과" readonly style="background:#f5f5f5;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <p style="font-weight:600;color:#a07850;font-size:14px;margin:16px 0 8px;">비율 미리보기</p>
+      <div style="width:100%;max-width:400px;margin:0 auto;" id="previewWrap">
+        <div class="preview-box" id="previewBox" style="height:225px;">16 : 9</div>
+      </div>
+
+      <!-- CSS Output -->
+      <div class="css-block" id="cssOutput"></div>
+      <div class="copy-row">
+        <button class="dev-btn" onclick="copyCSS()">📋 CSS 복사</button>
+        <span id="copyMsg" style="color:#4caf50;font-size:13px;display:none">복사됨!</span>
+      </div>
+
+      <!-- Common sizes table -->
+      <details style="margin-top:20px;">
+        <summary style="cursor:pointer;font-weight:600;color:#a07850;font-size:14px;">일반 해상도 목록</summary>
+        <div style="overflow-x:auto;margin-top:10px;">
+          <table class="result-table" id="sizeTable"></table>
+        </div>
+      </details>
+    </div>
+
+    <div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li><b>16:9</b>: YouTube, 대부분의 TV 및 모니터 표준 비율</li>
+        <li><b>4:3</b>: 구형 TV, 카메라 사진의 일반적 비율</li>
+        <li><b>1:1</b>: Instagram 정사각형 포스트</li>
+        <li>CSS <code>aspect-ratio</code> 속성으로 반응형 요소의 비율을 유지할 수 있습니다</li>
+      </ul>
+    </div>
+
+    <section class="faq-section">
+      <h2>자주 묻는 질문</h2>
+      <div class="faq-item">
+        <div class="faq-q">16:9와 1920x1080의 관계는?</div>
+        <div class="faq-a">1920÷1080 = 1.7778이며, GCD로 약분하면 16:9가 됩니다. 즉 1920x1080은 16:9 비율의 Full HD 해상도입니다. 같은 비율로 1280×720(HD), 3840×2160(4K)가 있습니다.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">CSS aspect-ratio는 어떻게 사용하나요?</div>
+        <div class="faq-a"><code>aspect-ratio: 16 / 9;</code>처럼 사용하면 너비만 지정해도 높이가 자동으로 맞춰집니다. 반응형 이미지, 비디오 래퍼, 카드 레이아웃에 유용합니다.</div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="tool-sidebar">
+    <div class="ad-card">
+      <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+    </div>
+    <div class="ad-card">
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">🛠️ WooaDev</div>
+      <p>개발자를 위한 무료 온라인 도구 모음</p>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">CSS · 레이아웃</div>
+      <a href="/css-units.html">CSS 단위 변환</a>
+      <a href="/aspect-ratio.html">화면비 계산기</a>
+      <a href="/border-radius.html">Border Radius</a>
+      <a href="/flexbox-generator.html">Flexbox 생성기</a>
+      <a href="/grid-generator.html">Grid 생성기</a>
+      <a href="/css-gradient.html">CSS Gradient</a>
+      <a href="/box-shadow.html">Box Shadow</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 WooaDev. All rights reserved. | <a href="https://wooahouse.com/" target="_blank" rel="noopener">WooaHouse</a></p>
+  </div>
+  <div class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</div>
+</footer>
+
+<script src="/js/pwa-install.js"></script>
+<script>
+  const presets = [
+    {r:'16:9', name:'와이드스크린', w:16, h:9},
+    {r:'4:3', name:'표준 TV', w:4, h:3},
+    {r:'1:1', name:'정사각형', w:1, h:1},
+    {r:'21:9', name:'울트라와이드', w:21, h:9},
+    {r:'3:2', name:'DSLR 사진', w:3, h:2},
+    {r:'2:3', name:'세로 사진', w:2, h:3},
+    {r:'9:16', name:'모바일/릴스', w:9, h:16},
+    {r:'4:5', name:'Instagram', w:4, h:5},
+    {r:'5:4', name:'스퀘어+', w:5, h:4},
+    {r:'2:1', name:'파노라마', w:2, h:1},
+  ];
+
+  const commonSizes = [
+    {res:'3840×2160',ratio:'16:9',name:'4K UHD'},
+    {res:'2560×1440',ratio:'16:9',name:'QHD / 2K'},
+    {res:'1920×1080',ratio:'16:9',name:'Full HD'},
+    {res:'1280×720',ratio:'16:9',name:'HD'},
+    {res:'2048×1536',ratio:'4:3',name:'iPad (초기)'},
+    {res:'1024×768',ratio:'4:3',name:'XGA'},
+    {res:'800×600',ratio:'4:3',name:'SVGA'},
+    {res:'375×812',ratio:'~9:19.5',name:'iPhone X/11'},
+    {res:'1080×1920',ratio:'9:16',name:'FHD 세로'},
+    {res:'2560×1080',ratio:'21:9',name:'UW FHD'},
+  ];
+
+  // Build presets
+  const pg = document.getElementById('presetsGrid');
+  presets.forEach(p=>{
+    const btn=document.createElement('button');
+    btn.className='preset-btn';
+    btn.innerHTML=`<div class="preset-ratio">${p.r}</div><div class="preset-name">${p.name}</div>`;
+    btn.onclick=()=>applyPreset(p.w,p.h);
+    pg.appendChild(btn);
+  });
+
+  // Build size table
+  const st = document.getElementById('sizeTable');
+  st.innerHTML='<tr><th>해상도</th><th>비율</th><th>이름</th></tr>';
+  commonSizes.forEach(s=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${s.res}</td><td>${s.ratio}</td><td>${s.name}</td>`;
+    st.appendChild(tr);
+  });
+
+  function gcd(a,b){return b===0?a:gcd(b,a%b);}
+
+  let currentRatioW=16, currentRatioH=9;
+
+  function calcFromSize() {
+    const w=parseInt(document.getElementById('inW').value)||1;
+    const h=parseInt(document.getElementById('inH').value)||1;
+    const g=gcd(w,h);
+    currentRatioW=w/g; currentRatioH=h/g;
+    const dec=(w/h).toFixed(4);
+    document.getElementById('ratioDisplay').textContent=currentRatioW+':'+currentRatioH;
+    document.getElementById('ratioDecimal').textContent=dec;
+    // Find matching preset
+    const match=presets.find(p=>p.w===currentRatioW&&p.h===currentRatioH);
+    document.getElementById('ratioDesc').textContent=match?match.name:'사용자 정의';
+    updatePreview(currentRatioW,currentRatioH);
+    updateCSS(currentRatioW,currentRatioH);
+  }
+
+  function applyPreset(w,h) {
+    currentRatioW=w; currentRatioH=h;
+    document.getElementById('inW').value=w*100;
+    document.getElementById('inH').value=h*100;
+    document.getElementById('ratioDisplay').textContent=w+':'+h;
+    document.getElementById('ratioDecimal').textContent=(w/h).toFixed(4);
+    const match=presets.find(p=>p.w===w&&p.h===h);
+    document.getElementById('ratioDesc').textContent=match?match.name:'';
+    updatePreview(w,h);
+    updateCSS(w,h);
+  }
+
+  function calcH() {
+    const w=parseFloat(document.getElementById('convW').value)||0;
+    if(!w||!currentRatioW) return;
+    document.getElementById('convH').value=Math.round(w*currentRatioH/currentRatioW);
+  }
+  function calcW() {
+    const h=parseFloat(document.getElementById('convH2').value)||0;
+    if(!h||!currentRatioH) return;
+    document.getElementById('convW2').value=Math.round(h*currentRatioW/currentRatioH);
+  }
+
+  function updatePreview(w,h) {
+    const box=document.getElementById('previewBox');
+    const maxH=240;
+    const maxW=400;
+    const ratio=w/h;
+    let bw,bh;
+    if(w>=h){ bw=maxW; bh=Math.round(maxW/ratio); if(bh>maxH){bh=maxH;bw=Math.round(maxH*ratio);} }
+    else { bh=maxH; bw=Math.round(maxH*ratio); }
+    box.style.width=bw+'px';
+    box.style.height=bh+'px';
+    box.textContent=w+' : '+h;
+    document.getElementById('previewWrap').style.width=bw+'px';
+  }
+
+  function updateCSS(w,h) {
+    document.getElementById('cssOutput').textContent=
+`.element {\n  aspect-ratio: ${w} / ${h};\n  width: 100%; /* 너비만 지정하면 높이 자동 */\n}\n\n/* 또는 padding-top 방법 (구형 브라우저) */\n.element::before {\n  content: "";\n  display: block;\n  padding-top: ${(h/w*100).toFixed(4)}%;\n}`;
+  }
+
+  function copyCSS() {
+    navigator.clipboard.writeText(document.getElementById('cssOutput').textContent).then(()=>{
+      const msg=document.getElementById('copyMsg');
+      msg.style.display='inline';
+      setTimeout(()=>msg.style.display='none',2000);
+    });
+  }
+
+  calcFromSize();
+</script>
+</body>
+</html>

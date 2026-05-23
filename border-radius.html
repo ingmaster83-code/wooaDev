@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+<meta charset="UTF-8">
+<meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+<meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Border Radius 생성기 무료 — 둥근 모서리 CSS 코드 | WooaDev</title>
+<meta name="description" content="CSS border-radius를 시각적으로 조절하는 무료 온라인 생성기. 단순 모드(전체)와 상세 모드(4모서리 개별)를 지원. px/% 단위 전환, 미리보기, CSS 코드 바로 복사.">
+<meta name="keywords" content="border-radius 생성기, CSS 둥근 모서리, border radius generator, CSS border radius tool, 모서리 둥글기, CSS 코드 생성기, 라운드 코너">
+<link rel="canonical" href="https://wooadev.wooahouse.com/border-radius.html">
+<link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/border-radius.html">
+<link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/border-radius.html">
+<link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/border-radius.html">
+<meta property="og:title" content="CSS Border Radius 생성기 무료 | WooaDev">
+<meta property="og:description" content="슬라이더로 모서리 둥글기를 조절하고 CSS border-radius 코드를 바로 복사하세요.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wooadev.wooahouse.com/border-radius.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="WooaDev">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSS Border Radius 생성기","url":"https://wooadev.wooahouse.com/border-radius.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="https://ads-partners.coupang.com/g.js"></script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#C4956A">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.lang-switcher{display:flex;align-items:center;gap:4px}
+.lang-switcher a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.8rem;font-weight:600;padding:3px 8px;border-radius:12px;transition:background 0.15s}
+.lang-switcher a.active{color:white;background:rgba(255,255,255,0.25)}
+.lang-switcher a:hover{color:white;background:rgba(255,255,255,0.18)}
+.lang-switcher span{color:rgba(255,255,255,0.3);font-size:0.75rem}
+
+/* 미리보기 스테이지 */
+.br-stage{display:flex;align-items:center;justify-content:center;background:repeating-conic-gradient(#f0f0f0 0% 25%,#fff 0% 50%) 0 0/20px 20px;border-radius:12px;min-height:220px;margin-bottom:20px;border:1px solid rgba(0,0,0,0.06);padding:40px 20px;position:relative}
+.br-box{width:140px;height:140px;background:#C4956A;transition:border-radius .15s}
+
+/* 모드 탭 */
+.mode-tabs{display:flex;gap:8px;margin-bottom:16px}
+.mode-tab{padding:7px 18px;border-radius:8px;border:1.5px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:0.85rem;font-weight:600;color:#64748b;transition:all .15s}
+.mode-tab.active{background:#C4956A;color:#fff;border-color:#C4956A}
+
+/* 슬라이더 그룹 */
+.slider-group{display:flex;flex-direction:column;gap:12px}
+.slider-row{display:flex;align-items:center;gap:10px}
+.slider-row label{width:80px;font-size:0.82rem;color:#64748b;flex-shrink:0}
+.slider-row input[type=range]{flex:1;accent-color:#C4956A}
+.slider-row input[type=number]{width:64px;text-align:center;border:1px solid #e2e8f0;border-radius:6px;padding:4px 6px;font-size:0.82rem}
+.slider-row span{font-size:0.8rem;color:#94a3b8;white-space:nowrap;width:18px}
+
+/* 옵션 바 */
+.opt-bar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.unit-btns{display:flex;gap:0;border:1.5px solid #e2e8f0;border-radius:8px;overflow:hidden}
+.unit-btn{padding:5px 14px;border:none;background:#f8fafc;cursor:pointer;font-size:0.82rem;font-weight:600;color:#64748b;transition:background .15s}
+.unit-btn.active{background:#C4956A;color:#fff}
+.color-pick-wrap{display:flex;align-items:center;gap:8px;font-size:0.82rem;color:#64748b}
+.color-pick-wrap input[type=color]{width:36px;height:36px;border:none;border-radius:8px;cursor:pointer;padding:2px;background:none}
+
+/* 4모서리 그리드 */
+.corner-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:4px}
+.corner-label{font-size:0.78rem;color:#94a3b8;margin-bottom:4px;font-weight:600}
+
+.code-out{font-family:'Consolas','Monaco',monospace;font-size:0.88rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;word-break:break-all;line-height:1.6;color:#1e293b;margin-bottom:10px;min-height:48px}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="css-gradient.html">Gradient</a>
+      <a href="box-shadow.html">Shadow</a>
+      <a href="color-converter.html">Color</a>
+      <a href="json-formatter.html">JSON</a>
+      <a href="hash-generator.html">Hash</a>
+      <a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="border-radius.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/border-radius.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85);font-size:0.85rem;text-decoration:none;margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar"><span class="our-sites-label">WooaHouse Services</span><div class="our-sites-links"><a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a><a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a><a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a><a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a><a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a><a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a><a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a><a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a><a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a><a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a><a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a><a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a><a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a></div></div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Border Radius 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">⬜</span>
+    <h1>CSS Border Radius 생성기</h1>
+    <p>슬라이더로 모서리 둥글기를 조절하고 CSS border-radius 코드를 바로 복사하세요. 단순·상세 모드, px·% 단위 지원.</p>
+  </div>
+
+  <!-- 미리보기 -->
+  <div class="br-stage">
+    <div class="br-box" id="brBox"></div>
+  </div>
+
+  <!-- 컨트롤 -->
+  <div class="dev-panel">
+    <div class="opt-bar">
+      <div>
+        <div class="dev-label" style="margin-bottom:6px">모드</div>
+        <div class="mode-tabs">
+          <button class="mode-tab active" id="btnSimple" onclick="setMode('simple')">단순</button>
+          <button class="mode-tab" id="btnAdv" onclick="setMode('advanced')">상세 (4모서리)</button>
+        </div>
+      </div>
+      <div>
+        <div class="dev-label" style="margin-bottom:6px">단위</div>
+        <div class="unit-btns">
+          <button class="unit-btn active" id="btnPx" onclick="setUnit('px')">px</button>
+          <button class="unit-btn" id="btnPct" onclick="setUnit('%')">%</button>
+        </div>
+      </div>
+      <div class="color-pick-wrap">
+        <label>박스 색상</label>
+        <input type="color" id="boxColor" value="#C4956A" oninput="document.getElementById('brBox').style.background=this.value">
+      </div>
+    </div>
+
+    <!-- 단순 모드 -->
+    <div id="simpleMode">
+      <div class="dev-label">전체 모서리</div>
+      <div class="slider-group">
+        <div class="slider-row">
+          <label>모서리</label>
+          <input type="range" id="sAll" min="0" max="100" value="12" oninput="syncSimple(this)">
+          <input type="number" id="nAll" min="0" max="9999" value="12" style="width:64px" oninput="syncSimple(this,true)">
+          <span id="unitLabelSimple">px</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 상세 모드 -->
+    <div id="advMode" style="display:none">
+      <div class="dev-label">4모서리 개별 설정</div>
+      <div class="corner-grid">
+        <div>
+          <div class="corner-label">↖ 왼쪽 위 (TL)</div>
+          <div class="slider-group">
+            <div class="slider-row">
+              <input type="range" id="sTL" min="0" max="100" value="12" oninput="syncCorner('TL',this)">
+              <input type="number" id="nTL" min="0" max="9999" value="12" oninput="syncCorner('TL',this,true)">
+              <span class="unit-lbl">px</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="corner-label">↗ 오른쪽 위 (TR)</div>
+          <div class="slider-group">
+            <div class="slider-row">
+              <input type="range" id="sTR" min="0" max="100" value="12" oninput="syncCorner('TR',this)">
+              <input type="number" id="nTR" min="0" max="9999" value="12" oninput="syncCorner('TR',this,true)">
+              <span class="unit-lbl">px</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="corner-label">↙ 왼쪽 아래 (BL)</div>
+          <div class="slider-group">
+            <div class="slider-row">
+              <input type="range" id="sBL" min="0" max="100" value="12" oninput="syncCorner('BL',this)">
+              <input type="number" id="nBL" min="0" max="9999" value="12" oninput="syncCorner('BL',this,true)">
+              <span class="unit-lbl">px</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="corner-label">↘ 오른쪽 아래 (BR)</div>
+          <div class="slider-group">
+            <div class="slider-row">
+              <input type="range" id="sBR" min="0" max="100" value="12" oninput="syncCorner('BR',this)">
+              <input type="number" id="nBR" min="0" max="9999" value="12" oninput="syncCorner('BR',this,true)">
+              <span class="unit-lbl">px</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 코드 출력 -->
+  <div class="dev-panel" style="margin-top:12px">
+    <div class="dev-label">생성된 CSS 코드</div>
+    <div class="code-out" id="codeOut"></div>
+    <button class="dev-btn" onclick="copyCode()">📋 코드 복사</button>
+    <span id="copyMsg" style="color:#22c55e;font-size:0.83rem;margin-left:10px;display:none">✅ 복사 완료!</span>
+  </div>
+
+  <div class="tips-panel" style="margin-top:16px">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li><strong>단순 모드</strong>: 4개 모서리에 동일한 값을 한 번에 적용합니다.</li>
+      <li><strong>상세 모드</strong>: 각 모서리(TL, TR, BL, BR)를 개별 설정할 수 있습니다.</li>
+      <li><strong>%</strong> 단위: 요소 크기에 비례한 비율로 적용. 50%로 설정하면 완전한 원/타원이 됩니다.</li>
+      <li><strong>px</strong> 단위: 고정 픽셀 값. 해상도와 무관하게 일정한 둥글기를 유지합니다.</li>
+      <li>4개 값이 모두 같으면 <code>border-radius: 12px</code>처럼 단일 값으로 출력됩니다.</li>
+    </ul>
+  </div>
+
+  <details class="faq-item">
+    <summary>4개 값을 각각 다르게 설정하면 어떻게 되나요?</summary>
+    <p>CSS는 <code>border-radius: TL TR BR BL</code> 순서로 시계 방향으로 각 모서리를 지정합니다. 상세 모드에서 개별 설정 시 이 형식으로 코드가 생성됩니다.</p>
+  </details>
+  <details class="faq-item">
+    <summary>50%로 설정하면 원이 되나요?</summary>
+    <p>정사각형 요소에 <code>border-radius: 50%</code>를 적용하면 완전한 원이 됩니다. 직사각형에 적용하면 타원이 됩니다.</p>
+  </details>
+  <details class="faq-item">
+    <summary>border-radius와 border-top-left-radius 차이는?</summary>
+    <p><code>border-radius</code>는 단축 속성(shorthand)으로 최대 4개 값을 한 번에 설정합니다. <code>border-top-left-radius</code> 등 개별 속성으로도 설정 가능하며, 이 도구는 단축 속성 형식의 코드를 생성합니다.</p>
+  </details>
+</div>
+
+<aside class="tool-sidebar">
+  <div class="ad-card">
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px"
+      data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025"
+      data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card">
+    <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+  </div>
+</aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-col"><h4>🛠️ WooaDev</h4><p>개발자 필수 유틸리티 도구 모음. 브라우저에서 무료로 바로 사용.</p></div>
+      <div class="footer-links"><h4>인코딩 · 해시</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL 인코더</a><a href="image-to-base64.html">이미지→Base64</a><a href="hash-generator.html">Hash 생성기</a><a href="jwt-decoder.html">JWT 디코더</a></div>
+      <div class="footer-links"><h4>포맷 · 변환</h4><a href="json-formatter.html">JSON 포맷터</a><a href="xml-formatter.html">XML 포맷터</a><a href="css-gradient.html">CSS 그라디언트</a><a href="box-shadow.html">Box Shadow</a><a href="border-radius.html">Border Radius</a></div>
+      <div class="footer-links"><h4>생성기 · 변환</h4><a href="uuid-generator.html">UUID 생성기</a><a href="lorem-ipsum.html">Lorem Ipsum</a><a href="cron-generator.html">Cron 생성기</a><a href="number-base.html">진법 변환기</a><a href="timestamp.html">타임스탬프</a></div>
+      <div class="footer-links"><h4>WooaHouse 서비스</h4><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">WooaViewer</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">WooaPDF</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">WooaText</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev by WooaHouse. 모든 권리 보유.</p></div>
+  </div>
+</footer>
+<script src="js/pwa-install.js"></script>
+<script>
+let mode = 'simple';
+let unit = 'px';
+const corners = { TL:12, TR:12, BL:12, BR:12 };
+const MAX_PX = 300, MAX_PCT = 50;
+
+function getMax() { return unit === 'px' ? MAX_PX : MAX_PCT; }
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('simpleMode').style.display = m === 'simple' ? 'block' : 'none';
+  document.getElementById('advMode').style.display = m === 'advanced' ? 'block' : 'none';
+  document.getElementById('btnSimple').classList.toggle('active', m === 'simple');
+  document.getElementById('btnAdv').classList.toggle('active', m === 'advanced');
+  render();
+}
+
+function setUnit(u) {
+  unit = u;
+  document.getElementById('btnPx').classList.toggle('active', u === 'px');
+  document.getElementById('btnPct').classList.toggle('active', u === '%');
+  const max = getMax();
+  ['sTL','sTR','sBL','sBR','sAll'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.max = max;
+  });
+  document.getElementById('unitLabelSimple').textContent = u;
+  document.querySelectorAll('.unit-lbl').forEach(el => el.textContent = u);
+  render();
+}
+
+function syncSimple(el, fromNum) {
+  const v = Math.max(0, Math.min(parseInt(el.value)||0, fromNum ? 9999 : getMax()));
+  document.getElementById('sAll').value = Math.min(v, getMax());
+  document.getElementById('nAll').value = v;
+  corners.TL = corners.TR = corners.BL = corners.BR = v;
+  render();
+}
+
+function syncCorner(c, el, fromNum) {
+  const v = Math.max(0, Math.min(parseInt(el.value)||0, fromNum ? 9999 : getMax()));
+  document.getElementById('s'+c).value = Math.min(v, getMax());
+  document.getElementById('n'+c).value = v;
+  corners[c] = v;
+  render();
+}
+
+function render() {
+  const u = unit;
+  const { TL, TR, BL, BR } = corners;
+  let val;
+  if (TL === TR && TL === BL && TL === BR) {
+    val = `${TL}${u}`;
+  } else {
+    val = `${TL}${u} ${TR}${u} ${BR}${u} ${BL}${u}`;
+  }
+  document.getElementById('brBox').style.borderRadius = val;
+  document.getElementById('codeOut').textContent = `border-radius: ${val};`;
+}
+
+function copyCode() {
+  const txt = document.getElementById('codeOut').textContent;
+  navigator.clipboard.writeText(txt).then(() => {
+    const msg = document.getElementById('copyMsg');
+    msg.style.display = 'inline';
+    setTimeout(() => msg.style.display = 'none', 2000);
+  });
+}
+
+render();
+</script>
+</body>
+</html>

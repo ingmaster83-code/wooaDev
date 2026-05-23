@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <title>CSS Transition Generator - Animation Preview Online | WooaDev</title>
+  <meta name="description" content="Generate CSS transition code with live animation preview. Control duration, easing, delay, and property. Includes common easing presets. Free online CSS tool.">
+  <meta name="keywords" content="CSS transition generator, CSS animation, transition property, easing function, timing function, cubic-bezier">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/css-transition.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/css-transition.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/css-transition.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/css-transition.html">
+  <meta property="og:title" content="CSS Transition Generator | WooaDev">
+  <meta property="og:description" content="Generate CSS transition code with live preview, easing presets, and property selection.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/css-transition.html">
+  <meta property="og:locale" content="en_US">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <style>
+    .ctrl-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    @media(max-width:600px){.ctrl-grid{grid-template-columns:1fr;}}
+    .ctrl-group { display:flex; flex-direction:column; gap:6px; }
+    .ctrl-group label { font-size:13px; font-weight:600; color:#a07850; }
+    .ctrl-group select, .ctrl-group input[type=range] { width:100%; }
+    .ctrl-group input[type=range] { accent-color:#C4956A; }
+    .val-badge { font-size:12px; color:#888; }
+    .preview-area { display:flex; align-items:center; justify-content:center; background:#f0e8dc; border-radius:12px; min-height:160px; margin:20px 0; overflow:hidden; cursor:pointer; }
+    .preview-box { width:80px; height:80px; background:#C4956A; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px; font-weight:700; user-select:none; }
+    .preview-hint { text-align:center; font-size:12px; color:#aaa; margin-top:-12px; margin-bottom:8px; }
+    .prop-checks { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px; }
+    .prop-check { display:flex; align-items:center; gap:4px; font-size:13px; }
+    .prop-check input[type=checkbox] { accent-color:#C4956A; }
+    .output-block { font-family:monospace; font-size:13px; background:#1e1e2e; color:#cdd6f4; border-radius:8px; padding:16px; overflow-x:auto; }
+    .copy-row { display:flex; gap:8px; align-items:center; margin-top:8px; }
+    .easing-presets { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+    .ease-btn { padding:4px 10px; border-radius:6px; border:1px solid #d0b896; background:#fff; font-size:12px; cursor:pointer; }
+    .ease-btn.active, .ease-btn:hover { background:#C4956A; color:#fff; border-color:#C4956A; }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">🛠️ WooaDev</a>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="css-gradient.html">Gradient</a>
+      <a href="box-shadow.html">Shadow</a>
+      <a href="flexbox-generator.html">Flexbox</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../css-transition.html">KO</a>
+        <a href="css-transition.html" class="active">EN</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+    <a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a>
+    <a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a>
+    <a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a>
+  </div>
+</div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+  <div class="tool-page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; CSS Transition Generator</div>
+    <div class="tool-header">
+      <div class="tool-icon-lg">🎬</div>
+      <div>
+        <h1>CSS Transition Generator</h1>
+        <p>Control duration, easing, and delay with sliders and see a live animation preview</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <p style="font-weight:600;color:#a07850;font-size:14px;margin-bottom:8px;">Apply to Property</p>
+      <div class="prop-checks">
+        <label class="prop-check"><input type="checkbox" id="propAll" checked onchange="toggleAll(this)"> all</label>
+        <label class="prop-check"><input type="checkbox" class="prop-cb" value="opacity"> opacity</label>
+        <label class="prop-check"><input type="checkbox" class="prop-cb" value="transform"> transform</label>
+        <label class="prop-check"><input type="checkbox" class="prop-cb" value="background-color"> background-color</label>
+        <label class="prop-check"><input type="checkbox" class="prop-cb" value="color"> color</label>
+        <label class="prop-check"><input type="checkbox" class="prop-cb" value="border-color"> border-color</label>
+        <label class="prop-check"><input type="checkbox" class="prop-cb" value="box-shadow"> box-shadow</label>
+        <label class="prop-check"><input type="checkbox" class="prop-cb" value="width"> width</label>
+        <label class="prop-check"><input type="checkbox" class="prop-cb" value="height"> height</label>
+      </div>
+
+      <div class="ctrl-grid">
+        <div class="ctrl-group">
+          <label>Duration <span class="val-badge" id="durVal">0.3s</span></label>
+          <input type="range" id="duration" min="0" max="3000" step="50" value="300" oninput="render()">
+        </div>
+        <div class="ctrl-group">
+          <label>Delay <span class="val-badge" id="delayVal">0s</span></label>
+          <input type="range" id="delay" min="0" max="2000" step="50" value="0" oninput="render()">
+        </div>
+      </div>
+
+      <p style="font-weight:600;color:#a07850;font-size:14px;margin:12px 0 6px">Easing (Timing Function)</p>
+      <div class="easing-presets" id="easingPresets"></div>
+      <input type="text" id="customEasing" style="width:100%;border:1px solid #d0b896;border-radius:8px;padding:8px;font-size:13px;font-family:monospace;box-sizing:border-box;" placeholder="cubic-bezier(0.25, 0.46, 0.45, 0.94)" oninput="render()">
+
+      <div class="preview-area" id="previewArea" onclick="triggerPreview()">
+        <div class="preview-box" id="previewBox">Click</div>
+      </div>
+      <p class="preview-hint">Click the box to preview the transition</p>
+
+      <div class="output-block" id="cssOutput"></div>
+      <div class="copy-row">
+        <button class="dev-btn" onclick="copyCSS()">📋 Copy</button>
+        <span id="copyMsg" style="color:#4caf50;font-size:13px;display:none">Copied!</span>
+      </div>
+    </div>
+
+    <div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li><b>ease-in-out</b> is the most commonly used easing for smooth UI transitions</li>
+        <li>Enter a custom <b>cubic-bezier</b> for fully customized motion curves</li>
+        <li>Specify individual properties instead of <b>all</b> for better performance</li>
+        <li>Chain multiple transitions: <code>transition: opacity 0.3s, transform 0.5s;</code></li>
+      </ul>
+    </div>
+
+    <section class="faq-section">
+      <h2>FAQ</h2>
+      <div class="faq-item">
+        <div class="faq-q">What is the difference between transition and animation?</div>
+        <div class="faq-a">Transition defines a smooth change between two states (e.g., hover on/off). Animation uses keyframes for multi-step, looping effects. Use transition for simple hover effects; use animation for complex sequences.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Should I use will-change with transitions?</div>
+        <div class="faq-a">Adding <code>will-change: transform</code> can enable GPU acceleration for transform and opacity transitions, improving performance. However, overusing it increases memory consumption, so apply it only where needed.</div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="tool-sidebar">
+    <div class="ad-card">
+      <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+    </div>
+    <div class="ad-card">
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">🛠️ WooaDev</div>
+      <p>Free online developer tools</p>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">CSS Tools</div>
+      <a href="css-gradient.html">CSS Gradient</a>
+      <a href="box-shadow.html">Box Shadow</a>
+      <a href="border-radius.html">Border Radius</a>
+      <a href="flexbox-generator.html">Flexbox Generator</a>
+      <a href="grid-generator.html">Grid Generator</a>
+      <a href="css-transition.html">CSS Transition</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 WooaDev. All rights reserved. | <a href="https://wooahouse.com/" target="_blank" rel="noopener">WooaHouse</a></p>
+  </div>
+  <div class="coupang-notice">This post is part of the Coupang Partners activity, and a certain commission is provided accordingly.</div>
+</footer>
+
+<script src="../js/pwa-install.js"></script>
+<script>
+  const easingList = [
+    {label:'linear',value:'linear'},{label:'ease',value:'ease'},{label:'ease-in',value:'ease-in'},
+    {label:'ease-out',value:'ease-out'},{label:'ease-in-out',value:'ease-in-out'},
+    {label:'spring',value:'cubic-bezier(0.34,1.56,0.64,1)'},{label:'bounce',value:'cubic-bezier(0.68,-0.55,0.27,1.55)'},
+    {label:'sharp',value:'cubic-bezier(0.4,0,0.6,1)'},{label:'swift',value:'cubic-bezier(0.55,0,0.1,1)'},
+  ];
+  const presetsDiv = document.getElementById('easingPresets');
+  easingList.forEach((e,i)=>{
+    const btn=document.createElement('button');
+    btn.className='ease-btn'+(i===4?' active':'');
+    btn.textContent=e.label;
+    btn.dataset.value=e.value;
+    btn.onclick=()=>{
+      document.querySelectorAll('.ease-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('customEasing').value=e.value;
+      render();
+    };
+    presetsDiv.appendChild(btn);
+  });
+  document.getElementById('customEasing').value='ease-in-out';
+
+  function toggleAll(cb){document.querySelectorAll('.prop-cb').forEach(c=>c.checked=false);render();}
+  function getProperty(){
+    if(document.getElementById('propAll').checked)return'all';
+    const checked=Array.from(document.querySelectorAll('.prop-cb:checked')).map(c=>c.value);
+    return checked.length?checked.join(', '):'all';
+  }
+
+  function render(){
+    const dur=parseInt(document.getElementById('duration').value);
+    const delay=parseInt(document.getElementById('delay').value);
+    const easing=document.getElementById('customEasing').value||'ease-in-out';
+    document.getElementById('durVal').textContent=(dur/1000).toFixed(2).replace(/\.?0+$/,'')+'s';
+    document.getElementById('delayVal').textContent=(delay/1000).toFixed(2).replace(/\.?0+$/,'')+'s';
+    const prop=getProperty();
+    const durS=(dur/1000).toFixed(2).replace(/\.?0+$/,'')+'s';
+    const delS=(delay/1000).toFixed(2).replace(/\.?0+$/,'')+'s';
+    document.getElementById('cssOutput').textContent=`transition: ${prop} ${durS} ${easing}${delay>0?' '+delS:''};`;
+  }
+
+  let toggled=false;
+  function triggerPreview(){
+    const box=document.getElementById('previewBox');
+    const dur=parseInt(document.getElementById('duration').value);
+    const delay=parseInt(document.getElementById('delay').value);
+    const easing=document.getElementById('customEasing').value||'ease-in-out';
+    box.style.transition=`all ${dur}ms ${easing} ${delay}ms`;
+    toggled=!toggled;
+    if(toggled){box.style.transform='scale(1.4) rotate(20deg)';box.style.opacity='0.6';box.style.background='#6a9cc4';box.style.borderRadius='50%';}
+    else{box.style.transform='';box.style.opacity='';box.style.background='#C4956A';box.style.borderRadius='12px';}
+  }
+
+  function copyCSS(){
+    navigator.clipboard.writeText(document.getElementById('cssOutput').textContent).then(()=>{
+      const msg=document.getElementById('copyMsg');msg.style.display='inline';
+      setTimeout(()=>msg.style.display='none',2000);
+    });
+  }
+  render();
+</script>
+</body>
+</html>

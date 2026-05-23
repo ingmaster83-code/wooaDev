@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+<meta charset="UTF-8">
+<meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+<meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON → TypeScript 변환기 무료 — interface 자동 생성 | WooaDev</title>
+<meta name="description" content="JSON을 붙여넣으면 TypeScript interface를 자동 생성. 중첩 객체·배열·선택적 필드 지원. 무료 온라인 JSON to TypeScript 변환기.">
+<meta name="keywords" content="JSON TypeScript 변환, JSON to TS interface, JSON to TypeScript generator, TS 타입 자동생성, TypeScript 인터페이스 생성">
+<link rel="canonical" href="https://wooadev.wooahouse.com/json-to-ts.html">
+<link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/json-to-ts.html">
+<link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/json-to-ts.html">
+<link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/json-to-ts.html">
+<meta property="og:title" content="JSON → TypeScript 변환기 무료 | WooaDev">
+<meta property="og:description" content="JSON 붙여넣기 → TypeScript interface 자동 생성. 중첩 객체·배열 지원.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wooadev.wooahouse.com/json-to-ts.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="WooaDev">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON TypeScript 변환기","url":"https://wooadev.wooahouse.com/json-to-ts.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="https://ads-partners.coupang.com/g.js"></script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#C4956A">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.lang-switcher{display:flex;align-items:center;gap:4px}.lang-switcher a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.8rem;font-weight:600;padding:3px 8px;border-radius:12px;transition:background 0.15s}.lang-switcher a.active{color:white;background:rgba(255,255,255,0.25)}.lang-switcher a:hover{color:white;background:rgba(255,255,255,0.18)}.lang-switcher span{color:rgba(255,255,255,0.3);font-size:0.75rem}
+.io-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px}
+@media(max-width:640px){.io-grid{grid-template-columns:1fr}}
+.io-box label{display:block;font-size:0.82rem;font-weight:600;color:#64748b;margin-bottom:6px}
+.io-ta{width:100%;min-height:260px;font-family:monospace;font-size:0.82rem;padding:12px;border:1.5px solid #e2e8f0;border-radius:10px;resize:vertical;background:#f8fafc;color:#1e293b;box-sizing:border-box;line-height:1.55}
+.opt-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.opt-row label{font-size:0.82rem;color:#64748b}
+.opt-row input[type=text]{padding:6px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:0.85rem;width:160px}
+.opt-row input[type=checkbox]{accent-color:#C4956A;width:15px;height:15px}
+.err{color:#DC2626;font-size:0.82rem;margin-top:4px}
+</style>
+</head>
+<body>
+<header><div class="header-inner"><a href="index.html" class="logo">WooaDev</a><nav><a href="json-formatter.html">JSON</a><a href="json-yaml.html">YAML</a><a href="regex-tester.html">Regex</a><a href="hash-generator.html">Hash</a><a href="index.html">전체 도구 ›</a></nav><div class="header-right"><div class="lang-switcher"><a href="json-to-ts.html" class="active">KO</a><span>|</span><a href="en/json-to-ts.html">EN</a></div><a href="about.html" style="color:rgba(255,255,255,0.85);font-size:0.85rem;text-decoration:none;margin-left:8px;">소개</a></div></div></header>
+<div class="our-sites-bar"><span class="our-sites-label">WooaHouse Services</span><div class="our-sites-links"><a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a><a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a><a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a><a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a><a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a><a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a><a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a><a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a><a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a><a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a><a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a><a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a><a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a></div></div>
+<div class="mobile-top-ad"><ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON → TypeScript</span></div>
+  <div class="tool-header"><span class="tool-header-icon">🔷</span><h1>JSON → TypeScript 변환기</h1><p>JSON을 붙여넣으면 TypeScript interface를 자동 생성합니다. 중첩 객체·배열·선택적 필드를 지원합니다.</p></div>
+  <div class="dev-panel">
+    <div class="opt-row">
+      <label>루트 인터페이스 이름</label>
+      <input type="text" id="rootName" value="Root" oninput="convert()">
+      <label><input type="checkbox" id="optFields" onchange="convert()"> 선택적 필드 (필드명?)</label>
+      <label><input type="checkbox" id="exportKw" checked onchange="convert()"> export 추가</label>
+    </div>
+    <div class="io-grid">
+      <div class="io-box"><label>JSON 입력</label><textarea class="io-ta" id="jsonIn" placeholder='{"name":"홍길동","age":30,"address":{"city":"서울","zip":"04524"},"tags":["개발자","프론트엔드"]}' oninput="convert()"></textarea></div>
+      <div class="io-box"><label>TypeScript 출력</label><textarea class="io-ta" id="tsOut" readonly></textarea></div>
+    </div>
+    <div id="errMsg" class="err"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="dev-btn" onclick="convert()">🔷 변환</button>
+      <button class="dev-btn" onclick="copyTs()">📋 복사</button>
+      <button class="dev-btn" style="background:#f1f5f9;color:#475569" onclick="clearAll()">🗑️ 초기화</button>
+      <span id="copyMsg" style="color:#22c55e;font-size:0.83rem;margin-left:4px;display:none">✅ 복사 완료!</span>
+    </div>
+  </div>
+  <div class="tips-panel" style="margin-top:16px"><h3>💡 Tips</h3><ul>
+    <li>중첩 객체는 별도 interface로 자동 생성됩니다.</li>
+    <li>배열은 요소 타입을 추론해 <code>type[]</code> 형식으로 생성됩니다.</li>
+    <li>선택적 필드 옵션 체크 시 모든 필드에 <code>?</code>가 추가됩니다.</li>
+    <li>null 값은 <code>null</code> 타입으로 처리됩니다.</li>
+  </ul></div>
+  <details class="faq-item"><summary>혼합 타입 배열은 어떻게 처리되나요?</summary><p>배열의 첫 번째 요소를 기준으로 타입을 추론합니다. 다양한 타입이 섞인 배열은 <code>any[]</code>로 표시되거나 수동으로 수정이 필요합니다.</p></details>
+  <details class="faq-item"><summary>생성된 코드를 바로 사용할 수 있나요?</summary><p>대부분의 경우 바로 사용 가능하지만, API 응답에 따라 null 허용 여부(<code>| null</code>)나 선택적 필드 처리를 수동으로 조정하는 것을 권장합니다.</p></details>
+</div>
+<aside class="tool-sidebar">
+  <div class="ad-card"><ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+  <div class="ad-card"><script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script></div>
+</aside>
+</div>
+<footer class="footer"><div class="footer-inner"><div class="footer-top">
+  <div class="footer-col"><h4>🛠️ WooaDev</h4><p>개발자 필수 유틸리티. 브라우저에서 무료로 사용.</p></div>
+  <div class="footer-links"><h4>인코딩 · 해시</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL 인코더</a><a href="html-entity.html">HTML Entity</a><a href="hash-generator.html">Hash 생성기</a><a href="jwt-decoder.html">JWT 디코더</a></div>
+  <div class="footer-links"><h4>포맷 · 변환</h4><a href="json-formatter.html">JSON 포맷터</a><a href="json-to-ts.html">JSON→TypeScript</a><a href="css-gradient.html">CSS 그라디언트</a><a href="flexbox-generator.html">Flexbox</a><a href="color-contrast.html">색상 대비</a></div>
+  <div class="footer-links"><h4>생성기</h4><a href="uuid-generator.html">UUID</a><a href="meta-tag.html">Meta Tag</a><a href="color-palette.html">색상 팔레트</a><a href="cron-generator.html">Cron</a><a href="timestamp.html">타임스탬프</a></div>
+  <div class="footer-links"><h4>WooaHouse 서비스</h4><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">WooaViewer</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">WooaPDF</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">WooaText</a></div>
+</div><div class="footer-bottom"><p>© 2026 WooaDev by WooaHouse. 모든 권리 보유.</p></div></div></footer>
+<script src="js/pwa-install.js"></script>
+<script>
+const interfaces = [];
+
+function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+
+function getType(v, key){
+  if(v===null) return 'null';
+  if(Array.isArray(v)){
+    if(!v.length) return 'any[]';
+    const itemTypes = [...new Set(v.map(el=>getType(el,key.replace(/s$/,''))))];
+    return itemTypes.length===1 ? itemTypes[0]+'[]' : `(${itemTypes.join('|')})[]`;
+  }
+  if(typeof v==='object'){
+    const name=cap(key);
+    buildInterface(v,name);
+    return name;
+  }
+  return typeof v;
+}
+
+function buildInterface(obj, name){
+  if(interfaces.find(i=>i.name===name)) return;
+  const opt = document.getElementById('optFields').checked ? '?' : '';
+  const exp = document.getElementById('exportKw').checked ? 'export ' : '';
+  const props = Object.entries(obj).map(([k,v])=>`  ${k}${opt}: ${getType(v,k)};`).join('\n');
+  interfaces.push({name, code:`${exp}interface ${name} {\n${props}\n}`});
+}
+
+function convert(){
+  interfaces.length=0;
+  const raw=document.getElementById('jsonIn').value.trim();
+  const errEl=document.getElementById('errMsg');
+  if(!raw){document.getElementById('tsOut').value='';errEl.textContent='';return;}
+  try{
+    const json=JSON.parse(raw);
+    const rootName=document.getElementById('rootName').value.trim()||'Root';
+    if(typeof json==='object'&&!Array.isArray(json)&&json!==null){
+      buildInterface(json,cap(rootName));
+    } else if(Array.isArray(json)&&json.length&&typeof json[0]==='object'){
+      buildInterface(json[0],cap(rootName));
+    }
+    document.getElementById('tsOut').value=interfaces.map(i=>i.code).reverse().join('\n\n');
+    errEl.textContent='';
+  }catch(e){errEl.textContent='⚠️ JSON 파싱 오류: '+e.message;document.getElementById('tsOut').value='';}
+}
+
+function copyTs(){
+  const t=document.getElementById('tsOut').value;
+  if(!t)return;
+  navigator.clipboard.writeText(t).then(()=>{const m=document.getElementById('copyMsg');m.style.display='inline';setTimeout(()=>m.style.display='none',2000);});
+}
+
+function clearAll(){document.getElementById('jsonIn').value='';document.getElementById('tsOut').value='';document.getElementById('errMsg').textContent='';}
+</script>
+</body>
+</html>

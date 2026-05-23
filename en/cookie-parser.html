@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <title>Cookie Parser - HTTP Cookie String Analyzer & Generator | WooaDev</title>
+  <meta name="description" content="Parse HTTP cookie strings into key-value pairs and generate Set-Cookie headers. Supports Expires, SameSite, Secure, HttpOnly attributes. Free online cookie parser.">
+  <meta name="keywords" content="cookie parser, HTTP cookie, Set-Cookie header, cookie analyzer, cookie generator, SameSite, HttpOnly, cookie string">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/cookie-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/cookie-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/cookie-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/cookie-parser.html">
+  <meta property="og:title" content="Cookie Parser | WooaDev">
+  <meta property="og:description" content="Parse HTTP cookie strings, analyze attributes, and generate Set-Cookie headers.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/cookie-parser.html">
+  <meta property="og:locale" content="en_US">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <style>
+    .cookie-tabs { display:flex; gap:4px; margin-bottom:16px; }
+    .cookie-tab { padding:8px 20px; border-radius:8px 8px 0 0; border:1px solid #d0b896; border-bottom:none; background:#f5ede0; cursor:pointer; font-size:14px; font-weight:600; }
+    .cookie-tab.active { background:#C4956A; color:#fff; border-color:#C4956A; }
+    .tab-panel { display:none; }
+    .tab-panel.active { display:block; }
+    .cookie-area { width:100%; min-height:100px; border:1px solid #d0b896; border-radius:8px; padding:10px; font-family:monospace; font-size:13px; resize:vertical; box-sizing:border-box; }
+    .cookie-table { width:100%; border-collapse:collapse; font-size:13px; margin-top:12px; }
+    .cookie-table th { background:#f5ede0; padding:8px 10px; border:1px solid #e0cdb0; text-align:left; font-weight:600; color:#a07850; }
+    .cookie-table td { padding:7px 10px; border:1px solid #e0cdb0; }
+    .cookie-table td.key-col { font-family:monospace; font-weight:600; }
+    .cookie-table td.val-col { font-family:monospace; word-break:break-all; }
+    .badge { display:inline-block; padding:2px 7px; border-radius:10px; font-size:11px; font-weight:700; margin:2px; }
+    .badge-secure { background:#d4edda; color:#155724; }
+    .badge-http { background:#cce5ff; color:#004085; }
+    .badge-ss-strict { background:#f8d7da; color:#721c24; }
+    .badge-ss-lax { background:#fff3cd; color:#856404; }
+    .badge-ss-none { background:#e2e3e5; color:#383d41; }
+    .form-grid { display:grid; grid-template-columns:130px 1fr; gap:10px 12px; align-items:center; }
+    .form-grid label { font-size:13px; font-weight:600; color:#555; text-align:right; }
+    .form-grid input[type=text], .form-grid input[type=number], .form-grid select { border:1px solid #d0b896; border-radius:6px; padding:7px 10px; font-size:13px; width:100%; box-sizing:border-box; }
+    .form-grid .checkbox-row { display:flex; gap:16px; flex-wrap:wrap; }
+    .form-grid .checkbox-row label { font-weight:normal; display:flex; align-items:center; gap:4px; font-size:13px; text-align:left; }
+    .form-grid .checkbox-row label input { accent-color:#C4956A; }
+    .output-block { font-family:monospace; font-size:13px; background:#1e1e2e; color:#cdd6f4; border-radius:8px; padding:14px; word-break:break-all; min-height:40px; margin-top:12px; }
+    .copy-row { display:flex; gap:8px; align-items:center; margin-top:8px; }
+    .current-cookies { background:#fdf8f3; border:1px solid #e0cdb0; border-radius:8px; padding:12px; margin-top:12px; }
+    .no-result { color:#aaa; font-size:13px; padding:20px; text-align:center; }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">🛠️ WooaDev</a>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="jwt-decoder.html">JWT Decoder</a>
+      <a href="url-encoder.html">URL Encoder</a>
+      <a href="http-status.html">HTTP Status</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../cookie-parser.html">KO</a>
+        <a href="cookie-parser.html" class="active">EN</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+    <a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a>
+    <a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a>
+    <a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a>
+  </div>
+</div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+  <div class="tool-page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; Cookie Parser</div>
+    <div class="tool-header">
+      <div class="tool-icon-lg">🍪</div>
+      <div>
+        <h1>Cookie Parser</h1>
+        <p>Parse HTTP cookie strings and generate Set-Cookie headers with full attribute support</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="cookie-tabs">
+        <div class="cookie-tab active" onclick="switchTab('parse')">🔍 Parse</div>
+        <div class="cookie-tab" onclick="switchTab('generate')">🔨 Generate</div>
+        <div class="cookie-tab" onclick="switchTab('current')">🌐 Current Cookies</div>
+      </div>
+
+      <div class="tab-panel active" id="tab-parse">
+        <div style="margin-bottom:12px;">
+          <label style="font-size:13px;font-weight:600;color:#555;display:block;margin-bottom:6px;">Cookie Header or Set-Cookie Value</label>
+          <textarea class="cookie-area" id="cookieInput" placeholder="session_id=abc123; user=Alice; theme=dark; Max-Age=3600; Secure; HttpOnly; SameSite=Lax" oninput="parseCookie()"></textarea>
+        </div>
+        <button class="dev-btn" onclick="parseCookie()">🔍 Parse</button>
+        <div id="parseResult"></div>
+      </div>
+
+      <div class="tab-panel" id="tab-generate">
+        <div class="form-grid">
+          <label>Name</label>
+          <input type="text" id="cName" placeholder="session_id">
+          <label>Value</label>
+          <input type="text" id="cValue" placeholder="abc123xyz">
+          <label>Domain</label>
+          <input type="text" id="cDomain" placeholder=".example.com">
+          <label>Path</label>
+          <input type="text" id="cPath" placeholder="/" value="/">
+          <label>Max-Age (sec)</label>
+          <input type="number" id="cMaxAge" placeholder="3600 (1 hour)">
+          <label>Expires</label>
+          <input type="text" id="cExpires" placeholder="Tue, 01 Jan 2030 00:00:00 GMT">
+          <label>SameSite</label>
+          <select id="cSameSite">
+            <option value="">None selected</option>
+            <option value="Strict">Strict</option>
+            <option value="Lax" selected>Lax</option>
+            <option value="None">None</option>
+          </select>
+          <label>Flags</label>
+          <div class="checkbox-row">
+            <label><input type="checkbox" id="cSecure" checked> Secure</label>
+            <label><input type="checkbox" id="cHttpOnly" checked> HttpOnly</label>
+          </div>
+        </div>
+        <button class="dev-btn" onclick="generateCookie()" style="width:100%;margin-top:16px;">🔨 Generate Cookie</button>
+        <div class="output-block" id="cookieOutput">Set-Cookie: value will appear here</div>
+        <div class="copy-row">
+          <button class="dev-btn" onclick="copyCookie()">📋 Copy</button>
+          <span id="copyMsg" style="color:#4caf50;font-size:13px;display:none">Copied!</span>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-current">
+        <p style="font-size:13px;color:#888;margin-bottom:12px;">Reads and parses document.cookie from the current page (HttpOnly cookies are not accessible via JS)</p>
+        <button class="dev-btn" onclick="loadCurrentCookies()">🔄 Load Current Cookies</button>
+        <div id="currentCookiesResult" class="current-cookies" style="margin-top:12px;">
+          <div class="no-result">Click the button to display cookies on this page</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li><b>Secure</b>: cookie only sent over HTTPS. <b>HttpOnly</b>: inaccessible to JavaScript (XSS protection)</li>
+        <li><b>SameSite=Strict</b>: cookie not sent on cross-site requests (strongest CSRF protection)</li>
+        <li><b>Max-Age</b>: expiry in seconds. <b>Expires</b>: absolute GMT date for expiry</li>
+        <li>Cookie max size is ~4KB. Browser limits vary on how many cookies per domain</li>
+      </ul>
+    </div>
+
+    <section class="faq-section">
+      <h2>FAQ</h2>
+      <div class="faq-item">
+        <div class="faq-q">What is the difference between the Cookie and Set-Cookie headers?</div>
+        <div class="faq-a">The Cookie header is sent by the browser to the server and contains only name=value pairs. The Set-Cookie header is sent by the server to the browser and includes attributes like Expires, Domain, Path, Secure, and HttpOnly.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What are the requirements for SameSite=None?</div>
+        <div class="faq-a">When using SameSite=None, the Secure flag must also be present. Without Secure, modern browsers will reject the cookie. SameSite=None allows cross-site requests to carry the cookie, so use it only when necessary (e.g., embedded widgets, OAuth).</div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="tool-sidebar">
+    <div class="ad-card">
+      <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+    </div>
+    <div class="ad-card">
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">🛠️ WooaDev</div>
+      <p>Free online developer tools</p>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">Web Dev Tools</div>
+      <a href="cookie-parser.html">Cookie Parser</a>
+      <a href="jwt-decoder.html">JWT Decoder</a>
+      <a href="jwt-generator.html">JWT Generator</a>
+      <a href="url-encoder.html">URL Encoder</a>
+      <a href="http-status.html">HTTP Status</a>
+      <a href="regex-tester.html">Regex Tester</a>
+      <a href="ip-lookup.html">IP Lookup</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 WooaDev. All rights reserved. | <a href="https://wooahouse.com/" target="_blank" rel="noopener">WooaHouse</a></p>
+  </div>
+  <div class="coupang-notice">This post is part of the Coupang Partners activity, and a certain commission is provided accordingly.</div>
+</footer>
+
+<script src="../js/pwa-install.js"></script>
+<script>
+  function switchTab(tab){document.querySelectorAll('.cookie-tab').forEach((t,i)=>{t.classList.toggle('active',['parse','generate','current'][i]===tab);});document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.getElementById('tab-'+tab).classList.add('active');}
+  const setCookieAttrs=['expires','max-age','domain','path','samesite','secure','httponly'];
+  function parseCookie(){
+    const raw=document.getElementById('cookieInput').value.trim();
+    const result=document.getElementById('parseResult');
+    if(!raw){result.innerHTML='';return;}
+    const parts=raw.split(';').map(p=>p.trim()).filter(Boolean);
+    const cookies=[],attrs={};let isSetCookie=false;
+    parts.forEach((part,i)=>{
+      const lower=part.toLowerCase();
+      if(i===0){const eq=part.indexOf('=');if(eq>-1){cookies.push({name:part.slice(0,eq).trim(),value:part.slice(eq+1).trim()});}else{cookies.push({name:part,value:''}); }}
+      else{const isAttr=setCookieAttrs.some(a=>lower===a||lower.startsWith(a+'='));if(isAttr){isSetCookie=true;const eq=part.indexOf('=');if(eq>-1){attrs[part.slice(0,eq).trim().toLowerCase()]=part.slice(eq+1).trim();}else{attrs[part.toLowerCase()]=true;}}else{const eq=part.indexOf('=');if(eq>-1){cookies.push({name:part.slice(0,eq).trim(),value:part.slice(eq+1).trim()});}}}
+    });
+    let html=`<table class="cookie-table"><tr><th>Name</th><th>Value</th></tr>${cookies.map(c=>`<tr><td class="key-col">${esc(c.name)}</td><td class="val-col">${esc(c.value)}</td></tr>`).join('')}</table>`;
+    if(isSetCookie&&Object.keys(attrs).length>0){
+      html+=`<div style="margin-top:12px;font-weight:600;color:#a07850;font-size:13px;">Cookie Attributes</div><table class="cookie-table" style="margin-top:6px;"><tr><th>Attribute</th><th>Value</th><th>Description</th></tr>`;
+      const attrDesc={expires:'Cookie expiry date (GMT)','max-age':'Cookie lifetime (seconds)',domain:'Cookie applies to this domain',path:'Cookie applies to this path',samesite:'Cross-site request policy',secure:'HTTPS only',httponly:'No JS access'};
+      const badgeMap={secure:'<span class="badge badge-secure">Secure</span>',httponly:'<span class="badge badge-http">HttpOnly</span>'};
+      Object.entries(attrs).forEach(([k,v])=>{let dispV=v===true?(badgeMap[k]||'✓'):esc(String(v));if(k==='samesite'){const cls={'strict':'badge-ss-strict','lax':'badge-ss-lax','none':'badge-ss-none'}[v.toLowerCase()]||'';dispV=`<span class="badge ${cls}">${esc(v)}</span>`;}html+=`<tr><td class="key-col">${esc(k)}</td><td>${dispV}</td><td style="font-size:12px;color:#888;">${attrDesc[k]||''}</td></tr>`;});
+      html+='</table>';
+    }
+    result.innerHTML=html;
+  }
+  function generateCookie(){const name=document.getElementById('cName').value||'cookie',value=document.getElementById('cValue').value||'',domain=document.getElementById('cDomain').value,path=document.getElementById('cPath').value,maxAge=document.getElementById('cMaxAge').value,expires=document.getElementById('cExpires').value,samesite=document.getElementById('cSameSite').value,secure=document.getElementById('cSecure').checked,httponly=document.getElementById('cHttpOnly').checked;let cookie=`Set-Cookie: ${name}=${value}`;if(path)cookie+=`; Path=${path}`;if(domain)cookie+=`; Domain=${domain}`;if(maxAge)cookie+=`; Max-Age=${maxAge}`;if(expires)cookie+=`; Expires=${expires}`;if(samesite)cookie+=`; SameSite=${samesite}`;if(secure)cookie+='; Secure';if(httponly)cookie+='; HttpOnly';document.getElementById('cookieOutput').textContent=cookie;}
+  function copyCookie(){navigator.clipboard.writeText(document.getElementById('cookieOutput').textContent).then(()=>{const msg=document.getElementById('copyMsg');msg.style.display='inline';setTimeout(()=>msg.style.display='none',2000);});}
+  function loadCurrentCookies(){const raw=document.cookie,result=document.getElementById('currentCookiesResult');if(!raw){result.innerHTML='<div class="no-result">No accessible cookies on this page</div>';return;}const cookies=raw.split(';').map(p=>{const eq=p.indexOf('=');return{name:p.slice(0,eq).trim(),value:p.slice(eq+1).trim()};});result.innerHTML=`<table class="cookie-table"><tr><th>Name</th><th>Value</th></tr>${cookies.map(c=>`<tr><td class="key-col">${esc(c.name)}</td><td class="val-col">${esc(c.value)}</td></tr>`).join('')}</table><p style="font-size:12px;color:#aaa;margin-top:8px;">* HttpOnly cookies cannot be accessed via JavaScript.</p>`;}
+  function esc(s){const d=document.createElement('div');d.appendChild(document.createTextNode(s));return d.innerHTML;}
+</script>
+</body>
+</html>

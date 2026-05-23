@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <title>JSON to TypeScript Interface Generator - Online Free | WooaDev</title>
+  <meta name="description" content="Convert JSON to TypeScript interfaces automatically. Handles nested objects, arrays, optional fields, and exports. Free online JSON to TypeScript converter.">
+  <meta name="keywords" content="JSON to TypeScript, JSON to TS, TypeScript interface generator, JSON converter, TS types, TypeScript types">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/json-to-ts.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/json-to-ts.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/json-to-ts.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/json-to-ts.html">
+  <meta property="og:title" content="JSON to TypeScript Interface Generator | WooaDev">
+  <meta property="og:description" content="Convert JSON to TypeScript interfaces automatically with nested object support.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/json-to-ts.html">
+  <meta property="og:locale" content="en_US">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "JSON to TypeScript Interface Generator",
+    "url": "https://wooadev.wooahouse.com/en/json-to-ts.html",
+    "description": "Convert JSON to TypeScript interfaces automatically",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <style>
+    .convert-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    @media(max-width:680px){.convert-grid{grid-template-columns:1fr;}}
+    .side-label { font-weight:600; color:#a07850; font-size:14px; margin-bottom:6px; }
+    .io-area { width:100%; height:260px; border:1px solid #d0b896; border-radius:8px; padding:10px; font-family:monospace; font-size:13px; resize:vertical; box-sizing:border-box; }
+    .output-area { width:100%; height:260px; border:1px solid #d0b896; border-radius:8px; padding:10px; font-family:monospace; font-size:13px; background:#1e1e2e; color:#cdd6f4; resize:vertical; box-sizing:border-box; }
+    .options-row { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:12px; }
+    .opt-label { font-size:13px; display:flex; align-items:center; gap:5px; }
+    .opt-label input { accent-color:#C4956A; }
+    .name-row { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+    .name-row label { font-size:13px; font-weight:600; color:#555; }
+    .name-row input { border:1px solid #d0b896; border-radius:6px; padding:6px 10px; font-size:13px; width:160px; }
+    .copy-row { display:flex; gap:8px; align-items:center; margin-top:8px; }
+    .error-msg { color:#e74c3c; font-size:13px; margin-top:6px; }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">🛠️ WooaDev</a>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="json-formatter.html">JSON</a>
+      <a href="regex-tester.html">Regex</a>
+      <a href="timestamp.html">Timestamp</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../json-to-ts.html">KO</a>
+        <a href="json-to-ts.html" class="active">EN</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+    <a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a>
+    <a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a>
+    <a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a>
+  </div>
+</div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+  <div class="tool-page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; JSON to TypeScript</div>
+    <div class="tool-header">
+      <div class="tool-icon-lg">🔷</div>
+      <div>
+        <h1>JSON to TypeScript Interface Generator</h1>
+        <p>Paste JSON and instantly generate TypeScript interface definitions</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="name-row">
+        <label>Root Interface Name:</label>
+        <input type="text" id="rootName" value="Root" placeholder="Root">
+        <div class="options-row" style="margin:0;">
+          <label class="opt-label"><input type="checkbox" id="useExport" checked> export</label>
+          <label class="opt-label"><input type="checkbox" id="useOptional"> Optional (?)</label>
+        </div>
+      </div>
+
+      <div class="convert-grid">
+        <div>
+          <div class="side-label">📥 JSON Input</div>
+          <textarea class="io-area" id="jsonInput" placeholder='{"name": "Alice", "age": 30, "active": true}'></textarea>
+          <div class="error-msg" id="errMsg"></div>
+        </div>
+        <div>
+          <div class="side-label">🔷 TypeScript Output</div>
+          <textarea class="output-area" id="tsOutput" readonly></textarea>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+        <button class="dev-btn" onclick="convert()">🔷 Convert</button>
+        <button class="dev-btn" onclick="loadExample()">📋 Load Example</button>
+        <button class="dev-btn" onclick="clearAll()">Clear</button>
+      </div>
+      <div class="copy-row">
+        <button class="dev-btn" onclick="copyOutput()">📋 Copy TypeScript</button>
+        <span id="copyMsg" style="color:#4caf50;font-size:13px;display:none">Copied!</span>
+      </div>
+    </div>
+
+    <div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li>Nested objects generate separate interfaces automatically</li>
+        <li>Arrays use the first element to infer the item type (e.g., <code>string[]</code>)</li>
+        <li>Enable <b>Optional (?)</b> to mark all fields as optional</li>
+        <li>Works with JSON arrays at the root level too</li>
+      </ul>
+    </div>
+
+    <section class="faq-section">
+      <h2>FAQ</h2>
+      <div class="faq-item">
+        <div class="faq-q">What happens with null values?</div>
+        <div class="faq-a">Null values are typed as <code>null</code>. If you want nullable types, use a union: <code>string | null</code> — you can edit the output after generation.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Does it handle deeply nested JSON?</div>
+        <div class="faq-a">Yes. Each nested object generates its own interface, and the parent interface references it by name. Interface names are derived from the property key (PascalCase).</div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="tool-sidebar">
+    <div class="ad-card">
+      <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+    </div>
+    <div class="ad-card">
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">🛠️ WooaDev</div>
+      <p>Free online developer tools</p>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">Encoding · Convert</div>
+      <a href="base64.html">Base64</a>
+      <a href="url-encoder.html">URL Encoder</a>
+      <a href="html-entity.html">HTML Entity</a>
+      <a href="image-to-base64.html">Image to Base64</a>
+      <a href="json-to-ts.html">JSON to TypeScript</a>
+      <a href="text-binary.html">Text ↔ Binary</a>
+      <a href="number-base.html">Number Base</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 WooaDev. All rights reserved. | <a href="https://wooahouse.com/" target="_blank" rel="noopener">WooaHouse</a></p>
+  </div>
+  <div class="coupang-notice">This post is part of the Coupang Partners activity, and a certain commission is provided accordingly.</div>
+</footer>
+
+<script src="../js/pwa-install.js"></script>
+<script>
+  const interfaces = [];
+
+  function toPascal(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  function getType(val, key) {
+    if (val === null) return 'null';
+    const t = typeof val;
+    if (t === 'string') return 'string';
+    if (t === 'number') return 'number';
+    if (t === 'boolean') return 'boolean';
+    if (Array.isArray(val)) {
+      if (val.length === 0) return 'any[]';
+      const itemType = getType(val[0], key);
+      return itemType + '[]';
+    }
+    if (t === 'object') {
+      const name = toPascal(key);
+      buildInterface(val, name);
+      return name;
+    }
+    return 'any';
+  }
+
+  function buildInterface(obj, name) {
+    if (interfaces.find(i => i.name === name)) return;
+    const useOpt = document.getElementById('useOptional').checked;
+    const lines = [`interface ${name} {`];
+    Object.entries(obj).forEach(([k, v]) => {
+      const type = getType(v, k);
+      lines.push(`  ${k}${useOpt ? '?' : ''}: ${type};`);
+    });
+    lines.push('}');
+    interfaces.push({ name, body: lines.join('\n') });
+  }
+
+  function convert() {
+    const raw = document.getElementById('jsonInput').value.trim();
+    document.getElementById('errMsg').textContent = '';
+    if (!raw) { document.getElementById('tsOutput').value = ''; return; }
+    interfaces.length = 0;
+    let parsed;
+    try { parsed = JSON.parse(raw); } catch(e) {
+      document.getElementById('errMsg').textContent = 'Invalid JSON: ' + e.message;
+      return;
+    }
+    const rootName = document.getElementById('rootName').value || 'Root';
+    const useExp = document.getElementById('useExport').checked;
+    if (Array.isArray(parsed)) {
+      const itemType = parsed.length > 0 ? getType(parsed[0], rootName + 'Item') : 'any';
+      interfaces.push({ name: rootName, body: `type ${rootName} = ${itemType}[];` });
+    } else {
+      buildInterface(parsed, rootName);
+    }
+    const prefix = useExp ? 'export ' : '';
+    const output = interfaces.reverse().map(i => prefix + i.body).join('\n\n');
+    document.getElementById('tsOutput').value = output;
+  }
+
+  function loadExample() {
+    document.getElementById('jsonInput').value = JSON.stringify({
+      "id": 1,
+      "name": "Alice",
+      "email": "alice@example.com",
+      "active": true,
+      "score": 98.5,
+      "address": {
+        "city": "Seoul",
+        "zip": "12345"
+      },
+      "tags": ["developer", "typescript"],
+      "metadata": null
+    }, null, 2);
+    convert();
+  }
+
+  function clearAll() {
+    document.getElementById('jsonInput').value = '';
+    document.getElementById('tsOutput').value = '';
+    document.getElementById('errMsg').textContent = '';
+  }
+
+  function copyOutput() {
+    const txt = document.getElementById('tsOutput').value;
+    if (!txt) return;
+    navigator.clipboard.writeText(txt).then(() => {
+      const msg = document.getElementById('copyMsg');
+      msg.style.display = 'inline';
+      setTimeout(() => msg.style.display = 'none', 2000);
+    });
+  }
+
+  document.getElementById('jsonInput').addEventListener('input', convert);
+  document.getElementById('rootName').addEventListener('input', convert);
+  document.getElementById('useExport').addEventListener('change', convert);
+  document.getElementById('useOptional').addEventListener('change', convert);
+</script>
+</body>
+</html>

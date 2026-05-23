@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+<meta charset="UTF-8">
+<meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+<meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이미지 Base64 변환기 무료 — Image to Base64 온라인 인코더 | WooaDev</title>
+<meta name="description" content="이미지 파일을 Base64 데이터 URL로 즉시 변환. PNG · JPG · SVG · GIF · WebP 지원. 드래그앤드롭으로 업로드하고 Data URL · CSS background · HTML img 형식으로 복사.">
+<meta name="keywords" content="이미지 Base64 변환, image to base64, data URL 생성, 이미지 인코더, Base64 인코딩, 이미지 데이터URL, img src base64, CSS base64 이미지">
+<link rel="canonical" href="https://wooadev.wooahouse.com/image-to-base64.html">
+<link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/image-to-base64.html">
+<link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/image-to-base64.html">
+<link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/image-to-base64.html">
+<meta property="og:title" content="이미지 Base64 변환기 무료 | WooaDev">
+<meta property="og:description" content="이미지 파일을 Base64 Data URL로 즉시 변환. PNG·JPG·SVG·GIF·WebP 지원. 드래그앤드롭으로 쉽게 사용.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wooadev.wooahouse.com/image-to-base64.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="WooaDev">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"이미지 Base64 변환기","url":"https://wooadev.wooahouse.com/image-to-base64.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="https://ads-partners.coupang.com/g.js"></script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#C4956A">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.lang-switcher{display:flex;align-items:center;gap:4px}
+.lang-switcher a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.8rem;font-weight:600;padding:3px 8px;border-radius:12px;transition:background 0.15s}
+.lang-switcher a.active{color:white;background:rgba(255,255,255,0.25)}
+.lang-switcher a:hover{color:white;background:rgba(255,255,255,0.18)}
+.lang-switcher span{color:rgba(255,255,255,0.3);font-size:0.75rem}
+
+.drop-zone-img{border:2px dashed #e2e8f0;border-radius:14px;padding:48px 24px;text-align:center;cursor:pointer;transition:all .2s;background:#fafbfc}
+.drop-zone-img:hover,.drop-zone-img.dragging{border-color:#C4956A;background:#fff8f2}
+.drop-zone-img .dz-icon{font-size:3rem;display:block;margin-bottom:10px}
+.drop-zone-img h3{margin:0 0 6px;font-size:1rem;color:#334155}
+.drop-zone-img p{margin:0;color:#94a3b8;font-size:0.85rem}
+
+.img-preview{max-width:100%;max-height:220px;border-radius:10px;border:1px solid #e2e8f0;display:block;margin:0 auto 14px}
+.file-info{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.file-info span{background:#f1f5f9;padding:4px 10px;border-radius:6px;font-size:0.8rem;color:#475569}
+
+.fmt-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.fmt-tab{padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:0.83rem;color:#64748b;font-weight:600;transition:all .15s}
+.fmt-tab.active{background:#C4956A;color:#fff;border-color:#C4956A}
+
+.output-ta{width:100%;min-height:110px;font-family:'Consolas','Monaco',monospace;font-size:0.78rem;padding:12px;border:1px solid #e2e8f0;border-radius:10px;resize:vertical;background:#f8fafc;color:#334155;box-sizing:border-box;line-height:1.5}
+.copy-msg{color:#22c55e;font-size:0.83rem;margin-top:6px;display:none}
+.btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+
+.code-out{font-family:'Consolas','Monaco',monospace;font-size:0.88rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;word-break:break-all;line-height:1.6;color:#1e293b;margin-bottom:10px;min-height:48px}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a>
+      <a href="json-formatter.html">JSON</a>
+      <a href="css-gradient.html">Gradient</a>
+      <a href="box-shadow.html">Shadow</a>
+      <a href="hash-generator.html">Hash</a>
+      <a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="image-to-base64.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/image-to-base64.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85);font-size:0.85rem;text-decoration:none;margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar"><span class="our-sites-label">WooaHouse Services</span><div class="our-sites-links"><a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a><a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a><a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a><a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a><a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a><a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a><a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a><a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a><a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a><a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a><a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a><a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a><a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a></div></div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>이미지 → Base64</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🖼️</span>
+    <h1>이미지 Base64 변환기</h1>
+    <p>이미지 파일을 Base64 Data URL로 즉시 변환. PNG · JPG · SVG · GIF · WebP 지원. 드래그앤드롭으로 올리고 원하는 형식으로 복사하세요.</p>
+  </div>
+
+  <!-- 드롭존 -->
+  <div class="dev-panel">
+    <div class="drop-zone-img" id="dropZone">
+      <span class="dz-icon">🖼️</span>
+      <h3>이미지를 드래그하거나 클릭하세요</h3>
+      <p>PNG · JPG · GIF · SVG · WebP · BMP · ICO</p>
+      <input type="file" id="fileInput" accept="image/*" style="display:none">
+    </div>
+
+    <!-- 결과 영역 -->
+    <div id="resultArea" style="display:none;margin-top:16px">
+      <img id="imgPreview" class="img-preview" src="" alt="미리보기">
+      <div class="file-info">
+        <span id="infoName"></span>
+        <span id="infoType"></span>
+        <span id="infoSize"></span>
+        <span id="infoB64Size"></span>
+      </div>
+
+      <div class="dev-label">출력 형식</div>
+      <div class="fmt-tabs">
+        <button class="fmt-tab active" data-fmt="dataurl">Data URL</button>
+        <button class="fmt-tab" data-fmt="base64only">Base64만</button>
+        <button class="fmt-tab" data-fmt="css">CSS background</button>
+        <button class="fmt-tab" data-fmt="html">HTML &lt;img&gt;</button>
+      </div>
+
+      <textarea class="output-ta" id="outputBox" readonly></textarea>
+      <div class="btn-row">
+        <button class="dev-btn" onclick="copyOutput()">📋 복사</button>
+        <button class="dev-btn" style="background:#f1f5f9;color:#475569" onclick="resetAll()">🔄 초기화</button>
+      </div>
+      <p class="copy-msg" id="copyMsg">✅ 클립보드에 복사되었습니다!</p>
+    </div>
+  </div>
+
+  <div class="tips-panel" style="margin-top:16px">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li>Base64로 변환하면 별도 파일 없이 HTML/CSS에 이미지를 직접 삽입할 수 있습니다.</li>
+      <li>파일 크기가 클수록 Base64 문자열도 길어집니다 (원본 대비 약 33% 증가).</li>
+      <li>작은 아이콘·로고에 적합하며, 큰 이미지는 일반 URL 방식을 권장합니다.</li>
+      <li>SVG는 Base64 외에도 url-encoded 방식으로 CSS에 넣을 수 있습니다.</li>
+      <li>모든 변환은 브라우저 안에서만 처리됩니다. 파일이 서버로 전송되지 않습니다.</li>
+    </ul>
+  </div>
+
+  <details class="faq-item">
+    <summary>Data URL과 Base64만의 차이는?</summary>
+    <p>Data URL은 <code>data:image/png;base64,AAA...</code> 형식으로 HTML img src나 CSS url()에 바로 사용할 수 있습니다. Base64만은 순수한 인코딩 문자열로, 별도 처리가 필요한 경우 사용합니다.</p>
+  </details>
+  <details class="faq-item">
+    <summary>어떤 이미지 형식을 지원하나요?</summary>
+    <p>PNG, JPG/JPEG, GIF, SVG, WebP, BMP, ICO 등 브라우저가 지원하는 모든 이미지 형식을 변환할 수 있습니다.</p>
+  </details>
+  <details class="faq-item">
+    <summary>이미지가 서버에 업로드되나요?</summary>
+    <p>아니요. 모든 처리는 브라우저 내 JavaScript로만 실행됩니다. 파일은 외부로 전송되지 않아 개인정보가 보호됩니다.</p>
+  </details>
+  <details class="faq-item">
+    <summary>큰 이미지도 변환할 수 있나요?</summary>
+    <p>기술적으로는 가능하지만, 대용량 이미지는 Base64 문자열이 매우 길어져 HTML/CSS 파일 크기가 크게 증가합니다. 일반적으로 10KB 미만의 이미지에 사용하는 것을 권장합니다.</p>
+  </details>
+</div>
+
+<aside class="tool-sidebar">
+  <div class="ad-card">
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px"
+      data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025"
+      data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card">
+    <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+  </div>
+</aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-col"><h4>🛠️ WooaDev</h4><p>개발자 필수 유틸리티 도구 모음. 브라우저에서 무료로 바로 사용.</p></div>
+      <div class="footer-links"><h4>인코딩 · 해시</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL 인코더</a><a href="image-to-base64.html">이미지→Base64</a><a href="hash-generator.html">Hash 생성기</a><a href="jwt-decoder.html">JWT 디코더</a></div>
+      <div class="footer-links"><h4>포맷 · 변환</h4><a href="json-formatter.html">JSON 포맷터</a><a href="xml-formatter.html">XML 포맷터</a><a href="css-gradient.html">CSS 그라디언트</a><a href="box-shadow.html">Box Shadow</a><a href="border-radius.html">Border Radius</a></div>
+      <div class="footer-links"><h4>생성기 · 변환</h4><a href="uuid-generator.html">UUID 생성기</a><a href="lorem-ipsum.html">Lorem Ipsum</a><a href="cron-generator.html">Cron 생성기</a><a href="number-base.html">진법 변환기</a><a href="timestamp.html">타임스탬프</a></div>
+      <div class="footer-links"><h4>WooaHouse 서비스</h4><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">WooaViewer</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">WooaPDF</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">WooaText</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev by WooaHouse. 모든 권리 보유.</p></div>
+  </div>
+</footer>
+<script src="js/pwa-install.js"></script>
+<script>
+let dataURL = '';
+let currentFmt = 'dataurl';
+
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragging'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragging'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault(); dropZone.classList.remove('dragging');
+  if (e.dataTransfer.files[0]) processFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', () => { if (fileInput.files[0]) processFile(fileInput.files[0]); });
+
+document.querySelectorAll('.fmt-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.fmt-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    currentFmt = btn.dataset.fmt;
+    updateOutput();
+  });
+});
+
+function processFile(file) {
+  if (!file.type.startsWith('image/')) { alert('이미지 파일만 지원합니다.'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    dataURL = e.target.result;
+    document.getElementById('imgPreview').src = dataURL;
+    document.getElementById('infoName').textContent = '📁 ' + file.name;
+    document.getElementById('infoType').textContent = '🏷️ ' + file.type;
+    document.getElementById('infoSize').textContent = '📦 원본: ' + fmtBytes(file.size);
+    const b64bytes = Math.ceil((dataURL.length - dataURL.indexOf(',') - 1) * 3 / 4);
+    document.getElementById('infoB64Size').textContent = '🔤 Base64: ' + fmtBytes(b64bytes);
+    document.getElementById('resultArea').style.display = 'block';
+    dropZone.style.display = 'none';
+    updateOutput();
+  };
+  reader.readAsDataURL(file);
+}
+
+function updateOutput() {
+  const b64 = dataURL.split(',')[1];
+  let out = '';
+  if (currentFmt === 'dataurl') out = dataURL;
+  else if (currentFmt === 'base64only') out = b64;
+  else if (currentFmt === 'css') out = `background-image: url("${dataURL}");`;
+  else if (currentFmt === 'html') out = `<img src="${dataURL}" alt="image">`;
+  document.getElementById('outputBox').value = out;
+}
+
+function copyOutput() {
+  const txt = document.getElementById('outputBox').value;
+  if (!txt) return;
+  navigator.clipboard.writeText(txt).then(() => {
+    const msg = document.getElementById('copyMsg');
+    msg.style.display = 'block';
+    setTimeout(() => msg.style.display = 'none', 2000);
+  });
+}
+
+function resetAll() {
+  dataURL = '';
+  document.getElementById('resultArea').style.display = 'none';
+  dropZone.style.display = 'block';
+  fileInput.value = '';
+}
+
+function fmtBytes(b) {
+  if (b < 1024) return b + ' B';
+  if (b < 1024 * 1024) return (b / 1024).toFixed(1) + ' KB';
+  return (b / 1024 / 1024).toFixed(2) + ' MB';
+}
+</script>
+</body>
+</html>

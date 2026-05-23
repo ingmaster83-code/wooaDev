@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <title>마크다운 테이블 생성기 - 표를 마크다운으로 변환 | WooaDev</title>
+  <meta name="description" content="마크다운 테이블 생성기로 표를 쉽게 만들고 마크다운 코드로 변환하세요. 행/열 추가, 정렬 설정, CSV 가져오기 지원. 무료 온라인 도구.">
+  <meta name="keywords" content="마크다운 테이블, markdown table, 마크다운 표, 테이블 생성기, markdown generator, GitHub 마크다운">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/markdown-table.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/markdown-table.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/markdown-table.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/markdown-table.html">
+  <meta property="og:title" content="마크다운 테이블 생성기 | WooaDev">
+  <meta property="og:description" content="표를 쉽게 만들고 마크다운 코드로 변환. 행/열 추가, CSV 가져오기 지원.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/markdown-table.html">
+  <meta property="og:locale" content="ko_KR">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="manifest" href="/manifest.json">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "마크다운 테이블 생성기",
+    "url": "https://wooadev.wooahouse.com/markdown-table.html",
+    "description": "마크다운 테이블 생성기로 표를 쉽게 만들고 마크다운 코드로 변환",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" }
+  }
+  </script>
+  <style>
+    .table-controls { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+    .md-table-wrapper { overflow-x:auto; margin-bottom:16px; }
+    .md-table { border-collapse:collapse; width:100%; min-width:400px; }
+    .md-table th, .md-table td { border:1px solid #d0b896; padding:6px 8px; }
+    .md-table th { background:#f5ede0; font-weight:600; }
+    .md-table input { width:100%; border:none; background:transparent; font-size:14px; color:#333; outline:none; font-family:inherit; }
+    .md-table input:focus { background:#fffaf5; }
+    .md-table .align-sel { width:80px; border:none; background:transparent; font-size:13px; cursor:pointer; }
+    .col-del-btn { background:#e74c3c; color:#fff; border:none; border-radius:4px; padding:2px 7px; cursor:pointer; font-size:12px; }
+    .row-del-btn { background:#e74c3c; color:#fff; border:none; border-radius:4px; padding:2px 6px; cursor:pointer; font-size:12px; }
+    .output-area { font-family:monospace; font-size:13px; background:#1e1e2e; color:#cdd6f4; border-radius:8px; padding:16px; white-space:pre; overflow-x:auto; min-height:80px; }
+    .copy-row { display:flex; gap:8px; align-items:center; margin-top:8px; }
+    .csv-area { width:100%; min-height:80px; font-family:monospace; font-size:13px; border:1px solid #d0b896; border-radius:8px; padding:10px; resize:vertical; box-sizing:border-box; }
+    .section-label { font-weight:600; color:#a07850; margin:12px 0 6px; font-size:14px; }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="/index.html" class="logo">🛠️ WooaDev</a>
+    <nav class="nav">
+      <a href="/index.html">홈</a>
+      <a href="/json-formatter.html">JSON</a>
+      <a href="/regex-tester.html">Regex</a>
+      <a href="/timestamp.html">Timestamp</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="/markdown-table.html" class="active">KO</a>
+        <a href="/en/markdown-table.html">EN</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+    <a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a>
+    <a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a>
+    <a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a>
+  </div>
+</div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+  <div class="tool-page">
+    <div class="breadcrumb"><a href="/index.html">홈</a> &rsaquo; 마크다운 테이블 생성기</div>
+    <div class="tool-header">
+      <div class="tool-icon-lg">📋</div>
+      <div>
+        <h1>마크다운 테이블 생성기</h1>
+        <p>표를 시각적으로 편집하고 마크다운 코드로 즉시 변환하세요</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="table-controls">
+        <button class="dev-btn" onclick="addRow()">+ 행 추가</button>
+        <button class="dev-btn" onclick="addCol()">+ 열 추가</button>
+        <button class="dev-btn" onclick="clearTable()">초기화</button>
+      </div>
+
+      <div class="md-table-wrapper">
+        <table class="md-table" id="editorTable">
+          <thead id="thead"></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="section-label">📤 CSV 가져오기</div>
+      <textarea class="csv-area" id="csvInput" placeholder="CSV를 붙여넣으면 첫 행이 헤더가 됩니다&#10;예: 이름,나이,직업&#10;홍길동,30,개발자"></textarea>
+      <div style="margin-top:6px;">
+        <button class="dev-btn" onclick="importCSV()">CSV → 테이블</button>
+      </div>
+
+      <div class="section-label">📝 마크다운 출력</div>
+      <div class="output-area" id="mdOutput"></div>
+      <div class="copy-row">
+        <button class="dev-btn" onclick="copyMd()">📋 복사</button>
+        <span id="copyMsg" style="color:#4caf50;font-size:13px;display:none">복사됨!</span>
+      </div>
+    </div>
+
+    <div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li>헤더 행에서 정렬(왼쪽/가운데/오른쪽)을 선택할 수 있습니다</li>
+        <li>CSV 가져오기: 첫 번째 행이 자동으로 헤더가 됩니다</li>
+        <li>열/행 오른쪽 <b>×</b> 버튼으로 삭제합니다</li>
+        <li>생성된 마크다운은 GitHub, Notion, VS Code에서 바로 사용 가능합니다</li>
+      </ul>
+    </div>
+
+    <section class="faq-section">
+      <h2>자주 묻는 질문</h2>
+      <div class="faq-item">
+        <div class="faq-q">마크다운 테이블은 어디서 사용하나요?</div>
+        <div class="faq-a">GitHub README, GitLab, Notion, Obsidian, VS Code, Discord 등 마크다운을 지원하는 모든 플랫폼에서 사용할 수 있습니다.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">열 정렬 설정은 어떻게 동작하나요?</div>
+        <div class="faq-a">헤더 행의 정렬 선택기로 각 열의 정렬을 지정합니다. 구분선에 `:---`, `:---:`, `---:` 형식으로 반영됩니다.</div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="tool-sidebar">
+    <div class="ad-card">
+      <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+    </div>
+    <div class="ad-card">
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">🛠️ WooaDev</div>
+      <p>개발자를 위한 무료 온라인 도구 모음</p>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">인코딩 · 변환</div>
+      <a href="/base64.html">Base64</a>
+      <a href="/url-encoder.html">URL 인코더</a>
+      <a href="/html-entity.html">HTML 엔티티</a>
+      <a href="/image-to-base64.html">이미지 → Base64</a>
+      <a href="/json-to-ts.html">JSON → TypeScript</a>
+      <a href="/text-binary.html">텍스트 ↔ 바이너리</a>
+      <a href="/number-base.html">진수 변환</a>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">포맷 · 변환</div>
+      <a href="/json-formatter.html">JSON 포매터</a>
+      <a href="/sql-formatter.html">SQL 포매터</a>
+      <a href="/xml-formatter.html">XML 포매터</a>
+      <a href="/markdown-preview.html">마크다운 미리보기</a>
+      <a href="/markdown-table.html">마크다운 테이블</a>
+      <a href="/color-converter.html">색상 변환</a>
+      <a href="/color-contrast.html">색상 대비</a>
+      <a href="/border-radius.html">Border Radius</a>
+      <a href="/css-units.html">CSS 단위 변환</a>
+      <a href="/aspect-ratio.html">화면비 계산기</a>
+      <a href="/cookie-parser.html">쿠키 파서</a>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">생성기</div>
+      <a href="/uuid-generator.html">UUID 생성기</a>
+      <a href="/password-generator.html">비밀번호 생성기</a>
+      <a href="/hash-generator.html">해시 생성기</a>
+      <a href="/cron-generator.html">Cron 생성기</a>
+      <a href="/lorem-ipsum.html">Lorem Ipsum</a>
+      <a href="/css-gradient.html">CSS Gradient</a>
+      <a href="/box-shadow.html">Box Shadow</a>
+      <a href="/flexbox-generator.html">Flexbox 생성기</a>
+      <a href="/grid-generator.html">Grid 생성기</a>
+      <a href="/css-transition.html">CSS Transition</a>
+      <a href="/meta-tag.html">Meta Tag 생성기</a>
+      <a href="/color-palette.html">컬러 팔레트</a>
+      <a href="/jwt-generator.html">JWT 생성기</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 WooaDev. All rights reserved. | <a href="https://wooahouse.com/" target="_blank" rel="noopener">WooaHouse</a></p>
+  </div>
+  <div class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</div>
+</footer>
+
+<script src="/js/pwa-install.js"></script>
+<script>
+  // Table state
+  let alignments = []; // 'left','center','right'
+
+  function initTable(cols, rows) {
+    alignments = Array(cols).fill('left');
+    const thead = document.getElementById('thead');
+    const tbody = document.getElementById('tbody');
+    thead.innerHTML = '';
+    tbody.innerHTML = '';
+    // Header row
+    const htr = document.createElement('tr');
+    for (let c = 0; c < cols; c++) {
+      const th = document.createElement('th');
+      th.innerHTML = `<input type="text" placeholder="헤더 ${c+1}" oninput="renderMd()">
+        <br><select class="align-sel" onchange="alignments[${c}]=this.value;renderMd()">
+          <option value="left">왼쪽</option>
+          <option value="center">가운데</option>
+          <option value="right">오른쪽</option>
+        </select>`;
+      htr.appendChild(th);
+    }
+    const delTh = document.createElement('th');
+    delTh.textContent = '';
+    htr.appendChild(delTh);
+    thead.appendChild(htr);
+    // Body rows
+    for (let r = 0; r < rows; r++) addBodyRow(cols);
+    renderMd();
+  }
+
+  function addBodyRow(cols) {
+    cols = cols || getColCount();
+    const tbody = document.getElementById('tbody');
+    const tr = document.createElement('tr');
+    for (let c = 0; c < cols; c++) {
+      const td = document.createElement('td');
+      td.innerHTML = `<input type="text" placeholder="셀" oninput="renderMd()">`;
+      tr.appendChild(td);
+    }
+    const delTd = document.createElement('td');
+    delTd.innerHTML = `<button class="row-del-btn" onclick="this.closest('tr').remove();renderMd()">×</button>`;
+    tr.appendChild(delTd);
+    tbody.appendChild(tr);
+  }
+
+  function getColCount() {
+    const th = document.querySelectorAll('#thead tr th');
+    return Math.max(0, th.length - 1);
+  }
+
+  function addRow() { addBodyRow(); renderMd(); }
+
+  function addCol() {
+    const cols = getColCount();
+    alignments.push('left');
+    // Add to header
+    const htr = document.querySelector('#thead tr');
+    const lastTh = htr.lastElementChild;
+    const newTh = document.createElement('th');
+    const idx = cols;
+    newTh.innerHTML = `<input type="text" placeholder="헤더 ${idx+1}" oninput="renderMd()">
+      <br><select class="align-sel" onchange="alignments[${idx}]=this.value;renderMd()">
+        <option value="left">왼쪽</option>
+        <option value="center">가운데</option>
+        <option value="right">오른쪽</option>
+      </select>`;
+    htr.insertBefore(newTh, lastTh);
+    // Add to each body row
+    document.querySelectorAll('#tbody tr').forEach(tr => {
+      const lastTd = tr.lastElementChild;
+      const td = document.createElement('td');
+      td.innerHTML = `<input type="text" placeholder="셀" oninput="renderMd()">`;
+      tr.insertBefore(td, lastTd);
+    });
+    // Update delete buttons for col removal
+    renderMd();
+  }
+
+  function clearTable() { initTable(3, 3); }
+
+  function renderMd() {
+    const cols = getColCount();
+    if (cols === 0) { document.getElementById('mdOutput').textContent = ''; return; }
+    const headerInputs = Array.from(document.querySelectorAll('#thead tr th input[type=text]'));
+    const headers = headerInputs.map(i => i.value || ' ');
+    const sepRow = alignments.slice(0, cols).map(a => {
+      if (a === 'center') return ':---:';
+      if (a === 'right') return '---:';
+      return ':---';
+    });
+    const rows = Array.from(document.querySelectorAll('#tbody tr')).map(tr => {
+      const inputs = Array.from(tr.querySelectorAll('input[type=text]'));
+      return inputs.map(i => i.value || ' ');
+    });
+    const pad = (val, len) => val.padEnd(len);
+    const colWidths = Array(cols).fill(3);
+    [headers, ...rows].forEach(row => {
+      row.slice(0, cols).forEach((cell, ci) => {
+        colWidths[ci] = Math.max(colWidths[ci], cell.length);
+      });
+    });
+    const fmtRow = (cells) => '| ' + cells.slice(0, cols).map((c, ci) => pad(c, colWidths[ci])).join(' | ') + ' |';
+    const fmtSep = () => '| ' + sepRow.slice(0, cols).map((s, ci) => {
+      const len = colWidths[ci];
+      if (s === ':---:') return ':' + '-'.repeat(len-2) + ':';
+      if (s === '---:') return '-'.repeat(len-1) + ':';
+      return ':' + '-'.repeat(len-1);
+    }).join(' | ') + ' |';
+    const lines = [fmtRow(headers), fmtSep(), ...rows.map(fmtRow)];
+    document.getElementById('mdOutput').textContent = lines.join('\n');
+  }
+
+  function importCSV() {
+    const raw = document.getElementById('csvInput').value.trim();
+    if (!raw) return;
+    const lines = raw.split('\n').map(l => l.split(',').map(c => c.trim().replace(/^"|"$/g,'')));
+    if (lines.length < 1) return;
+    const cols = Math.max(...lines.map(l => l.length));
+    initTable(cols, 0);
+    // Fill header
+    const headerInputs = Array.from(document.querySelectorAll('#thead tr th input[type=text]'));
+    lines[0].forEach((val, i) => { if (headerInputs[i]) headerInputs[i].value = val; });
+    // Fill body rows
+    for (let r = 1; r < lines.length; r++) {
+      addBodyRow(cols);
+      const rows = document.querySelectorAll('#tbody tr');
+      const lastRow = rows[rows.length - 1];
+      const inputs = lastRow.querySelectorAll('input[type=text]');
+      lines[r].forEach((val, i) => { if (inputs[i]) inputs[i].value = val; });
+    }
+    renderMd();
+  }
+
+  function copyMd() {
+    const text = document.getElementById('mdOutput').textContent;
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+      const msg = document.getElementById('copyMsg');
+      msg.style.display = 'inline';
+      setTimeout(() => msg.style.display = 'none', 2000);
+    });
+  }
+
+  // Init
+  initTable(3, 3);
+</script>
+</body>
+</html>

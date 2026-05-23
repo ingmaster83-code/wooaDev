@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+<meta charset="UTF-8">
+<meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+<meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Grid 생성기 무료 — 시각적 Grid 레이아웃 CSS 코드 | WooaDev</title>
+<meta name="description" content="CSS Grid 레이아웃을 시각적으로 설정하고 CSS 코드를 바로 복사. grid-template-columns·rows·gap·justify·align 등 지원. 무료 온라인 CSS Grid 생성기.">
+<meta name="keywords" content="CSS Grid 생성기, grid generator, grid-template-columns, grid layout, CSS 레이아웃, 그리드 생성기, grid gap">
+<link rel="canonical" href="https://wooadev.wooahouse.com/grid-generator.html">
+<link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/grid-generator.html">
+<link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/grid-generator.html">
+<link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/grid-generator.html">
+<meta property="og:title" content="CSS Grid 생성기 무료 | WooaDev">
+<meta property="og:description" content="CSS Grid 속성을 시각적으로 설정하고 코드를 바로 복사하세요.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wooadev.wooahouse.com/grid-generator.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="WooaDev">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSS Grid 생성기","url":"https://wooadev.wooahouse.com/grid-generator.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="https://ads-partners.coupang.com/g.js"></script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#C4956A">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.lang-switcher{display:flex;align-items:center;gap:4px}.lang-switcher a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.8rem;font-weight:600;padding:3px 8px;border-radius:12px;transition:background 0.15s}.lang-switcher a.active{color:white;background:rgba(255,255,255,0.25)}.lang-switcher a:hover{color:white;background:rgba(255,255,255,0.18)}.lang-switcher span{color:rgba(255,255,255,0.3);font-size:0.75rem}
+.grid-stage{background:repeating-conic-gradient(#f0f0f0 0% 25%,#fff 0% 50%) 0 0/20px 20px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);padding:20px;margin-bottom:20px;min-height:200px}
+.grid-preview{display:grid;gap:8px;background:rgba(196,149,106,0.12);border:2px dashed #C4956A;border-radius:8px;padding:10px;min-height:160px;transition:all .2s}
+.grid-cell{background:#C4956A;border-radius:6px;color:#fff;font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center;min-height:40px;padding:8px;transition:all .2s}
+.ctrl-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:580px){.ctrl-grid{grid-template-columns:1fr}}
+.ctrl-group label{display:block;font-size:0.8rem;font-weight:700;color:#64748b;margin-bottom:6px}
+.ctrl-group select,.ctrl-group input[type=text]{width:100%;padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:8px;background:#f8fafc;font-size:0.85rem;color:#1e293b}
+.ctrl-group input[type=text]:focus,.ctrl-group select:focus{outline:none;border-color:#C4956A}
+.num-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.num-row label{font-size:0.82rem;color:#64748b;width:70px}
+.num-btn{width:30px;height:30px;border:1.5px solid #e2e8f0;border-radius:7px;background:#f8fafc;cursor:pointer;font-size:1rem;font-weight:700}
+.num-btn:hover{background:#C4956A;color:#fff;border-color:#C4956A}
+.num-val{width:48px;text-align:center;border:1px solid #e2e8f0;border-radius:7px;padding:5px;font-size:0.9rem}
+.gap-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.gap-row label{font-size:0.82rem;color:#64748b;white-space:nowrap}
+.gap-row input[type=range]{flex:1;accent-color:#C4956A}
+.code-out{font-family:monospace;font-size:0.85rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;line-height:1.7;color:#1e293b;margin-bottom:10px;white-space:pre}
+</style>
+</head>
+<body>
+<header><div class="header-inner"><a href="index.html" class="logo">WooaDev</a><nav><a href="flexbox-generator.html">Flexbox</a><a href="css-gradient.html">Gradient</a><a href="box-shadow.html">Shadow</a><a href="color-contrast.html">Contrast</a><a href="index.html">전체 도구 ›</a></nav><div class="header-right"><div class="lang-switcher"><a href="grid-generator.html" class="active">KO</a><span>|</span><a href="en/grid-generator.html">EN</a></div><a href="about.html" style="color:rgba(255,255,255,0.85);font-size:0.85rem;text-decoration:none;margin-left:8px;">소개</a></div></div></header>
+<div class="our-sites-bar"><span class="our-sites-label">WooaHouse Services</span><div class="our-sites-links"><a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a><a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a><a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a><a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a><a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a><a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a><a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a><a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a><a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a><a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a><a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a><a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a><a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a></div></div>
+<div class="mobile-top-ad"><ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CSS Grid 생성기</span></div>
+  <div class="tool-header"><span class="tool-header-icon">🔲</span><h1>CSS Grid 생성기</h1><p>CSS Grid 레이아웃을 시각적으로 설정하고 CSS 코드를 바로 복사하세요. grid-template · gap · justify · align 등 지원.</p></div>
+
+  <div class="grid-stage"><div class="grid-preview" id="gridPreview"></div></div>
+
+  <div class="dev-panel">
+    <div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:14px">
+      <div class="num-row"><label>열(Column)</label><button class="num-btn" onclick="chg('cols',-1)">−</button><input type="number" class="num-val" id="cols" value="3" min="1" max="12" oninput="render()"><button class="num-btn" onclick="chg('cols',1)">+</button></div>
+      <div class="num-row"><label>행(Row)</label><button class="num-btn" onclick="chg('rows',-1)">−</button><input type="number" class="num-val" id="rows" value="2" min="1" max="8" oninput="render()"><button class="num-btn" onclick="chg('rows',1)">+</button></div>
+    </div>
+    <div style="margin-bottom:14px">
+      <div class="dev-label" style="margin-bottom:6px">Column Template</div>
+      <input type="text" id="colTpl" value="1fr 1fr 1fr" style="width:100%;padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-family:monospace;font-size:0.85rem" oninput="render()" placeholder="1fr 1fr 1fr  또는  200px auto 1fr">
+      <div class="dev-label" style="margin:10px 0 6px">Row Template</div>
+      <input type="text" id="rowTpl" value="auto" style="width:100%;padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-family:monospace;font-size:0.85rem" oninput="render()" placeholder="auto  또는  100px auto 200px">
+    </div>
+    <div class="gap-row"><label>Column Gap: <span id="cgVal">8</span>px</label><input type="range" id="cgap" min="0" max="48" value="8" oninput="document.getElementById('cgVal').textContent=this.value;render()"></div>
+    <div class="gap-row"><label>Row Gap: <span id="rgVal">8</span>px</label><input type="range" id="rgap" min="0" max="48" value="8" oninput="document.getElementById('rgVal').textContent=this.value;render()"></div>
+    <div class="ctrl-grid">
+      <div class="ctrl-group"><label>justify-items</label><select id="ji" onchange="render()"><option value="stretch">stretch</option><option value="start">start</option><option value="end">end</option><option value="center">center</option></select></div>
+      <div class="ctrl-group"><label>align-items</label><select id="ai" onchange="render()"><option value="stretch">stretch</option><option value="start">start</option><option value="end">end</option><option value="center">center</option></select></div>
+      <div class="ctrl-group"><label>justify-content</label><select id="jc" onchange="render()"><option value="start">start</option><option value="end">end</option><option value="center">center</option><option value="stretch">stretch</option><option value="space-between">space-between</option><option value="space-around">space-around</option><option value="space-evenly">space-evenly</option></select></div>
+      <div class="ctrl-group"><label>align-content</label><select id="ac" onchange="render()"><option value="start">start</option><option value="end">end</option><option value="center">center</option><option value="stretch">stretch</option><option value="space-between">space-between</option><option value="space-around">space-around</option></select></div>
+    </div>
+  </div>
+
+  <div class="dev-panel" style="margin-top:12px">
+    <div class="dev-label">생성된 CSS 코드</div>
+    <div class="code-out" id="codeOut"></div>
+    <button class="dev-btn" onclick="copyCode()">📋 코드 복사</button>
+    <span id="copyMsg" style="color:#22c55e;font-size:0.83rem;margin-left:10px;display:none">✅ 복사 완료!</span>
+  </div>
+
+  <div class="tips-panel" style="margin-top:16px"><h3>💡 Tips</h3><ul>
+    <li><strong>fr 단위</strong>: 남은 공간을 비율로 나눕니다. <code>1fr 2fr</code>은 1:2 비율로 분할.</li>
+    <li><strong>repeat()</strong>: Column Template에 <code>repeat(3, 1fr)</code> 형식도 사용 가능합니다.</li>
+    <li><strong>justify-items</strong>: 각 셀 내에서 아이템을 수평 정렬합니다.</li>
+    <li><strong>align-items</strong>: 각 셀 내에서 아이템을 수직 정렬합니다.</li>
+  </ul></div>
+  <details class="faq-item"><summary>Flexbox와 Grid 중 어떤 걸 써야 하나요?</summary><p>1차원(행 또는 열)이면 Flexbox, 2차원(행+열 동시)이면 Grid가 적합합니다. 카드 그리드, 갤러리, 대시보드 레이아웃에는 Grid를 사용하세요.</p></details>
+  <details class="faq-item"><summary>minmax()를 어떻게 사용하나요?</summary><p>Column Template에 <code>minmax(200px, 1fr)</code>을 입력하면 최소 200px, 최대 가능한 공간으로 열이 설정됩니다. 반응형 레이아웃에 유용합니다.</p></details>
+</div>
+<aside class="tool-sidebar">
+  <div class="ad-card"><ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+  <div class="ad-card"><script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script></div>
+</aside>
+</div>
+<footer class="footer"><div class="footer-inner"><div class="footer-top">
+  <div class="footer-col"><h4>🛠️ WooaDev</h4><p>개발자 필수 유틸리티. 브라우저에서 무료로 사용.</p></div>
+  <div class="footer-links"><h4>CSS 도구</h4><a href="css-gradient.html">CSS 그라디언트</a><a href="box-shadow.html">Box Shadow</a><a href="border-radius.html">Border Radius</a><a href="flexbox-generator.html">Flexbox</a><a href="grid-generator.html">CSS Grid</a></div>
+  <div class="footer-links"><h4>포맷 · 변환</h4><a href="json-formatter.html">JSON 포맷터</a><a href="json-to-ts.html">JSON→TypeScript</a><a href="color-contrast.html">색상 대비</a><a href="html-entity.html">HTML Entity</a></div>
+  <div class="footer-links"><h4>생성기</h4><a href="uuid-generator.html">UUID</a><a href="meta-tag.html">Meta Tag</a><a href="color-palette.html">색상 팔레트</a><a href="cron-generator.html">Cron</a></div>
+  <div class="footer-links"><h4>WooaHouse 서비스</h4><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">WooaViewer</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">WooaPDF</a><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">WooaColor</a></div>
+</div><div class="footer-bottom"><p>© 2026 WooaDev by WooaHouse. 모든 권리 보유.</p></div></div></footer>
+<script src="js/pwa-install.js"></script>
+<script>
+function g(id){return document.getElementById(id);}
+function v(id){return g(id).value;}
+
+function chg(id,d){const el=g(id);el.value=Math.max(parseInt(el.min),Math.min(parseInt(el.max),parseInt(el.value||1)+d));render();}
+
+function render(){
+  const cols=Math.max(1,Math.min(12,parseInt(v('cols'))||3));
+  const rows=Math.max(1,Math.min(8,parseInt(v('rows'))||2));
+  const colTpl=v('colTpl')||`repeat(${cols}, 1fr)`;
+  const rowTpl=v('rowTpl')||'auto';
+  const cg=v('cgap'), rg=v('rgap');
+  const ji=v('ji'), ai=v('ai'), jc=v('jc'), ac=v('ac');
+
+  const gp=g('gridPreview');
+  gp.style.cssText=`display:grid;grid-template-columns:${colTpl};grid-template-rows:${rowTpl};column-gap:${cg}px;row-gap:${rg}px;justify-items:${ji};align-items:${ai};justify-content:${jc};align-content:${ac};background:rgba(196,149,106,0.12);border:2px dashed #C4956A;border-radius:8px;padding:10px;min-height:160px;transition:all .2s`;
+  gp.innerHTML='';
+  for(let i=1;i<=cols*rows;i++){const el=document.createElement('div');el.className='grid-cell';el.textContent=i;gp.appendChild(el);}
+
+  const lines=[`.container {`,
+    `  display: grid;`,
+    `  grid-template-columns: ${colTpl};`,
+    rowTpl!=='auto'?`  grid-template-rows: ${rowTpl};`:null,
+    cg===rg?`  gap: ${cg}px;`:`  column-gap: ${cg}px;\n  row-gap: ${rg}px;`,
+    ji!=='stretch'?`  justify-items: ${ji};`:null,
+    ai!=='stretch'?`  align-items: ${ai};`:null,
+    jc!=='start'?`  justify-content: ${jc};`:null,
+    ac!=='start'?`  align-content: ${ac};`:null,
+    `}`].filter(Boolean).join('\n');
+  g('codeOut').textContent=lines;
+}
+
+function copyCode(){
+  navigator.clipboard.writeText(g('codeOut').textContent).then(()=>{const m=g('copyMsg');m.style.display='inline';setTimeout(()=>m.style.display='none',2000);});
+}
+
+render();
+</script>
+</body>
+</html>

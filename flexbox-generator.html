@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+<meta charset="UTF-8">
+<meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+<meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Flexbox 생성기 무료 — 시각적 flex 레이아웃 코드 생성 | WooaDev</title>
+<meta name="description" content="CSS Flexbox 속성을 시각적으로 설정하고 CSS 코드를 바로 복사. flex-direction, justify-content, align-items 등 모든 flex 속성 지원. 무료 온라인 Flexbox 생성기.">
+<meta name="keywords" content="flexbox 생성기, CSS flex generator, flexbox 레이아웃, justify-content, align-items, flex-direction, CSS 레이아웃, flexbox 코드 생성">
+<link rel="canonical" href="https://wooadev.wooahouse.com/flexbox-generator.html">
+<link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/flexbox-generator.html">
+<link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/flexbox-generator.html">
+<link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/flexbox-generator.html">
+<meta property="og:title" content="CSS Flexbox 생성기 무료 | WooaDev">
+<meta property="og:description" content="Flexbox 속성을 시각적으로 설정하고 CSS 코드를 바로 복사. justify-content, align-items 등 지원.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wooadev.wooahouse.com/flexbox-generator.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="WooaDev">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSS Flexbox 생성기","url":"https://wooadev.wooahouse.com/flexbox-generator.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="https://ads-partners.coupang.com/g.js"></script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#C4956A">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.lang-switcher{display:flex;align-items:center;gap:4px}
+.lang-switcher a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.8rem;font-weight:600;padding:3px 8px;border-radius:12px;transition:background 0.15s}
+.lang-switcher a.active{color:white;background:rgba(255,255,255,0.25)}
+.lang-switcher a:hover{color:white;background:rgba(255,255,255,0.18)}
+.lang-switcher span{color:rgba(255,255,255,0.3);font-size:0.75rem}
+
+/* 미리보기 */
+.flex-stage{background:repeating-conic-gradient(#f0f0f0 0% 25%,#fff 0% 50%) 0 0/20px 20px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);padding:20px;min-height:200px;margin-bottom:20px}
+.flex-container{display:flex;min-height:160px;gap:8px;background:rgba(196,149,106,0.12);border:2px dashed #C4956A;border-radius:8px;padding:10px;transition:all .2s}
+.flex-item{background:#C4956A;border-radius:6px;color:#fff;font-weight:700;font-size:0.85rem;display:flex;align-items:center;justify-content:center;min-width:40px;min-height:40px;padding:8px 12px;transition:all .2s}
+
+/* 컨트롤 */
+.ctrl-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:580px){.ctrl-grid{grid-template-columns:1fr}}
+.ctrl-group label{display:block;font-size:0.8rem;font-weight:700;color:#64748b;margin-bottom:6px}
+.ctrl-group select{width:100%;padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:8px;background:#f8fafc;font-size:0.85rem;color:#1e293b;cursor:pointer}
+.ctrl-group select:focus{outline:none;border-color:#C4956A}
+
+.item-ctrl{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.item-ctrl label{font-size:0.82rem;color:#64748b;width:60px;flex-shrink:0}
+.item-num{width:60px;text-align:center;border:1px solid #e2e8f0;border-radius:8px;padding:6px;font-size:0.9rem}
+.item-num-btn{width:32px;height:32px;border:1.5px solid #e2e8f0;border-radius:8px;background:#f8fafc;cursor:pointer;font-size:1rem;font-weight:700;transition:background .15s}
+.item-num-btn:hover{background:#C4956A;color:#fff;border-color:#C4956A}
+
+.gap-row{display:flex;align-items:center;gap:10px}
+.gap-row input[type=range]{flex:1;accent-color:#C4956A}
+.gap-row span{font-size:0.82rem;color:#64748b;white-space:nowrap;width:40px}
+
+.code-out{font-family:'Consolas','Monaco',monospace;font-size:0.85rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;line-height:1.7;color:#1e293b;margin-bottom:10px;white-space:pre}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="css-gradient.html">Gradient</a>
+      <a href="box-shadow.html">Shadow</a>
+      <a href="border-radius.html">Radius</a>
+      <a href="color-contrast.html">Contrast</a>
+      <a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="flexbox-generator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/flexbox-generator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85);font-size:0.85rem;text-decoration:none;margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar"><span class="our-sites-label">WooaHouse Services</span><div class="our-sites-links"><a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a><a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a><a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a><a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a><a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a><a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a><a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a><a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a><a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a><a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a><a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a><a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a><a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a></div></div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Flexbox 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📐</span>
+    <h1>CSS Flexbox 생성기</h1>
+    <p>Flexbox 속성을 시각적으로 조절하고 CSS 코드를 바로 복사하세요. flex-direction · justify-content · align-items · gap 등 지원.</p>
+  </div>
+
+  <!-- 미리보기 -->
+  <div class="flex-stage">
+    <div class="flex-container" id="flexContainer"></div>
+  </div>
+
+  <!-- 컨트롤 -->
+  <div class="dev-panel">
+    <!-- 아이템 수 + gap -->
+    <div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:16px;align-items:center">
+      <div class="item-ctrl">
+        <label>아이템 수</label>
+        <button class="item-num-btn" onclick="changeCount(-1)">−</button>
+        <input type="number" class="item-num" id="itemCount" value="4" min="1" max="12" oninput="render()">
+        <button class="item-num-btn" onclick="changeCount(1)">+</button>
+      </div>
+      <div style="flex:1;min-width:180px">
+        <div style="font-size:0.8rem;font-weight:700;color:#64748b;margin-bottom:6px">Gap: <span id="gapVal">8</span>px</div>
+        <div class="gap-row">
+          <input type="range" id="gapRange" min="0" max="48" value="8" oninput="document.getElementById('gapVal').textContent=this.value;render()">
+        </div>
+      </div>
+    </div>
+
+    <div class="ctrl-grid">
+      <div class="ctrl-group">
+        <label>flex-direction</label>
+        <select id="flexDirection" onchange="render()">
+          <option value="row">row</option>
+          <option value="row-reverse">row-reverse</option>
+          <option value="column">column</option>
+          <option value="column-reverse">column-reverse</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label>flex-wrap</label>
+        <select id="flexWrap" onchange="render()">
+          <option value="nowrap">nowrap</option>
+          <option value="wrap">wrap</option>
+          <option value="wrap-reverse">wrap-reverse</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label>justify-content</label>
+        <select id="justifyContent" onchange="render()">
+          <option value="flex-start">flex-start</option>
+          <option value="flex-end">flex-end</option>
+          <option value="center">center</option>
+          <option value="space-between">space-between</option>
+          <option value="space-around">space-around</option>
+          <option value="space-evenly">space-evenly</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label>align-items</label>
+        <select id="alignItems" onchange="render()">
+          <option value="stretch">stretch</option>
+          <option value="flex-start">flex-start</option>
+          <option value="flex-end">flex-end</option>
+          <option value="center">center</option>
+          <option value="baseline">baseline</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label>align-content</label>
+        <select id="alignContent" onchange="render()">
+          <option value="normal">normal</option>
+          <option value="flex-start">flex-start</option>
+          <option value="flex-end">flex-end</option>
+          <option value="center">center</option>
+          <option value="space-between">space-between</option>
+          <option value="space-around">space-around</option>
+          <option value="stretch">stretch</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label>align-self (아이템)</label>
+        <select id="alignSelf" onchange="render()">
+          <option value="auto">auto</option>
+          <option value="flex-start">flex-start</option>
+          <option value="flex-end">flex-end</option>
+          <option value="center">center</option>
+          <option value="stretch">stretch</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 코드 출력 -->
+  <div class="dev-panel" style="margin-top:12px">
+    <div class="dev-label">생성된 CSS 코드</div>
+    <div class="code-out" id="codeOut"></div>
+    <button class="dev-btn" onclick="copyCode()">📋 코드 복사</button>
+    <span id="copyMsg" style="color:#22c55e;font-size:0.83rem;margin-left:10px;display:none">✅ 복사 완료!</span>
+  </div>
+
+  <div class="tips-panel" style="margin-top:16px">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li><strong>justify-content</strong>: 주축(main axis) 방향 정렬. flex-direction이 row면 수평, column이면 수직.</li>
+      <li><strong>align-items</strong>: 교차축(cross axis) 정렬. 단일 행에 적용됩니다.</li>
+      <li><strong>align-content</strong>: 여러 행이 있을 때 교차축 정렬. flex-wrap: wrap일 때 효과가 있습니다.</li>
+      <li><strong>align-self</strong>: 개별 아이템의 교차축 정렬을 덮어씁니다.</li>
+      <li><strong>gap</strong>: 아이템 간격. row-gap과 column-gap을 동시에 설정합니다.</li>
+    </ul>
+  </div>
+
+  <details class="faq-item">
+    <summary>Flexbox와 Grid의 차이는?</summary>
+    <p>Flexbox는 1차원 레이아웃(행 또는 열)에 적합하고, Grid는 2차원(행+열) 레이아웃에 적합합니다. 내비게이션 바, 버튼 그룹 등엔 Flexbox, 전체 페이지 레이아웃엔 Grid가 유용합니다.</p>
+  </details>
+  <details class="faq-item">
+    <summary>flex-grow, flex-shrink, flex-basis란?</summary>
+    <p><code>flex-grow</code>: 남은 공간을 채우는 비율. <code>flex-shrink</code>: 공간 부족 시 줄어드는 비율. <code>flex-basis</code>: 아이템의 기본 크기. 단축 속성 <code>flex: 1</code>은 <code>flex: 1 1 0%</code>와 같습니다.</p>
+  </details>
+  <details class="faq-item">
+    <summary>모든 브라우저에서 지원되나요?</summary>
+    <p>Flexbox는 모든 현대 브라우저(Chrome, Firefox, Safari, Edge)에서 완벽하게 지원됩니다. IE11도 일부 지원하나 일부 속성에 버그가 있어 접두사(<code>-ms-</code>)가 필요할 수 있습니다.</p>
+  </details>
+</div>
+
+<aside class="tool-sidebar">
+  <div class="ad-card">
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px"
+      data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025"
+      data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card">
+    <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+  </div>
+</aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-col"><h4>🛠️ WooaDev</h4><p>개발자 필수 유틸리티 도구 모음. 브라우저에서 무료로 바로 사용.</p></div>
+      <div class="footer-links"><h4>인코딩 · 해시</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL 인코더</a><a href="image-to-base64.html">이미지→Base64</a><a href="html-entity.html">HTML Entity</a><a href="hash-generator.html">Hash 생성기</a></div>
+      <div class="footer-links"><h4>포맷 · 변환</h4><a href="json-formatter.html">JSON 포맷터</a><a href="css-gradient.html">CSS 그라디언트</a><a href="box-shadow.html">Box Shadow</a><a href="border-radius.html">Border Radius</a><a href="color-contrast.html">색상 대비 검사</a></div>
+      <div class="footer-links"><h4>생성기 · 변환</h4><a href="uuid-generator.html">UUID 생성기</a><a href="lorem-ipsum.html">Lorem Ipsum</a><a href="flexbox-generator.html">Flexbox 생성기</a><a href="cron-generator.html">Cron 생성기</a><a href="timestamp.html">타임스탬프</a></div>
+      <div class="footer-links"><h4>WooaHouse 서비스</h4><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">WooaViewer</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">WooaPDF</a><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">WooaColor</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev by WooaHouse. 모든 권리 보유.</p></div>
+  </div>
+</footer>
+<script src="js/pwa-install.js"></script>
+<script>
+function v(id) { return document.getElementById(id).value; }
+
+function render() {
+  const count = Math.max(1, Math.min(12, parseInt(document.getElementById('itemCount').value)||4));
+  const gap = v('gapRange');
+  const dir = v('flexDirection');
+  const wrap = v('flexWrap');
+  const jc = v('justifyContent');
+  const ai = v('alignItems');
+  const ac = v('alignContent');
+  const as_ = v('alignSelf');
+
+  const fc = document.getElementById('flexContainer');
+  fc.style.cssText = `display:flex;flex-direction:${dir};flex-wrap:${wrap};justify-content:${jc};align-items:${ai};align-content:${ac};gap:${gap}px;min-height:160px;background:rgba(196,149,106,0.12);border:2px dashed #C4956A;border-radius:8px;padding:10px;transition:all .2s`;
+
+  fc.innerHTML = '';
+  for (let i = 1; i <= count; i++) {
+    const el = document.createElement('div');
+    el.className = 'flex-item';
+    el.textContent = i;
+    if (as_ !== 'auto') el.style.alignSelf = as_;
+    fc.appendChild(el);
+  }
+
+  const lines = [`.container {`,
+    `  display: flex;`,
+    `  flex-direction: ${dir};`,
+    `  flex-wrap: ${wrap};`,
+    `  justify-content: ${jc};`,
+    `  align-items: ${ai};`,
+    ac !== 'normal' ? `  align-content: ${ac};` : null,
+    `  gap: ${gap}px;`,
+    `}`,
+    as_ !== 'auto' ? `\n.item {\n  align-self: ${as_};\n}` : null
+  ].filter(Boolean).join('\n');
+
+  document.getElementById('codeOut').textContent = lines;
+}
+
+function changeCount(d) {
+  const el = document.getElementById('itemCount');
+  el.value = Math.max(1, Math.min(12, parseInt(el.value||4) + d));
+  render();
+}
+
+function copyCode() {
+  navigator.clipboard.writeText(document.getElementById('codeOut').textContent).then(() => {
+    const m = document.getElementById('copyMsg');
+    m.style.display = 'inline';
+    setTimeout(() => m.style.display = 'none', 2000);
+  });
+}
+
+render();
+</script>
+</body>
+</html>

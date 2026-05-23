@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+<meta charset="UTF-8">
+<meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+<meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free CSS Gradient Generator — Linear, Radial & Conic | WooaDev</title>
+<meta name="description" content="Visually create CSS gradients — linear, radial, and conic. Add color stops, adjust direction and position, then copy the CSS code instantly. Free, no install.">
+<meta name="keywords" content="CSS gradient generator, linear-gradient, radial-gradient, conic-gradient, gradient CSS code, online gradient maker, free gradient tool">
+<link rel="canonical" href="https://wooadev.wooahouse.com/en/css-gradient.html">
+<link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/css-gradient.html">
+<link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/css-gradient.html">
+<link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/css-gradient.html">
+<meta property="og:title" content="Free CSS Gradient Generator | WooaDev">
+<meta property="og:description" content="Create linear, radial, and conic CSS gradients visually and copy the code instantly.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wooadev.wooahouse.com/en/css-gradient.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+<meta property="og:site_name" content="WooaDev">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSS Gradient Generator","url":"https://wooadev.wooahouse.com/en/css-gradient.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="https://ads-partners.coupang.com/g.js"></script>
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#C4956A">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+.lang-switcher{display:flex;align-items:center;gap:4px}
+.lang-switcher a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.8rem;font-weight:600;padding:3px 8px;border-radius:12px;transition:background 0.15s}
+.lang-switcher a.active{color:white;background:rgba(255,255,255,0.25)}
+.lang-switcher a:hover{color:white;background:rgba(255,255,255,0.18)}
+.lang-switcher span{color:rgba(255,255,255,0.3);font-size:0.75rem}
+.grad-preview{width:100%;height:160px;border-radius:12px;border:1px solid rgba(0,0,0,0.08);margin-bottom:20px;transition:background 0.2s}
+.type-tabs{display:flex;gap:8px;margin-bottom:18px}
+.type-tab{padding:7px 18px;border-radius:20px;border:1.5px solid var(--border,#E2E8F0);background:#fff;font-size:0.85rem;font-weight:600;cursor:pointer;color:var(--text-light,#64748B);transition:all .15s}
+.type-tab.active{background:#C4956A;color:#fff;border-color:#C4956A}
+.dir-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px;max-width:200px}
+.dir-btn{padding:8px 0;border-radius:8px;border:1.5px solid var(--border,#E2E8F0);background:#fff;cursor:pointer;font-size:1.1rem;text-align:center;transition:all .15s}
+.dir-btn.active,.dir-btn:hover{border-color:#C4956A;background:#FFF8F2}
+.deg-row{display:flex;align-items:center;gap:8px;margin-top:6px}
+.deg-row input[type=range]{flex:1;accent-color:#C4956A}
+.deg-row input[type=number]{width:64px;padding:5px 8px;border:1px solid var(--border,#E2E8F0);border-radius:6px;font-size:0.85rem;text-align:center}
+.stops-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.stop-row{display:flex;align-items:center;gap:10px;background:var(--panel-bg,#F8FAFC);border:1px solid var(--border,#E2E8F0);border-radius:10px;padding:10px 12px}
+.stop-color{width:40px;height:40px;border:none;border-radius:8px;cursor:pointer;padding:2px;background:none;flex-shrink:0}
+.stop-pos{display:flex;align-items:center;gap:6px;flex:1}
+.stop-pos input[type=range]{flex:1;accent-color:#C4956A}
+.stop-pos span{width:38px;text-align:right;font-size:0.82rem;color:var(--text-light,#64748B);flex-shrink:0}
+.stop-del{padding:4px 10px;border:none;border-radius:6px;background:#FEE2E2;color:#DC2626;cursor:pointer;font-size:0.8rem;font-weight:600;flex-shrink:0}
+.stop-del:hover{background:#FECACA}
+.btn-add-stop{width:100%;padding:8px;border:1.5px dashed #C4956A;background:transparent;border-radius:8px;color:#C4956A;font-weight:600;cursor:pointer;font-size:0.85rem;transition:background .15s}
+.btn-add-stop:hover{background:#FFF8F2}
+.code-out{font-family:'Consolas','Monaco',monospace;font-size:0.88rem;background:var(--panel-bg,#F8FAFC);border:1px solid var(--border,#E2E8F0);border-radius:10px;padding:14px;word-break:break-all;line-height:1.6;color:var(--text,#1E293B);margin-bottom:10px;min-height:48px}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="json-formatter.html">JSON</a>
+      <a href="xml-formatter.html">XML</a>
+      <a href="color-converter.html">Color</a>
+      <a href="regex-tester.html">Regex</a>
+      <a href="hash-generator.html">Hash</a>
+      <a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../css-gradient.html">KO</a>
+        <span>|</span>
+        <a href="css-gradient.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85);font-size:0.85rem;text-decoration:none;margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar"><span class="our-sites-label">WooaHouse Services</span><div class="our-sites-links"><a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a><a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a><a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a><a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a><a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a><a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a><a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a><a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a><a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a><a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a><a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a><a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a><a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a></div></div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CSS Gradient Generator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🌈</span>
+    <h1>CSS Gradient Generator</h1>
+    <p>Visually design linear, radial, or conic gradients and copy the CSS code instantly. Add color stops, adjust direction, and fine-tune positions.</p>
+  </div>
+
+  <div class="dev-panel">
+    <div class="grad-preview" id="preview"></div>
+    <div class="type-tabs">
+      <button class="type-tab active" onclick="setType('linear')">Linear</button>
+      <button class="type-tab" onclick="setType('radial')">Radial</button>
+      <button class="type-tab" onclick="setType('conic')">Conic</button>
+    </div>
+    <div id="dirSection">
+      <div class="dev-label">Direction</div>
+      <div class="dir-grid">
+        <button class="dir-btn" onclick="setDir('to top left')" title="↖">↖</button>
+        <button class="dir-btn active" onclick="setDir('to top')" title="↑">↑</button>
+        <button class="dir-btn" onclick="setDir('to top right')" title="↗">↗</button>
+        <button class="dir-btn" onclick="setDir('to left')" title="←">←</button>
+        <button class="dir-btn" onclick="setDir('circle')" title="●" id="radialBtn" style="display:none">●</button>
+        <button class="dir-btn" onclick="setDir('center')" title="○" id="centerBtn" style="display:none">○</button>
+        <button class="dir-btn" onclick="setDir('to right')" title="→">→</button>
+        <button class="dir-btn" onclick="setDir('to bottom left')" title="↙">↙</button>
+        <button class="dir-btn" onclick="setDir('to bottom')" title="↓">↓</button>
+        <button class="dir-btn" onclick="setDir('to bottom right')" title="↘">↘</button>
+      </div>
+      <div class="deg-row" id="degRow">
+        <span style="font-size:0.82rem;color:var(--text-light,#64748B);white-space:nowrap">Custom angle</span>
+        <input type="range" id="degRange" min="0" max="360" value="0" oninput="setDegFromRange()">
+        <input type="number" id="degNum" min="0" max="360" value="0" oninput="setDegFromNum()">
+        <span style="font-size:0.82rem;color:var(--text-light)">deg</span>
+      </div>
+    </div>
+    <div style="margin-top:16px">
+      <div class="dev-label">Color Stops</div>
+      <div class="stops-list" id="stopsList"></div>
+      <button class="btn-add-stop" onclick="addStop()">+ Add Color</button>
+    </div>
+  </div>
+
+  <div class="dev-panel" style="margin-top:12px">
+    <div class="dev-label">Generated CSS</div>
+    <div class="code-out" id="codeOut"></div>
+    <button class="dev-btn" onclick="copyCode()">📋 Copy Code</button>
+  </div>
+
+  <div class="tips-panel" style="margin-top:16px">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li><strong>Linear</strong>: Color transitions along a straight line — ideal for backgrounds, buttons, and headers.</li>
+      <li><strong>Radial</strong>: Color radiates from a center point outward — great for spotlight and highlight effects.</li>
+      <li><strong>Conic</strong>: Color sweeps around a center point — useful for pie charts and color wheels.</li>
+      <li>Adjust stop positions (%) to precisely control the transition range between colors.</li>
+      <li>Replace <code>linear-gradient</code> with <code>repeating-linear-gradient</code> in the output to create striped patterns.</li>
+    </ul>
+  </div>
+
+  <details class="faq-item">
+    <summary>Can I layer multiple gradients?</summary>
+    <p>Yes. In CSS, you can separate multiple gradients with commas in the <code>background</code> property to layer them. Example: <code>background: linear-gradient(...), radial-gradient(...);</code> The first one listed renders on top.</p>
+  </details>
+  <details class="faq-item">
+    <summary>Is conic-gradient supported in all browsers?</summary>
+    <p>Conic gradients require Chrome 69+, Firefox 83+, or Safari 12.1+. They are not supported in Internet Explorer. Linear and radial gradients work in IE 10+.</p>
+  </details>
+  <details class="faq-item">
+    <summary>How do I use this as a border gradient?</summary>
+    <p>CSS doesn't support gradients directly on <code>border-color</code>. Instead, use <code>border-image</code>: <code>border-image: linear-gradient(to right, #f00, #00f) 1;</code> or use a pseudo-element background technique for more control.</p>
+  </details>
+</div>
+
+<aside class="tool-sidebar">
+  <div class="ad-card">
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px"
+      data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025"
+      data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card">
+    <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+  </div>
+</aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-col"><h4>🛠️ WooaDev</h4><p>Essential developer utilities — free, browser-based, no install.</p></div>
+      <div class="footer-links"><h4>Encoding · Hashing</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL Encoder</a><a href="hash-generator.html">Hash Generator</a><a href="jwt-decoder.html">JWT Decoder</a><a href="password-generator.html">Password Generator</a></div>
+      <div class="footer-links"><h4>Format · Convert</h4><a href="json-formatter.html">JSON Formatter</a><a href="xml-formatter.html">XML Formatter</a><a href="color-converter.html">Color Converter</a><a href="css-gradient.html">CSS Gradient</a><a href="box-shadow.html">Box Shadow</a></div>
+      <div class="footer-links"><h4>Generators</h4><a href="uuid-generator.html">UUID Generator</a><a href="lorem-ipsum.html">Lorem Ipsum</a><a href="cron-generator.html">Cron Generator</a><a href="number-base.html">Number Base</a><a href="timestamp.html">Timestamp</a></div>
+      <div class="footer-links"><h4>WooaHouse Services</h4><a href="https://wooaviewer.wooahouse.com/en/" target="_blank" rel="noopener">WooaViewer</a><a href="https://pdfkit.wooahouse.com/en/" target="_blank" rel="noopener">WooaPDF</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">WooaText</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev by WooaHouse. All rights reserved.</p></div>
+  </div>
+</footer>
+<script src="../js/pwa-install.js"></script>
+<script>
+let gradType='linear',gradDir='to top',gradDeg=null;
+let stops=[{color:'#6366F1',pos:0},{color:'#C4956A',pos:100}];
+function setType(t){gradType=t;document.querySelectorAll('.type-tab').forEach((b,i)=>b.classList.toggle('active',['linear','radial','conic'][i]===t));const ds=document.getElementById('dirSection'),dr=document.getElementById('degRow'),rb=document.getElementById('radialBtn'),cb=document.getElementById('centerBtn');if(t==='radial'){ds.style.display='block';dr.style.display='none';rb.style.display='';cb.style.display='';gradDir='ellipse';}else if(t==='conic'){ds.style.display='block';dr.style.display='flex';rb.style.display='none';cb.style.display='none';}else{ds.style.display='block';dr.style.display='flex';rb.style.display='none';cb.style.display='none';if(gradDir==='ellipse'||gradDir==='circle')gradDir='to top';}render();}
+function setDir(d){gradDir=d;gradDeg=null;document.querySelectorAll('.dir-btn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');render();}
+function setDegFromRange(){gradDeg=parseInt(document.getElementById('degRange').value);document.getElementById('degNum').value=gradDeg;document.querySelectorAll('.dir-btn').forEach(b=>b.classList.remove('active'));render();}
+function setDegFromNum(){gradDeg=parseInt(document.getElementById('degNum').value)||0;document.getElementById('degRange').value=gradDeg;document.querySelectorAll('.dir-btn').forEach(b=>b.classList.remove('active'));render();}
+function addStop(){stops.push({color:'#A855F7',pos:Math.round((stops[stops.length-1].pos+100)/2)});renderStops();render();}
+function removeStop(i){if(stops.length<=2)return;stops.splice(i,1);renderStops();render();}
+function updateStopColor(i,v){stops[i].color=v;render();}
+function updateStopPos(i,v){stops[i].pos=parseInt(v);document.getElementById('posLabel'+i).textContent=v+'%';render();}
+function renderStops(){document.getElementById('stopsList').innerHTML=stops.map((s,i)=>`<div class="stop-row"><input type="color" class="stop-color" value="${s.color}" oninput="updateStopColor(${i},this.value)"><div class="stop-pos"><input type="range" min="0" max="100" value="${s.pos}" oninput="updateStopPos(${i},this.value)"><span id="posLabel${i}">${s.pos}%</span></div><input type="text" value="${s.color}" style="width:80px;font-family:monospace;font-size:0.82rem;border:1px solid var(--border,#E2E8F0);border-radius:6px;padding:4px 6px" oninput="if(this.value.match(/^#[0-9a-fA-F]{6}$/)){stops[${i}].color=this.value;document.querySelectorAll('.stop-color')[${i}].value=this.value;render()}"><button class="stop-del" onclick="removeStop(${i})" ${stops.length<=2?'disabled':''}>✕</button></div>`).join('');}
+function buildCSS(){const ss=stops.map(s=>`${s.color} ${s.pos}%`).join(', ');if(gradType==='linear'){const d=gradDeg!==null?gradDeg+'deg':gradDir;return`background: linear-gradient(${d}, ${ss});`;}else if(gradType==='radial'){const sh=(gradDir==='circle')?'circle at center':'ellipse at center';return`background: radial-gradient(${sh}, ${ss})`;}else{const fr=gradDeg!==null?`from ${gradDeg}deg`:'from 0deg';return`background: conic-gradient(${fr} at center, ${ss});`;}}
+function render(){const css=buildCSS();document.getElementById('preview').style.background=css.replace('background: ','').replace(';','');document.getElementById('codeOut').textContent=css;}
+function copyCode(){navigator.clipboard.writeText(document.getElementById('codeOut').textContent).then(()=>{const btn=event.target,orig=btn.textContent;btn.textContent='✅ Copied!';setTimeout(()=>btn.textContent=orig,1500);});}
+renderStops();render();
+</script>
+</body>
+</html>

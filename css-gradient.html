@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+<meta charset="UTF-8">
+<meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+<meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS 그라디언트 생성기 무료 — Linear Radial Conic Gradient | WooaDev</title>
+<meta name="description" content="CSS 그라디언트를 시각적으로 만드는 무료 온라인 생성기. Linear, Radial, Conic 타입 지원. 색상 추가·이동·삭제, 방향 설정 후 CSS 코드를 바로 복사하세요.">
+<meta name="keywords" content="CSS 그라디언트 생성기, gradient generator, linear-gradient, radial-gradient, conic-gradient, CSS 배경 생성기, 그라디언트 CSS 코드">
+<link rel="canonical" href="https://wooadev.wooahouse.com/css-gradient.html">
+<link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/css-gradient.html">
+<link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/css-gradient.html">
+<link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/css-gradient.html">
+<meta property="og:title" content="CSS 그라디언트 생성기 무료 | WooaDev">
+<meta property="og:description" content="Linear, Radial, Conic 그라디언트를 시각적으로 만들고 CSS 코드를 바로 복사하세요.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wooadev.wooahouse.com/css-gradient.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+<meta property="og:site_name" content="WooaDev">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSS 그라디언트 생성기","url":"https://wooadev.wooahouse.com/css-gradient.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="https://ads-partners.coupang.com/g.js"></script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#C4956A">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.lang-switcher{display:flex;align-items:center;gap:4px}
+.lang-switcher a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.8rem;font-weight:600;padding:3px 8px;border-radius:12px;transition:background 0.15s}
+.lang-switcher a.active{color:white;background:rgba(255,255,255,0.25)}
+.lang-switcher a:hover{color:white;background:rgba(255,255,255,0.18)}
+.lang-switcher span{color:rgba(255,255,255,0.3);font-size:0.75rem}
+
+.grad-preview{width:100%;height:160px;border-radius:12px;border:1px solid rgba(0,0,0,0.08);margin-bottom:20px;transition:background 0.2s}
+
+.type-tabs{display:flex;gap:8px;margin-bottom:18px}
+.type-tab{padding:7px 18px;border-radius:20px;border:1.5px solid var(--border,#E2E8F0);background:#fff;font-size:0.85rem;font-weight:600;cursor:pointer;color:var(--text-light,#64748B);transition:all .15s}
+.type-tab.active{background:#C4956A;color:#fff;border-color:#C4956A}
+
+.dir-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px;max-width:200px}
+.dir-btn{padding:8px 0;border-radius:8px;border:1.5px solid var(--border,#E2E8F0);background:#fff;cursor:pointer;font-size:1.1rem;text-align:center;transition:all .15s}
+.dir-btn.active,.dir-btn:hover{border-color:#C4956A;background:#FFF8F2}
+.deg-row{display:flex;align-items:center;gap:8px;margin-top:6px}
+.deg-row input[type=range]{flex:1;accent-color:#C4956A}
+.deg-row input[type=number]{width:64px;padding:5px 8px;border:1px solid var(--border,#E2E8F0);border-radius:6px;font-size:0.85rem;text-align:center}
+
+.stops-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.stop-row{display:flex;align-items:center;gap:10px;background:var(--panel-bg,#F8FAFC);border:1px solid var(--border,#E2E8F0);border-radius:10px;padding:10px 12px}
+.stop-color{width:40px;height:40px;border:none;border-radius:8px;cursor:pointer;padding:2px;background:none;flex-shrink:0}
+.stop-pos{display:flex;align-items:center;gap:6px;flex:1}
+.stop-pos input[type=range]{flex:1;accent-color:#C4956A}
+.stop-pos span{width:38px;text-align:right;font-size:0.82rem;color:var(--text-light,#64748B);flex-shrink:0}
+.stop-del{padding:4px 10px;border:none;border-radius:6px;background:#FEE2E2;color:#DC2626;cursor:pointer;font-size:0.8rem;font-weight:600;flex-shrink:0}
+.stop-del:hover{background:#FECACA}
+.btn-add-stop{width:100%;padding:8px;border:1.5px dashed #C4956A;background:transparent;border-radius:8px;color:#C4956A;font-weight:600;cursor:pointer;font-size:0.85rem;transition:background .15s}
+.btn-add-stop:hover{background:#FFF8F2}
+
+.code-out{font-family:'Consolas','Monaco',monospace;font-size:0.88rem;background:var(--panel-bg,#F8FAFC);border:1px solid var(--border,#E2E8F0);border-radius:10px;padding:14px;word-break:break-all;line-height:1.6;color:var(--text,#1E293B);margin-bottom:10px;min-height:48px}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="json-formatter.html">JSON</a>
+      <a href="xml-formatter.html">XML</a>
+      <a href="color-converter.html">Color</a>
+      <a href="regex-tester.html">Regex</a>
+      <a href="hash-generator.html">Hash</a>
+      <a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="css-gradient.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/css-gradient.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85);font-size:0.85rem;text-decoration:none;margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar"><span class="our-sites-label">WooaHouse Services</span><div class="our-sites-links"><a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a><a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a><a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a><a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a><a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a><a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a><a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a><a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a><a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a><a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a><a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a><a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a><a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a></div></div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CSS 그라디언트 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🌈</span>
+    <h1>CSS 그라디언트 생성기</h1>
+    <p>Linear, Radial, Conic 그라디언트를 시각적으로 디자인하고 CSS 코드를 바로 복사하세요. 색상 추가·위치 조절·방향 설정까지 한 번에.</p>
+  </div>
+
+  <div class="dev-panel">
+    <!-- 미리보기 -->
+    <div class="grad-preview" id="preview"></div>
+
+    <!-- 타입 탭 -->
+    <div class="type-tabs">
+      <button class="type-tab active" onclick="setType('linear')">Linear</button>
+      <button class="type-tab" onclick="setType('radial')">Radial</button>
+      <button class="type-tab" onclick="setType('conic')">Conic</button>
+    </div>
+
+    <!-- 방향 (linear/conic만) -->
+    <div id="dirSection">
+      <div class="dev-label">방향</div>
+      <div class="dir-grid">
+        <button class="dir-btn" onclick="setDir('to top left')" title="↖">↖</button>
+        <button class="dir-btn active" onclick="setDir('to top')" title="↑">↑</button>
+        <button class="dir-btn" onclick="setDir('to top right')" title="↗">↗</button>
+        <button class="dir-btn" onclick="setDir('to left')" title="←">←</button>
+        <button class="dir-btn" onclick="setDir('circle')" title="●" id="radialBtn" style="display:none">●</button>
+        <button class="dir-btn" onclick="setDir('center')" title="○" id="centerBtn" style="display:none">○</button>
+        <button class="dir-btn" onclick="setDir('to right')" title="→">→</button>
+        <button class="dir-btn" onclick="setDir('to bottom left')" title="↙">↙</button>
+        <button class="dir-btn" onclick="setDir('to bottom')" title="↓">↓</button>
+        <button class="dir-btn" onclick="setDir('to bottom right')" title="↘">↘</button>
+      </div>
+      <div class="deg-row" id="degRow">
+        <span style="font-size:0.82rem;color:var(--text-light,#64748B);white-space:nowrap">사용자 정의 각도</span>
+        <input type="range" id="degRange" min="0" max="360" value="0" oninput="setDegFromRange()">
+        <input type="number" id="degNum" min="0" max="360" value="0" oninput="setDegFromNum()">
+        <span style="font-size:0.82rem;color:var(--text-light)">deg</span>
+      </div>
+    </div>
+
+    <!-- 색상 정지점 -->
+    <div style="margin-top:16px">
+      <div class="dev-label">색상 정지점</div>
+      <div class="stops-list" id="stopsList"></div>
+      <button class="btn-add-stop" onclick="addStop()">+ 색상 추가</button>
+    </div>
+  </div>
+
+  <!-- 코드 출력 -->
+  <div class="dev-panel" style="margin-top:12px">
+    <div class="dev-label">생성된 CSS 코드</div>
+    <div class="code-out" id="codeOut"></div>
+    <button class="dev-btn" onclick="copyCode()">📋 코드 복사</button>
+  </div>
+
+  <div class="tips-panel" style="margin-top:16px">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li><strong>Linear</strong>: 한 방향으로 색이 변하는 기본 그라디언트. 배경·버튼·헤더에 많이 사용.</li>
+      <li><strong>Radial</strong>: 중심에서 원형으로 퍼지는 그라디언트. 빛·하이라이트 효과에 적합.</li>
+      <li><strong>Conic</strong>: 중심을 기준으로 각도 방향으로 색이 변함. 파이 차트·색상환 표현에 사용.</li>
+      <li>색상 정지점 위치(%)를 조절해 색상 전환 구간을 세밀하게 제어할 수 있습니다.</li>
+      <li><code>background</code> 속성 대신 <code>background-image</code>를 사용해도 동일하게 동작합니다.</li>
+    </ul>
+  </div>
+
+  <details class="faq-item">
+    <summary>그라디언트를 여러 개 겹칠 수 있나요?</summary>
+    <p>네. CSS에서 <code>background</code>에 쉼표로 구분해 여러 그라디언트를 나열하면 레이어처럼 겹칩니다. 예: <code>background: linear-gradient(...), radial-gradient(...);</code></p>
+  </details>
+  <details class="faq-item">
+    <summary>IE(인터넷 익스플로러)에서 지원되나요?</summary>
+    <p>Linear, Radial 그라디언트는 IE 10+에서 지원됩니다. Conic 그라디언트는 IE에서 지원되지 않으며 Chrome 69+, Firefox 83+, Safari 12.1+ 이상의 현대 브라우저가 필요합니다.</p>
+  </details>
+  <details class="faq-item">
+    <summary>반복 그라디언트(repeating-gradient)는 어떻게 만드나요?</summary>
+    <p>생성된 코드의 <code>linear-gradient</code>를 <code>repeating-linear-gradient</code>로 바꾸면 마지막 색상 정지점 이후 패턴이 반복됩니다. 줄무늬 배경을 만들 때 유용합니다.</p>
+  </details>
+</div>
+
+<aside class="tool-sidebar">
+  <div class="ad-card">
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px"
+      data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025"
+      data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card">
+    <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+  </div>
+</aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-col"><h4>🛠️ WooaDev</h4><p>개발자 필수 유틸리티 도구 모음. 브라우저에서 무료로 바로 사용.</p></div>
+      <div class="footer-links"><h4>인코딩 · 해시</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL 인코더</a><a href="hash-generator.html">Hash 생성기</a><a href="jwt-decoder.html">JWT 디코더</a><a href="password-generator.html">비밀번호 생성기</a></div>
+      <div class="footer-links"><h4>포맷 · 변환</h4><a href="json-formatter.html">JSON 포맷터</a><a href="xml-formatter.html">XML 포맷터</a><a href="color-converter.html">색상 변환기</a><a href="css-gradient.html">CSS 그라디언트</a><a href="box-shadow.html">Box Shadow</a></div>
+      <div class="footer-links"><h4>생성기 · 변환</h4><a href="uuid-generator.html">UUID 생성기</a><a href="lorem-ipsum.html">Lorem Ipsum</a><a href="cron-generator.html">Cron 생성기</a><a href="number-base.html">진법 변환기</a><a href="timestamp.html">타임스탬프</a></div>
+      <div class="footer-links"><h4>WooaHouse 서비스</h4><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">WooaViewer</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">WooaPDF</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">WooaText</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev by WooaHouse. 모든 권리 보유.</p></div>
+  </div>
+</footer>
+<script src="js/pwa-install.js"></script>
+<script>
+let gradType = 'linear';
+let gradDir  = 'to top';
+let gradDeg  = null; // null = 방향 버튼 모드, number = deg 모드
+let stops    = [
+  { color: '#6366F1', pos: 0 },
+  { color: '#C4956A', pos: 100 },
+];
+
+function setType(t) {
+  gradType = t;
+  document.querySelectorAll('.type-tab').forEach((b,i) => b.classList.toggle('active', ['linear','radial','conic'][i] === t));
+  const dirSection = document.getElementById('dirSection');
+  const degRow     = document.getElementById('degRow');
+  const radialBtn  = document.getElementById('radialBtn');
+  const centerBtn  = document.getElementById('centerBtn');
+
+  if (t === 'radial') {
+    dirSection.style.display = 'block';
+    degRow.style.display = 'none';
+    radialBtn.style.display = ''; centerBtn.style.display = '';
+    gradDir = 'ellipse';
+  } else if (t === 'conic') {
+    dirSection.style.display = 'block';
+    degRow.style.display = 'flex';
+    radialBtn.style.display = 'none'; centerBtn.style.display = 'none';
+  } else {
+    dirSection.style.display = 'block';
+    degRow.style.display = 'flex';
+    radialBtn.style.display = 'none'; centerBtn.style.display = 'none';
+    if (gradDir === 'ellipse' || gradDir === 'circle') gradDir = 'to top';
+  }
+  render();
+}
+
+function setDir(d) {
+  gradDir = d;
+  gradDeg = null;
+  document.querySelectorAll('.dir-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  render();
+}
+
+function setDegFromRange() {
+  gradDeg = parseInt(document.getElementById('degRange').value);
+  document.getElementById('degNum').value = gradDeg;
+  document.querySelectorAll('.dir-btn').forEach(b => b.classList.remove('active'));
+  render();
+}
+function setDegFromNum() {
+  gradDeg = parseInt(document.getElementById('degNum').value) || 0;
+  document.getElementById('degRange').value = gradDeg;
+  document.querySelectorAll('.dir-btn').forEach(b => b.classList.remove('active'));
+  render();
+}
+
+function addStop() {
+  stops.push({ color: '#A855F7', pos: Math.round((stops[stops.length-1].pos + 100) / 2) });
+  renderStops(); render();
+}
+function removeStop(i) {
+  if (stops.length <= 2) return;
+  stops.splice(i, 1);
+  renderStops(); render();
+}
+function updateStopColor(i, v) { stops[i].color = v; render(); }
+function updateStopPos(i, v)   { stops[i].pos   = parseInt(v); document.getElementById('posLabel'+i).textContent = v+'%'; render(); }
+
+function renderStops() {
+  const list = document.getElementById('stopsList');
+  list.innerHTML = stops.map((s, i) => `
+    <div class="stop-row">
+      <input type="color" class="stop-color" value="${s.color}" oninput="updateStopColor(${i}, this.value)">
+      <div class="stop-pos">
+        <input type="range" min="0" max="100" value="${s.pos}" oninput="updateStopPos(${i}, this.value)">
+        <span id="posLabel${i}">${s.pos}%</span>
+      </div>
+      <input type="text" value="${s.color}" style="width:80px;font-family:monospace;font-size:0.82rem;border:1px solid var(--border,#E2E8F0);border-radius:6px;padding:4px 6px" oninput="if(this.value.match(/^#[0-9a-fA-F]{6}$/)){stops[${i}].color=this.value;document.querySelectorAll('.stop-color')[${i}].value=this.value;render()}">
+      <button class="stop-del" onclick="removeStop(${i})" ${stops.length<=2?'disabled':''}>✕</button>
+    </div>`).join('');
+}
+
+function buildCSS() {
+  const stopsStr = stops.map(s => `${s.color} ${s.pos}%`).join(', ');
+  if (gradType === 'linear') {
+    const dir = gradDeg !== null ? gradDeg + 'deg' : gradDir;
+    return `background: linear-gradient(${dir}, ${stopsStr});`;
+  } else if (gradType === 'radial') {
+    const shape = (gradDir === 'circle') ? 'circle at center' : 'ellipse at center';
+    return `background: radial-gradient(${shape}, ${stopsStr});`;
+  } else {
+    const from = gradDeg !== null ? `from ${gradDeg}deg` : 'from 0deg';
+    return `background: conic-gradient(${from} at center, ${stopsStr});`;
+  }
+}
+
+function render() {
+  const css = buildCSS();
+  const val = css.replace('background: ', '').replace(';', '');
+  document.getElementById('preview').style.background = val;
+  document.getElementById('codeOut').textContent = css;
+}
+
+function copyCode() {
+  const code = document.getElementById('codeOut').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = '✅ 복사됨!';
+    setTimeout(() => btn.textContent = orig, 1500);
+  });
+}
+
+renderStops();
+render();
+</script>
+</body>
+</html>

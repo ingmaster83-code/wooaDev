@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+<meta charset="UTF-8">
+<meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+<meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>색상 팔레트 생성기 무료 — 보색·유사색·삼각색 팔레트 | WooaDev</title>
+<meta name="description" content="기본 색상으로 보색·유사색·삼각색·사각색·단색 팔레트를 자동 생성. HEX 코드 복사. 무료 온라인 색상 팔레트 생성기.">
+<meta name="keywords" content="색상 팔레트 생성기, color palette generator, 보색, 유사색, 삼각색, 색상 조화, HEX 팔레트, 컬러 팔레트">
+<link rel="canonical" href="https://wooadev.wooahouse.com/color-palette.html">
+<link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/color-palette.html">
+<link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/color-palette.html">
+<link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/color-palette.html">
+<meta property="og:title" content="색상 팔레트 생성기 무료 | WooaDev">
+<meta property="og:description" content="기본 색상으로 보색·유사색·삼각색 팔레트 자동 생성. HEX 코드 복사 지원.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wooadev.wooahouse.com/color-palette.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="WooaDev">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"색상 팔레트 생성기","url":"https://wooadev.wooahouse.com/color-palette.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="https://ads-partners.coupang.com/g.js"></script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#C4956A">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.lang-switcher{display:flex;align-items:center;gap:4px}.lang-switcher a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.8rem;font-weight:600;padding:3px 8px;border-radius:12px;transition:background 0.15s}.lang-switcher a.active{color:white;background:rgba(255,255,255,0.25)}.lang-switcher a:hover{color:white;background:rgba(255,255,255,0.18)}.lang-switcher span{color:rgba(255,255,255,0.3);font-size:0.75rem}
+.base-pick{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.base-pick label{font-size:0.85rem;font-weight:700;color:#64748b}
+.base-pick input[type=color]{width:56px;height:56px;border:none;border-radius:12px;cursor:pointer;padding:2px;background:none}
+.base-pick input[type=text]{font-family:monospace;padding:7px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:0.9rem;width:110px}
+.scheme-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.scheme-tab{padding:7px 14px;border-radius:8px;border:1.5px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:0.83rem;font-weight:600;color:#64748b;transition:all .15s}
+.scheme-tab.active{background:#C4956A;color:#fff;border-color:#C4956A}
+.palette-row{display:flex;gap:0;border-radius:14px;overflow:hidden;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.swatch{flex:1;min-height:120px;display:flex;flex-direction:column;justify-content:flex-end;padding:10px 8px;cursor:pointer;transition:flex .2s;position:relative}
+.swatch:hover{flex:1.4}
+.swatch-hex{font-family:monospace;font-size:0.78rem;font-weight:700;text-align:center;background:rgba(0,0,0,0.25);color:#fff;border-radius:6px;padding:3px 6px;margin-top:4px}
+.swatch-lbl{font-size:0.7rem;color:rgba(255,255,255,0.8);text-align:center;margin-bottom:2px}
+.swatch-copy{position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.3);color:#fff;border:none;border-radius:6px;padding:2px 7px;font-size:0.7rem;cursor:pointer;opacity:0;transition:opacity .15s}
+.swatch:hover .swatch-copy{opacity:1}
+.copy-all-btn{margin-top:4px}
+</style>
+</head>
+<body>
+<header><div class="header-inner"><a href="index.html" class="logo">WooaDev</a><nav><a href="color-converter.html">Color</a><a href="color-contrast.html">Contrast</a><a href="css-gradient.html">Gradient</a><a href="image-to-base64.html">Img→B64</a><a href="index.html">전체 도구 ›</a></nav><div class="header-right"><div class="lang-switcher"><a href="color-palette.html" class="active">KO</a><span>|</span><a href="en/color-palette.html">EN</a></div><a href="about.html" style="color:rgba(255,255,255,0.85);font-size:0.85rem;text-decoration:none;margin-left:8px;">소개</a></div></div></header>
+<div class="our-sites-bar"><span class="our-sites-label">WooaHouse Services</span><div class="our-sites-links"><a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a><a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a><a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a><a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a><a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a><a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a><a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a><a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a><a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a><a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a><a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a><a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a><a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a></div></div>
+<div class="mobile-top-ad"><ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>색상 팔레트 생성기</span></div>
+  <div class="tool-header"><span class="tool-header-icon">🎨</span><h1>색상 팔레트 생성기</h1><p>기본 색상을 선택하면 보색·유사색·삼각색 등 조화로운 팔레트를 자동 생성합니다. 스와치를 클릭하면 HEX 코드가 복사됩니다.</p></div>
+
+  <div class="dev-panel">
+    <div class="base-pick">
+      <label>기본 색상</label>
+      <input type="color" id="baseColor" value="#C4956A" oninput="onPick(this.value)">
+      <input type="text" id="baseHex" value="#C4956A" maxlength="7" oninput="onHex(this.value)">
+    </div>
+    <div class="scheme-tabs">
+      <button class="scheme-tab active" data-s="complementary" onclick="setScheme(this)">보색</button>
+      <button class="scheme-tab" data-s="analogous" onclick="setScheme(this)">유사색</button>
+      <button class="scheme-tab" data-s="triadic" onclick="setScheme(this)">삼각색</button>
+      <button class="scheme-tab" data-s="tetradic" onclick="setScheme(this)">사각색</button>
+      <button class="scheme-tab" data-s="monochromatic" onclick="setScheme(this)">단색 변형</button>
+      <button class="scheme-tab" data-s="shades" onclick="setScheme(this)">명도 단계</button>
+    </div>
+    <div class="palette-row" id="paletteRow"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="dev-btn copy-all-btn" onclick="copyAll()">📋 모든 색상 복사</button>
+      <span id="copyMsg" style="color:#22c55e;font-size:0.83rem;margin-left:4px;display:none">✅ 복사 완료!</span>
+    </div>
+  </div>
+
+  <div class="tips-panel" style="margin-top:16px"><h3>💡 Tips</h3><ul>
+    <li><strong>보색</strong>: 색상환에서 반대편 색상. 강렬한 대비로 눈에 띄는 디자인에 적합.</li>
+    <li><strong>유사색</strong>: 인접한 색상들. 부드럽고 조화로운 느낌.</li>
+    <li><strong>삼각색</strong>: 120° 간격의 3색. 균형잡힌 다채로운 팔레트.</li>
+    <li><strong>단색 변형</strong>: 같은 색조의 밝기·채도 변형. 깔끔한 UI에 적합.</li>
+    <li>스와치를 클릭하면 해당 색상의 HEX 코드가 클립보드에 복사됩니다.</li>
+  </ul></div>
+  <details class="faq-item"><summary>색상 조화 이론이란?</summary><p>색상환을 기반으로 어울리는 색상 조합을 수학적으로 계산하는 이론입니다. 보색·유사색·삼각색 등은 모두 HSL 색상 모델에서 색조(Hue) 각도로 계산됩니다.</p></details>
+</div>
+<aside class="tool-sidebar">
+  <div class="ad-card"><ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+  <div class="ad-card"><script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script></div>
+</aside>
+</div>
+<footer class="footer"><div class="footer-inner"><div class="footer-top">
+  <div class="footer-col"><h4>🛠️ WooaDev</h4><p>개발자 필수 유틸리티. 브라우저에서 무료로 사용.</p></div>
+  <div class="footer-links"><h4>색상 도구</h4><a href="color-palette.html">색상 팔레트</a><a href="color-converter.html">색상 변환기</a><a href="color-contrast.html">색상 대비</a><a href="css-gradient.html">CSS 그라디언트</a></div>
+  <div class="footer-links"><h4>CSS 생성기</h4><a href="box-shadow.html">Box Shadow</a><a href="border-radius.html">Border Radius</a><a href="flexbox-generator.html">Flexbox</a><a href="grid-generator.html">CSS Grid</a></div>
+  <div class="footer-links"><h4>생성기</h4><a href="uuid-generator.html">UUID</a><a href="meta-tag.html">Meta Tag</a><a href="cron-generator.html">Cron</a><a href="timestamp.html">타임스탬프</a></div>
+  <div class="footer-links"><h4>WooaHouse 서비스</h4><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">WooaColor</a><a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">WooaImage</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">WooaPDF</a></div>
+</div><div class="footer-bottom"><p>© 2026 WooaDev by WooaHouse. 모든 권리 보유.</p></div></div></footer>
+<script src="js/pwa-install.js"></script>
+<script>
+let currentScheme='complementary', currentHex='#C4956A';
+let paletteColors=[];
+
+function hexToHsl(hex){
+  let r=parseInt(hex.slice(1,3),16)/255,g=parseInt(hex.slice(3,5),16)/255,b=parseInt(hex.slice(5,7),16)/255;
+  const max=Math.max(r,g,b),min=Math.min(r,g,b);let h,s,l=(max+min)/2;
+  if(max===min){h=s=0;}else{const d=max-min;s=l>0.5?d/(2-max-min):d/(max+min);
+    switch(max){case r:h=((g-b)/d+(g<b?6:0))/6;break;case g:h=((b-r)/d+2)/6;break;case b:h=((r-g)/d+4)/6;break;}}
+  return[h*360,s*100,l*100];
+}
+
+function hslToHex(h,s,l){
+  h/=360;s/=100;l/=100;
+  let r,g,b;
+  if(s===0){r=g=b=l;}else{
+    const hue2rgb=(p,q,t)=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p;};
+    const q=l<0.5?l*(1+s):l+s-l*s,p=2*l-q;
+    r=hue2rgb(p,q,h+1/3);g=hue2rgb(p,q,h);b=hue2rgb(p,q,h-1/3);
+  }
+  return '#'+[r,g,b].map(x=>Math.round(x*255).toString(16).padStart(2,'0')).join('');
+}
+
+function getSchemeColors(hex,scheme){
+  const [h,s,l]=hexToHsl(hex);
+  const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
+  switch(scheme){
+    case 'complementary':return[hex,hslToHex((h+30)%360,s,l),hslToHex((h+180)%360,s,l),hslToHex((h+210)%360,s,l)];
+    case 'analogous':return[hslToHex((h-30+360)%360,s,l),hslToHex((h-15+360)%360,s,l),hex,hslToHex((h+15)%360,s,l),hslToHex((h+30)%360,s,l)];
+    case 'triadic':return[hex,hslToHex((h+120)%360,s,l),hslToHex((h+240)%360,s,l)];
+    case 'tetradic':return[hex,hslToHex((h+90)%360,s,l),hslToHex((h+180)%360,s,l),hslToHex((h+270)%360,s,l)];
+    case 'monochromatic':return[hslToHex(h,clamp(s*0.4,0,100),clamp(l*1.4,0,95)),hslToHex(h,clamp(s*0.7,0,100),clamp(l*1.2,0,95)),hex,hslToHex(h,clamp(s*1.1,0,100),clamp(l*0.8,0,95)),hslToHex(h,clamp(s*1.2,0,100),clamp(l*0.6,0,95))];
+    case 'shades':return[hslToHex(h,s,90),hslToHex(h,s,75),hslToHex(h,s,60),hslToHex(h,s,45),hslToHex(h,s,30),hslToHex(h,s,15)];
+    default:return[hex];
+  }
+}
+
+const schemeLabels={complementary:['기본','보조','보색','보색2'],analogous:['유사-30','유사-15','기본','유사+15','유사+30'],triadic:['기본','삼각1','삼각2'],tetradic:['기본','사각1','사각2','사각3'],monochromatic:['밝음4','밝음2','기본','어둠2','어둠4'],shades:['90%','75%','60%','45%','30%','15%']};
+
+function getLuma(hex){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return 0.299*r+0.587*g+0.114*b;}
+
+function render(){
+  paletteColors=getSchemeColors(currentHex,currentScheme);
+  const labels=schemeLabels[currentScheme]||[];
+  const row=document.getElementById('paletteRow');
+  row.innerHTML=paletteColors.map((c,i)=>{
+    const fg=getLuma(c)>140?'#1e293b':'#ffffff';
+    return `<div class="swatch" style="background:${c}" onclick="copySwatch('${c}')">
+      <button class="swatch-copy" onclick="event.stopPropagation();copySwatch('${c}')">복사</button>
+      <div class="swatch-lbl" style="color:${fg};opacity:.7">${labels[i]||''}</div>
+      <div class="swatch-hex" style="color:${fg};background:rgba(0,0,0,0.2)">${c}</div>
+    </div>`;
+  }).join('');
+}
+
+function copySwatch(hex){
+  navigator.clipboard.writeText(hex).then(()=>{const m=document.getElementById('copyMsg');m.style.display='inline';setTimeout(()=>m.style.display='none',1500);});
+}
+
+function copyAll(){
+  navigator.clipboard.writeText(paletteColors.join(', ')).then(()=>{const m=document.getElementById('copyMsg');m.style.display='inline';setTimeout(()=>m.style.display='none',2000);});
+}
+
+function onPick(v){currentHex=v;document.getElementById('baseHex').value=v;render();}
+function onHex(v){if(/^#[0-9a-fA-F]{6}$/.test(v)){currentHex=v;document.getElementById('baseColor').value=v;render();}}
+function setScheme(btn){currentScheme=btn.dataset.s;document.querySelectorAll('.scheme-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render();}
+
+render();
+</script>
+</body>
+</html>

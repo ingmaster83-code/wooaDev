@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <title>CSS Grid Generator - Visual Layout Builder Online | WooaDev</title>
+  <meta name="description" content="Build CSS Grid layouts visually. Set columns, rows, gaps, and alignment with live preview and instant CSS code generation. Free online CSS Grid generator.">
+  <meta name="keywords" content="CSS grid generator, grid layout, CSS grid, grid-template-columns, grid-template-rows, CSS layout tool">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/grid-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/grid-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/grid-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/grid-generator.html">
+  <meta property="og:title" content="CSS Grid Generator | WooaDev">
+  <meta property="og:description" content="Build CSS Grid layouts visually with live preview and instant CSS code generation.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/grid-generator.html">
+  <meta property="og:locale" content="en_US">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "CSS Grid Generator",
+    "url": "https://wooadev.wooahouse.com/en/grid-generator.html",
+    "description": "Build CSS Grid layouts visually with live preview and instant CSS code generation",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <style>
+    .ctrl-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    @media(max-width:600px){.ctrl-grid{grid-template-columns:1fr;}}
+    .ctrl-group { display:flex; flex-direction:column; gap:6px; }
+    .ctrl-group label { font-size:13px; font-weight:600; color:#a07850; }
+    .ctrl-group input[type=text], .ctrl-group select { border:1px solid #d0b896; border-radius:6px; padding:7px 10px; font-size:13px; width:100%; box-sizing:border-box; }
+    .ctrl-group input[type=range] { accent-color:#C4956A; width:100%; }
+    .val-badge { font-size:12px; color:#888; margin-left:4px; }
+    .counter-row { display:flex; align-items:center; gap:8px; }
+    .cnt-btn { width:30px; height:30px; border-radius:6px; border:1px solid #d0b896; background:#fff; font-size:18px; cursor:pointer; }
+    .cnt-val { font-size:16px; font-weight:700; min-width:24px; text-align:center; }
+    .preview-area { background:#f0e8dc; border-radius:12px; padding:16px; min-height:200px; margin:16px 0; overflow:auto; }
+    .grid-preview { display:grid; min-height:160px; }
+    .grid-cell { background:#C4956A; border-radius:6px; min-height:40px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:700; }
+    .css-output { font-family:monospace; font-size:13px; background:#1e1e2e; color:#cdd6f4; border-radius:8px; padding:14px; white-space:pre; overflow-x:auto; }
+    .copy-row { display:flex; gap:8px; align-items:center; margin-top:8px; }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">🛠️ WooaDev</a>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="flexbox-generator.html">Flexbox</a>
+      <a href="css-gradient.html">Gradient</a>
+      <a href="box-shadow.html">Shadow</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../grid-generator.html">KO</a>
+        <a href="grid-generator.html" class="active">EN</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+    <a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a>
+    <a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a>
+    <a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a>
+  </div>
+</div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+  <div class="tool-page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; CSS Grid Generator</div>
+    <div class="tool-header">
+      <div class="tool-icon-lg">⬛</div>
+      <div>
+        <h1>CSS Grid Generator</h1>
+        <p>Build CSS Grid layouts visually and get instant CSS code</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="ctrl-grid">
+        <div class="ctrl-group">
+          <label>Columns</label>
+          <div class="counter-row">
+            <button class="cnt-btn" onclick="changeCount('cols',-1)">−</button>
+            <span class="cnt-val" id="colCount">3</span>
+            <button class="cnt-btn" onclick="changeCount('cols',1)">+</button>
+          </div>
+        </div>
+        <div class="ctrl-group">
+          <label>Rows</label>
+          <div class="counter-row">
+            <button class="cnt-btn" onclick="changeCount('rows',-1)">−</button>
+            <span class="cnt-val" id="rowCount">3</span>
+            <button class="cnt-btn" onclick="changeCount('rows',1)">+</button>
+          </div>
+        </div>
+        <div class="ctrl-group">
+          <label>Column Template</label>
+          <input type="text" id="colTemplate" value="repeat(3, 1fr)" oninput="render()">
+        </div>
+        <div class="ctrl-group">
+          <label>Row Template</label>
+          <input type="text" id="rowTemplate" value="repeat(3, 100px)" oninput="render()">
+        </div>
+        <div class="ctrl-group">
+          <label>Column Gap <span class="val-badge" id="colGapVal">16px</span></label>
+          <input type="range" id="colGap" min="0" max="60" value="16" oninput="render()">
+        </div>
+        <div class="ctrl-group">
+          <label>Row Gap <span class="val-badge" id="rowGapVal">16px</span></label>
+          <input type="range" id="rowGap" min="0" max="60" value="16" oninput="render()">
+        </div>
+        <div class="ctrl-group">
+          <label>justify-items</label>
+          <select id="justifyItems" onchange="render()">
+            <option value="stretch" selected>stretch</option>
+            <option value="start">start</option>
+            <option value="end">end</option>
+            <option value="center">center</option>
+          </select>
+        </div>
+        <div class="ctrl-group">
+          <label>align-items</label>
+          <select id="alignItems" onchange="render()">
+            <option value="stretch" selected>stretch</option>
+            <option value="start">start</option>
+            <option value="end">end</option>
+            <option value="center">center</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="preview-area">
+        <div class="grid-preview" id="gridPreview"></div>
+      </div>
+
+      <div class="css-output" id="cssOutput"></div>
+      <div class="copy-row">
+        <button class="dev-btn" onclick="copyCSS()">📋 Copy CSS</button>
+        <span id="copyMsg" style="color:#4caf50;font-size:13px;display:none">Copied!</span>
+      </div>
+    </div>
+
+    <div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li><code>1fr</code> distributes remaining space equally among columns</li>
+        <li>Use <code>repeat(3, 1fr)</code> as shorthand for 3 equal columns</li>
+        <li><code>minmax(200px, 1fr)</code> sets minimum and maximum sizes</li>
+        <li><code>auto-fill</code> / <code>auto-fit</code> with <code>minmax()</code> creates responsive grids</li>
+      </ul>
+    </div>
+
+    <section class="faq-section">
+      <h2>FAQ</h2>
+      <div class="faq-item">
+        <div class="faq-q">What is the difference between auto-fill and auto-fit?</div>
+        <div class="faq-a">Both automatically create as many columns as possible. The difference is that <code>auto-fit</code> collapses empty tracks so items stretch to fill the container, while <code>auto-fill</code> keeps empty tracks.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How do I make a responsive grid without media queries?</div>
+        <div class="faq-a">Use <code>grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))</code>. Items will wrap automatically when the viewport is too narrow.</div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="tool-sidebar">
+    <div class="ad-card">
+      <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+    </div>
+    <div class="ad-card">
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">🛠️ WooaDev</div>
+      <p>Free online developer tools</p>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">CSS Tools</div>
+      <a href="css-gradient.html">CSS Gradient</a>
+      <a href="box-shadow.html">Box Shadow</a>
+      <a href="border-radius.html">Border Radius</a>
+      <a href="flexbox-generator.html">Flexbox Generator</a>
+      <a href="grid-generator.html">Grid Generator</a>
+      <a href="css-transition.html">CSS Transition</a>
+      <a href="color-contrast.html">Color Contrast</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 WooaDev. All rights reserved. | <a href="https://wooahouse.com/" target="_blank" rel="noopener">WooaHouse</a></p>
+  </div>
+  <div class="coupang-notice">This post is part of the Coupang Partners activity, and a certain commission is provided accordingly.</div>
+</footer>
+
+<script src="../js/pwa-install.js"></script>
+<script>
+  let cols = 3, rows = 3;
+
+  function changeCount(type, delta) {
+    if (type === 'cols') { cols = Math.max(1, Math.min(12, cols + delta)); document.getElementById('colCount').textContent = cols; updateTemplate('col'); }
+    else { rows = Math.max(1, Math.min(10, rows + delta)); document.getElementById('rowCount').textContent = rows; updateTemplate('row'); }
+    render();
+  }
+
+  function updateTemplate(type) {
+    if (type === 'col') document.getElementById('colTemplate').value = `repeat(${cols}, 1fr)`;
+    else document.getElementById('rowTemplate').value = `repeat(${rows}, 100px)`;
+  }
+
+  function render() {
+    const colTpl = document.getElementById('colTemplate').value;
+    const rowTpl = document.getElementById('rowTemplate').value;
+    const cg = document.getElementById('colGap').value;
+    const rg = document.getElementById('rowGap').value;
+    const ji = document.getElementById('justifyItems').value;
+    const ai = document.getElementById('alignItems').value;
+    document.getElementById('colGapVal').textContent = cg + 'px';
+    document.getElementById('rowGapVal').textContent = rg + 'px';
+    const preview = document.getElementById('gridPreview');
+    preview.style.gridTemplateColumns = colTpl;
+    preview.style.gridTemplateRows = rowTpl;
+    preview.style.columnGap = cg + 'px';
+    preview.style.rowGap = rg + 'px';
+    preview.style.justifyItems = ji;
+    preview.style.alignItems = ai;
+    const total = cols * rows;
+    preview.innerHTML = '';
+    for (let i = 0; i < total; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'grid-cell';
+      cell.style.opacity = 0.5 + (i % cols) * 0.1 + Math.floor(i / cols) * 0.05;
+      cell.textContent = i + 1;
+      preview.appendChild(cell);
+    }
+    const lines = [
+      `.container {`,
+      `  display: grid;`,
+      `  grid-template-columns: ${colTpl};`,
+      `  grid-template-rows: ${rowTpl};`,
+      cg !== '0' ? `  column-gap: ${cg}px;` : null,
+      rg !== '0' ? `  row-gap: ${rg}px;` : null,
+      ji !== 'stretch' ? `  justify-items: ${ji};` : null,
+      ai !== 'stretch' ? `  align-items: ${ai};` : null,
+      `}`,
+    ].filter(Boolean);
+    document.getElementById('cssOutput').textContent = lines.join('\n');
+  }
+
+  function copyCSS() {
+    navigator.clipboard.writeText(document.getElementById('cssOutput').textContent).then(() => {
+      const msg = document.getElementById('copyMsg');
+      msg.style.display = 'inline';
+      setTimeout(() => msg.style.display = 'none', 2000);
+    });
+  }
+
+  render();
+</script>
+</body>
+</html>

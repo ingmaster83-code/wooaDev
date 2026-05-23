@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+<meta charset="UTF-8">
+<meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+<meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free CSS Box Shadow Generator — Visual Shadow Builder | WooaDev</title>
+<meta name="description" content="Visually configure CSS box-shadow with sliders: offset, blur, spread, color, opacity, and inset. Add multiple shadow layers and copy the CSS code instantly. Free, no install.">
+<meta name="keywords" content="CSS box shadow generator, box-shadow tool, shadow CSS generator, online shadow builder, CSS shadow code, box shadow maker">
+<link rel="canonical" href="https://wooadev.wooahouse.com/en/box-shadow.html">
+<link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/box-shadow.html">
+<link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/box-shadow.html">
+<link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/box-shadow.html">
+<meta property="og:title" content="Free CSS Box Shadow Generator | WooaDev">
+<meta property="og:description" content="Visually build CSS box-shadow with sliders, multiple layers, and instant CSS code copy.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wooadev.wooahouse.com/en/box-shadow.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+<meta property="og:site_name" content="WooaDev">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSS Box Shadow Generator","url":"https://wooadev.wooahouse.com/en/box-shadow.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="https://ads-partners.coupang.com/g.js"></script>
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#C4956A">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+.lang-switcher{display:flex;align-items:center;gap:4px}
+.lang-switcher a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.8rem;font-weight:600;padding:3px 8px;border-radius:12px;transition:background 0.15s}
+.lang-switcher a.active{color:white;background:rgba(255,255,255,0.25)}
+.lang-switcher a:hover{color:white;background:rgba(255,255,255,0.18)}
+.lang-switcher span{color:rgba(255,255,255,0.3);font-size:0.75rem}
+.shadow-stage{display:flex;align-items:center;justify-content:center;background:repeating-conic-gradient(#f0f0f0 0% 25%,#fff 0% 50%) 0 0/20px 20px;border-radius:12px;min-height:200px;margin-bottom:20px;border:1px solid rgba(0,0,0,0.06);padding:40px 20px}
+.shadow-box{width:120px;height:120px;background:#fff;border-radius:12px;transition:box-shadow .2s}
+.layer-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.layer-card{background:var(--panel-bg,#F8FAFC);border:1.5px solid var(--border,#E2E8F0);border-radius:12px;padding:14px}
+.layer-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;cursor:pointer}
+.layer-num{width:26px;height:26px;border-radius:50%;background:#C4956A;color:#fff;font-size:0.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.layer-preview-chip{flex:1;height:20px;border-radius:4px;background:#fff}
+.layer-del{padding:3px 10px;border:none;border-radius:6px;background:#FEE2E2;color:#DC2626;cursor:pointer;font-size:0.78rem;font-weight:600}
+.layer-del:disabled{opacity:.4;cursor:default}
+.slider-group{display:flex;flex-direction:column;gap:10px}
+.slider-row{display:flex;align-items:center;gap:10px}
+.slider-row label{width:68px;font-size:0.8rem;color:var(--text-light,#64748B);flex-shrink:0}
+.slider-row input[type=range]{flex:1;accent-color:#C4956A}
+.slider-row input[type=number]{width:60px;text-align:center;border:1px solid var(--border,#E2E8F0);border-radius:6px;padding:4px 6px;font-size:0.82rem}
+.slider-row span{font-size:0.8rem;color:var(--text-light);white-space:nowrap}
+.color-inset-row{display:flex;gap:14px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.color-pick-wrap{display:flex;align-items:center;gap:8px}
+.color-pick-wrap input[type=color]{width:38px;height:38px;border:none;border-radius:8px;cursor:pointer;padding:2px;background:none}
+.opacity-wrap{display:flex;align-items:center;gap:8px;flex:1;min-width:120px}
+.opacity-wrap input[type=range]{flex:1;accent-color:#C4956A}
+.inset-toggle{display:flex;align-items:center;gap:6px;font-size:0.85rem;cursor:pointer;color:var(--text,#1E293B)}
+.inset-toggle input{width:16px;height:16px;accent-color:#C4956A}
+.btn-add-layer{width:100%;padding:8px;border:1.5px dashed #C4956A;background:transparent;border-radius:8px;color:#C4956A;font-weight:600;cursor:pointer;font-size:0.85rem;transition:background .15s}
+.btn-add-layer:hover{background:#FFF8F2}
+.code-out{font-family:'Consolas','Monaco',monospace;font-size:0.88rem;background:var(--panel-bg,#F8FAFC);border:1px solid var(--border,#E2E8F0);border-radius:10px;padding:14px;word-break:break-all;line-height:1.6;color:var(--text,#1E293B);margin-bottom:10px;min-height:48px}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="json-formatter.html">JSON</a>
+      <a href="xml-formatter.html">XML</a>
+      <a href="color-converter.html">Color</a>
+      <a href="regex-tester.html">Regex</a>
+      <a href="hash-generator.html">Hash</a>
+      <a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../box-shadow.html">KO</a>
+        <span>|</span>
+        <a href="box-shadow.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85);font-size:0.85rem;text-decoration:none;margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar"><span class="our-sites-label">WooaHouse Services</span><div class="our-sites-links"><a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a><a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a><a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a><a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a><a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a><a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a><a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a><a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a><a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a><a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a><a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a><a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a><a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a></div></div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Box Shadow Generator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🫧</span>
+    <h1>CSS Box Shadow Generator</h1>
+    <p>Use sliders to set shadow offset, blur, spread, color, and opacity. Supports multiple shadow layers and inset shadows. Copy the CSS instantly.</p>
+  </div>
+
+  <div class="shadow-stage">
+    <div class="shadow-box" id="shadowBox"></div>
+  </div>
+
+  <div class="dev-panel">
+    <div class="dev-label">Shadow Layers</div>
+    <div class="layer-list" id="layerList"></div>
+    <button class="btn-add-layer" onclick="addLayer()">+ Add Shadow</button>
+  </div>
+
+  <div class="dev-panel" style="margin-top:12px">
+    <div class="dev-label">Generated CSS</div>
+    <div class="code-out" id="codeOut"></div>
+    <button class="dev-btn" onclick="copyCode()">📋 Copy Code</button>
+  </div>
+
+  <div class="tips-panel" style="margin-top:16px">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li><strong>X Offset</strong>: Positive moves shadow right, negative moves it left.</li>
+      <li><strong>Y Offset</strong>: Positive moves shadow down, negative moves it up.</li>
+      <li><strong>Blur</strong>: Higher values create softer, more spread-out shadows. 0 = sharp edge.</li>
+      <li><strong>Spread</strong>: Positive expands the shadow, negative shrinks it.</li>
+      <li><strong>Inset</strong>: Draws the shadow inside the element — great for pressed/sunken effects.</li>
+      <li>Stack multiple shadow layers for richer, more realistic depth effects.</li>
+    </ul>
+  </div>
+
+  <details class="faq-item">
+    <summary>What's the difference between box-shadow and text-shadow?</summary>
+    <p><code>box-shadow</code> applies to the entire element box and supports <code>inset</code> and <code>spread</code>. <code>text-shadow</code> only applies to the text characters and does not support those parameters.</p>
+  </details>
+  <details class="faq-item">
+    <summary>Does box-shadow affect layout?</summary>
+    <p>No. Unlike <code>outline</code>, <code>box-shadow</code> does not take up space in the document layout. It is purely visual and does not push other elements away.</p>
+  </details>
+  <details class="faq-item">
+    <summary>How do I apply a shadow to only one side?</summary>
+    <p>Use a negative spread value combined with a single-directional offset. For example: <code>box-shadow: 0 4px 6px -4px rgba(0,0,0,0.4)</code> shows a shadow only at the bottom.</p>
+  </details>
+</div>
+
+<aside class="tool-sidebar">
+  <div class="ad-card">
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px"
+      data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025"
+      data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card">
+    <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+  </div>
+</aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-col"><h4>🛠️ WooaDev</h4><p>Essential developer utilities — free, browser-based, no install.</p></div>
+      <div class="footer-links"><h4>Encoding · Hashing</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL Encoder</a><a href="hash-generator.html">Hash Generator</a><a href="jwt-decoder.html">JWT Decoder</a><a href="password-generator.html">Password Generator</a></div>
+      <div class="footer-links"><h4>Format · Convert</h4><a href="json-formatter.html">JSON Formatter</a><a href="xml-formatter.html">XML Formatter</a><a href="color-converter.html">Color Converter</a><a href="css-gradient.html">CSS Gradient</a><a href="box-shadow.html">Box Shadow</a></div>
+      <div class="footer-links"><h4>Generators</h4><a href="uuid-generator.html">UUID Generator</a><a href="lorem-ipsum.html">Lorem Ipsum</a><a href="cron-generator.html">Cron Generator</a><a href="number-base.html">Number Base</a><a href="timestamp.html">Timestamp</a></div>
+      <div class="footer-links"><h4>WooaHouse Services</h4><a href="https://wooaviewer.wooahouse.com/en/" target="_blank" rel="noopener">WooaViewer</a><a href="https://pdfkit.wooahouse.com/en/" target="_blank" rel="noopener">WooaPDF</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">WooaText</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev by WooaHouse. All rights reserved.</p></div>
+  </div>
+</footer>
+<script src="../js/pwa-install.js"></script>
+<script>
+let layers=[{x:0,y:4,blur:16,spread:0,color:'#000000',opacity:20,inset:false}];
+function hexToRgba(hex,op){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return`rgba(${r},${g},${b},${(op/100).toFixed(2)})`;}
+function layerCSS(l){return`${l.inset?'inset ':''} ${l.x}px ${l.y}px ${l.blur}px ${l.spread}px ${hexToRgba(l.color,l.opacity)}`.trim();}
+function render(){const css=layers.map(layerCSS).join(',\n         ');document.getElementById('shadowBox').style.boxShadow=layers.map(layerCSS).join(', ');document.getElementById('codeOut').textContent=`box-shadow: ${css};`;}
+function addLayer(){layers.push({x:4,y:4,blur:12,spread:0,color:'#000000',opacity:15,inset:false});renderLayers();render();}
+function removeLayer(i){if(layers.length<=1)return;layers.splice(i,1);renderLayers();render();}
+function renderLayerChip(i){const chip=document.getElementById('chip'+i);if(chip)chip.style.boxShadow=layerCSS(layers[i]).replace(/inset\s*/,'');}
+function renderLayers(){document.getElementById('layerList').innerHTML=layers.map((l,i)=>`
+<div class="layer-card" id="layer${i}">
+  <div class="layer-header"><div class="layer-num">${i+1}</div><div class="layer-preview-chip" id="chip${i}"></div><button class="layer-del" onclick="removeLayer(${i})" ${layers.length<=1?'disabled':''}>✕ Remove</button></div>
+  <div class="slider-group">
+    <div class="slider-row"><label>X Offset</label><input type="range" min="-50" max="50" value="${l.x}" oninput="layers[${i}].x=parseInt(this.value);document.getElementById('xN${i}').value=this.value;renderLayerChip(${i});render()"><input type="number" id="xN${i}" min="-50" max="50" value="${l.x}" oninput="layers[${i}].x=parseInt(this.value)||0;renderLayerChip(${i});render()"><span>px</span></div>
+    <div class="slider-row"><label>Y Offset</label><input type="range" min="-50" max="50" value="${l.y}" oninput="layers[${i}].y=parseInt(this.value);document.getElementById('yN${i}').value=this.value;renderLayerChip(${i});render()"><input type="number" id="yN${i}" min="-50" max="50" value="${l.y}" oninput="layers[${i}].y=parseInt(this.value)||0;renderLayerChip(${i});render()"><span>px</span></div>
+    <div class="slider-row"><label>Blur</label><input type="range" min="0" max="100" value="${l.blur}" oninput="layers[${i}].blur=parseInt(this.value);document.getElementById('bN${i}').value=this.value;renderLayerChip(${i});render()"><input type="number" id="bN${i}" min="0" max="100" value="${l.blur}" oninput="layers[${i}].blur=parseInt(this.value)||0;renderLayerChip(${i});render()"><span>px</span></div>
+    <div class="slider-row"><label>Spread</label><input type="range" min="-50" max="50" value="${l.spread}" oninput="layers[${i}].spread=parseInt(this.value);document.getElementById('spN${i}').value=this.value;renderLayerChip(${i});render()"><input type="number" id="spN${i}" min="-50" max="50" value="${l.spread}" oninput="layers[${i}].spread=parseInt(this.value)||0;renderLayerChip(${i});render()"><span>px</span></div>
+  </div>
+  <div class="color-inset-row">
+    <div class="color-pick-wrap"><label style="font-size:0.8rem;color:var(--text-light)">Color</label><input type="color" value="${l.color}" oninput="layers[${i}].color=this.value;renderLayerChip(${i});render()"></div>
+    <div class="opacity-wrap"><label style="font-size:0.8rem;color:var(--text-light);white-space:nowrap">Opacity</label><input type="range" min="0" max="100" value="${l.opacity}" oninput="layers[${i}].opacity=parseInt(this.value);this.nextElementSibling.textContent=this.value+'%';renderLayerChip(${i});render()"><span style="font-size:0.82rem;color:var(--text-light);width:38px">${l.opacity}%</span></div>
+    <label class="inset-toggle"><input type="checkbox" ${l.inset?'checked':''} onchange="layers[${i}].inset=this.checked;renderLayerChip(${i});render()"> Inset</label>
+  </div>
+</div>`).join('');layers.forEach((_,i)=>renderLayerChip(i));}
+function copyCode(){navigator.clipboard.writeText(document.getElementById('codeOut').textContent).then(()=>{const btn=event.target,orig=btn.textContent;btn.textContent='✅ Copied!';setTimeout(()=>btn.textContent=orig,1500);});}
+renderLayers();render();
+</script>
+</body>
+</html>

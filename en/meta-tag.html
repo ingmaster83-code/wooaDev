@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <title>Meta Tag Generator - SEO & OG Tags Online Free | WooaDev</title>
+  <meta name="description" content="Generate SEO meta tags, Open Graph tags, and Twitter Card tags instantly. Preview Google SERP and social share cards. Free online meta tag generator.">
+  <meta name="keywords" content="meta tag generator, SEO meta tags, Open Graph tags, OG tags, Twitter card, meta description generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/meta-tag.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/meta-tag.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/meta-tag.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/meta-tag.html">
+  <meta property="og:title" content="Meta Tag Generator | WooaDev">
+  <meta property="og:description" content="Generate SEO meta tags, OG tags, and Twitter Card tags with live preview.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/meta-tag.html">
+  <meta property="og:locale" content="en_US">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="manifest" href="../manifest.json">
+  <style>
+    .form-grid { display:grid; grid-template-columns:140px 1fr; gap:10px 12px; align-items:start; }
+    .form-grid label { font-size:13px; font-weight:600; color:#555; padding-top:8px; text-align:right; }
+    .form-grid input[type=text], .form-grid input[type=url], .form-grid select { border:1px solid #d0b896; border-radius:6px; padding:7px 10px; font-size:13px; width:100%; box-sizing:border-box; }
+    .form-grid textarea { border:1px solid #d0b896; border-radius:6px; padding:7px 10px; font-size:13px; width:100%; box-sizing:border-box; resize:vertical; }
+    .char-count { font-size:11px; margin-top:2px; }
+    .char-ok { color:#4caf50; } .char-warn { color:#ff9800; } .char-over { color:#e74c3c; }
+    .preview-card { border:1px solid #e0e0e0; border-radius:10px; overflow:hidden; max-width:480px; margin:12px 0; font-family:Arial,sans-serif; }
+    .serp-card { padding:14px 16px; }
+    .serp-url { color:#1a0dab; font-size:14px; margin-bottom:2px; font-weight:normal; }
+    .serp-title { color:#1a0dab; font-size:18px; font-weight:bold; margin-bottom:4px; }
+    .serp-desc { color:#4d5156; font-size:14px; line-height:1.5; }
+    .og-card-img { width:100%; height:200px; background:#e0d0bc; display:flex; align-items:center; justify-content:center; color:#a07850; font-size:13px; overflow:hidden; }
+    .og-card-img img { width:100%; height:100%; object-fit:cover; }
+    .og-card-body { padding:12px 16px; background:#f7f7f7; }
+    .og-card-site { font-size:11px; color:#666; text-transform:uppercase; }
+    .og-card-title { font-size:15px; font-weight:700; color:#1a1a1a; margin:4px 0; }
+    .og-card-desc { font-size:13px; color:#555; }
+    .output-block { font-family:monospace; font-size:12px; background:#1e1e2e; color:#cdd6f4; border-radius:8px; padding:14px; white-space:pre; overflow-x:auto; margin-top:12px; max-height:320px; overflow-y:auto; }
+    .copy-row { display:flex; gap:8px; align-items:center; margin-top:8px; }
+    .section-title { font-weight:700; color:#a07850; font-size:14px; margin:16px 0 8px; }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">🛠️ WooaDev</a>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="json-formatter.html">JSON</a>
+      <a href="regex-tester.html">Regex</a>
+      <a href="http-status.html">HTTP Status</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../meta-tag.html">KO</a>
+        <a href="meta-tag.html" class="active">EN</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+    <a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a>
+    <a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a>
+    <a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a>
+  </div>
+</div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+  <div class="tool-page">
+    <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; Meta Tag Generator</div>
+    <div class="tool-header">
+      <div class="tool-icon-lg">🏷️</div>
+      <div>
+        <h1>Meta Tag Generator</h1>
+        <p>Generate SEO, Open Graph, and Twitter Card meta tags with live preview</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="form-grid">
+        <label>Title</label>
+        <div>
+          <input type="text" id="mTitle" placeholder="Page title (40–60 chars recommended)" oninput="render()">
+          <div class="char-count" id="cTitle"></div>
+        </div>
+        <label>Description</label>
+        <div>
+          <textarea id="mDesc" rows="2" placeholder="Page description (120–160 chars recommended)" oninput="render()"></textarea>
+          <div class="char-count" id="cDesc"></div>
+        </div>
+        <label>URL</label>
+        <input type="url" id="mUrl" placeholder="https://example.com/page.html" oninput="render()">
+        <label>OG Image URL</label>
+        <input type="url" id="mImage" placeholder="https://example.com/og-image.jpg (1200×630)" oninput="render()">
+        <label>Site Name</label>
+        <input type="text" id="mSiteName" placeholder="My Website" oninput="render()">
+        <label>OG Type</label>
+        <select id="mType" onchange="render()">
+          <option value="website">website</option>
+          <option value="article">article</option>
+          <option value="product">product</option>
+        </select>
+        <label>Twitter Card</label>
+        <select id="mTwitterCard" onchange="render()">
+          <option value="summary_large_image">summary_large_image</option>
+          <option value="summary">summary</option>
+          <option value="app">app</option>
+        </select>
+        <label>Keywords</label>
+        <input type="text" id="mKeywords" placeholder="keyword1, keyword2, keyword3" oninput="render()">
+        <label>Author</label>
+        <input type="text" id="mAuthor" placeholder="Author name" oninput="render()">
+      </div>
+
+      <div class="section-title">👁️ Google SERP Preview</div>
+      <div class="preview-card">
+        <div class="serp-card">
+          <div class="serp-url" id="prevUrl">https://example.com/page</div>
+          <div class="serp-title" id="prevTitle">Page Title</div>
+          <div class="serp-desc" id="prevDesc">Page description will appear here.</div>
+        </div>
+      </div>
+
+      <div class="section-title">📲 Social Share (OG) Preview</div>
+      <div class="preview-card">
+        <div class="og-card-img" id="ogImgWrap"><span>OG Image (1200×630)</span></div>
+        <div class="og-card-body">
+          <div class="og-card-site" id="ogSite">example.com</div>
+          <div class="og-card-title" id="ogTitle">Page Title</div>
+          <div class="og-card-desc" id="ogDesc">Description</div>
+        </div>
+      </div>
+
+      <div class="section-title">📋 Generated HTML</div>
+      <div class="output-block" id="metaOutput"></div>
+      <div class="copy-row">
+        <button class="dev-btn" onclick="copyMeta()">📋 Copy HTML</button>
+        <span id="copyMsg" style="color:#4caf50;font-size:13px;display:none">Copied!</span>
+      </div>
+    </div>
+
+    <div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li>Title: 40–60 characters, Description: 120–160 characters for best SERP display</li>
+        <li>OG Image: 1200×630px recommended (min 600×315). Facebook requires &lt;8MB.</li>
+        <li>Twitter Card: use <code>summary_large_image</code> for a large hero image</li>
+        <li>Always test with Facebook Debugger and Twitter Card Validator after deployment</li>
+      </ul>
+    </div>
+
+    <section class="faq-section">
+      <h2>FAQ</h2>
+      <div class="faq-item">
+        <div class="faq-q">What is the difference between meta description and OG description?</div>
+        <div class="faq-a">Meta description is used by search engines for SERP snippets. OG (Open Graph) description is shown when sharing on social media platforms like Facebook or LinkedIn. Both should be compelling but can differ slightly.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do meta keywords still matter for SEO?</div>
+        <div class="faq-a">Google officially ignores the meta keywords tag. However, some other search engines (like Yandex) still consider it. It doesn't hurt to include them but shouldn't be your main SEO focus.</div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="tool-sidebar">
+    <div class="ad-card">
+      <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+    </div>
+    <div class="ad-card">
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">🛠️ WooaDev</div>
+      <p>Free online developer tools</p>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">Generators</div>
+      <a href="meta-tag.html">Meta Tag Generator</a>
+      <a href="css-gradient.html">CSS Gradient</a>
+      <a href="box-shadow.html">Box Shadow</a>
+      <a href="color-palette.html">Color Palette</a>
+      <a href="jwt-generator.html">JWT Generator</a>
+      <a href="password-generator.html">Password Generator</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 WooaDev. All rights reserved. | <a href="https://wooahouse.com/" target="_blank" rel="noopener">WooaHouse</a></p>
+  </div>
+  <div class="coupang-notice">This post is part of the Coupang Partners activity, and a certain commission is provided accordingly.</div>
+</footer>
+
+<script src="../js/pwa-install.js"></script>
+<script>
+  function esc(s){const d=document.createElement('div');d.appendChild(document.createTextNode(s));return d.innerHTML;}
+  function countClass(n,ok,warn){return n<=ok?'char-ok':n<=warn?'char-warn':'char-over';}
+
+  function render() {
+    const title=document.getElementById('mTitle').value;
+    const desc=document.getElementById('mDesc').value;
+    const url=document.getElementById('mUrl').value;
+    const image=document.getElementById('mImage').value;
+    const siteName=document.getElementById('mSiteName').value;
+    const type=document.getElementById('mType').value;
+    const tCard=document.getElementById('mTwitterCard').value;
+    const keywords=document.getElementById('mKeywords').value;
+    const author=document.getElementById('mAuthor').value;
+
+    // Char counts
+    const tc=document.getElementById('cTitle');
+    tc.textContent=title.length+' / 60 chars';
+    tc.className='char-count '+countClass(title.length,60,70);
+    const dc=document.getElementById('cDesc');
+    dc.textContent=desc.length+' / 160 chars';
+    dc.className='char-count '+countClass(desc.length,160,180);
+
+    // SERP preview
+    document.getElementById('prevUrl').textContent=url||'https://example.com/page';
+    document.getElementById('prevTitle').textContent=title||'Page Title';
+    document.getElementById('prevDesc').textContent=desc||'Page description will appear here.';
+
+    // OG preview
+    const ogImg=document.getElementById('ogImgWrap');
+    if(image){ogImg.innerHTML=`<img src="${esc(image)}" alt="OG image">`;}
+    else{ogImg.innerHTML='<span>OG Image (1200×630)</span>';}
+    const domain=url?url.replace(/^https?:\/\//,'').split('/')[0]:'example.com';
+    document.getElementById('ogSite').textContent=domain;
+    document.getElementById('ogTitle').textContent=title||'Page Title';
+    document.getElementById('ogDesc').textContent=desc||'Description';
+
+    // Generate HTML
+    const lines=[];
+    if(title) lines.push(`<title>${esc(title)}</title>`);
+    if(desc) lines.push(`<meta name="description" content="${esc(desc)}">`);
+    if(keywords) lines.push(`<meta name="keywords" content="${esc(keywords)}">`);
+    if(author) lines.push(`<meta name="author" content="${esc(author)}">`);
+    if(url) lines.push(`<link rel="canonical" href="${esc(url)}">`);
+    lines.push('');
+    if(title) lines.push(`<meta property="og:title" content="${esc(title)}">`);
+    if(desc) lines.push(`<meta property="og:description" content="${esc(desc)}">`);
+    lines.push(`<meta property="og:type" content="${esc(type)}">`);
+    if(url) lines.push(`<meta property="og:url" content="${esc(url)}">`);
+    if(image) lines.push(`<meta property="og:image" content="${esc(image)}">`);
+    if(siteName) lines.push(`<meta property="og:site_name" content="${esc(siteName)}">`);
+    lines.push('');
+    lines.push(`<meta name="twitter:card" content="${esc(tCard)}">`);
+    if(title) lines.push(`<meta name="twitter:title" content="${esc(title)}">`);
+    if(desc) lines.push(`<meta name="twitter:description" content="${esc(desc)}">`);
+    if(image) lines.push(`<meta name="twitter:image" content="${esc(image)}">`);
+    document.getElementById('metaOutput').textContent=lines.join('\n');
+  }
+
+  function copyMeta(){
+    navigator.clipboard.writeText(document.getElementById('metaOutput').textContent).then(()=>{
+      const msg=document.getElementById('copyMsg');
+      msg.style.display='inline';
+      setTimeout(()=>msg.style.display='none',2000);
+    });
+  }
+  render();
+</script>
+</body>
+</html>

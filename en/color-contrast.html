@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+<meta charset="UTF-8">
+<meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+<meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Contrast Checker Free — WCAG Accessibility Tool | WooaDev</title>
+<meta name="description" content="Check color contrast ratio between text and background. Instantly see WCAG AA and AAA pass/fail for normal and large text. Free online accessibility checker.">
+<meta name="keywords" content="color contrast checker, WCAG contrast ratio, accessibility color checker, AA AAA contrast, web accessibility color, contrast ratio tool">
+<link rel="canonical" href="https://wooadev.wooahouse.com/en/color-contrast.html">
+<link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/color-contrast.html">
+<link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/color-contrast.html">
+<link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/color-contrast.html">
+<meta property="og:title" content="Color Contrast Checker Free | WooaDev">
+<meta property="og:description" content="Check WCAG AA/AAA contrast ratio between text and background colors instantly.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wooadev.wooahouse.com/en/color-contrast.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="WooaDev">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Color Contrast Checker","url":"https://wooadev.wooahouse.com/en/color-contrast.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="https://ads-partners.coupang.com/g.js"></script>
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#C4956A">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+.lang-switcher{display:flex;align-items:center;gap:4px}
+.lang-switcher a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.8rem;font-weight:600;padding:3px 8px;border-radius:12px;transition:background 0.15s}
+.lang-switcher a.active{color:white;background:rgba(255,255,255,0.25)}
+.lang-switcher a:hover{color:white;background:rgba(255,255,255,0.18)}
+.lang-switcher span{color:rgba(255,255,255,0.3);font-size:0.75rem}
+.color-pair{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:20px}
+.color-pick-card{background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:16px;text-align:center}
+.color-pick-card label{display:block;font-size:0.8rem;color:#64748b;font-weight:600;margin-bottom:8px}
+.color-pick-card input[type=color]{width:64px;height:64px;border:none;border-radius:10px;cursor:pointer;padding:2px;background:none;display:block;margin:0 auto 8px}
+.hex-input{width:100%;text-align:center;border:1px solid #e2e8f0;border-radius:8px;padding:6px;font-family:monospace;font-size:0.9rem;box-sizing:border-box}
+.swap-btn{background:#f1f5f9;border:1.5px solid #e2e8f0;border-radius:50%;width:40px;height:40px;font-size:1.2rem;cursor:pointer;transition:background .15s;flex-shrink:0}
+.swap-btn:hover{background:#e2e8f0}
+.preview-box{border-radius:12px;padding:32px 24px;text-align:center;margin-bottom:20px;transition:background .15s}
+.preview-box .preview-normal{font-size:1rem;margin-bottom:8px}
+.preview-box .preview-large{font-size:1.5rem;font-weight:700}
+.ratio-display{text-align:center;margin-bottom:20px}
+.ratio-num{font-size:3rem;font-weight:800;color:#1e293b;line-height:1}
+.ratio-label{font-size:0.85rem;color:#64748b;margin-top:4px}
+.wcag-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px}
+.wcag-card{border-radius:10px;padding:14px;border:1.5px solid #e2e8f0;background:#f8fafc}
+.wcag-card-title{font-size:0.78rem;font-weight:700;color:#64748b;margin-bottom:6px}
+.wcag-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-size:0.83rem}
+.badge-pass{background:#DCFCE7;color:#16A34A;border-radius:6px;padding:2px 10px;font-weight:700;font-size:0.78rem}
+.badge-fail{background:#FEE2E2;color:#DC2626;border-radius:6px;padding:2px 10px;font-weight:700;font-size:0.78rem}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="color-converter.html">Color</a>
+      <a href="css-gradient.html">Gradient</a>
+      <a href="box-shadow.html">Shadow</a>
+      <a href="json-formatter.html">JSON</a>
+      <a href="../index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../color-contrast.html">KO</a>
+        <span>|</span>
+        <a href="color-contrast.html" class="active">EN</a>
+      </div>
+      <a href="../about.html" style="color:rgba(255,255,255,0.85);font-size:0.85rem;text-decoration:none;margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar"><span class="our-sites-label">WooaHouse Services</span><div class="our-sites-links"><a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a><a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a><a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a><a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a><a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a><a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a><a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a><a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a><a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a><a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a><a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a><a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a><a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a></div></div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="../index.html">WooaDev</a><span>›</span><span>Color Contrast Checker</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🎨</span>
+    <h1>Color Contrast Checker</h1>
+    <p>Calculate the contrast ratio between text and background colors. Instantly check WCAG AA and AAA accessibility compliance.</p>
+  </div>
+
+  <div class="dev-panel">
+    <div class="color-pair">
+      <div class="color-pick-card">
+        <label>Text Color</label>
+        <input type="color" id="fgColor" value="#1e293b" oninput="onColorInput('fg',this.value)">
+        <input type="text" class="hex-input" id="fgHex" value="#1e293b" maxlength="7" oninput="onHexInput('fg',this.value)">
+      </div>
+      <button class="swap-btn" onclick="swapColors()" title="Swap colors">⇄</button>
+      <div class="color-pick-card">
+        <label>Background Color</label>
+        <input type="color" id="bgColor" value="#ffffff" oninput="onColorInput('bg',this.value)">
+        <input type="text" class="hex-input" id="bgHex" value="#ffffff" maxlength="7" oninput="onHexInput('bg',this.value)">
+      </div>
+    </div>
+
+    <div class="preview-box" id="previewBox">
+      <div class="preview-normal" id="previewNormal">Normal text preview (16px)</div>
+      <div class="preview-large" id="previewLarge">Large text preview (24px Bold)</div>
+    </div>
+
+    <div class="ratio-display">
+      <div class="ratio-num" id="ratioNum">—</div>
+      <div class="ratio-label">Contrast Ratio</div>
+    </div>
+
+    <div class="wcag-grid">
+      <div class="wcag-card">
+        <div class="wcag-card-title">WCAG 2.1 AA (Minimum)</div>
+        <div class="wcag-row"><span>Normal text (4.5:1)</span><span id="aa-normal">—</span></div>
+        <div class="wcag-row"><span>Large text (3:1)</span><span id="aa-large">—</span></div>
+        <div class="wcag-row"><span>UI components (3:1)</span><span id="aa-ui">—</span></div>
+      </div>
+      <div class="wcag-card">
+        <div class="wcag-card-title">WCAG 2.1 AAA (Enhanced)</div>
+        <div class="wcag-row"><span>Normal text (7:1)</span><span id="aaa-normal">—</span></div>
+        <div class="wcag-row"><span>Large text (4.5:1)</span><span id="aaa-large">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tips-panel" style="margin-top:16px">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li><strong>Large text</strong>: 18pt (24px) or larger, or 14pt (~18.67px) Bold or heavier.</li>
+      <li><strong>AA</strong>: The minimum standard required by most legal accessibility requirements.</li>
+      <li><strong>AAA</strong>: The highest level of accessibility. May not be achievable for all content.</li>
+      <li>Low contrast makes text hard to read for users with low vision or color blindness.</li>
+    </ul>
+  </div>
+
+  <details class="faq-item">
+    <summary>What is WCAG?</summary>
+    <p>Web Content Accessibility Guidelines, published by the W3C. It defines two levels of conformance: AA and AAA. Most organizations and regulations require at least AA compliance.</p>
+  </details>
+  <details class="faq-item">
+    <summary>How is contrast ratio calculated?</summary>
+    <p>Based on relative luminance: <code>(L1 + 0.05) / (L2 + 0.05)</code> where L1 is the brighter color. The maximum ratio is 21:1 (black vs white) and minimum is 1:1 (identical colors).</p>
+  </details>
+  <details class="faq-item">
+    <summary>What are UI component requirements?</summary>
+    <p>Non-text elements like button borders, input outlines, and icons also need at least 3:1 contrast against their background (WCAG 2.1 AA success criterion 1.4.11).</p>
+  </details>
+</div>
+
+<aside class="tool-sidebar">
+  <div class="ad-card">
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px"
+      data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025"
+      data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card">
+    <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+  </div>
+</aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-col"><h4>🛠️ WooaDev</h4><p>Essential developer utilities, free in your browser — no install needed.</p></div>
+      <div class="footer-links"><h4>Encoding · Hash</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL Encoder</a><a href="image-to-base64.html">Image→Base64</a><a href="html-entity.html">HTML Entity</a><a href="hash-generator.html">Hash Generator</a></div>
+      <div class="footer-links"><h4>Format · Convert</h4><a href="json-formatter.html">JSON Formatter</a><a href="css-gradient.html">CSS Gradient</a><a href="box-shadow.html">Box Shadow</a><a href="border-radius.html">Border Radius</a><a href="color-contrast.html">Color Contrast</a></div>
+      <div class="footer-links"><h4>Generators</h4><a href="uuid-generator.html">UUID Generator</a><a href="lorem-ipsum.html">Lorem Ipsum</a><a href="flexbox-generator.html">Flexbox Generator</a><a href="cron-generator.html">Cron Generator</a><a href="timestamp.html">Timestamp</a></div>
+      <div class="footer-links"><h4>WooaHouse Services</h4><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">WooaViewer</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">WooaPDF</a><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">WooaColor</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev by WooaHouse. All rights reserved.</p></div>
+  </div>
+</footer>
+<script src="../js/pwa-install.js"></script>
+<script>
+function hexToRgb(hex){hex=hex.replace('#','');if(hex.length===3)hex=hex.split('').map(c=>c+c).join('');const n=parseInt(hex,16);return[(n>>16)&255,(n>>8)&255,n&255];}
+function luminance(r,g,b){return[r,g,b].map(c=>{c/=255;return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4);}).reduce((a,c,i)=>a+c*[0.2126,0.7152,0.0722][i],0);}
+function contrastRatio(h1,h2){const[r1,g1,b1]=hexToRgb(h1),[r2,g2,b2]=hexToRgb(h2);const l1=luminance(r1,g1,b1),l2=luminance(r2,g2,b2);const bright=Math.max(l1,l2),dark=Math.min(l1,l2);return(bright+0.05)/(dark+0.05);}
+function badge(pass){return pass?'<span class="badge-pass">PASS ✓</span>':'<span class="badge-fail">FAIL ✗</span>';}
+function render(){
+  const fg=document.getElementById('fgHex').value.trim(),bg=document.getElementById('bgHex').value.trim();
+  if(!/^#[0-9a-fA-F]{6}$/.test(fg)||!/^#[0-9a-fA-F]{6}$/.test(bg))return;
+  const ratio=contrastRatio(fg,bg);
+  document.getElementById('ratioNum').textContent=ratio.toFixed(2)+':1';
+  document.getElementById('previewBox').style.background=bg;
+  document.getElementById('previewNormal').style.color=fg;
+  document.getElementById('previewLarge').style.color=fg;
+  document.getElementById('aa-normal').innerHTML=badge(ratio>=4.5);
+  document.getElementById('aa-large').innerHTML=badge(ratio>=3);
+  document.getElementById('aa-ui').innerHTML=badge(ratio>=3);
+  document.getElementById('aaa-normal').innerHTML=badge(ratio>=7);
+  document.getElementById('aaa-large').innerHTML=badge(ratio>=4.5);
+}
+function onColorInput(type,val){document.getElementById(type+'Hex').value=val;render();}
+function onHexInput(type,val){if(/^#[0-9a-fA-F]{6}$/.test(val)){document.getElementById(type+'Color').value=val;render();}}
+function swapColors(){const fg=document.getElementById('fgHex').value,bg=document.getElementById('bgHex').value;document.getElementById('fgHex').value=bg;document.getElementById('bgHex').value=fg;document.getElementById('fgColor').value=bg;document.getElementById('bgColor').value=fg;render();}
+render();
+</script>
+</body>
+</html>

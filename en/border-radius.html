@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+<meta charset="UTF-8">
+<meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+<meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Border Radius Generator Free — Rounded Corners CSS Code | WooaDev</title>
+<meta name="description" content="Free online CSS border-radius generator. Visually adjust rounded corners with sliders. Simple mode (all corners) or advanced mode (4 corners individually). px/% units, live preview, copy CSS instantly.">
+<meta name="keywords" content="border radius generator, CSS rounded corners, border-radius tool, CSS generator, round corners, CSS border radius online, rounded corner CSS">
+<link rel="canonical" href="https://wooadev.wooahouse.com/en/border-radius.html">
+<link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/border-radius.html">
+<link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/border-radius.html">
+<link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/border-radius.html">
+<meta property="og:title" content="CSS Border Radius Generator Free | WooaDev">
+<meta property="og:description" content="Visually adjust rounded corners with sliders and copy CSS border-radius code instantly.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wooadev.wooahouse.com/en/border-radius.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="WooaDev">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSS Border Radius Generator","url":"https://wooadev.wooahouse.com/en/border-radius.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="https://ads-partners.coupang.com/g.js"></script>
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#C4956A">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+.lang-switcher{display:flex;align-items:center;gap:4px}
+.lang-switcher a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.8rem;font-weight:600;padding:3px 8px;border-radius:12px;transition:background 0.15s}
+.lang-switcher a.active{color:white;background:rgba(255,255,255,0.25)}
+.lang-switcher a:hover{color:white;background:rgba(255,255,255,0.18)}
+.lang-switcher span{color:rgba(255,255,255,0.3);font-size:0.75rem}
+
+.br-stage{display:flex;align-items:center;justify-content:center;background:repeating-conic-gradient(#f0f0f0 0% 25%,#fff 0% 50%) 0 0/20px 20px;border-radius:12px;min-height:220px;margin-bottom:20px;border:1px solid rgba(0,0,0,0.06);padding:40px 20px}
+.br-box{width:140px;height:140px;background:#C4956A;transition:border-radius .15s}
+
+.mode-tabs{display:flex;gap:8px;margin-bottom:16px}
+.mode-tab{padding:7px 18px;border-radius:8px;border:1.5px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-size:0.85rem;font-weight:600;color:#64748b;transition:all .15s}
+.mode-tab.active{background:#C4956A;color:#fff;border-color:#C4956A}
+
+.slider-group{display:flex;flex-direction:column;gap:12px}
+.slider-row{display:flex;align-items:center;gap:10px}
+.slider-row label{width:80px;font-size:0.82rem;color:#64748b;flex-shrink:0}
+.slider-row input[type=range]{flex:1;accent-color:#C4956A}
+.slider-row input[type=number]{width:64px;text-align:center;border:1px solid #e2e8f0;border-radius:6px;padding:4px 6px;font-size:0.82rem}
+.slider-row span{font-size:0.8rem;color:#94a3b8;white-space:nowrap;width:18px}
+
+.opt-bar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.unit-btns{display:flex;gap:0;border:1.5px solid #e2e8f0;border-radius:8px;overflow:hidden}
+.unit-btn{padding:5px 14px;border:none;background:#f8fafc;cursor:pointer;font-size:0.82rem;font-weight:600;color:#64748b;transition:background .15s}
+.unit-btn.active{background:#C4956A;color:#fff}
+.color-pick-wrap{display:flex;align-items:center;gap:8px;font-size:0.82rem;color:#64748b}
+.color-pick-wrap input[type=color]{width:36px;height:36px;border:none;border-radius:8px;cursor:pointer;padding:2px;background:none}
+
+.corner-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:4px}
+.corner-label{font-size:0.78rem;color:#94a3b8;margin-bottom:4px;font-weight:600}
+
+.code-out{font-family:'Consolas','Monaco',monospace;font-size:0.88rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;word-break:break-all;line-height:1.6;color:#1e293b;margin-bottom:10px;min-height:48px}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="css-gradient.html">Gradient</a>
+      <a href="box-shadow.html">Shadow</a>
+      <a href="color-converter.html">Color</a>
+      <a href="json-formatter.html">JSON</a>
+      <a href="hash-generator.html">Hash</a>
+      <a href="../index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../border-radius.html">KO</a>
+        <span>|</span>
+        <a href="border-radius.html" class="active">EN</a>
+      </div>
+      <a href="../about.html" style="color:rgba(255,255,255,0.85);font-size:0.85rem;text-decoration:none;margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar"><span class="our-sites-label">WooaHouse Services</span><div class="our-sites-links"><a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a><a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a><a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a><a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a><a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a><a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a><a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a><a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a><a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a><a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a><a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a><a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a><a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a><a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a></div></div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="../index.html">WooaDev</a><span>›</span><span>Border Radius Generator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">⬜</span>
+    <h1>CSS Border Radius Generator</h1>
+    <p>Visually adjust rounded corners with sliders and copy CSS code instantly. Simple and advanced (4-corner) mode with px/% unit support.</p>
+  </div>
+
+  <!-- Preview -->
+  <div class="br-stage">
+    <div class="br-box" id="brBox"></div>
+  </div>
+
+  <!-- Controls -->
+  <div class="dev-panel">
+    <div class="opt-bar">
+      <div>
+        <div class="dev-label" style="margin-bottom:6px">Mode</div>
+        <div class="mode-tabs">
+          <button class="mode-tab active" id="btnSimple" onclick="setMode('simple')">Simple</button>
+          <button class="mode-tab" id="btnAdv" onclick="setMode('advanced')">Advanced (4 corners)</button>
+        </div>
+      </div>
+      <div>
+        <div class="dev-label" style="margin-bottom:6px">Unit</div>
+        <div class="unit-btns">
+          <button class="unit-btn active" id="btnPx" onclick="setUnit('px')">px</button>
+          <button class="unit-btn" id="btnPct" onclick="setUnit('%')">%</button>
+        </div>
+      </div>
+      <div class="color-pick-wrap">
+        <label>Box color</label>
+        <input type="color" id="boxColor" value="#C4956A" oninput="document.getElementById('brBox').style.background=this.value">
+      </div>
+    </div>
+
+    <!-- Simple Mode -->
+    <div id="simpleMode">
+      <div class="dev-label">All Corners</div>
+      <div class="slider-group">
+        <div class="slider-row">
+          <label>Radius</label>
+          <input type="range" id="sAll" min="0" max="100" value="12" oninput="syncSimple(this)">
+          <input type="number" id="nAll" min="0" max="9999" value="12" style="width:64px" oninput="syncSimple(this,true)">
+          <span id="unitLabelSimple">px</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Advanced Mode -->
+    <div id="advMode" style="display:none">
+      <div class="dev-label">Individual Corner Settings</div>
+      <div class="corner-grid">
+        <div>
+          <div class="corner-label">↖ Top-Left (TL)</div>
+          <div class="slider-group">
+            <div class="slider-row">
+              <input type="range" id="sTL" min="0" max="100" value="12" oninput="syncCorner('TL',this)">
+              <input type="number" id="nTL" min="0" max="9999" value="12" oninput="syncCorner('TL',this,true)">
+              <span class="unit-lbl">px</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="corner-label">↗ Top-Right (TR)</div>
+          <div class="slider-group">
+            <div class="slider-row">
+              <input type="range" id="sTR" min="0" max="100" value="12" oninput="syncCorner('TR',this)">
+              <input type="number" id="nTR" min="0" max="9999" value="12" oninput="syncCorner('TR',this,true)">
+              <span class="unit-lbl">px</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="corner-label">↙ Bottom-Left (BL)</div>
+          <div class="slider-group">
+            <div class="slider-row">
+              <input type="range" id="sBL" min="0" max="100" value="12" oninput="syncCorner('BL',this)">
+              <input type="number" id="nBL" min="0" max="9999" value="12" oninput="syncCorner('BL',this,true)">
+              <span class="unit-lbl">px</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="corner-label">↘ Bottom-Right (BR)</div>
+          <div class="slider-group">
+            <div class="slider-row">
+              <input type="range" id="sBR" min="0" max="100" value="12" oninput="syncCorner('BR',this)">
+              <input type="number" id="nBR" min="0" max="9999" value="12" oninput="syncCorner('BR',this,true)">
+              <span class="unit-lbl">px</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Code Output -->
+  <div class="dev-panel" style="margin-top:12px">
+    <div class="dev-label">Generated CSS Code</div>
+    <div class="code-out" id="codeOut"></div>
+    <button class="dev-btn" onclick="copyCode()">📋 Copy Code</button>
+    <span id="copyMsg" style="color:#22c55e;font-size:0.83rem;margin-left:10px;display:none">✅ Copied!</span>
+  </div>
+
+  <div class="tips-panel" style="margin-top:16px">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li><strong>Simple mode</strong>: Applies the same value to all 4 corners at once.</li>
+      <li><strong>Advanced mode</strong>: Set each corner (TL, TR, BL, BR) individually.</li>
+      <li><strong>%</strong> unit: Proportional to the element size. Set to 50% for a perfect circle.</li>
+      <li><strong>px</strong> unit: Fixed pixel value — consistent roundness regardless of element size.</li>
+      <li>When all 4 values are equal, the output is simplified to a single value like <code>border-radius: 12px</code>.</li>
+    </ul>
+  </div>
+
+  <details class="faq-item">
+    <summary>What happens when I set 4 different values?</summary>
+    <p>CSS applies corners clockwise: <code>border-radius: TL TR BR BL</code>. In advanced mode, each corner is set individually and the code is generated in this format.</p>
+  </details>
+  <details class="faq-item">
+    <summary>Does 50% make a perfect circle?</summary>
+    <p>On a square element, <code>border-radius: 50%</code> creates a perfect circle. On a rectangle, it creates an ellipse.</p>
+  </details>
+  <details class="faq-item">
+    <summary>What is the difference between border-radius and border-top-left-radius?</summary>
+    <p><code>border-radius</code> is a shorthand property that sets up to 4 corners at once. Individual properties like <code>border-top-left-radius</code> also work. This tool generates the shorthand format.</p>
+  </details>
+</div>
+
+<aside class="tool-sidebar">
+  <div class="ad-card">
+    <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px"
+      data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025"
+      data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <div class="ad-card">
+    <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+  </div>
+</aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-col"><h4>🛠️ WooaDev</h4><p>Essential developer utilities, free in your browser — no install needed.</p></div>
+      <div class="footer-links"><h4>Encoding · Hash</h4><a href="base64.html">Base64</a><a href="url-encoder.html">URL Encoder</a><a href="image-to-base64.html">Image→Base64</a><a href="hash-generator.html">Hash Generator</a><a href="jwt-decoder.html">JWT Decoder</a></div>
+      <div class="footer-links"><h4>Format · Convert</h4><a href="json-formatter.html">JSON Formatter</a><a href="xml-formatter.html">XML Formatter</a><a href="css-gradient.html">CSS Gradient</a><a href="box-shadow.html">Box Shadow</a><a href="border-radius.html">Border Radius</a></div>
+      <div class="footer-links"><h4>Generators</h4><a href="uuid-generator.html">UUID Generator</a><a href="lorem-ipsum.html">Lorem Ipsum</a><a href="cron-generator.html">Cron Generator</a><a href="number-base.html">Number Base</a><a href="timestamp.html">Timestamp</a></div>
+      <div class="footer-links"><h4>WooaHouse Services</h4><a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">WooaViewer</a><a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">WooaPDF</a><a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">WooaText</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 WooaDev by WooaHouse. All rights reserved.</p></div>
+  </div>
+</footer>
+<script src="../js/pwa-install.js"></script>
+<script>
+let mode = 'simple', unit = 'px';
+const corners = { TL:12, TR:12, BL:12, BR:12 };
+const MAX_PX = 300, MAX_PCT = 50;
+
+function getMax() { return unit === 'px' ? MAX_PX : MAX_PCT; }
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('simpleMode').style.display = m === 'simple' ? 'block' : 'none';
+  document.getElementById('advMode').style.display = m === 'advanced' ? 'block' : 'none';
+  document.getElementById('btnSimple').classList.toggle('active', m === 'simple');
+  document.getElementById('btnAdv').classList.toggle('active', m === 'advanced');
+  render();
+}
+
+function setUnit(u) {
+  unit = u;
+  document.getElementById('btnPx').classList.toggle('active', u === 'px');
+  document.getElementById('btnPct').classList.toggle('active', u === '%');
+  const max = getMax();
+  ['sTL','sTR','sBL','sBR','sAll'].forEach(id => { const el = document.getElementById(id); if (el) el.max = max; });
+  document.getElementById('unitLabelSimple').textContent = u;
+  document.querySelectorAll('.unit-lbl').forEach(el => el.textContent = u);
+  render();
+}
+
+function syncSimple(el, fromNum) {
+  const v = Math.max(0, Math.min(parseInt(el.value)||0, fromNum ? 9999 : getMax()));
+  document.getElementById('sAll').value = Math.min(v, getMax());
+  document.getElementById('nAll').value = v;
+  corners.TL = corners.TR = corners.BL = corners.BR = v;
+  render();
+}
+
+function syncCorner(c, el, fromNum) {
+  const v = Math.max(0, Math.min(parseInt(el.value)||0, fromNum ? 9999 : getMax()));
+  document.getElementById('s'+c).value = Math.min(v, getMax());
+  document.getElementById('n'+c).value = v;
+  corners[c] = v;
+  render();
+}
+
+function render() {
+  const u = unit;
+  const { TL, TR, BL, BR } = corners;
+  let val = (TL === TR && TL === BL && TL === BR) ? `${TL}${u}` : `${TL}${u} ${TR}${u} ${BR}${u} ${BL}${u}`;
+  document.getElementById('brBox').style.borderRadius = val;
+  document.getElementById('codeOut').textContent = `border-radius: ${val};`;
+}
+
+function copyCode() {
+  navigator.clipboard.writeText(document.getElementById('codeOut').textContent).then(() => {
+    const msg = document.getElementById('copyMsg');
+    msg.style.display = 'inline';
+    setTimeout(() => msg.style.display = 'none', 2000);
+  });
+}
+
+render();
+</script>
+</body>
+</html>

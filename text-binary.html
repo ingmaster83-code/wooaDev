@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <title>텍스트 ↔ 바이너리 변환기 - 2진수 변환 온라인 | WooaDev</title>
+  <meta name="description" content="텍스트를 바이너리(2진수) 코드로 변환하거나 바이너리를 텍스트로 디코딩하세요. 8비트 ASCII 변환, 공백 구분 옵션 지원. 무료 온라인 도구.">
+  <meta name="keywords" content="텍스트 바이너리 변환, binary converter, 2진수 변환, binary to text, text to binary, ASCII 바이너리">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/text-binary.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/text-binary.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/text-binary.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/text-binary.html">
+  <meta property="og:title" content="텍스트 ↔ 바이너리 변환기 | WooaDev">
+  <meta property="og:description" content="텍스트를 바이너리로, 바이너리를 텍스트로 즉시 변환. ASCII 8비트 지원.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/text-binary.html">
+  <meta property="og:locale" content="ko_KR">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="manifest" href="/manifest.json">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "텍스트 ↔ 바이너리 변환기",
+    "url": "https://wooadev.wooahouse.com/text-binary.html",
+    "description": "텍스트를 바이너리로, 바이너리를 텍스트로 변환",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" }
+  }
+  </script>
+  <style>
+    .convert-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    @media(max-width:600px){.convert-grid{grid-template-columns:1fr;}}
+    .side-label { font-weight:600; color:#a07850; font-size:14px; margin-bottom:6px; }
+    .io-area { width:100%; height:150px; border:1px solid #d0b896; border-radius:8px; padding:10px; font-family:monospace; font-size:13px; resize:vertical; box-sizing:border-box; }
+    .arrow-col { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; }
+    .arrow-btn { width:44px; height:44px; border-radius:50%; border:2px solid #C4956A; background:#fff; font-size:20px; cursor:pointer; transition:background 0.2s; }
+    .arrow-btn:hover { background:#C4956A; color:#fff; }
+    .opts-row { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:12px; align-items:center; }
+    .opt-label { font-size:13px; display:flex; align-items:center; gap:4px; }
+    .opt-label input { accent-color:#C4956A; }
+    .stat-bar { font-size:12px; color:#888; margin-top:4px; }
+    .copy-row { display:flex; gap:8px; align-items:center; margin-top:8px; }
+    .ref-table { width:100%; border-collapse:collapse; font-size:13px; margin-top:12px; }
+    .ref-table th { background:#f5ede0; padding:6px 8px; text-align:left; border:1px solid #e0cdb0; }
+    .ref-table td { padding:5px 8px; border:1px solid #e0cdb0; font-family:monospace; }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <a href="/index.html" class="logo">🛠️ WooaDev</a>
+    <nav class="nav">
+      <a href="/index.html">홈</a>
+      <a href="/base64.html">Base64</a>
+      <a href="/number-base.html">진수 변환</a>
+      <a href="/html-entity.html">HTML 엔티티</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="/text-binary.html" class="active">KO</a>
+        <a href="/en/text-binary.html">EN</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="our-sites-bar">
+  <span class="our-sites-label">WooaHouse Services</span>
+  <div class="our-sites-links">
+    <a href="https://wooahouse.com/" target="_blank" rel="noopener">🔗 WooaHouse</a>
+    <a href="https://pdfkit.wooahouse.com/" target="_blank" rel="noopener">📄 WooaPDF</a>
+    <a href="https://imagekit.wooahouse.com/" target="_blank" rel="noopener">🖼️ WooaImage</a>
+    <a href="https://colorkit.wooahouse.com/" target="_blank" rel="noopener">🎨 WooaColor</a>
+    <a href="https://textkit.wooahouse.com/" target="_blank" rel="noopener">✏️ WooaText</a>
+    <a href="https://qrkit.wooahouse.com/" target="_blank" rel="noopener">📱 WooaQR</a>
+    <a href="https://calckit.wooahouse.com/" target="_blank" rel="noopener">🧮 WooaCalc</a>
+    <a href="https://fontkit.wooahouse.com/" target="_blank" rel="noopener">🔤 WooaFont</a>
+    <a href="https://mactools.wooahouse.com/" target="_blank" rel="noopener">🍎 WooaMac</a>
+    <a href="https://pctools.wooahouse.com/" target="_blank" rel="noopener">🖥️ WooaPC</a>
+    <a href="https://vskit.wooahouse.com/" target="_blank" rel="noopener">💻 WooaVS</a>
+    <a href="https://wooaaudio.wooahouse.com/" target="_blank" rel="noopener">🎵 WooaAudio</a>
+    <a href="https://wooaviewer.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaViewer</a>
+    <a href="https://wooadev.wooahouse.com/" target="_blank" rel="noopener" class="active">🛠️ WooaDev</a>
+    <a href="https://wooaocr.wooahouse.com/" target="_blank" rel="noopener">🔍 WooaOCR</a>
+    <a href="https://wooasheet.wooahouse.com/" target="_blank" rel="noopener">📊 WooaSheet</a>
+    <a href="https://wooaseo.wooahouse.com/" target="_blank" rel="noopener">🔎 WooaSEO</a>
+  </div>
+</div>
+
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+
+<div class="page-with-sidebar">
+  <div class="tool-page">
+    <div class="breadcrumb"><a href="/index.html">홈</a> &rsaquo; 텍스트 ↔ 바이너리 변환기</div>
+    <div class="tool-header">
+      <div class="tool-icon-lg">01</div>
+      <div>
+        <h1>텍스트 ↔ 바이너리 변환기</h1>
+        <p>텍스트를 2진수 바이너리로 변환하거나 바이너리를 텍스트로 디코딩하세요</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="opts-row">
+        <label class="opt-label"><input type="checkbox" id="spaceSep" checked> 바이트 공백 구분</label>
+        <label class="opt-label"><input type="checkbox" id="newlineSep"> 문자별 줄바꿈</label>
+        <label class="opt-label">
+          인코딩:
+          <select id="encoding" style="border:1px solid #d0b896;border-radius:6px;padding:3px 6px;font-size:13px;">
+            <option value="ascii">ASCII</option>
+            <option value="utf16">UTF-16 (유니코드)</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="convert-grid">
+        <div>
+          <div class="side-label">📝 텍스트</div>
+          <textarea class="io-area" id="textIn" placeholder="변환할 텍스트를 입력하세요" oninput="textToBin()"></textarea>
+          <div class="stat-bar" id="textStat"></div>
+        </div>
+        <div>
+          <div class="side-label">💾 바이너리</div>
+          <textarea class="io-area" id="binIn" placeholder="01001000 01100101 ..." oninput="binToText()"></textarea>
+          <div class="stat-bar" id="binStat"></div>
+        </div>
+      </div>
+
+      <div class="copy-row">
+        <button class="dev-btn" onclick="copyText()">📋 텍스트 복사</button>
+        <button class="dev-btn" onclick="copyBin()">📋 바이너리 복사</button>
+        <button class="dev-btn" onclick="clearAll()">초기화</button>
+        <span id="copyMsg" style="color:#4caf50;font-size:13px;display:none">복사됨!</span>
+      </div>
+
+      <!-- ASCII reference -->
+      <details style="margin-top:20px;">
+        <summary style="cursor:pointer;font-weight:600;color:#a07850;font-size:14px;margin-bottom:8px;">ASCII 참조 테이블 (출력 가능 문자)</summary>
+        <div style="overflow-x:auto;">
+          <table class="ref-table" id="refTable"></table>
+        </div>
+      </details>
+    </div>
+
+    <div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li>텍스트 영역에 입력하면 자동으로 바이너리로 변환됩니다</li>
+        <li>바이너리 영역에 입력하면 자동으로 텍스트로 변환됩니다</li>
+        <li>UTF-16 모드에서는 한글, 한자 등 멀티바이트 문자도 변환 가능합니다</li>
+        <li>각 바이트는 8비트(00000000~11111111)로 표현됩니다</li>
+      </ul>
+    </div>
+
+    <section class="faq-section">
+      <h2>자주 묻는 질문</h2>
+      <div class="faq-item">
+        <div class="faq-q">바이너리 코드란 무엇인가요?</div>
+        <div class="faq-a">바이너리(이진) 코드는 0과 1만으로 데이터를 표현하는 방식입니다. 컴퓨터는 내부적으로 모든 데이터를 바이너리로 처리합니다. ASCII 문자는 각각 7~8비트의 바이너리로 표현됩니다.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">한글은 변환되나요?</div>
+        <div class="faq-a">UTF-16 모드를 선택하면 한글을 포함한 유니코드 문자를 모두 바이너리로 변환할 수 있습니다. ASCII 모드는 영문/숫자/특수문자만 지원합니다.</div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="tool-sidebar">
+    <div class="ad-card">
+      <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="1419180025" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+    </div>
+    <div class="ad-card">
+      <script src="https://ads-partners.coupang.com/g.js"></script>
+      <script>new PartnersCoupang.G({"id":986943,"template":"carousel","trackingCode":"AF5600192","width":"160","height":"200","tsource":""});</script>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">🛠️ WooaDev</div>
+      <p>개발자를 위한 무료 온라인 도구 모음</p>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">인코딩 · 변환</div>
+      <a href="/base64.html">Base64</a>
+      <a href="/url-encoder.html">URL 인코더</a>
+      <a href="/html-entity.html">HTML 엔티티</a>
+      <a href="/image-to-base64.html">이미지 → Base64</a>
+      <a href="/json-to-ts.html">JSON → TypeScript</a>
+      <a href="/text-binary.html">텍스트 ↔ 바이너리</a>
+      <a href="/number-base.html">진수 변환</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 WooaDev. All rights reserved. | <a href="https://wooahouse.com/" target="_blank" rel="noopener">WooaHouse</a></p>
+  </div>
+  <div class="coupang-notice">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</div>
+</footer>
+
+<script src="/js/pwa-install.js"></script>
+<script>
+  let converting = false;
+
+  function getSep() {
+    const space = document.getElementById('spaceSep').checked;
+    const nl = document.getElementById('newlineSep').checked;
+    return nl ? '\n' : (space ? ' ' : '');
+  }
+
+  function charToBin(ch) {
+    const enc = document.getElementById('encoding').value;
+    if (enc === 'utf16') {
+      const code = ch.charCodeAt(0);
+      return [(code >> 8).toString(2).padStart(8,'0'), (code & 0xFF).toString(2).padStart(8,'0')].join(' ');
+    }
+    return ch.charCodeAt(0).toString(2).padStart(8,'0');
+  }
+
+  function textToBin() {
+    if (converting) return;
+    converting = true;
+    const text = document.getElementById('textIn').value;
+    const sep = getSep();
+    const bins = text.split('').map(charToBin);
+    document.getElementById('binIn').value = bins.join(sep);
+    document.getElementById('textStat').textContent = `문자 수: ${text.length}`;
+    document.getElementById('binStat').textContent = `바이트 수: ${bins.length}`;
+    converting = false;
+  }
+
+  function binToText() {
+    if (converting) return;
+    converting = true;
+    const raw = document.getElementById('binIn').value.trim();
+    if (!raw) { document.getElementById('textIn').value = ''; converting=false; return; }
+    const enc = document.getElementById('encoding').value;
+    const bytes = raw.replace(/[^01\s]/g,'').trim().split(/\s+/).filter(b=>b.length>0);
+    let result = '';
+    try {
+      if (enc === 'utf16') {
+        for (let i = 0; i < bytes.length-1; i+=2) {
+          const code = (parseInt(bytes[i],2)<<8)|parseInt(bytes[i+1],2);
+          result += String.fromCharCode(code);
+        }
+      } else {
+        result = bytes.map(b=>String.fromCharCode(parseInt(b,2))).join('');
+      }
+    } catch(e) { result = '오류: 올바른 바이너리를 입력하세요'; }
+    document.getElementById('textIn').value = result;
+    document.getElementById('binStat').textContent = `바이트 수: ${bytes.length}`;
+    document.getElementById('textStat').textContent = `문자 수: ${result.length}`;
+    converting = false;
+  }
+
+  function copyText() {
+    const t = document.getElementById('textIn').value;
+    navigator.clipboard.writeText(t).then(showCopy);
+  }
+  function copyBin() {
+    const t = document.getElementById('binIn').value;
+    navigator.clipboard.writeText(t).then(showCopy);
+  }
+  function clearAll() {
+    document.getElementById('textIn').value='';
+    document.getElementById('binIn').value='';
+    document.getElementById('textStat').textContent='';
+    document.getElementById('binStat').textContent='';
+  }
+  function showCopy() {
+    const msg=document.getElementById('copyMsg');
+    msg.style.display='inline';
+    setTimeout(()=>msg.style.display='none',2000);
+  }
+
+  // Build ASCII reference table
+  const tbl = document.getElementById('refTable');
+  let hdr = '<tr><th>문자</th><th>10진수</th><th>바이너리</th><th>문자</th><th>10진수</th><th>바이너리</th></tr>';
+  tbl.innerHTML = hdr;
+  for (let i = 32; i < 127; i+=2) {
+    const tr = document.createElement('tr');
+    const c1 = String.fromCharCode(i);
+    const c2 = i+1<127?String.fromCharCode(i+1):'';
+    tr.innerHTML = `<td>${c1==' '?'(space)':c1}</td><td>${i}</td><td>${i.toString(2).padStart(8,'0')}</td>
+      <td>${c2==' '?'(space)':c2}</td><td>${i+1<127?i+1:''}</td><td>${i+1<127?(i+1).toString(2).padStart(8,'0'):''}</td>`;
+    tbl.appendChild(tr);
+  }
+
+  document.getElementById('spaceSep').addEventListener('change', textToBin);
+  document.getElementById('newlineSep').addEventListener('change', textToBin);
+  document.getElementById('encoding').addEventListener('change', textToBin);
+</script>
+</body>
+</html>
