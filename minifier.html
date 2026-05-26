@@ -135,7 +135,8 @@
   <div class="tab-content" id="tab-html">
     <div class="dev-panel">
       <div class="dev-label">HTML 입력</div>
-      <textarea class="dev-textarea" id="htmlInput" placeholder="<!DOCTYPE html><html>  <head>    <title>Hello</title>  </head>  <body>    <p>World</p>  </body></html>" style="min-height:180px"></textarea>
+      <textarea class="dev-textarea" id="htmlInput" placeholder="<!DOCTYPE html><html>  <head>    <title>Hello</title>  </head>  <body>    <p>World</p>    <div class="wooa-orig-anchor"></div>
+</body></html>" style="min-height:180px"></textarea>
       <div class="dev-btn-row">
         <button class="dev-btn" onclick="runHTML('minify')">압축 (Minify)</button>
         <button class="dev-btn" onclick="runHTML('beautify')">정렬 (Beautify)</button>
@@ -421,6 +422,7 @@ function copyResult(id) {
   });
 }
 </script>
+<script src="js/wooahouse-originals-tool.js"></script>
 <script src="js/pwa-install.js"></script>
 </body>
 </html>
