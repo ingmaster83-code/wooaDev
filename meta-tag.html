@@ -7,15 +7,15 @@
 <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
 <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meta Tag 생성기 무료 — OG·Twitter·SEO 메타태그 자동생성 | WooaDev</title>
-<meta name="description" content="OG 태그, Twitter Card, SEO 메타태그를 자동 생성. Google SERP·SNS 카드 미리보기 지원. 무료 온라인 HTML 메타태그 생성기.">
+<title>Meta Tag 생성기 무료 무설치 — OG·Twitter·SEO 메타태그 자동생성 | WooaDev</title>
+<meta name="description" content="OG 태그, Twitter Card, SEO 메타태그를 자동 생성. Google SERP·SNS 카드 미리보기 지원. 무료 온라인 HTML 메타태그 생성기 설치 없이 브라우저에서 무료로 사용 가능합니다.">
 <meta name="keywords" content="메타태그 생성기, OG 태그 생성, meta tag generator, og:title og:description, Twitter Card 생성, SEO 메타태그, HTML 메타태그">
 <link rel="canonical" href="https://wooadev.wooahouse.com/meta-tag.html">
 <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/meta-tag.html">
 <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/meta-tag.html">
 <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/meta-tag.html">
-<meta property="og:title" content="Meta Tag 생성기 무료 | WooaDev">
-<meta property="og:description" content="OG·Twitter·SEO 메타태그 자동 생성 및 Google·SNS 미리보기 확인.">
+<meta property="og:title" content="Meta Tag 생성기 무료 무설치 — OG·Twitter·SEO 메타태그 자동생성 | WooaDev">
+<meta property="og:description" content="OG 태그, Twitter Card, SEO 메타태그를 자동 생성. Google SERP·SNS 카드 미리보기 지원. 무료 온라인 HTML 메타태그 생성기 설치 없이 브라우저에서 무료로 사용 가능합니다.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://wooadev.wooahouse.com/meta-tag.html">
 <meta property="og:locale" content="ko_KR">
@@ -213,8 +213,8 @@ function render(){
   if(site)  lines.push(`<meta property="og:site_name" content="${esc(site)}">`);
   lines.push('');
   lines.push(`<meta name="twitter:card" content="${tw}">`);
-  if(title) lines.push(`<meta name="twitter:title" content="${esc(title)}">`);
-  if(desc)  lines.push(`<meta name="twitter:description" content="${esc(desc)}">`);
+  if(title) lines.push(`<meta name="twitter:title" content="Meta Tag 생성기 무료 무설치 — OG·Twitter·SEO 메타태그 자동생성 | WooaDev">`);
+  if(desc)  lines.push(`<meta name="twitter:description" content="OG 태그, Twitter Card, SEO 메타태그를 자동 생성. Google SERP·SNS 카드 미리보기 지원. 무료 온라인 HTML 메타태그 생성기 설치 없이 브라우저에서 무료로 사용 가능합니다.">`);
   if(img)   lines.push(`<meta name="twitter:image" content="${esc(img)}">`);
 
   g('codeOut').textContent=lines.join('\n');
