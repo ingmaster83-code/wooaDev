@@ -116,6 +116,18 @@
     <div class="dev-label">매칭 목록</div>
     <div id="matchList"></div>
   </div>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="case-converter.html" class="related-card"><span class="related-icon">🔠</span><span>케이스 변환기</span></a>
+    <a href="base64.html" class="related-card"><span class="related-icon">🔐</span><span>Base64</span></a>
+    <a href="url-encoder.html" class="related-card"><span class="related-icon">🔗</span><span>URL 인코더</span></a>
+    <a href="image-to-base64.html" class="related-card"><span class="related-icon">🖼️</span><span>이미지 → Base64</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>정규표현식을 실시간으로 테스트하고 매칭 결과를 확인합니다.</li><li>g, i, m 플래그를 조합해 정밀한 검색을 수행하세요.</li><li>그룹 캡처는 괄호 ()로 지정하며 결과에서 확인할 수 있습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>정규표현식 플래그 g, i, m의 의미는 무엇인가요?</summary><p>g는 전체 일치, i는 대소문자 구분 없음, m은 여러 줄 모드입니다.</p></details><details><summary>그룹 캡처는 어떻게 사용하나요?</summary><p>괄호 ()로 그룹을 지정하면 $1, $2 등으로 일치한 그룹 값을 참조할 수 있습니다.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details></div>
 </div>
 <aside class="tool-sidebar"></aside>
 </div>
@@ -159,20 +171,7 @@ function highlight(str, matches) {
   return result;
 }
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-</script>
-  <div class="related-tools">
-  <h2>함께 쓰면 좋은 도구</h2>
-  <div class="related-grid">
-    <a href="case-converter.html" class="related-card"><span class="related-icon">🔠</span><span>케이스 변환기</span></a>
-    <a href="base64.html" class="related-card"><span class="related-icon">🔐</span><span>Base64</span></a>
-    <a href="url-encoder.html" class="related-card"><span class="related-icon">🔗</span><span>URL 인코더</span></a>
-    <a href="image-to-base64.html" class="related-card"><span class="related-icon">🖼️</span><span>이미지 → Base64</span></a>
-  </div>
-</div>
-<div class="wooa-orig-anchor"></div>
-<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>정규표현식 플래그 g, i, m의 의미는 무엇인가요?</summary><p>g는 전체 일치, i는 대소문자 구분 없음, m은 여러 줄 모드입니다.</p></details><details><summary>그룹 캡처는 어떻게 사용하나요?</summary><p>괄호 ()로 그룹을 지정하면 $1, $2 등으로 일치한 그룹 값을 참조할 수 있습니다.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details></div>
-<div class="tips-panel"><h3>💡 Tips</h3><ul><li>정규표현식을 실시간으로 테스트하고 매칭 결과를 확인합니다.</li><li>g, i, m 플래그를 조합해 정밀한 검색을 수행하세요.</li><li>그룹 캡처는 괄호 ()로 지정하며 결과에서 확인할 수 있습니다.</li></ul></div>
-<script src="js/wooahouse-originals-tool.js"></script>
+</script><script src="js/wooahouse-originals-tool.js"></script>
 <script src="js/pwa-install.js"></script>
 <script src="js/wooa-sidebar.js"></script>
 <script src="js/wooa-footer.js"></script>

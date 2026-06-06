@@ -143,34 +143,7 @@
     </div>
   </div>
 
-  <div class="tips-panel" style="margin-top:16px">
-    <h3>💡 Tips</h3>
-    <ul>
-      <li><strong>큰 텍스트</strong>: 18pt(24px) 이상 또는 14pt(약 18.67px) Bold 이상을 의미합니다.</li>
-      <li><strong>AA 기준</strong>: 대부분의 법적 접근성 요구사항에서 최소 기준으로 요구됩니다.</li>
-      <li><strong>AAA 기준</strong>: 가장 높은 접근성 수준. 모든 콘텐츠에 달성하기 어려울 수 있습니다.</li>
-      <li>대비가 낮으면 저시력·색맹 사용자가 텍스트를 읽기 어렵습니다.</li>
-    </ul>
-  </div>
 
-  <details class="faq-item">
-    <summary>WCAG란 무엇인가요?</summary>
-    <p>Web Content Accessibility Guidelines의 약자로, W3C에서 제정한 웹 콘텐츠 접근성 지침입니다. AA와 AAA 두 가지 준수 수준이 있으며, 대부분의 국가·기관에서 AA 이상을 요구합니다.</p>
-  </details>
-  <details class="faq-item">
-    <summary>대비 비율은 어떻게 계산되나요?</summary>
-    <p>상대 휘도(Relative Luminance)를 기반으로 계산됩니다. 공식은 <code>(L1 + 0.05) / (L2 + 0.05)</code>이며 L1은 밝은 색상, L2는 어두운 색상의 휘도입니다. 최대값은 21:1(흰색 vs 검정), 최소값은 1:1(동일한 색상)입니다.</p>
-  </details>
-  <details class="faq-item">
-    <summary>UI 컴포넌트 기준은 무엇인가요?</summary>
-    <p>버튼 테두리, 입력 필드 아웃라인, 아이콘 등 비텍스트 UI 요소의 색상도 배경과 3:1 이상의 대비를 가져야 합니다 (WCAG 2.1 AA 기준 1.4.11).</p>
-  </details>
-</div>
-
-<aside class="tool-sidebar"></aside>
-</div>
-
-<footer class="footer"></footer>
   <div class="related-tools">
   <h2>함께 쓰면 좋은 도구</h2>
   <div class="related-grid">
@@ -181,8 +154,22 @@
   </div>
 </div>
 <div class="wooa-orig-anchor"></div>
+<div class="tips-panel">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li><strong>큰 텍스트</strong>: 18pt(24px) 이상 또는 14pt(약 18.67px) Bold 이상을 의미합니다.</li>
+      <li><strong>AA 기준</strong>: 대부분의 법적 접근성 요구사항에서 최소 기준으로 요구됩니다.</li>
+      <li><strong>AAA 기준</strong>: 가장 높은 접근성 수준. 모든 콘텐츠에 달성하기 어려울 수 있습니다.</li>
+      <li>대비가 낮으면 저시력·색맹 사용자가 텍스트를 읽기 어렵습니다.</li>
+    </ul>
+  </div>
 <div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>WCAG AA와 AAA 기준은 어떻게 다른가요?</summary><p>AA는 일반 텍스트 4.5:1 이상, AAA는 7:1 이상의 대비율을 요구합니다.</p></details><details><summary>대비율이 낮으면 어떻게 개선하나요?</summary><p>배경색을 밝게 하거나 텍스트 색상을 어둡게 조정하면 대비율이 높아집니다.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details></div>
-<script src="js/wooahouse-originals-tool.js"></script>
+</div>
+
+<aside class="tool-sidebar"></aside>
+</div>
+
+<footer class="footer"></footer><script src="js/wooahouse-originals-tool.js"></script>
 <script src="js/pwa-install.js"></script>
 <script>
 function hexToRgb(hex) {

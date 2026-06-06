@@ -152,35 +152,7 @@
     <button class="dev-btn" onclick="copyCode()">📋 코드 복사</button>
   </div>
 
-  <div class="tips-panel" style="margin-top:16px">
-    <h3>💡 Tips</h3>
-    <ul>
-      <li><strong>Linear</strong>: 한 방향으로 색이 변하는 기본 그라디언트. 배경·버튼·헤더에 많이 사용.</li>
-      <li><strong>Radial</strong>: 중심에서 원형으로 퍼지는 그라디언트. 빛·하이라이트 효과에 적합.</li>
-      <li><strong>Conic</strong>: 중심을 기준으로 각도 방향으로 색이 변함. 파이 차트·색상환 표현에 사용.</li>
-      <li>색상 정지점 위치(%)를 조절해 색상 전환 구간을 세밀하게 제어할 수 있습니다.</li>
-      <li><code>background</code> 속성 대신 <code>background-image</code>를 사용해도 동일하게 동작합니다.</li>
-    </ul>
-  </div>
 
-  <details class="faq-item">
-    <summary>그라디언트를 여러 개 겹칠 수 있나요?</summary>
-    <p>네. CSS에서 <code>background</code>에 쉼표로 구분해 여러 그라디언트를 나열하면 레이어처럼 겹칩니다. 예: <code>background: linear-gradient(...), radial-gradient(...);</code></p>
-  </details>
-  <details class="faq-item">
-    <summary>IE(인터넷 익스플로러)에서 지원되나요?</summary>
-    <p>Linear, Radial 그라디언트는 IE 10+에서 지원됩니다. Conic 그라디언트는 IE에서 지원되지 않으며 Chrome 69+, Firefox 83+, Safari 12.1+ 이상의 현대 브라우저가 필요합니다.</p>
-  </details>
-  <details class="faq-item">
-    <summary>반복 그라디언트(repeating-gradient)는 어떻게 만드나요?</summary>
-    <p>생성된 코드의 <code>linear-gradient</code>를 <code>repeating-linear-gradient</code>로 바꾸면 마지막 색상 정지점 이후 패턴이 반복됩니다. 줄무늬 배경을 만들 때 유용합니다.</p>
-  </details>
-</div>
-
-<aside class="tool-sidebar"></aside>
-</div>
-
-<footer class="footer"></footer>
   <div class="related-tools">
   <h2>함께 쓰면 좋은 도구</h2>
   <div class="related-grid">
@@ -191,8 +163,23 @@
   </div>
 </div>
 <div class="wooa-orig-anchor"></div>
+<div class="tips-panel">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li><strong>Linear</strong>: 한 방향으로 색이 변하는 기본 그라디언트. 배경·버튼·헤더에 많이 사용.</li>
+      <li><strong>Radial</strong>: 중심에서 원형으로 퍼지는 그라디언트. 빛·하이라이트 효과에 적합.</li>
+      <li><strong>Conic</strong>: 중심을 기준으로 각도 방향으로 색이 변함. 파이 차트·색상환 표현에 사용.</li>
+      <li>색상 정지점 위치(%)를 조절해 색상 전환 구간을 세밀하게 제어할 수 있습니다.</li>
+      <li><code>background</code> 속성 대신 <code>background-image</code>를 사용해도 동일하게 동작합니다.</li>
+    </ul>
+  </div>
 <div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>CSS gradient 코드를 바로 복사할 수 있나요?</summary><p>네. 생성된 CSS 코드를 클릭하면 클립보드에 복사됩니다.</p></details><details><summary>방사형(radial) 그라디언트도 생성할 수 있나요?</summary><p>네. 선형(linear)과 방사형(radial) 그라디언트 모두 지원합니다.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details></div>
-<script src="js/wooahouse-originals-tool.js"></script>
+</div>
+
+<aside class="tool-sidebar"></aside>
+</div>
+
+<footer class="footer"></footer><script src="js/wooahouse-originals-tool.js"></script>
 <script src="js/pwa-install.js"></script>
 <script>
 let gradType = 'linear';

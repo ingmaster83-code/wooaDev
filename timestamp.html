@@ -112,6 +112,18 @@
       <div class="ts-result-row"><span class="ts-result-label">밀리초 (ms)</span><span class="ts-result-val" id="d-ms"></span><button class="ts-copy" onclick="cp('d-ms')">복사</button></div>
     </div>
   </div>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+    <a href="minifier.html" class="related-card"><span class="related-icon">🗜️</span><span>CSS·JS·HTML 압축</span></a>
+    <a href="sql-formatter.html" class="related-card"><span class="related-icon">🗄️</span><span>SQL 포맷터</span></a>
+    <a href="css-units.html" class="related-card"><span class="related-icon">📐</span><span>CSS 단위 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Unix 타임스탬프(초·밀리초)를 날짜·시간으로 변환합니다.</li><li>현재 시각의 타임스탬프를 즉시 확인할 수 있습니다.</li><li>API 응답에서 타임스탬프를 읽을 때 유용합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>Unix 타임스탬프란 무엇인가요?</summary><p>1970년 1월 1일 00:00:00 UTC를 기준으로 경과한 초(또는 밀리초) 수입니다.</p></details><details><summary>밀리초 타임스탬프와 초 타임스탬프는 어떻게 구분하나요?</summary><p>자릿수로 구분합니다. 10자리는 초 단위, 13자리는 밀리초 단위입니다.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details></div>
 </div>
 <aside class="tool-sidebar"></aside>
 </div>
@@ -162,20 +174,7 @@ function tick(){
   document.getElementById('nowMs').textContent='밀리초: '+n.getTime();
 }
 tick(); setInterval(tick,1000);
-</script>
-  <div class="related-tools">
-  <h2>함께 쓰면 좋은 도구</h2>
-  <div class="related-grid">
-    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
-    <a href="minifier.html" class="related-card"><span class="related-icon">🗜️</span><span>CSS·JS·HTML 압축</span></a>
-    <a href="sql-formatter.html" class="related-card"><span class="related-icon">🗄️</span><span>SQL 포맷터</span></a>
-    <a href="css-units.html" class="related-card"><span class="related-icon">📐</span><span>CSS 단위 변환기</span></a>
-  </div>
-</div>
-<div class="wooa-orig-anchor"></div>
-<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>Unix 타임스탬프란 무엇인가요?</summary><p>1970년 1월 1일 00:00:00 UTC를 기준으로 경과한 초(또는 밀리초) 수입니다.</p></details><details><summary>밀리초 타임스탬프와 초 타임스탬프는 어떻게 구분하나요?</summary><p>자릿수로 구분합니다. 10자리는 초 단위, 13자리는 밀리초 단위입니다.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details></div>
-<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Unix 타임스탬프(초·밀리초)를 날짜·시간으로 변환합니다.</li><li>현재 시각의 타임스탬프를 즉시 확인할 수 있습니다.</li><li>API 응답에서 타임스탬프를 읽을 때 유용합니다.</li></ul></div>
-<script src="js/wooahouse-originals-tool.js"></script>
+</script><script src="js/wooahouse-originals-tool.js"></script>
 <script src="js/pwa-install.js"></script>
 <script src="js/wooa-sidebar.js"></script>
 <script src="js/wooa-footer.js"></script>

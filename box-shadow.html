@@ -128,36 +128,7 @@
     <button class="dev-btn" onclick="copyCode()">📋 코드 복사</button>
   </div>
 
-  <div class="tips-panel" style="margin-top:16px">
-    <h3>💡 Tips</h3>
-    <ul>
-      <li><strong>X Offset</strong>: 양수 → 오른쪽, 음수 → 왼쪽으로 그림자 이동.</li>
-      <li><strong>Y Offset</strong>: 양수 → 아래쪽, 음수 → 위쪽으로 그림자 이동.</li>
-      <li><strong>Blur</strong>: 값이 클수록 그림자가 부드럽게 퍼짐. 0이면 선명한 그림자.</li>
-      <li><strong>Spread</strong>: 양수 → 그림자 확장, 음수 → 그림자 축소.</li>
-      <li><strong>Inset</strong>: 외부 그림자 대신 요소 내부에 그림자를 적용. 눌린 효과(pressed effect)에 사용.</li>
-      <li>그림자 레이어를 여러 개 추가하면 더 입체적인 효과를 낼 수 있습니다.</li>
-    </ul>
-  </div>
 
-  <details class="faq-item">
-    <summary>text-shadow와 box-shadow의 차이는?</summary>
-    <p><code>box-shadow</code>는 요소 박스 전체에 그림자를 적용하고, <code>text-shadow</code>는 텍스트 문자에만 그림자를 적용합니다. <code>box-shadow</code>는 <code>inset</code>과 <code>spread</code>를 지원하지만 <code>text-shadow</code>는 지원하지 않습니다.</p>
-  </details>
-  <details class="faq-item">
-    <summary>성능에 영향을 주나요?</summary>
-    <p>그림자는 GPU 가속 레이어(transform, opacity)에서는 최적화되지만, 과도한 blur나 다중 레이어는 렌더링 비용이 증가합니다. 특히 스크롤 애니메이션 중에는 blur 값을 낮게 유지하는 것이 좋습니다. <code>will-change: box-shadow</code>를 사용하면 일부 성능 향상이 가능합니다.</p>
-  </details>
-  <details class="faq-item">
-    <summary>그림자를 한 쪽만 적용할 수 있나요?</summary>
-    <p>네. Spread를 음수로 설정하고 한쪽 Offset만 크게 주면 특정 방향에만 그림자가 보이는 효과를 낼 수 있습니다. 예: <code>box-shadow: 0 4px 6px -4px rgba(0,0,0,0.4)</code>는 아래쪽에만 그림자를 표시합니다.</p>
-  </details>
-</div>
-
-<aside class="tool-sidebar"></aside>
-</div>
-
-<footer class="footer"></footer>
   <div class="related-tools">
   <h2>함께 쓰면 좋은 도구</h2>
   <div class="related-grid">
@@ -168,8 +139,24 @@
   </div>
 </div>
 <div class="wooa-orig-anchor"></div>
+<div class="tips-panel">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li><strong>X Offset</strong>: 양수 → 오른쪽, 음수 → 왼쪽으로 그림자 이동.</li>
+      <li><strong>Y Offset</strong>: 양수 → 아래쪽, 음수 → 위쪽으로 그림자 이동.</li>
+      <li><strong>Blur</strong>: 값이 클수록 그림자가 부드럽게 퍼짐. 0이면 선명한 그림자.</li>
+      <li><strong>Spread</strong>: 양수 → 그림자 확장, 음수 → 그림자 축소.</li>
+      <li><strong>Inset</strong>: 외부 그림자 대신 요소 내부에 그림자를 적용. 눌린 효과(pressed effect)에 사용.</li>
+      <li>그림자 레이어를 여러 개 추가하면 더 입체적인 효과를 낼 수 있습니다.</li>
+    </ul>
+  </div>
 <div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>inset 그림자란 무엇인가요?</summary><p>inset 옵션을 켜면 박스 외부가 아닌 내부에 그림자가 생성됩니다.</p></details><details><summary>여러 그림자를 동시에 적용할 수 있나요?</summary><p>CSS에서 쉼표로 여러 box-shadow 값을 나열하면 겹쳐서 적용됩니다.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details></div>
-<script src="js/wooahouse-originals-tool.js"></script>
+</div>
+
+<aside class="tool-sidebar"></aside>
+</div>
+
+<footer class="footer"></footer><script src="js/wooahouse-originals-tool.js"></script>
 <script src="js/pwa-install.js"></script>
 <script>
 let layers = [

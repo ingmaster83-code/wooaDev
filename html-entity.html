@@ -135,29 +135,7 @@
     </table>
   </div>
 
-  <div class="tips-panel" style="margin-top:16px">
-    <h3>💡 Tips</h3>
-    <ul>
-      <li>HTML에서 <code>&lt;</code> <code>&gt;</code> <code>&amp;</code>는 태그·속성으로 해석되므로 반드시 엔티티로 인코딩해야 합니다.</li>
-      <li>사용자 입력을 HTML에 출력할 때 XSS 방지를 위해 반드시 인코딩하세요.</li>
-      <li>표의 코드를 클릭하면 전체 선택됩니다.</li>
-    </ul>
-  </div>
 
-  <details class="faq-item">
-    <summary>Named Entity와 Numeric Entity의 차이는?</summary>
-    <p>Named Entity는 <code>&amp;amp;</code>처럼 이름이 있는 형식으로 가독성이 좋습니다. Numeric Entity는 <code>&amp;#38;</code>처럼 유니코드 코드포인트를 사용하며 모든 문자를 표현할 수 있습니다.</p>
-  </details>
-  <details class="faq-item">
-    <summary>인코딩 없이 HTML에 특수문자를 넣으면?</summary>
-    <p>브라우저가 HTML 태그나 속성으로 해석해 레이아웃이 깨지거나 XSS 보안 취약점이 발생할 수 있습니다.</p>
-  </details>
-</div>
-
-<aside class="tool-sidebar"></aside>
-</div>
-
-<footer class="footer"></footer>
   <div class="related-tools">
   <h2>함께 쓰면 좋은 도구</h2>
   <div class="related-grid">
@@ -168,8 +146,21 @@
   </div>
 </div>
 <div class="wooa-orig-anchor"></div>
+<div class="tips-panel">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li>HTML에서 <code>&lt;</code> <code>&gt;</code> <code>&amp;</code>는 태그·속성으로 해석되므로 반드시 엔티티로 인코딩해야 합니다.</li>
+      <li>사용자 입력을 HTML에 출력할 때 XSS 방지를 위해 반드시 인코딩하세요.</li>
+      <li>표의 코드를 클릭하면 전체 선택됩니다.</li>
+    </ul>
+  </div>
 <div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>HTML 엔티티를 사용하는 이유는 무엇인가요?</summary><p>HTML에서 특수 의미를 가진 문자(< > & 등)를 안전하게 표시하기 위해 사용합니다.</p></details><details><summary>&amp;와 &#38;는 같은 의미인가요?</summary><p>네. 둘 다 & 문자를 나타내는 HTML 엔티티입니다.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details></div>
-<script src="js/wooahouse-originals-tool.js"></script>
+</div>
+
+<aside class="tool-sidebar"></aside>
+</div>
+
+<footer class="footer"></footer><script src="js/wooahouse-originals-tool.js"></script>
 <script src="js/pwa-install.js"></script>
 <script>
 function encode() {

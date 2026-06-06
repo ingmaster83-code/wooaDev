@@ -112,6 +112,18 @@
     <div class="bit-display" id="bitDisplay"></div>
     <div style="font-size:0.78rem;color:#9CA3AF;margin-top:8px" id="bitInfo"></div>
   </div>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="timestamp.html" class="related-card"><span class="related-icon">🕐</span><span>타임스탬프 변환</span></a>
+    <a href="minifier.html" class="related-card"><span class="related-icon">🗜️</span><span>CSS·JS·HTML 압축</span></a>
+    <a href="sql-formatter.html" class="related-card"><span class="related-icon">🗄️</span><span>SQL 포맷터</span></a>
+    <a href="css-units.html" class="related-card"><span class="related-icon">📐</span><span>CSS 단위 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>2진수, 8진수, 10진수, 16진수 간 변환을 지원합니다.</li><li>색상 코드(HEX)나 파일 권한(8진수) 변환에 활용합니다.</li><li>16진수에서 A~F는 10~15에 해당합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>2진수, 8진수, 16진수는 각각 어디서 사용하나요?</summary><p>2진수는 컴퓨터 연산, 8진수는 파일 권한(chmod), 16진수는 색상 코드·메모리 주소에 사용됩니다.</p></details><details><summary>16진수 A~F는 어떤 숫자에 해당하나요?</summary><p>A=10, B=11, C=12, D=13, E=14, F=15에 해당합니다.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details></div>
 </div>
 <aside class="tool-sidebar"></aside>
 </div>
@@ -172,20 +184,7 @@ function cp(id) {
   btn.textContent = '복사됨!';
   setTimeout(()=>{ btn.textContent = orig; }, 1200);
 }
-</script>
-  <div class="related-tools">
-  <h2>함께 쓰면 좋은 도구</h2>
-  <div class="related-grid">
-    <a href="timestamp.html" class="related-card"><span class="related-icon">🕐</span><span>타임스탬프 변환</span></a>
-    <a href="minifier.html" class="related-card"><span class="related-icon">🗜️</span><span>CSS·JS·HTML 압축</span></a>
-    <a href="sql-formatter.html" class="related-card"><span class="related-icon">🗄️</span><span>SQL 포맷터</span></a>
-    <a href="css-units.html" class="related-card"><span class="related-icon">📐</span><span>CSS 단위 변환기</span></a>
-  </div>
-</div>
-<div class="wooa-orig-anchor"></div>
-<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>2진수, 8진수, 16진수는 각각 어디서 사용하나요?</summary><p>2진수는 컴퓨터 연산, 8진수는 파일 권한(chmod), 16진수는 색상 코드·메모리 주소에 사용됩니다.</p></details><details><summary>16진수 A~F는 어떤 숫자에 해당하나요?</summary><p>A=10, B=11, C=12, D=13, E=14, F=15에 해당합니다.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details></div>
-<div class="tips-panel"><h3>💡 Tips</h3><ul><li>2진수, 8진수, 10진수, 16진수 간 변환을 지원합니다.</li><li>색상 코드(HEX)나 파일 권한(8진수) 변환에 활용합니다.</li><li>16진수에서 A~F는 10~15에 해당합니다.</li></ul></div>
-<script src="js/wooahouse-originals-tool.js"></script>
+</script><script src="js/wooahouse-originals-tool.js"></script>
 <script src="js/pwa-install.js"></script>
 <script src="js/wooa-sidebar.js"></script>
 <script src="js/wooa-footer.js"></script>

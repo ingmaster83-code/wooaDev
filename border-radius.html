@@ -204,35 +204,7 @@
     <span id="copyMsg" style="color:#22c55e;font-size:0.83rem;margin-left:10px;display:none">✅ 복사 완료!</span>
   </div>
 
-  <div class="tips-panel" style="margin-top:16px">
-    <h3>💡 Tips</h3>
-    <ul>
-      <li><strong>단순 모드</strong>: 4개 모서리에 동일한 값을 한 번에 적용합니다.</li>
-      <li><strong>상세 모드</strong>: 각 모서리(TL, TR, BL, BR)를 개별 설정할 수 있습니다.</li>
-      <li><strong>%</strong> 단위: 요소 크기에 비례한 비율로 적용. 50%로 설정하면 완전한 원/타원이 됩니다.</li>
-      <li><strong>px</strong> 단위: 고정 픽셀 값. 해상도와 무관하게 일정한 둥글기를 유지합니다.</li>
-      <li>4개 값이 모두 같으면 <code>border-radius: 12px</code>처럼 단일 값으로 출력됩니다.</li>
-    </ul>
-  </div>
 
-  <details class="faq-item">
-    <summary>4개 값을 각각 다르게 설정하면 어떻게 되나요?</summary>
-    <p>CSS는 <code>border-radius: TL TR BR BL</code> 순서로 시계 방향으로 각 모서리를 지정합니다. 상세 모드에서 개별 설정 시 이 형식으로 코드가 생성됩니다.</p>
-  </details>
-  <details class="faq-item">
-    <summary>50%로 설정하면 원이 되나요?</summary>
-    <p>정사각형 요소에 <code>border-radius: 50%</code>를 적용하면 완전한 원이 됩니다. 직사각형에 적용하면 타원이 됩니다.</p>
-  </details>
-  <details class="faq-item">
-    <summary>border-radius와 border-top-left-radius 차이는?</summary>
-    <p><code>border-radius</code>는 단축 속성(shorthand)으로 최대 4개 값을 한 번에 설정합니다. <code>border-top-left-radius</code> 등 개별 속성으로도 설정 가능하며, 이 도구는 단축 속성 형식의 코드를 생성합니다.</p>
-  </details>
-</div>
-
-<aside class="tool-sidebar"></aside>
-</div>
-
-<footer class="footer"></footer>
   <div class="related-tools">
   <h2>함께 쓰면 좋은 도구</h2>
   <div class="related-grid">
@@ -243,8 +215,23 @@
   </div>
 </div>
 <div class="wooa-orig-anchor"></div>
+<div class="tips-panel">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li><strong>단순 모드</strong>: 4개 모서리에 동일한 값을 한 번에 적용합니다.</li>
+      <li><strong>상세 모드</strong>: 각 모서리(TL, TR, BL, BR)를 개별 설정할 수 있습니다.</li>
+      <li><strong>%</strong> 단위: 요소 크기에 비례한 비율로 적용. 50%로 설정하면 완전한 원/타원이 됩니다.</li>
+      <li><strong>px</strong> 단위: 고정 픽셀 값. 해상도와 무관하게 일정한 둥글기를 유지합니다.</li>
+      <li>4개 값이 모두 같으면 <code>border-radius: 12px</code>처럼 단일 값으로 출력됩니다.</li>
+    </ul>
+  </div>
 <div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>px와 % 단위 중 어느 것을 써야 하나요?</summary><p>px는 고정 값, %는 요소 크기에 비례해 적용됩니다. 반응형 디자인에는 % 또는 rem을 권장합니다.</p></details><details><summary>border-radius를 원형으로 만들려면?</summary><p>width와 height가 같은 요소에 border-radius: 50%를 적용하면 완전한 원이 됩니다.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details></div>
-<script src="js/wooahouse-originals-tool.js"></script>
+</div>
+
+<aside class="tool-sidebar"></aside>
+</div>
+
+<footer class="footer"></footer><script src="js/wooahouse-originals-tool.js"></script>
 <script src="js/pwa-install.js"></script>
 <script>
 let mode = 'simple';

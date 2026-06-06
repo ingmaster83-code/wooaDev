@@ -132,6 +132,18 @@
     </div>
     <div id="parseResult" class="alert alert-info" style="display:none;margin-top:10px"></div>
   </div>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="uuid-generator.html" class="related-card"><span class="related-icon">🆔</span><span>UUID 생성기</span></a>
+    <a href="lorem-ipsum.html" class="related-card"><span class="related-icon">📝</span><span>Lorem Ipsum</span></a>
+    <a href="flexbox-generator.html" class="related-card"><span class="related-icon">📐</span><span>Flexbox 생성기</span></a>
+    <a href="grid-generator.html" class="related-card"><span class="related-icon">⬛</span><span>CSS Grid 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>크론 표현식을 GUI로 쉽게 생성하고 의미를 확인합니다.</li><li>* * * * *는 분·시·일·월·요일 순서입니다.</li><li>복잡한 스케줄도 표현식 미리보기로 다음 실행 시간을 확인하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>크론 표현식에서 *의 의미는 무엇인가요?</summary><p>* 은 "모든 값"을 의미합니다. 예: * * * * *는 매 분마다 실행입니다.</p></details><details><summary>매일 오전 9시에 실행하는 크론 표현식은?</summary><p>0 9 * * *로 설정합니다. 분·시·일·월·요일 순서입니다.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details></div>
 </div>
 <aside class="tool-sidebar"></aside>
 </div>
@@ -197,20 +209,7 @@ function copyCron() {
     setTimeout(() => el.textContent = orig, 1200);
   });
 }
-</script>
-  <div class="related-tools">
-  <h2>함께 쓰면 좋은 도구</h2>
-  <div class="related-grid">
-    <a href="uuid-generator.html" class="related-card"><span class="related-icon">🆔</span><span>UUID 생성기</span></a>
-    <a href="lorem-ipsum.html" class="related-card"><span class="related-icon">📝</span><span>Lorem Ipsum</span></a>
-    <a href="flexbox-generator.html" class="related-card"><span class="related-icon">📐</span><span>Flexbox 생성기</span></a>
-    <a href="grid-generator.html" class="related-card"><span class="related-icon">⬛</span><span>CSS Grid 생성기</span></a>
-  </div>
-</div>
-<div class="wooa-orig-anchor"></div>
-<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>크론 표현식에서 *의 의미는 무엇인가요?</summary><p>* 은 "모든 값"을 의미합니다. 예: * * * * *는 매 분마다 실행입니다.</p></details><details><summary>매일 오전 9시에 실행하는 크론 표현식은?</summary><p>0 9 * * *로 설정합니다. 분·시·일·월·요일 순서입니다.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details></div>
-<div class="tips-panel"><h3>💡 Tips</h3><ul><li>크론 표현식을 GUI로 쉽게 생성하고 의미를 확인합니다.</li><li>* * * * *는 분·시·일·월·요일 순서입니다.</li><li>복잡한 스케줄도 표현식 미리보기로 다음 실행 시간을 확인하세요.</li></ul></div>
-<script src="js/wooahouse-originals-tool.js"></script>
+</script><script src="js/wooahouse-originals-tool.js"></script>
 <script src="js/pwa-install.js"></script>
 <script src="js/wooa-sidebar.js"></script>
 <script src="js/wooa-footer.js"></script>
