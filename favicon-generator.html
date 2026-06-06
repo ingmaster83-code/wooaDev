@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>파비콘 생성기 - 이미지·텍스트로 favicon.ico PNG 무료 무설치 | WooaDev</title>
+  <meta name="description" content="이미지를 업로드하거나 텍스트·이모지를 입력해 파비콘을 즉시 생성하세요. favicon.ico(16·32·48px), Apple Touch Icon(180px), PWA 아이콘(192·512px) 전체를 ZIP으로 한 번에 다운로드. 브라우저에서 무료, 서버 전송 없음.">
+  <meta name="keywords" content="파비콘 생성기, favicon 만들기, favicon.ico 생성, 파비콘 만드는법, favicon generator, ico 변환, 파비콘 크기, apple touch icon, PWA 아이콘, 무료 파비콘">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/favicon-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/favicon-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/favicon-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/favicon-generator.html">
+  <meta property="og:title" content="파비콘 생성기 - 이미지·텍스트로 favicon.ico PNG 무료 무설치 | WooaDev">
+  <meta property="og:description" content="이미지를 업로드하거나 텍스트·이모지를 입력해 파비콘을 즉시 생성하세요. favicon.ico(16·32·48px), Apple Touch Icon(180px), PWA 아이콘(192·512px) 전체를 ZIP으로 한 번에 다운로드. 브라우저에서 무료, 서버 전송 없음.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/favicon-generator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="파비콘 생성기 - 이미지·텍스트로 favicon.ico PNG 무료 무설치 | WooaDev">
+  <meta name="twitter:description" content="이미지를 업로드하거나 텍스트·이모지를 입력해 파비콘을 즉시 생성하세요. favicon.ico(16·32·48px), Apple Touch Icon(180px), PWA 아이콘(192·512px) 전체를 ZIP으로 한 번에 다운로드. 브라우저에서 무료, 서버 전송 없음.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"파비콘 생성기","url":"https://wooadev.wooahouse.com/favicon-generator.html","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .mode-tabs { display:flex; gap:8px; margin-bottom:16px; }
+    .mode-tab { flex:1; padding:10px; border:2px solid #E5E7EB; background:white; border-radius:8px; cursor:pointer; font-size:0.88rem; font-weight:600; color:#6B7280; transition:all .15s; }
+    .mode-tab.active { border-color:#C4956A; background:#FFF8F0; color:#C4956A; }
+    .mode-tab:hover:not(.active) { border-color:#D1D5DB; background:#F9FAFB; color:#374151; }
+
+    .fav-drop { border:2.5px dashed #D1D5DB; border-radius:12px; padding:36px 20px; text-align:center; cursor:pointer; transition:all .2s; background:#FAFAFA; }
+    .fav-drop:hover, .fav-drop.dragover { border-color:#C4956A; background:#FFF8F0; }
+    .fav-drop p { color:#9CA3AF; font-size:0.88rem; margin:8px 0 0; }
+    .fav-drop-icon { font-size:2.5rem; }
+
+    .fav-text-input { font-size:2.5rem; text-align:center; border:2px solid #E5E7EB; border-radius:8px; padding:12px; width:100%; box-sizing:border-box; transition:border-color .15s; }
+    .fav-text-input:focus { outline:none; border-color:#C4956A; }
+
+    .color-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .color-row label { font-size:0.85rem; color:#374151; font-weight:600; }
+    .color-swatch { width:36px; height:36px; border-radius:8px; border:2px solid #E5E7EB; cursor:pointer; overflow:hidden; padding:0; }
+    .color-swatch input[type=color] { opacity:0; width:100%; height:100%; cursor:pointer; border:none; padding:0; margin:0; }
+
+    .preview-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:16px; }
+    .preview-item { display:flex; flex-direction:column; align-items:center; gap:8px; }
+    .preview-item canvas { border:1px solid #E5E7EB; border-radius:4px; image-rendering:pixelated; }
+    .preview-label { font-size:0.75rem; color:#6B7280; font-weight:600; }
+
+    .browser-mock { display:flex; align-items:center; gap:8px; background:#F3F4F6; border-radius:8px; padding:10px 14px; font-size:0.82rem; color:#374151; margin-top:12px; }
+    .browser-mock canvas { border-radius:2px; image-rendering:pixelated; }
+
+    .snippet-box { font-family:'Consolas','Monaco',monospace; font-size:0.78rem; background:#1A1A2E; color:#E8C49A; border-radius:8px; padding:14px; white-space:pre; overflow-x:auto; line-height:1.7; }
+
+    .dl-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; }
+    .dl-btn-item { display:flex; flex-direction:column; align-items:center; gap:4px; }
+    .dl-btn-item .dev-btn { width:100%; font-size:0.8rem; }
+    .dl-btn-item span { font-size:0.72rem; color:#9CA3AF; }
+
+    .padding-row { display:flex; align-items:center; gap:12px; }
+    .padding-slider { flex:1; accent-color:#C4956A; }
+    .padding-val { font-family:monospace; font-weight:700; color:#C4956A; width:32px; text-align:center; }
+
+    .lang-switcher { display:flex; align-items:center; gap:4px; }
+    .lang-switcher a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.8rem; font-weight:600; padding:3px 8px; border-radius:12px; transition:background .15s; }
+    .lang-switcher a.active { color:white; background:rgba(255,255,255,0.25); }
+    .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
+    .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="favicon-generator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/favicon-generator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>파비콘 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🌐</span>
+    <h1>파비콘 생성기</h1>
+    <p>이미지 또는 텍스트·이모지로 favicon.ico와 모든 크기의 PNG를 한 번에 만드세요.</p>
+  </div>
+
+  <!-- 모드 선택 -->
+  <div class="dev-panel">
+    <div class="dev-label" style="margin-bottom:12px">입력 방식</div>
+    <div class="mode-tabs">
+      <button class="mode-tab active" id="tabImage" onclick="switchMode('image')">🖼️ 이미지 업로드</button>
+      <button class="mode-tab" id="tabText" onclick="switchMode('text')">✏️ 텍스트 · 이모지</button>
+    </div>
+
+    <!-- 이미지 모드 -->
+    <div id="modeImage">
+      <div class="fav-drop" id="dropZone" onclick="document.getElementById('fileInput').click()">
+        <div class="fav-drop-icon">📂</div>
+        <div style="font-weight:700;color:#374151;margin-top:8px">클릭 또는 파일을 여기에 드래그</div>
+        <p>PNG · JPG · SVG · WebP · GIF 지원</p>
+      </div>
+      <input type="file" id="fileInput" accept="image/*" style="display:none">
+    </div>
+
+    <!-- 텍스트 모드 -->
+    <div id="modeText" style="display:none">
+      <input type="text" class="fav-text-input" id="textInput" placeholder="텍스트 또는 이모지 입력 (예: 🚀 A W)" maxlength="3" value="W" oninput="renderText()">
+      <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px">
+        <div class="color-row">
+          <label>배경색</label>
+          <div class="color-swatch"><input type="color" id="bgColor" value="#C4956A" oninput="renderText()"></div>
+          <span id="bgColorVal" style="font-family:monospace;font-size:0.82rem;color:#6B7280">#C4956A</span>
+        </div>
+        <div class="color-row">
+          <label>글자색</label>
+          <div class="color-swatch"><input type="color" id="fgColor" value="#FFFFFF" oninput="renderText()"></div>
+          <span id="fgColorVal" style="font-family:monospace;font-size:0.82rem;color:#6B7280">#FFFFFF</span>
+        </div>
+        <div class="color-row">
+          <label>둥근 모서리</label>
+          <div class="padding-row" style="flex:1">
+            <input type="range" class="padding-slider" id="radiusSlider" min="0" max="50" value="20" oninput="onRadiusChange()">
+            <span class="padding-val" id="radiusVal">20%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 미리보기 -->
+  <div class="dev-panel" id="previewPanel" style="display:none">
+    <div class="dev-label" style="margin-bottom:16px">미리보기</div>
+    <div class="preview-grid" id="previewGrid"></div>
+    <div class="browser-mock" id="browserMock">
+      <canvas id="mock16" width="16" height="16"></canvas>
+      <span style="color:#9CA3AF">새 탭</span>
+      <canvas id="mock32" width="32" height="32" style="margin-left:auto"></canvas>
+      <span style="color:#9CA3AF;font-size:0.75rem">× 32px</span>
+    </div>
+  </div>
+
+  <!-- 다운로드 -->
+  <div class="dev-panel" id="downloadPanel" style="display:none">
+    <div class="dev-label" style="margin-bottom:16px">다운로드</div>
+    <div class="dl-grid">
+      <div class="dl-btn-item">
+        <button class="dev-btn" onclick="downloadIco()">favicon.ico 다운로드</button>
+        <span>16 · 32 · 48px 포함</span>
+      </div>
+      <div class="dl-btn-item">
+        <button class="dev-btn secondary" onclick="downloadPng(180)">Apple Touch Icon</button>
+        <span>180 × 180 PNG</span>
+      </div>
+      <div class="dl-btn-item">
+        <button class="dev-btn secondary" onclick="downloadPng(192)">PWA 아이콘 192</button>
+        <span>192 × 192 PNG</span>
+      </div>
+      <div class="dl-btn-item">
+        <button class="dev-btn secondary" onclick="downloadPng(512)">PWA 아이콘 512</button>
+        <span>512 × 512 PNG</span>
+      </div>
+      <div class="dl-btn-item">
+        <button class="dev-btn" onclick="downloadZip()" style="background:#22C55E">ZIP 전체 다운로드</button>
+        <span>모든 크기 + HTML 코드</span>
+      </div>
+    </div>
+
+    <div style="margin-top:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div class="dev-label" style="margin:0">HTML &lt;head&gt; 코드</div>
+        <button class="dev-btn secondary" style="padding:4px 10px;font-size:0.78rem" onclick="copySnippet()">복사</button>
+      </div>
+      <div class="snippet-box" id="htmlSnippet"></div>
+    </div>
+  </div>
+
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script>
+const SIZES = [16, 32, 48, 64, 96, 128, 180, 192, 512];
+const ICO_SIZES = [16, 32, 48];
+let sourceImg = null;
+let currentMode = 'image';
+const canvasCache = {};
+
+function switchMode(mode) {
+  currentMode = mode;
+  document.getElementById('modeImage').style.display = mode === 'image' ? '' : 'none';
+  document.getElementById('modeText').style.display = mode === 'text' ? '' : 'none';
+  document.getElementById('tabImage').classList.toggle('active', mode === 'image');
+  document.getElementById('tabText').classList.toggle('active', mode === 'text');
+  if (mode === 'text') renderText();
+  else { hideOutput(); }
+}
+
+// Drag & drop
+const dropZone = document.getElementById('dropZone');
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault(); dropZone.classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (file) loadFile(file);
+});
+document.getElementById('fileInput').addEventListener('change', e => {
+  if (e.target.files[0]) loadFile(e.target.files[0]);
+});
+
+function loadFile(file) {
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => { sourceImg = img; renderAll(); };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function getSourceCanvas(size) {
+  const c = document.createElement('canvas');
+  c.width = size; c.height = size;
+  const ctx = c.getContext('2d');
+  if (currentMode === 'image' && sourceImg) {
+    ctx.drawImage(sourceImg, 0, 0, size, size);
+  } else if (currentMode === 'text') {
+    drawTextCanvas(ctx, size);
+  }
+  return c;
+}
+
+function drawTextCanvas(ctx, size) {
+  const bg = document.getElementById('bgColor').value;
+  const fg = document.getElementById('fgColor').value;
+  const radiusPct = parseInt(document.getElementById('radiusSlider').value);
+  const r = size * radiusPct / 100;
+  const text = document.getElementById('textInput').value || 'W';
+
+  ctx.clearRect(0, 0, size, size);
+  ctx.beginPath();
+  ctx.moveTo(r, 0);
+  ctx.lineTo(size - r, 0);
+  ctx.quadraticCurveTo(size, 0, size, r);
+  ctx.lineTo(size, size - r);
+  ctx.quadraticCurveTo(size, size, size - r, size);
+  ctx.lineTo(r, size);
+  ctx.quadraticCurveTo(0, size, 0, size - r);
+  ctx.lineTo(0, r);
+  ctx.quadraticCurveTo(0, 0, r, 0);
+  ctx.closePath();
+  ctx.fillStyle = bg;
+  ctx.fill();
+
+  const isEmoji = /\p{Emoji}/u.test(text);
+  const fontSize = Math.floor(size * (isEmoji ? 0.62 : 0.55));
+  ctx.font = isEmoji
+    ? `${fontSize}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`
+    : `bold ${fontSize}px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif`;
+  ctx.fillStyle = fg;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, size / 2, size / 2 + (isEmoji ? 0 : size * 0.03));
+}
+
+function renderText() {
+  document.getElementById('bgColorVal').textContent = document.getElementById('bgColor').value;
+  document.getElementById('fgColorVal').textContent = document.getElementById('fgColor').value;
+  renderAll();
+}
+
+function onRadiusChange() {
+  document.getElementById('radiusVal').textContent = document.getElementById('radiusSlider').value + '%';
+  renderText();
+}
+
+function renderAll() {
+  SIZES.forEach(s => { canvasCache[s] = getSourceCanvas(s); });
+  renderPreviews();
+  renderBrowserMock();
+  updateSnippet();
+  document.getElementById('previewPanel').style.display = '';
+  document.getElementById('downloadPanel').style.display = '';
+}
+
+function hideOutput() {
+  document.getElementById('previewPanel').style.display = 'none';
+  document.getElementById('downloadPanel').style.display = 'none';
+}
+
+function renderPreviews() {
+  const grid = document.getElementById('previewGrid');
+  grid.innerHTML = '';
+  [16,32,48,64,128,192].forEach(s => {
+    const item = document.createElement('div');
+    item.className = 'preview-item';
+    const c = canvasCache[s].cloneNode();
+    const ctx = c.getContext('2d');
+    ctx.drawImage(canvasCache[s], 0, 0);
+    const displaySize = Math.max(48, Math.min(s, 96));
+    c.style.width = displaySize + 'px';
+    c.style.height = displaySize + 'px';
+    item.innerHTML = `<span class="preview-label">${s} × ${s}</span>`;
+    item.insertBefore(c, item.firstChild);
+    grid.appendChild(item);
+  });
+}
+
+function renderBrowserMock() {
+  [16, 32].forEach(s => {
+    const dest = document.getElementById('mock' + s);
+    const ctx = dest.getContext('2d');
+    ctx.clearRect(0, 0, s, s);
+    ctx.drawImage(canvasCache[s], 0, 0);
+  });
+}
+
+function updateSnippet() {
+  document.getElementById('htmlSnippet').textContent =
+`<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">`;
+}
+
+function copySnippet() {
+  navigator.clipboard.writeText(document.getElementById('htmlSnippet').textContent);
+}
+
+// ICO generation (PNG data inside ICO container)
+function canvasToBytes(canvas) {
+  const dataURL = canvas.toDataURL('image/png');
+  const b64 = dataURL.split(',')[1];
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+
+function buildIco(sizes) {
+  const pngs = sizes.map(s => canvasToBytes(canvasCache[s]));
+  const headerSize = 6;
+  const dirEntrySize = 16;
+  let offset = headerSize + dirEntrySize * sizes.length;
+  const total = offset + pngs.reduce((a, p) => a + p.length, 0);
+  const buf = new ArrayBuffer(total);
+  const dv = new DataView(buf);
+  dv.setUint16(0, 0, true);
+  dv.setUint16(2, 1, true);
+  dv.setUint16(4, sizes.length, true);
+  sizes.forEach((s, i) => {
+    const pos = headerSize + i * dirEntrySize;
+    const w = s >= 256 ? 0 : s;
+    dv.setUint8(pos, w); dv.setUint8(pos+1, w);
+    dv.setUint8(pos+2, 0); dv.setUint8(pos+3, 0);
+    dv.setUint16(pos+4, 1, true); dv.setUint16(pos+6, 32, true);
+    dv.setUint32(pos+8, pngs[i].length, true);
+    dv.setUint32(pos+12, offset, true);
+    offset += pngs[i].length;
+  });
+  let dataPos = headerSize + dirEntrySize * sizes.length;
+  pngs.forEach(p => {
+    new Uint8Array(buf, dataPos, p.length).set(p);
+    dataPos += p.length;
+  });
+  return new Blob([buf], {type: 'image/x-icon'});
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function downloadIco() {
+  downloadBlob(buildIco(ICO_SIZES), 'favicon.ico');
+}
+
+function downloadPng(size) {
+  canvasCache[size].toBlob(blob => {
+    const names = {180:'apple-touch-icon.png', 192:'icon-192.png', 512:'icon-512.png'};
+    downloadBlob(blob, names[size] || `favicon-${size}x${size}.png`);
+  }, 'image/png');
+}
+
+async function downloadZip() {
+  const zip = new JSZip();
+  zip.file('favicon.ico', buildIco(ICO_SIZES));
+  const sizeNames = {16:'favicon-16x16.png', 32:'favicon-32x32.png', 48:'favicon-48x48.png',
+    64:'favicon-64x64.png', 128:'favicon-128x128.png', 180:'apple-touch-icon.png',
+    192:'icon-192.png', 512:'icon-512.png'};
+  for (const [s, name] of Object.entries(sizeNames)) {
+    const blob = await new Promise(res => canvasCache[parseInt(s)].toBlob(res, 'image/png'));
+    zip.file(name, blob);
+  }
+  zip.file('site.webmanifest', JSON.stringify({
+    name: 'My App',
+    short_name: 'App',
+    icons: [
+      {src:'/icon-192.png', sizes:'192x192', type:'image/png'},
+      {src:'/icon-512.png', sizes:'512x512', type:'image/png'}
+    ],
+    theme_color: '#ffffff',
+    background_color: '#ffffff',
+    display: 'standalone'
+  }, null, 2));
+  zip.file('README.txt',
+`파비콘 파일 설명 (WooaDev Favicon Generator)
+
+favicon.ico          — 브라우저 탭 아이콘 (16·32·48px 포함)
+favicon-16x16.png    — 브라우저 탭 16px
+favicon-32x32.png    — 브라우저 탭 32px
+apple-touch-icon.png — iOS 홈 화면 아이콘 (180px)
+icon-192.png         — PWA 아이콘 (192px)
+icon-512.png         — PWA 아이콘 (512px)
+site.webmanifest     — PWA 매니페스트 샘플
+
+HTML <head> 적용 코드:
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+`);
+  const blob = await zip.generateAsync({type:'blob'});
+  downloadBlob(blob, 'favicon-package.zip');
+}
+
+renderText();
+</script>
+
+<div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="meta-tag.html" class="related-card"><span class="related-icon">🏷️</span><span>Meta Tag 생성기</span></a>
+    <a href="css-gradient.html" class="related-card"><span class="related-icon">🌈</span><span>CSS 그라디언트</span></a>
+    <a href="image-to-base64.html" class="related-card"><span class="related-icon">🖼️</span><span>이미지 → Base64</span></a>
+    <a href="color-converter.html" class="related-card"><span class="related-icon">🎨</span><span>색상 코드 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2>
+  <details><summary>favicon.ico와 PNG 파일 중 어느 걸 써야 하나요?</summary><p>둘 다 사용하는 것이 좋습니다. favicon.ico는 구형 브라우저 호환용이며, PNG 파일은 고해상도 디스플레이와 PWA에 사용됩니다. ZIP 다운로드 후 HTML 코드를 그대로 붙여넣으면 모든 브라우저에서 최적의 아이콘이 표시됩니다.</p></details>
+  <details><summary>이미지를 어떤 크기로 준비해야 하나요?</summary><p>최소 512×512px 이상의 정사각형 이미지를 권장합니다. PNG나 SVG 형식이면 화질이 가장 좋습니다. 업로드 후 자동으로 모든 크기로 변환됩니다.</p></details>
+  <details><summary>파일이 서버에 업로드되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details>
+</div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul>
+  <li>텍스트·이모지 모드로 1~2글자나 이모지 하나만 입력하면 빠르게 파비콘을 만들 수 있습니다.</li>
+  <li>ZIP 다운로드 후 파일들을 사이트 루트(/)에 업로드하고 포함된 HTML 코드만 붙여넣으면 끝입니다.</li>
+  <li>logo.svg나 logo.png를 파비콘으로 쓸 때는 이미지 모드로 업로드 후 즉시 변환하세요.</li>
+</ul></div>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

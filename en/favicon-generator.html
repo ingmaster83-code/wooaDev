@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favicon Generator - Create favicon.ico & PNG from Image or Text Free No Install | WooaDev</title>
+  <meta name="description" content="Upload an image or type text/emoji to instantly generate favicons. Download favicon.ico (16·32·48px), Apple Touch Icon (180px), and PWA icons (192·512px) all at once as a ZIP. Runs entirely in your browser — no server upload.">
+  <meta name="keywords" content="favicon generator, favicon.ico creator, favicon maker, create favicon, favicon from image, favicon from text, emoji favicon, apple touch icon, PWA icon generator, free favicon generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/favicon-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/favicon-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/favicon-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/favicon-generator.html">
+  <meta property="og:title" content="Favicon Generator - Create favicon.ico & PNG from Image or Text Free No Install | WooaDev">
+  <meta property="og:description" content="Upload an image or type text/emoji to instantly generate favicons. Download favicon.ico (16·32·48px), Apple Touch Icon (180px), and PWA icons (192·512px) all at once as a ZIP. Runs entirely in your browser — no server upload.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/favicon-generator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Favicon Generator - Create favicon.ico & PNG from Image or Text Free No Install | WooaDev">
+  <meta name="twitter:description" content="Upload an image or type text/emoji to instantly generate favicons. Download favicon.ico (16·32·48px), Apple Touch Icon (180px), and PWA icons (192·512px) all at once as a ZIP. Runs entirely in your browser — no server upload.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Favicon Generator","url":"https://wooadev.wooahouse.com/en/favicon-generator.html","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .mode-tabs { display:flex; gap:8px; margin-bottom:16px; }
+    .mode-tab { flex:1; padding:10px; border:2px solid #E5E7EB; background:white; border-radius:8px; cursor:pointer; font-size:0.88rem; font-weight:600; color:#6B7280; transition:all .15s; }
+    .mode-tab.active { border-color:#C4956A; background:#FFF8F0; color:#C4956A; }
+    .mode-tab:hover:not(.active) { border-color:#D1D5DB; background:#F9FAFB; color:#374151; }
+
+    .fav-drop { border:2.5px dashed #D1D5DB; border-radius:12px; padding:36px 20px; text-align:center; cursor:pointer; transition:all .2s; background:#FAFAFA; }
+    .fav-drop:hover, .fav-drop.dragover { border-color:#C4956A; background:#FFF8F0; }
+    .fav-drop p { color:#9CA3AF; font-size:0.88rem; margin:8px 0 0; }
+    .fav-drop-icon { font-size:2.5rem; }
+
+    .fav-text-input { font-size:2.5rem; text-align:center; border:2px solid #E5E7EB; border-radius:8px; padding:12px; width:100%; box-sizing:border-box; transition:border-color .15s; }
+    .fav-text-input:focus { outline:none; border-color:#C4956A; }
+
+    .color-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .color-row label { font-size:0.85rem; color:#374151; font-weight:600; }
+    .color-swatch { width:36px; height:36px; border-radius:8px; border:2px solid #E5E7EB; cursor:pointer; overflow:hidden; padding:0; }
+    .color-swatch input[type=color] { opacity:0; width:100%; height:100%; cursor:pointer; border:none; padding:0; margin:0; }
+
+    .preview-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:16px; }
+    .preview-item { display:flex; flex-direction:column; align-items:center; gap:8px; }
+    .preview-item canvas { border:1px solid #E5E7EB; border-radius:4px; image-rendering:pixelated; }
+    .preview-label { font-size:0.75rem; color:#6B7280; font-weight:600; }
+
+    .browser-mock { display:flex; align-items:center; gap:8px; background:#F3F4F6; border-radius:8px; padding:10px 14px; font-size:0.82rem; color:#374151; margin-top:12px; }
+    .browser-mock canvas { border-radius:2px; image-rendering:pixelated; }
+
+    .snippet-box { font-family:'Consolas','Monaco',monospace; font-size:0.78rem; background:#1A1A2E; color:#E8C49A; border-radius:8px; padding:14px; white-space:pre; overflow-x:auto; line-height:1.7; }
+
+    .dl-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; }
+    .dl-btn-item { display:flex; flex-direction:column; align-items:center; gap:4px; }
+    .dl-btn-item .dev-btn { width:100%; font-size:0.8rem; }
+    .dl-btn-item span { font-size:0.72rem; color:#9CA3AF; }
+
+    .padding-row { display:flex; align-items:center; gap:12px; }
+    .padding-slider { flex:1; accent-color:#C4956A; }
+    .padding-val { font-family:monospace; font-weight:700; color:#C4956A; width:32px; text-align:center; }
+
+    .lang-switcher { display:flex; align-items:center; gap:4px; }
+    .lang-switcher a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.8rem; font-weight:600; padding:3px 8px; border-radius:12px; transition:background .15s; }
+    .lang-switcher a.active { color:white; background:rgba(255,255,255,0.25); }
+    .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
+    .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../favicon-generator.html">KO</a>
+        <span>|</span>
+        <a href="favicon-generator.html" class="active">EN</a>
+      </div>
+      <a href="../about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Favicon Generator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🌐</span>
+    <h1>Favicon Generator</h1>
+    <p>Create favicon.ico and all icon sizes from an image or text/emoji in seconds.</p>
+  </div>
+
+  <!-- Mode selector -->
+  <div class="dev-panel">
+    <div class="dev-label" style="margin-bottom:12px">Input method</div>
+    <div class="mode-tabs">
+      <button class="mode-tab active" id="tabImage" onclick="switchMode('image')">🖼️ Upload Image</button>
+      <button class="mode-tab" id="tabText" onclick="switchMode('text')">✏️ Text · Emoji</button>
+    </div>
+
+    <!-- Image mode -->
+    <div id="modeImage">
+      <div class="fav-drop" id="dropZone" onclick="document.getElementById('fileInput').click()">
+        <div class="fav-drop-icon">📂</div>
+        <div style="font-weight:700;color:#374151;margin-top:8px">Click or drag a file here</div>
+        <p>PNG · JPG · SVG · WebP · GIF supported</p>
+      </div>
+      <input type="file" id="fileInput" accept="image/*" style="display:none">
+    </div>
+
+    <!-- Text mode -->
+    <div id="modeText" style="display:none">
+      <input type="text" class="fav-text-input" id="textInput" placeholder="Type text or emoji (e.g. 🚀 A W)" maxlength="3" value="W" oninput="renderText()">
+      <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px">
+        <div class="color-row">
+          <label>Background</label>
+          <div class="color-swatch"><input type="color" id="bgColor" value="#C4956A" oninput="renderText()"></div>
+          <span id="bgColorVal" style="font-family:monospace;font-size:0.82rem;color:#6B7280">#C4956A</span>
+        </div>
+        <div class="color-row">
+          <label>Text color</label>
+          <div class="color-swatch"><input type="color" id="fgColor" value="#FFFFFF" oninput="renderText()"></div>
+          <span id="fgColorVal" style="font-family:monospace;font-size:0.82rem;color:#6B7280">#FFFFFF</span>
+        </div>
+        <div class="color-row">
+          <label>Corner radius</label>
+          <div class="padding-row" style="flex:1">
+            <input type="range" class="padding-slider" id="radiusSlider" min="0" max="50" value="20" oninput="onRadiusChange()">
+            <span class="padding-val" id="radiusVal">20%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Preview -->
+  <div class="dev-panel" id="previewPanel" style="display:none">
+    <div class="dev-label" style="margin-bottom:16px">Preview</div>
+    <div class="preview-grid" id="previewGrid"></div>
+    <div class="browser-mock" id="browserMock">
+      <canvas id="mock16" width="16" height="16"></canvas>
+      <span style="color:#9CA3AF">New Tab</span>
+      <canvas id="mock32" width="32" height="32" style="margin-left:auto"></canvas>
+      <span style="color:#9CA3AF;font-size:0.75rem">× 32px</span>
+    </div>
+  </div>
+
+  <!-- Download -->
+  <div class="dev-panel" id="downloadPanel" style="display:none">
+    <div class="dev-label" style="margin-bottom:16px">Download</div>
+    <div class="dl-grid">
+      <div class="dl-btn-item">
+        <button class="dev-btn" onclick="downloadIco()">Download favicon.ico</button>
+        <span>Includes 16 · 32 · 48px</span>
+      </div>
+      <div class="dl-btn-item">
+        <button class="dev-btn secondary" onclick="downloadPng(180)">Apple Touch Icon</button>
+        <span>180 × 180 PNG</span>
+      </div>
+      <div class="dl-btn-item">
+        <button class="dev-btn secondary" onclick="downloadPng(192)">PWA Icon 192</button>
+        <span>192 × 192 PNG</span>
+      </div>
+      <div class="dl-btn-item">
+        <button class="dev-btn secondary" onclick="downloadPng(512)">PWA Icon 512</button>
+        <span>512 × 512 PNG</span>
+      </div>
+      <div class="dl-btn-item">
+        <button class="dev-btn" onclick="downloadZip()" style="background:#22C55E">Download ZIP (all)</button>
+        <span>All sizes + HTML snippet</span>
+      </div>
+    </div>
+
+    <div style="margin-top:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div class="dev-label" style="margin:0">HTML &lt;head&gt; snippet</div>
+        <button class="dev-btn secondary" style="padding:4px 10px;font-size:0.78rem" onclick="copySnippet()">Copy</button>
+      </div>
+      <div class="snippet-box" id="htmlSnippet"></div>
+    </div>
+  </div>
+
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script>
+const SIZES = [16, 32, 48, 64, 96, 128, 180, 192, 512];
+const ICO_SIZES = [16, 32, 48];
+let sourceImg = null;
+let currentMode = 'image';
+const canvasCache = {};
+
+function switchMode(mode) {
+  currentMode = mode;
+  document.getElementById('modeImage').style.display = mode === 'image' ? '' : 'none';
+  document.getElementById('modeText').style.display = mode === 'text' ? '' : 'none';
+  document.getElementById('tabImage').classList.toggle('active', mode === 'image');
+  document.getElementById('tabText').classList.toggle('active', mode === 'text');
+  if (mode === 'text') renderText();
+  else hideOutput();
+}
+
+const dropZone = document.getElementById('dropZone');
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault(); dropZone.classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (file) loadFile(file);
+});
+document.getElementById('fileInput').addEventListener('change', e => {
+  if (e.target.files[0]) loadFile(e.target.files[0]);
+});
+
+function loadFile(file) {
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => { sourceImg = img; renderAll(); };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function getSourceCanvas(size) {
+  const c = document.createElement('canvas');
+  c.width = size; c.height = size;
+  const ctx = c.getContext('2d');
+  if (currentMode === 'image' && sourceImg) {
+    ctx.drawImage(sourceImg, 0, 0, size, size);
+  } else if (currentMode === 'text') {
+    drawTextCanvas(ctx, size);
+  }
+  return c;
+}
+
+function drawTextCanvas(ctx, size) {
+  const bg = document.getElementById('bgColor').value;
+  const fg = document.getElementById('fgColor').value;
+  const radiusPct = parseInt(document.getElementById('radiusSlider').value);
+  const r = size * radiusPct / 100;
+  const text = document.getElementById('textInput').value || 'W';
+
+  ctx.clearRect(0, 0, size, size);
+  ctx.beginPath();
+  ctx.moveTo(r, 0);
+  ctx.lineTo(size - r, 0);
+  ctx.quadraticCurveTo(size, 0, size, r);
+  ctx.lineTo(size, size - r);
+  ctx.quadraticCurveTo(size, size, size - r, size);
+  ctx.lineTo(r, size);
+  ctx.quadraticCurveTo(0, size, 0, size - r);
+  ctx.lineTo(0, r);
+  ctx.quadraticCurveTo(0, 0, r, 0);
+  ctx.closePath();
+  ctx.fillStyle = bg;
+  ctx.fill();
+
+  const isEmoji = /\p{Emoji}/u.test(text);
+  const fontSize = Math.floor(size * (isEmoji ? 0.62 : 0.55));
+  ctx.font = isEmoji
+    ? `${fontSize}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`
+    : `bold ${fontSize}px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif`;
+  ctx.fillStyle = fg;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, size / 2, size / 2 + (isEmoji ? 0 : size * 0.03));
+}
+
+function renderText() {
+  document.getElementById('bgColorVal').textContent = document.getElementById('bgColor').value;
+  document.getElementById('fgColorVal').textContent = document.getElementById('fgColor').value;
+  renderAll();
+}
+
+function onRadiusChange() {
+  document.getElementById('radiusVal').textContent = document.getElementById('radiusSlider').value + '%';
+  renderText();
+}
+
+function renderAll() {
+  SIZES.forEach(s => { canvasCache[s] = getSourceCanvas(s); });
+  renderPreviews();
+  renderBrowserMock();
+  updateSnippet();
+  document.getElementById('previewPanel').style.display = '';
+  document.getElementById('downloadPanel').style.display = '';
+}
+
+function hideOutput() {
+  document.getElementById('previewPanel').style.display = 'none';
+  document.getElementById('downloadPanel').style.display = 'none';
+}
+
+function renderPreviews() {
+  const grid = document.getElementById('previewGrid');
+  grid.innerHTML = '';
+  [16,32,48,64,128,192].forEach(s => {
+    const item = document.createElement('div');
+    item.className = 'preview-item';
+    const c = canvasCache[s].cloneNode();
+    const ctx = c.getContext('2d');
+    ctx.drawImage(canvasCache[s], 0, 0);
+    const displaySize = Math.max(48, Math.min(s, 96));
+    c.style.width = displaySize + 'px';
+    c.style.height = displaySize + 'px';
+    item.innerHTML = `<span class="preview-label">${s} × ${s}</span>`;
+    item.insertBefore(c, item.firstChild);
+    grid.appendChild(item);
+  });
+}
+
+function renderBrowserMock() {
+  [16, 32].forEach(s => {
+    const dest = document.getElementById('mock' + s);
+    const ctx = dest.getContext('2d');
+    ctx.clearRect(0, 0, s, s);
+    ctx.drawImage(canvasCache[s], 0, 0);
+  });
+}
+
+function updateSnippet() {
+  document.getElementById('htmlSnippet').textContent =
+`<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">`;
+}
+
+function copySnippet() {
+  navigator.clipboard.writeText(document.getElementById('htmlSnippet').textContent);
+}
+
+function canvasToBytes(canvas) {
+  const dataURL = canvas.toDataURL('image/png');
+  const b64 = dataURL.split(',')[1];
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+
+function buildIco(sizes) {
+  const pngs = sizes.map(s => canvasToBytes(canvasCache[s]));
+  const headerSize = 6;
+  const dirEntrySize = 16;
+  let offset = headerSize + dirEntrySize * sizes.length;
+  const total = offset + pngs.reduce((a, p) => a + p.length, 0);
+  const buf = new ArrayBuffer(total);
+  const dv = new DataView(buf);
+  dv.setUint16(0, 0, true);
+  dv.setUint16(2, 1, true);
+  dv.setUint16(4, sizes.length, true);
+  sizes.forEach((s, i) => {
+    const pos = headerSize + i * dirEntrySize;
+    const w = s >= 256 ? 0 : s;
+    dv.setUint8(pos, w); dv.setUint8(pos+1, w);
+    dv.setUint8(pos+2, 0); dv.setUint8(pos+3, 0);
+    dv.setUint16(pos+4, 1, true); dv.setUint16(pos+6, 32, true);
+    dv.setUint32(pos+8, pngs[i].length, true);
+    dv.setUint32(pos+12, offset, true);
+    offset += pngs[i].length;
+  });
+  let dataPos = headerSize + dirEntrySize * sizes.length;
+  pngs.forEach(p => {
+    new Uint8Array(buf, dataPos, p.length).set(p);
+    dataPos += p.length;
+  });
+  return new Blob([buf], {type: 'image/x-icon'});
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function downloadIco() {
+  downloadBlob(buildIco(ICO_SIZES), 'favicon.ico');
+}
+
+function downloadPng(size) {
+  canvasCache[size].toBlob(blob => {
+    const names = {180:'apple-touch-icon.png', 192:'icon-192.png', 512:'icon-512.png'};
+    downloadBlob(blob, names[size] || `favicon-${size}x${size}.png`);
+  }, 'image/png');
+}
+
+async function downloadZip() {
+  const zip = new JSZip();
+  zip.file('favicon.ico', buildIco(ICO_SIZES));
+  const sizeNames = {16:'favicon-16x16.png', 32:'favicon-32x32.png', 48:'favicon-48x48.png',
+    64:'favicon-64x64.png', 128:'favicon-128x128.png', 180:'apple-touch-icon.png',
+    192:'icon-192.png', 512:'icon-512.png'};
+  for (const [s, name] of Object.entries(sizeNames)) {
+    const blob = await new Promise(res => canvasCache[parseInt(s)].toBlob(res, 'image/png'));
+    zip.file(name, blob);
+  }
+  zip.file('site.webmanifest', JSON.stringify({
+    name: 'My App',
+    short_name: 'App',
+    icons: [
+      {src:'/icon-192.png', sizes:'192x192', type:'image/png'},
+      {src:'/icon-512.png', sizes:'512x512', type:'image/png'}
+    ],
+    theme_color: '#ffffff',
+    background_color: '#ffffff',
+    display: 'standalone'
+  }, null, 2));
+  zip.file('README.txt',
+`Favicon Package (WooaDev Favicon Generator)
+
+favicon.ico          — Browser tab icon (contains 16, 32, 48px)
+favicon-16x16.png    — Browser tab 16px
+favicon-32x32.png    — Browser tab 32px
+apple-touch-icon.png — iOS home screen icon (180px)
+icon-192.png         — PWA icon (192px)
+icon-512.png         — PWA icon (512px)
+site.webmanifest     — Sample PWA manifest
+
+Add to your HTML <head>:
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+`);
+  const blob = await zip.generateAsync({type:'blob'});
+  downloadBlob(blob, 'favicon-package.zip');
+}
+
+renderText();
+</script>
+
+<div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="meta-tag.html" class="related-card"><span class="related-icon">🏷️</span><span>Meta Tag Generator</span></a>
+    <a href="css-gradient.html" class="related-card"><span class="related-icon">🌈</span><span>CSS Gradient</span></a>
+    <a href="image-to-base64.html" class="related-card"><span class="related-icon">🖼️</span><span>Image to Base64</span></a>
+    <a href="color-converter.html" class="related-card"><span class="related-icon">🎨</span><span>Color Converter</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2>
+  <details><summary>Should I use favicon.ico or PNG files?</summary><p>Use both. favicon.ico ensures compatibility with older browsers, while PNG files are better for high-DPI displays and PWAs. Download the ZIP and paste the included HTML snippet — each browser will automatically pick the best format.</p></details>
+  <details><summary>What image size should I start with?</summary><p>A square image of at least 512×512px is recommended. PNG or SVG formats give the best results. After uploading, all sizes are generated automatically.</p></details>
+  <details><summary>Is my file uploaded to a server?</summary><p>No. All processing happens entirely in your browser. Your files are never sent to any server. It is completely safe.</p></details>
+</div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul>
+  <li>In text/emoji mode, a single emoji or 1–2 letters makes a great favicon in seconds.</li>
+  <li>After downloading the ZIP, upload the files to your site root (/) and paste the included HTML snippet — you are done.</li>
+  <li>Use a square PNG or SVG logo as the source image for the sharpest results at all sizes.</li>
+</ul></div>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>
