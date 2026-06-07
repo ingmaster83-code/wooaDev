@@ -134,30 +134,7 @@
   <div class="tab-content" id="tab-html">
     <div class="dev-panel">
       <div class="dev-label">HTML 입력</div>
-      <textarea class="dev-textarea" id="htmlInput" placeholder="<!DOCTYPE html><html>  <head>    <title>Hello</title>  </head>  <body>    <p>World</p>    <div class="related-tools">
-  <h2>함께 쓰면 좋은 도구</h2>
-  <div class="related-grid">
-    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
-    <a href="timestamp.html" class="related-card"><span class="related-icon">🕐</span><span>타임스탬프 변환</span></a>
-    <a href="sql-formatter.html" class="related-card"><span class="related-icon">🗄️</span><span>SQL 포맷터</span></a>
-    <a href="css-units.html" class="related-card"><span class="related-icon">📐</span><span>CSS 단위 변환기</span></a>
-  </div>
-</div>
-<div class="related-tools">
-  <h2>함께 쓰면 좋은 도구</h2>
-  <div class="related-grid">
-    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
-    <a href="sql-formatter.html" class="related-card"><span class="related-icon">🛢️</span><span>SQL 포맷터</span></a>
-    <a href="xml-formatter.html" class="related-card"><span class="related-icon">📄</span><span>XML 포맷터</span></a>
-    <a href="markdown-preview.html" class="related-card"><span class="related-icon">📝</span><span>Markdown 미리보기</span></a>
-  </div>
-</div>
-<div class="wooa-orig-anchor"></div>
-<div class="tips-panel"><h3>💡 Tips</h3><ul><li>HTML, CSS, JavaScript 코드를 압축해 파일 크기를 줄입니다.</li><li>공백, 주석, 불필요한 문자를 제거해 로딩 속도를 개선합니다.</li><li>프로덕션 배포 전 압축하는 것이 좋습니다.</li></ul></div>
-<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>어떤 코드를 압축할 수 있나요?</summary><p>HTML, CSS, JavaScript 코드를 압축해 파일 크기를 줄일 수 있습니다.</p></details><details><summary>압축한 코드를 다시 읽기 좋게 할 수 있나요?</summary><p>압축 해제(Beautify/Prettify)는 별도 포맷터 도구를 사용하세요.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details></div>
-<script src="js/wooa-sidebar.js"></script>
-<script src="js/wooa-footer.js"></script>
-</body></html>" style="min-height:180px"></textarea>
+      <textarea class="dev-textarea" id="htmlInput" placeholder="<!DOCTYPE html><html>  <head>    <title>Hello</title>  </head>  <body>    <p>World</p>  </body></html>" style="min-height:180px"></textarea>
       <div class="dev-btn-row">
         <button class="dev-btn" onclick="runHTML('minify')">압축 (Minify)</button>
         <button class="dev-btn" onclick="runHTML('beautify')">정렬 (Beautify)</button>
@@ -173,6 +150,30 @@
       <div class="size-stats" id="htmlStats"></div>
     </div>
   </div>
+<div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+    <a href="sql-formatter.html" class="related-card"><span class="related-icon">🛢️</span><span>SQL 포맷터</span></a>
+    <a href="xml-formatter.html" class="related-card"><span class="related-icon">📄</span><span>XML 포맷터</span></a>
+    <a href="markdown-preview.html" class="related-card"><span class="related-icon">📝</span><span>Markdown 미리보기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel">
+  <h3>💡 Tips</h3>
+  <ul>
+    <li>HTML, CSS, JavaScript 코드를 압축해 파일 크기를 줄입니다.</li>
+    <li>공백, 주석, 불필요한 문자를 제거해 로딩 속도를 개선합니다.</li>
+    <li>프로덕션 배포 전 압축하는 것이 좋습니다.</li>
+  </ul>
+</div>
+<div class="faq-section">
+  <h2>자주 묻는 질문</h2>
+  <details><summary>어떤 코드를 압축할 수 있나요?</summary><p>HTML, CSS, JavaScript 코드를 압축해 파일 크기를 줄일 수 있습니다.</p></details>
+  <details><summary>압축한 코드를 다시 읽기 좋게 할 수 있나요?</summary><p>압축 해제(Beautify/Prettify)는 별도 포맷터 도구를 사용하세요.</p></details>
+  <details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details>
+</div>
 </div>
 <aside class="tool-sidebar"></aside>
 </div>
