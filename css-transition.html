@@ -136,17 +136,8 @@
       </div>
     </div>
 
-    <div class="tips-panel">
-      <h3>💡 Tips</h3>
-      <ul>
-        <li><b>ease-in-out</b>: 자연스러운 UI 전환에 가장 많이 사용됩니다</li>
-        <li><b>cubic-bezier</b>: 직접 입력해 완전히 커스텀한 곡선을 만들 수 있습니다</li>
-        <li><b>all</b> 대신 특정 속성만 지정하면 성능 최적화에 도움이 됩니다</li>
-        <li>여러 속성을 쉼표로 연결: <code>transition: opacity 0.3s, transform 0.5s;</code></li>
-      </ul>
-    </div>
-
-      <div class="related-tools">
+    
+<div class="related-tools">
   <h2>함께 쓰면 좋은 도구</h2>
   <div class="related-grid">
     <a href="uuid-generator.html" class="related-card"><span class="related-icon">🆔</span><span>UUID 생성기</span></a>
@@ -156,17 +147,16 @@
   </div>
 </div>
 <div class="wooa-orig-anchor"></div>
-<section class="faq-section">
-      <h2>자주 묻는 질문</h2>
-      <div class="faq-item">
-        <div class="faq-q">transition과 animation의 차이는?</div>
-        <div class="faq-a">transition은 두 상태 사이의 전환을 정의하고, animation은 keyframe을 사용해 복잡한 여러 단계 애니메이션을 정의합니다. 간단한 hover 효과에는 transition이 적합합니다.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">will-change 속성을 함께 사용해야 하나요?</div>
-        <div class="faq-a">transform, opacity에는 <code>will-change: transform</code>을 추가하면 GPU 가속으로 성능이 향상됩니다. 단, 남용하면 메모리 소비가 늘어납니다.</div>
-      </div>
-    </section>
+<div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li><b>ease-in-out</b>: 자연스러운 UI 전환에 가장 많이 사용됩니다</li>
+        <li><b>cubic-bezier</b>: 직접 입력해 완전히 커스텀한 곡선을 만들 수 있습니다</li>
+        <li><b>all</b> 대신 특정 속성만 지정하면 성능 최적화에 도움이 됩니다</li>
+        <li>여러 속성을 쉼표로 연결: <code>transition: opacity 0.3s, transform 0.5s;</code></li>
+      </ul>
+    </div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>transition과 animation의 차이는?</summary><p>transition은 두 상태 사이의 전환을 정의하고, animation은 keyframe을 사용해 복잡한 여러 단계 애니메이션을 정의합니다. 간단한 hover 효과에는 transition이 적합합니다.</p></details><details><summary>will-change 속성을 함께 사용해야 하나요?</summary><p>transform, opacity에는 <code>will-change: transform</code>을 추가하면 GPU 가속으로 성능이 향상됩니다. 단, 남용하면 메모리 소비가 늘어납니다.</p></details></div>
   </div>
 
   <aside class="tool-sidebar"></aside>

@@ -89,15 +89,8 @@
     <span id="copyMsg" style="color:#22c55e;font-size:0.83rem;margin-left:10px;display:none">✅ 복사 완료!</span>
   </div>
 
-  <div class="tips-panel" style="margin-top:16px"><h3>💡 Tips</h3><ul>
-    <li><strong>fr 단위</strong>: 남은 공간을 비율로 나눕니다. <code>1fr 2fr</code>은 1:2 비율로 분할.</li>
-    <li><strong>repeat()</strong>: Column Template에 <code>repeat(3, 1fr)</code> 형식도 사용 가능합니다.</li>
-    <li><strong>justify-items</strong>: 각 셀 내에서 아이템을 수평 정렬합니다.</li>
-    <li><strong>align-items</strong>: 각 셀 내에서 아이템을 수직 정렬합니다.</li>
-  </ul></div>
-  <details class="faq-item"><summary>Flexbox와 Grid 중 어떤 걸 써야 하나요?</summary><p>1차원(행 또는 열)이면 Flexbox, 2차원(행+열 동시)이면 Grid가 적합합니다. 카드 그리드, 갤러리, 대시보드 레이아웃에는 Grid를 사용하세요.</p></details>
-  <details class="faq-item"><summary>minmax()를 어떻게 사용하나요?</summary><p>Column Template에 <code>minmax(200px, 1fr)</code>을 입력하면 최소 200px, 최대 가능한 공간으로 열이 설정됩니다. 반응형 레이아웃에 유용합니다.</p></details>
-  <div class="related-tools">
+  
+<div class="related-tools">
   <h2>함께 쓰면 좋은 도구</h2>
   <div class="related-grid">
     <a href="uuid-generator.html" class="related-card"><span class="related-icon">🆔</span><span>UUID 생성기</span></a>
@@ -107,6 +100,12 @@
   </div>
 </div>
 <div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul>
+    <li><strong>fr 단위</strong>: 남은 공간을 비율로 나눕니다. <code>1fr 2fr</code>은 1:2 비율로 분할.</li>
+    <li><strong>repeat()</strong>: Column Template에 <code>repeat(3, 1fr)</code> 형식도 사용 가능합니다.</li>
+    <li><strong>justify-items</strong>: 각 셀 내에서 아이템을 수평 정렬합니다.</li>
+    <li><strong>align-items</strong>: 각 셀 내에서 아이템을 수직 정렬합니다.</li>
+  </ul></div>
 <div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>복잡한 grid-template-areas도 생성할 수 있나요?</summary><p>네. 시각적으로 영역을 나눠 grid-template-areas 코드를 자동 생성합니다.</p></details><details><summary>반응형 그리드(auto-fill, auto-fit)도 지원하나요?</summary><p>네. 반응형 옵션을 선택하면 auto-fill, auto-fit 코드가 생성됩니다.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 완전히 안전합니다.</p></details></div>
 </div>
 <aside class="tool-sidebar"></aside>

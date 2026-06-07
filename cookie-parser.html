@@ -165,17 +165,8 @@
       </div>
     </div>
 
-    <div class="tips-panel">
-      <h3>💡 Tips</h3>
-      <ul>
-        <li><b>Secure</b>: HTTPS에서만 쿠키 전송, <b>HttpOnly</b>: JS에서 접근 불가 (XSS 방어)</li>
-        <li><b>SameSite=Strict</b>: 크로스사이트 요청에 쿠키 미포함 (CSRF 방어 최강)</li>
-        <li><b>Max-Age</b>: 초 단위로 만료 설정, <b>Expires</b>: GMT 날짜 형식으로 만료 설정</li>
-        <li>쿠키 최대 크기는 약 4KB이며, 도메인당 최대 쿠키 수는 브라우저마다 다릅니다</li>
-      </ul>
-    </div>
-
-      <div class="related-tools">
+    
+<div class="related-tools">
   <h2>함께 쓰면 좋은 도구</h2>
   <div class="related-grid">
     <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
@@ -185,17 +176,16 @@
   </div>
 </div>
 <div class="wooa-orig-anchor"></div>
-<section class="faq-section">
-      <h2>자주 묻는 질문</h2>
-      <div class="faq-item">
-        <div class="faq-q">Cookie 헤더와 Set-Cookie 헤더의 차이는?</div>
-        <div class="faq-a">Cookie 헤더는 클라이언트(브라우저)가 서버로 보내는 헤더로 이름=값 쌍만 포함합니다. Set-Cookie 헤더는 서버가 브라우저로 보내는 헤더로 Expires, Domain, Path, Secure, HttpOnly 등의 속성을 포함합니다.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">SameSite=None을 사용하려면?</div>
-        <div class="faq-a">SameSite=None 설정 시 반드시 Secure 플래그도 함께 설정해야 합니다. 그렇지 않으면 최신 브라우저에서 쿠키가 거부됩니다. None은 크로스사이트 요청에도 쿠키를 포함시키므로 신중하게 사용해야 합니다.</div>
-      </div>
-    </section>
+<div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li><b>Secure</b>: HTTPS에서만 쿠키 전송, <b>HttpOnly</b>: JS에서 접근 불가 (XSS 방어)</li>
+        <li><b>SameSite=Strict</b>: 크로스사이트 요청에 쿠키 미포함 (CSRF 방어 최강)</li>
+        <li><b>Max-Age</b>: 초 단위로 만료 설정, <b>Expires</b>: GMT 날짜 형식으로 만료 설정</li>
+        <li>쿠키 최대 크기는 약 4KB이며, 도메인당 최대 쿠키 수는 브라우저마다 다릅니다</li>
+      </ul>
+    </div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>Cookie 헤더와 Set-Cookie 헤더의 차이는?</summary><p>Cookie 헤더는 클라이언트(브라우저)가 서버로 보내는 헤더로 이름=값 쌍만 포함합니다. Set-Cookie 헤더는 서버가 브라우저로 보내는 헤더로 Expires, Domain, Path, Secure, HttpOnly 등의 속성을 포함합니다.</p></details><details><summary>SameSite=None을 사용하려면?</summary><p>SameSite=None 설정 시 반드시 Secure 플래그도 함께 설정해야 합니다. 그렇지 않으면 최신 브라우저에서 쿠키가 거부됩니다. None은 크로스사이트 요청에도 쿠키를 포함시키므로 신중하게 사용해야 합니다.</p></details></div>
   </div>
 
   <aside class="tool-sidebar"></aside>

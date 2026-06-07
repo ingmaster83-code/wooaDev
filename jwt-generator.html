@@ -194,17 +194,8 @@
       </div>
     </div>
 
-    <div class="tips-panel">
-      <h3>💡 Tips</h3>
-      <ul>
-        <li><b>sub</b>: 토큰 주제(사용자 ID), <b>iss</b>: 발급자, <b>exp</b>: 만료 시각(Unix timestamp)</li>
-        <li>JWT는 Base64URL로 인코딩되어 있으므로 내용이 암호화되지 않습니다 (서명만 검증)</li>
-        <li>민감한 정보(비밀번호, 신용카드 등)를 payload에 담지 마세요</li>
-        <li>HS256는 대칭키(같은 키로 서명/검증), RS256은 비대칭키(공개키/개인키) 방식입니다</li>
-      </ul>
-    </div>
-
-      <div class="related-tools">
+    
+<div class="related-tools">
   <h2>함께 쓰면 좋은 도구</h2>
   <div class="related-grid">
     <a href="uuid-generator.html" class="related-card"><span class="related-icon">🆔</span><span>UUID 생성기</span></a>
@@ -214,17 +205,16 @@
   </div>
 </div>
 <div class="wooa-orig-anchor"></div>
-<section class="faq-section">
-      <h2>자주 묻는 질문</h2>
-      <div class="faq-item">
-        <div class="faq-q">JWT는 어떻게 작동하나요?</div>
-        <div class="faq-a">JWT는 Header.Payload.Signature의 세 부분으로 구성됩니다. 서버는 시크릿 키로 서명을 생성하고, 클라이언트는 매 요청마다 JWT를 함께 전송합니다. 서버는 서명을 검증해 토큰의 위변조 여부를 확인합니다.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">JWT payload가 Base64라면 누구나 볼 수 있나요?</div>
-        <div class="faq-a">네, payload는 Base64URL로 인코딩되어 있어 누구나 디코딩할 수 있습니다. JWT의 보안은 암호화가 아닌 서명 검증에 있습니다. 민감한 데이터는 payload에 넣지 말아야 합니다.</div>
-      </div>
-    </section>
+<div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li><b>sub</b>: 토큰 주제(사용자 ID), <b>iss</b>: 발급자, <b>exp</b>: 만료 시각(Unix timestamp)</li>
+        <li>JWT는 Base64URL로 인코딩되어 있으므로 내용이 암호화되지 않습니다 (서명만 검증)</li>
+        <li>민감한 정보(비밀번호, 신용카드 등)를 payload에 담지 마세요</li>
+        <li>HS256는 대칭키(같은 키로 서명/검증), RS256은 비대칭키(공개키/개인키) 방식입니다</li>
+      </ul>
+    </div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>JWT는 어떻게 작동하나요?</summary><p>JWT는 Header.Payload.Signature의 세 부분으로 구성됩니다. 서버는 시크릿 키로 서명을 생성하고, 클라이언트는 매 요청마다 JWT를 함께 전송합니다. 서버는 서명을 검증해 토큰의 위변조 여부를 확인합니다.</p></details><details><summary>JWT payload가 Base64라면 누구나 볼 수 있나요?</summary><p>네, payload는 Base64URL로 인코딩되어 있어 누구나 디코딩할 수 있습니다. JWT의 보안은 암호화가 아닌 서명 검증에 있습니다. 민감한 데이터는 payload에 넣지 말아야 합니다.</p></details></div>
   </div>
 
   <aside class="tool-sidebar"></aside>
