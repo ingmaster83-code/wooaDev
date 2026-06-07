@@ -99,9 +99,6 @@
     <div class="json-output" id="jsonOutput"></div>
     <div class="json-stats" id="jsonStats"></div>
   </div>
-</div>
-<aside class="tool-sidebar"></aside>
-</div>
   <div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
@@ -215,7 +212,11 @@ function copyOutput() {
   } catch(e) {}
 }
 </script>
-<script src="../js/wooahouse-originals-tool-en.js"></script>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Paste minified JSON to format it with proper indentation for easy reading.</li><li>Use the minify option to compress JSON before sending it in API requests.</li><li>The validator highlights syntax errors so you can find and fix them instantly.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What is JSON?</summary><p>JSON (JavaScript Object Notation) is a lightweight data format widely used for APIs and configuration files.</p></details><details><summary>Why is my JSON invalid?</summary><p>Common issues: trailing commas, single quotes instead of double quotes, or missing quotes around keys.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div><script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script src="../js/wooa-sidebar-en.js"></script>
 <script src="../js/wooa-footer-en.js"></script>

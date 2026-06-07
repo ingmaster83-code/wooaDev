@@ -113,9 +113,6 @@
     <div class="dev-label">매칭 목록</div>
     <div id="matchList"></div>
   </div>
-</div>
-<aside class="tool-sidebar"></aside>
-</div>
   <div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
@@ -167,7 +164,11 @@ function highlight(str, matches) {
 }
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 </script>
-<script src="../js/wooahouse-originals-tool-en.js"></script>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Use <code>\d</code> for digits, <code>\w</code> for word characters, <code>\s</code> for whitespace.</li><li>Add the <code>g</code> flag for global matching, <code>i</code> for case-insensitive, <code>m</code> for multiline.</li><li>Test your pattern against multiple inputs to ensure it handles edge cases correctly.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What regex engine does this use?</summary><p>JavaScript RegExp, which is compatible with most modern browsers and Node.js.</p></details><details><summary>How do I match a literal dot?</summary><p>Escape it with a backslash: <code>\.</code>. Without escaping, <code>.</code> matches any character.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div><script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script src="../js/wooa-sidebar-en.js"></script>
 <script src="../js/wooa-footer-en.js"></script>

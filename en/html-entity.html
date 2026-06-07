@@ -131,27 +131,6 @@
     </table>
   </div>
 
-  <div class="tips-panel" style="margin-top:16px">
-    <h3>💡 Tips</h3>
-    <ul>
-      <li>In HTML, <code>&lt;</code>, <code>&gt;</code>, and <code>&amp;</code> are interpreted as tags/attributes and must be encoded as entities.</li>
-      <li>Always encode user input before rendering it in HTML to prevent XSS vulnerabilities.</li>
-      <li>Click any entity code in the table to select it for copying.</li>
-    </ul>
-  </div>
-
-  <details class="faq-item">
-    <summary>Named Entity vs Numeric Entity — what's the difference?</summary>
-    <p>Named entities like <code>&amp;amp;</code> are human-readable. Numeric entities like <code>&amp;#38;</code> use Unicode code points and can represent any character, including those without named equivalents.</p>
-  </details>
-  <details class="faq-item">
-    <summary>What happens if I put special characters in HTML without encoding?</summary>
-    <p>The browser may interpret them as HTML tags or attributes, breaking your layout or creating XSS security vulnerabilities.</p>
-  </details>
-</div>
-
-<aside class="tool-sidebar"></aside>
-</div>
 
   <div class="related-tools">
   <h2>Related Tools</h2>
@@ -164,6 +143,19 @@
 </div>
 <div class="wooa-orig-anchor"></div>
 <footer class="footer"></footer>
+<div class="tips-panel">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li>In HTML, <code>&lt;</code>, <code>&gt;</code>, and <code>&amp;</code> are interpreted as tags/attributes and must be encoded as entities.</li>
+      <li>Always encode user input before rendering it in HTML to prevent XSS vulnerabilities.</li>
+      <li>Click any entity code in the table to select it for copying.</li>
+    </ul>
+  </div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Why do we use HTML entities?</summary><p>HTML entities safely represent characters that have special meaning in HTML (< > &) or characters that are hard to type.</p></details><details><summary>Are &amp;amp; and &amp;#38; the same?</summary><p>Yes. Both represent the & ampersand character. Named (&amp;amp;) and numeric (&amp;#38;) forms are interchangeable.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+
+<aside class="tool-sidebar"></aside>
+</div>
 <script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script>

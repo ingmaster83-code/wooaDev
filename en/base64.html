@@ -91,9 +91,6 @@
     </div>
     <div style="margin-top:10px;font-size:0.78rem;color:#9CA3AF" id="outputInfo"></div>
   </div>
-</div>
-<aside class="tool-sidebar"></aside>
-</div>
   <div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
@@ -161,7 +158,11 @@ function copyOutput() {
   });
 }
 </script>
-<script src="../js/wooahouse-originals-tool-en.js"></script>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Use Base64 to embed images or binary files directly into HTML/CSS as <code>data:</code> URIs.</li><li>Base64 encoding increases data size by roughly 33% — keep this in mind for large files.</li><li>Decode a Base64 string to retrieve the original content or verify its integrity.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>When should I use Base64?</summary><p>Use Base64 when embedding binary data in text formats such as JSON, HTML attributes, or email bodies.</p></details><details><summary>Does Base64 make data secure?</summary><p>No. Base64 is encoding, not encryption. Anyone can decode it. Use encryption for sensitive data.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div><script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script src="../js/wooa-sidebar-en.js"></script>
 <script src="../js/wooa-footer-en.js"></script>

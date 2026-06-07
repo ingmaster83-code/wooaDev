@@ -86,9 +86,6 @@
     </div>
     <textarea class="dev-textarea" id="sqlOutput" readonly style="min-height:200px;font-family:'Consolas','Monaco',monospace;font-size:0.87rem;background:#1E293B;color:#E2E8F0;border-color:#334155"></textarea>
   </div>
-</div>
-<aside class="tool-sidebar"></aside>
-</div>
   <div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
@@ -191,7 +188,11 @@ function copySQL() {
   });
 }
 </script>
-<script src="../js/wooahouse-originals-tool-en.js"></script>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Format SQL queries with proper indentation for better readability and code reviews.</li><li>Use uppercase for SQL keywords (SELECT, FROM, WHERE) — it's the widely accepted convention.</li><li>Indent nested subqueries to visually separate query levels.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What SQL dialects are supported?</summary><p>Standard SQL syntax is supported, compatible with MySQL, PostgreSQL, SQLite, SQL Server, and others.</p></details><details><summary>Does formatting change query behavior?</summary><p>No. Formatting only changes whitespace and indentation, which does not affect how the query executes.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div><script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script src="../js/wooa-sidebar-en.js"></script>
 <script src="../js/wooa-footer-en.js"></script>

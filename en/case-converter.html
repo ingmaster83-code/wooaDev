@@ -85,9 +85,6 @@
     <div class="dev-label" style="margin-bottom:12px">Conversion result</div>
     <div class="case-grid" id="caseGrid"></div>
   </div>
-</div>
-<aside class="tool-sidebar"></aside>
-</div>
   <div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
@@ -153,7 +150,11 @@ function convert() {
   document.getElementById('resultPanel').style.display = 'block';
 }
 </script>
-<script src="../js/wooahouse-originals-tool-en.js"></script>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>camelCase is common in JavaScript variables; PascalCase is standard for class names.</li><li>snake_case is the convention in Python, Ruby, and database column names.</li><li>SCREAMING_SNAKE_CASE is typically used for constants in most programming languages.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>When do I use camelCase vs snake_case?</summary><p>camelCase is prevalent in JavaScript and Java; snake_case is standard in Python, Ruby, and SQL.</p></details><details><summary>Does the converter handle unicode characters?</summary><p>Yes. The converter handles unicode letters and preserves non-alphabetic characters as separators.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div><script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script src="../js/wooa-sidebar-en.js"></script>
 <script src="../js/wooa-footer-en.js"></script>

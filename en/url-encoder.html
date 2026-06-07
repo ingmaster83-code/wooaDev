@@ -98,9 +98,6 @@
       <tbody id="queryBody"></tbody>
     </table>
   </div>
-</div>
-<aside class="tool-sidebar"></aside>
-</div>
   <div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
@@ -150,7 +147,11 @@ function parseQuery(url) {
 }
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 </script>
-<script src="../js/wooahouse-originals-tool-en.js"></script>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Encode individual query parameter values, not the full URL structure.</li><li>Spaces become <code>%20</code> (percent-encoding) or <code>+</code> (form encoding).</li><li>Use <code>decodeURIComponent()</code> in JavaScript to decode percent-encoded strings programmatically.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Why do URLs need encoding?</summary><p>URLs can only contain ASCII characters. Special characters, spaces, and non-ASCII text must be percent-encoded.</p></details><details><summary>Should I encode the entire URL?</summary><p>No. Only encode the values of query parameters. Encoding the full URL will break the slash and special characters.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div><script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script src="../js/wooa-sidebar-en.js"></script>
 <script src="../js/wooa-footer-en.js"></script>

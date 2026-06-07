@@ -199,33 +199,6 @@
     <span id="copyMsg" style="color:#22c55e;font-size:0.83rem;margin-left:10px;display:none">✅ Copied!</span>
   </div>
 
-  <div class="tips-panel" style="margin-top:16px">
-    <h3>💡 Tips</h3>
-    <ul>
-      <li><strong>Simple mode</strong>: Applies the same value to all 4 corners at once.</li>
-      <li><strong>Advanced mode</strong>: Set each corner (TL, TR, BL, BR) individually.</li>
-      <li><strong>%</strong> unit: Proportional to the element size. Set to 50% for a perfect circle.</li>
-      <li><strong>px</strong> unit: Fixed pixel value — consistent roundness regardless of element size.</li>
-      <li>When all 4 values are equal, the output is simplified to a single value like <code>border-radius: 12px</code>.</li>
-    </ul>
-  </div>
-
-  <details class="faq-item">
-    <summary>What happens when I set 4 different values?</summary>
-    <p>CSS applies corners clockwise: <code>border-radius: TL TR BR BL</code>. In advanced mode, each corner is set individually and the code is generated in this format.</p>
-  </details>
-  <details class="faq-item">
-    <summary>Does 50% make a perfect circle?</summary>
-    <p>On a square element, <code>border-radius: 50%</code> creates a perfect circle. On a rectangle, it creates an ellipse.</p>
-  </details>
-  <details class="faq-item">
-    <summary>What is the difference between border-radius and border-top-left-radius?</summary>
-    <p><code>border-radius</code> is a shorthand property that sets up to 4 corners at once. Individual properties like <code>border-top-left-radius</code> also work. This tool generates the shorthand format.</p>
-  </details>
-</div>
-
-<aside class="tool-sidebar"></aside>
-</div>
 
   <div class="related-tools">
   <h2>Related Tools</h2>
@@ -238,6 +211,21 @@
 </div>
 <div class="wooa-orig-anchor"></div>
 <footer class="footer"></footer>
+<div class="tips-panel">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li><strong>Simple mode</strong>: Applies the same value to all 4 corners at once.</li>
+      <li><strong>Advanced mode</strong>: Set each corner (TL, TR, BL, BR) individually.</li>
+      <li><strong>%</strong> unit: Proportional to the element size. Set to 50% for a perfect circle.</li>
+      <li><strong>px</strong> unit: Fixed pixel value — consistent roundness regardless of element size.</li>
+      <li>When all 4 values are equal, the output is simplified to a single value like <code>border-radius: 12px</code>.</li>
+    </ul>
+  </div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Should I use px or % for border-radius?</summary><p>px sets a fixed radius regardless of element size. % is proportional to the element — 50% on a square creates a perfect circle.</p></details><details><summary>How do I set each corner differently?</summary><p>Use the advanced mode to set individual values for top-left, top-right, bottom-right, and bottom-left corners.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+
+<aside class="tool-sidebar"></aside>
+</div>
 <script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script>

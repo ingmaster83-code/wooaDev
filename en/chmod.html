@@ -167,9 +167,6 @@
       </div>
     </div>
   </div>
-</div>
-<aside class="tool-sidebar"></aside>
-</div>
   <div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
@@ -275,7 +272,11 @@ function copyCmd() {
 // Initialize with 755
 applyOctal('755');
 </script>
-<script src="../js/wooahouse-originals-tool-en.js"></script>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Use 755 for directories and executable scripts; 644 for regular files in web server setups.</li><li>Read (r) = 4, Write (w) = 2, Execute (x) = 1. Add the values for each group to get the octal digit.</li><li>Avoid setting 777 permissions — it allows everyone to write and execute, creating a security risk.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What does chmod 755 mean?</summary><p>Owner can read, write, and execute (7); group and others can read and execute (5).</p></details><details><summary>What is the difference between symbolic and numeric mode?</summary><p>Numeric (octal) mode uses digits like 755; symbolic mode uses letters like u+x, g-w.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div><script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script src="../js/wooa-sidebar-en.js"></script>
 <script src="../js/wooa-footer-en.js"></script>

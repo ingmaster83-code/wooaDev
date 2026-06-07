@@ -182,33 +182,6 @@
     <span id="copyMsg" style="color:#22c55e;font-size:0.83rem;margin-left:10px;display:none">✅ Copied!</span>
   </div>
 
-  <div class="tips-panel" style="margin-top:16px">
-    <h3>💡 Tips</h3>
-    <ul>
-      <li><strong>justify-content</strong>: Aligns items along the main axis. Horizontal for row, vertical for column.</li>
-      <li><strong>align-items</strong>: Aligns items along the cross axis for a single line.</li>
-      <li><strong>align-content</strong>: Aligns multiple lines along the cross axis. Only works with flex-wrap: wrap.</li>
-      <li><strong>align-self</strong>: Overrides align-items for individual items.</li>
-      <li><strong>gap</strong>: Sets spacing between items (both row-gap and column-gap).</li>
-    </ul>
-  </div>
-
-  <details class="faq-item">
-    <summary>What is the difference between Flexbox and Grid?</summary>
-    <p>Flexbox is designed for 1D layouts (either row or column), while Grid handles 2D layouts (rows and columns together). Use Flexbox for navbars and button groups; use Grid for full-page layouts.</p>
-  </details>
-  <details class="faq-item">
-    <summary>What are flex-grow, flex-shrink, and flex-basis?</summary>
-    <p><code>flex-grow</code>: proportion of remaining space an item takes. <code>flex-shrink</code>: how much an item shrinks when space is limited. <code>flex-basis</code>: default size before growing/shrinking. The shorthand <code>flex: 1</code> equals <code>flex: 1 1 0%</code>.</p>
-  </details>
-  <details class="faq-item">
-    <summary>Is Flexbox supported in all browsers?</summary>
-    <p>Flexbox is fully supported in all modern browsers (Chrome, Firefox, Safari, Edge). IE11 has partial support with some bugs and may require <code>-ms-</code> prefixes.</p>
-  </details>
-</div>
-
-<aside class="tool-sidebar"></aside>
-</div>
 
   <div class="related-tools">
   <h2>Related Tools</h2>
@@ -221,6 +194,21 @@
 </div>
 <div class="wooa-orig-anchor"></div>
 <footer class="footer"></footer>
+<div class="tips-panel">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li><strong>justify-content</strong>: Aligns items along the main axis. Horizontal for row, vertical for column.</li>
+      <li><strong>align-items</strong>: Aligns items along the cross axis for a single line.</li>
+      <li><strong>align-content</strong>: Aligns multiple lines along the cross axis. Only works with flex-wrap: wrap.</li>
+      <li><strong>align-self</strong>: Overrides align-items for individual items.</li>
+      <li><strong>gap</strong>: Sets spacing between items (both row-gap and column-gap).</li>
+    </ul>
+  </div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Can I use the generated CSS code directly?</summary><p>Yes. Copy the flexbox CSS properties and paste them into your stylesheet or component styles.</p></details><details><summary>Are flex-wrap and align-content supported?</summary><p>Yes. All major flexbox properties including flex-wrap, align-content, and gap are configurable.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+
+<aside class="tool-sidebar"></aside>
+</div>
 <script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script>

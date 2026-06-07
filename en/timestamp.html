@@ -109,9 +109,6 @@
       <div class="ts-result-row"><span class="ts-result-label">Milliseconds (ms)</span><span class="ts-result-val" id="d-ms"></span><button class="ts-copy" onclick="cp('d-ms')">Copy</button></div>
     </div>
   </div>
-</div>
-<aside class="tool-sidebar"></aside>
-</div>
   <div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
@@ -170,7 +167,11 @@ function tick(){
 }
 tick(); setInterval(tick,1000);
 </script>
-<script src="../js/wooahouse-originals-tool-en.js"></script>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Unix timestamp counts seconds since January 1, 1970 (UTC). JavaScript uses milliseconds — divide by 1000.</li><li>Use ISO 8601 format (e.g., 2024-01-15T09:30:00Z) for international date/time exchange.</li><li>Always store timestamps in UTC and convert to local time only for display.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What is a Unix timestamp?</summary><p>A Unix timestamp is the number of seconds elapsed since January 1, 1970, 00:00:00 UTC (the Unix epoch).</p></details><details><summary>Why does JavaScript return milliseconds?</summary><p><code>Date.now()</code> and <code>new Date().getTime()</code> return milliseconds. Divide by 1000 for Unix seconds.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div><script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script src="../js/wooa-sidebar-en.js"></script>
 <script src="../js/wooa-footer-en.js"></script>

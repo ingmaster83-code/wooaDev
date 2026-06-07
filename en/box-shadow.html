@@ -118,34 +118,6 @@
     <button class="dev-btn" onclick="copyCode()">📋 Copy Code</button>
   </div>
 
-  <div class="tips-panel" style="margin-top:16px">
-    <h3>💡 Tips</h3>
-    <ul>
-      <li><strong>X Offset</strong>: Positive moves shadow right, negative moves it left.</li>
-      <li><strong>Y Offset</strong>: Positive moves shadow down, negative moves it up.</li>
-      <li><strong>Blur</strong>: Higher values create softer, more spread-out shadows. 0 = sharp edge.</li>
-      <li><strong>Spread</strong>: Positive expands the shadow, negative shrinks it.</li>
-      <li><strong>Inset</strong>: Draws the shadow inside the element — great for pressed/sunken effects.</li>
-      <li>Stack multiple shadow layers for richer, more realistic depth effects.</li>
-    </ul>
-  </div>
-
-  <details class="faq-item">
-    <summary>What's the difference between box-shadow and text-shadow?</summary>
-    <p><code>box-shadow</code> applies to the entire element box and supports <code>inset</code> and <code>spread</code>. <code>text-shadow</code> only applies to the text characters and does not support those parameters.</p>
-  </details>
-  <details class="faq-item">
-    <summary>Does box-shadow affect layout?</summary>
-    <p>No. Unlike <code>outline</code>, <code>box-shadow</code> does not take up space in the document layout. It is purely visual and does not push other elements away.</p>
-  </details>
-  <details class="faq-item">
-    <summary>How do I apply a shadow to only one side?</summary>
-    <p>Use a negative spread value combined with a single-directional offset. For example: <code>box-shadow: 0 4px 6px -4px rgba(0,0,0,0.4)</code> shows a shadow only at the bottom.</p>
-  </details>
-</div>
-
-<aside class="tool-sidebar"></aside>
-</div>
 
   <div class="related-tools">
   <h2>Related Tools</h2>
@@ -158,6 +130,22 @@
 </div>
 <div class="wooa-orig-anchor"></div>
 <footer class="footer"></footer>
+<div class="tips-panel">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li><strong>X Offset</strong>: Positive moves shadow right, negative moves it left.</li>
+      <li><strong>Y Offset</strong>: Positive moves shadow down, negative moves it up.</li>
+      <li><strong>Blur</strong>: Higher values create softer, more spread-out shadows. 0 = sharp edge.</li>
+      <li><strong>Spread</strong>: Positive expands the shadow, negative shrinks it.</li>
+      <li><strong>Inset</strong>: Draws the shadow inside the element — great for pressed/sunken effects.</li>
+      <li>Stack multiple shadow layers for richer, more realistic depth effects.</li>
+    </ul>
+  </div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What is an inset shadow?</summary><p>An inset shadow appears inside the element instead of outside. Toggle the Inset option to switch.</p></details><details><summary>Can I apply multiple box shadows?</summary><p>Yes. In CSS, separate multiple box-shadow values with commas. Each shadow is rendered independently.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+
+<aside class="tool-sidebar"></aside>
+</div>
 <script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script>

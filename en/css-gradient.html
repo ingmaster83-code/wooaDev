@@ -139,33 +139,6 @@
     <button class="dev-btn" onclick="copyCode()">📋 Copy Code</button>
   </div>
 
-  <div class="tips-panel" style="margin-top:16px">
-    <h3>💡 Tips</h3>
-    <ul>
-      <li><strong>Linear</strong>: Color transitions along a straight line — ideal for backgrounds, buttons, and headers.</li>
-      <li><strong>Radial</strong>: Color radiates from a center point outward — great for spotlight and highlight effects.</li>
-      <li><strong>Conic</strong>: Color sweeps around a center point — useful for pie charts and color wheels.</li>
-      <li>Adjust stop positions (%) to precisely control the transition range between colors.</li>
-      <li>Replace <code>linear-gradient</code> with <code>repeating-linear-gradient</code> in the output to create striped patterns.</li>
-    </ul>
-  </div>
-
-  <details class="faq-item">
-    <summary>Can I layer multiple gradients?</summary>
-    <p>Yes. In CSS, you can separate multiple gradients with commas in the <code>background</code> property to layer them. Example: <code>background: linear-gradient(...), radial-gradient(...);</code> The first one listed renders on top.</p>
-  </details>
-  <details class="faq-item">
-    <summary>Is conic-gradient supported in all browsers?</summary>
-    <p>Conic gradients require Chrome 69+, Firefox 83+, or Safari 12.1+. They are not supported in Internet Explorer. Linear and radial gradients work in IE 10+.</p>
-  </details>
-  <details class="faq-item">
-    <summary>How do I use this as a border gradient?</summary>
-    <p>CSS doesn't support gradients directly on <code>border-color</code>. Instead, use <code>border-image</code>: <code>border-image: linear-gradient(to right, #f00, #00f) 1;</code> or use a pseudo-element background technique for more control.</p>
-  </details>
-</div>
-
-<aside class="tool-sidebar"></aside>
-</div>
 
   <div class="related-tools">
   <h2>Related Tools</h2>
@@ -178,6 +151,21 @@
 </div>
 <div class="wooa-orig-anchor"></div>
 <footer class="footer"></footer>
+<div class="tips-panel">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li><strong>Linear</strong>: Color transitions along a straight line — ideal for backgrounds, buttons, and headers.</li>
+      <li><strong>Radial</strong>: Color radiates from a center point outward — great for spotlight and highlight effects.</li>
+      <li><strong>Conic</strong>: Color sweeps around a center point — useful for pie charts and color wheels.</li>
+      <li>Adjust stop positions (%) to precisely control the transition range between colors.</li>
+      <li>Replace <code>linear-gradient</code> with <code>repeating-linear-gradient</code> in the output to create striped patterns.</li>
+    </ul>
+  </div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Can I copy the generated CSS code directly?</summary><p>Yes. Click the generated CSS code to copy it to your clipboard and paste it into your stylesheet.</p></details><details><summary>Is radial gradient supported?</summary><p>Yes. Both linear and radial gradients are supported. Switch between them using the mode selector.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+
+<aside class="tool-sidebar"></aside>
+</div>
 <script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script>

@@ -129,9 +129,6 @@
     </div>
     <div id="parseResult" class="alert alert-info" style="display:none;margin-top:10px"></div>
   </div>
-</div>
-<aside class="tool-sidebar"></aside>
-</div>
   <div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
@@ -205,7 +202,11 @@ function copyCron() {
   });
 }
 </script>
-<script src="../js/wooahouse-originals-tool-en.js"></script>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Use special strings like <code>@daily</code> or <code>@hourly</code> instead of manual cron syntax for common schedules.</li><li>The 5 fields are: minute, hour, day of month, month, day of week — in that order.</li><li>Use a comma to list multiple values and a hyphen to specify a range (e.g., 1-5 for Monday–Friday).</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What is cron?</summary><p>Cron is a Unix/Linux job scheduler that runs commands or scripts automatically at specified times.</p></details><details><summary>How do I run a job every 15 minutes?</summary><p>Use */15 in the minute field: <code>*/15 * * * * /path/to/command</code>.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div><script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script src="../js/wooa-sidebar-en.js"></script>
 <script src="../js/wooa-footer-en.js"></script>

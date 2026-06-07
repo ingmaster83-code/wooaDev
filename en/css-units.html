@@ -138,9 +138,6 @@
     <div class="dev-label">Conversion result <small style="color:#9CA3AF;font-weight:400">(클릭하면 복사)</small></div>
     <div class="units-grid" id="unitsGrid"></div>
   </div>
-</div>
-<aside class="tool-sidebar"></aside>
-</div>
   <div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
@@ -240,7 +237,11 @@ function copyValue(text) {
   });
 }
 </script>
-<script src="../js/wooahouse-originals-tool-en.js"></script>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Use <code>rem</code> for font sizes to respect the user's browser default and improve accessibility.</li><li>Use <code>em</code> for spacing that should scale with the component's font size.</li><li>Use <code>vw</code>/<code>vh</code> for viewport-relative layouts like full-screen sections.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What is the difference between em and rem?</summary><p><code>em</code> is relative to the parent element's font size; <code>rem</code> is relative to the root (<html>) element.</p></details><details><summary>When should I use px vs percent?</summary><p>Use px for fixed dimensions (borders, icons); use % for fluid layouts that scale with parent element size.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div><script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script src="../js/wooa-sidebar-en.js"></script>
 <script src="../js/wooa-footer-en.js"></script>

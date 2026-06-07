@@ -130,37 +130,6 @@
     </div>
   </div>
 
-  <div class="tips-panel" style="margin-top:16px">
-    <h3>💡 Tips</h3>
-    <ul>
-      <li>Base64 encoding lets you embed images directly in HTML/CSS without separate files.</li>
-      <li>Base64 strings are ~33% larger than the original file size.</li>
-      <li>Best suited for small icons and logos — use regular URLs for large images.</li>
-      <li>SVG can also be embedded using URL-encoded format in CSS.</li>
-      <li>All conversion happens in your browser. No file is sent to any server.</li>
-    </ul>
-  </div>
-
-  <details class="faq-item">
-    <summary>What is the difference between Data URL and Base64 only?</summary>
-    <p>A Data URL has the format <code>data:image/png;base64,AAA...</code> and can be used directly in HTML img src or CSS url(). Base64 only is the raw encoded string for cases where you need to process it separately.</p>
-  </details>
-  <details class="faq-item">
-    <summary>Which image formats are supported?</summary>
-    <p>PNG, JPG/JPEG, GIF, SVG, WebP, BMP, ICO and any other image format supported by your browser can be converted.</p>
-  </details>
-  <details class="faq-item">
-    <summary>Is my image uploaded to a server?</summary>
-    <p>No. All processing is done with JavaScript inside your browser. Your file is never transmitted anywhere, keeping your data private.</p>
-  </details>
-  <details class="faq-item">
-    <summary>Can I convert large images?</summary>
-    <p>Technically yes, but large images produce very long Base64 strings that significantly increase your HTML/CSS file size. It's generally recommended for images under 10 KB.</p>
-  </details>
-</div>
-
-<aside class="tool-sidebar"></aside>
-</div>
 
   <div class="related-tools">
   <h2>Related Tools</h2>
@@ -173,6 +142,21 @@
 </div>
 <div class="wooa-orig-anchor"></div>
 <footer class="footer"></footer>
+<div class="tips-panel">
+    <h3>💡 Tips</h3>
+    <ul>
+      <li>Base64 encoding lets you embed images directly in HTML/CSS without separate files.</li>
+      <li>Base64 strings are ~33% larger than the original file size.</li>
+      <li>Best suited for small icons and logos — use regular URLs for large images.</li>
+      <li>SVG can also be embedded using URL-encoded format in CSS.</li>
+      <li>All conversion happens in your browser. No file is sent to any server.</li>
+    </ul>
+  </div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Can I use a Base64 image in CSS?</summary><p>Yes. Use it as <code>background-image: url("data:image/png;base64,...")</code> in your stylesheet.</p></details><details><summary>What image formats are supported?</summary><p>PNG, JPG, GIF, WebP, SVG, and most common image formats are supported.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+
+<aside class="tool-sidebar"></aside>
+</div>
 <script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script>

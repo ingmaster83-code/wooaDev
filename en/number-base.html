@@ -109,9 +109,6 @@
     <div class="bit-display" id="bitDisplay"></div>
     <div style="font-size:0.78rem;color:#9CA3AF;margin-top:8px" id="bitInfo"></div>
   </div>
-</div>
-<aside class="tool-sidebar"></aside>
-</div>
   <div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
@@ -180,7 +177,11 @@ function cp(id) {
   setTimeout(()=>{ btn.textContent = orig; }, 1200);
 }
 </script>
-<script src="../js/wooahouse-originals-tool-en.js"></script>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Hexadecimal (base-16) uses 0–9 and A–F, and is widely used for colors and memory addresses.</li><li>Binary (base-2) is the fundamental number system used by all computers.</li><li>Octal (base-8) is used in Unix file permissions (chmod values).</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>When is hexadecimal used?</summary><p>Hex is used for HTML/CSS colors (#FF5733), memory addresses, byte values, and low-level debugging.</p></details><details><summary>How do I convert decimal 255 to binary?</summary><p>255 in binary is 11111111 (eight 1 bits), which equals FF in hex.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div><script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script src="../js/wooa-sidebar-en.js"></script>
 <script src="../js/wooa-footer-en.js"></script>

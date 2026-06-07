@@ -93,9 +93,6 @@
       </div>
     </div>
   </div>
-</div>
-<aside class="tool-sidebar"></aside>
-</div>
   <div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
@@ -133,7 +130,11 @@ function copyPanel(id) {
 }
 function showErr(msg) { const el=document.getElementById('errorMsg'); el.textContent=msg; el.style.display='block'; }
 </script>
-<script src="../js/wooahouse-originals-tool-en.js"></script>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>YAML is more human-readable; JSON is more universally supported in APIs and libraries.</li><li>YAML uses indentation for structure — be careful with tabs vs spaces.</li><li>Convert YAML to JSON when submitting data to REST APIs that expect JSON.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Is JSON or YAML better?</summary><p>JSON is preferred for API communication; YAML is preferred for human-readable config files like Kubernetes or CI/CD pipelines.</p></details><details><summary>Are comments supported?</summary><p>YAML supports comments (#); JSON does not. Comments are dropped when converting YAML → JSON.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div><script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script src="../js/wooa-sidebar-en.js"></script>
 <script src="../js/wooa-footer-en.js"></script>

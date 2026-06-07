@@ -108,9 +108,6 @@
       <div class="diff-output" id="diffOutput"></div>
     </div>
   </div>
-</div>
-<aside class="tool-sidebar"></aside>
-</div>
   <div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
@@ -161,7 +158,11 @@ function row(type, lnA, lnB, val) {
 function clearAll() { document.getElementById('textA').value=''; document.getElementById('textB').value=''; document.getElementById('resultPanel').style.display='none'; }
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 </script>
-<script src="../js/wooahouse-originals-tool-en.js"></script>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Paste two versions of a file to see exactly what changed between them.</li><li>Green lines are additions; red lines are deletions.</li><li>Great for code reviews, comparing config files, or spotting typos in documents.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What file types can I compare?</summary><p>Any text-based content: source code, JSON, YAML, Markdown, plain text, and more.</p></details><details><summary>Is the diff shown line-by-line or character-by-character?</summary><p>Line-by-line by default. Changed lines are highlighted so you can quickly identify differences.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div><script src="../js/wooahouse-originals-tool-en.js"></script>
 <script src="../js/pwa-install.js"></script>
 <script src="../js/wooa-sidebar-en.js"></script>
 <script src="../js/wooa-footer-en.js"></script>
