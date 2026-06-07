@@ -149,17 +149,8 @@
       </div>
     </div>
 
-    <div class="tips-panel">
-      <h3>💡 Tips</h3>
-      <ul>
-        <li><b>Secure</b>: cookie only sent over HTTPS. <b>HttpOnly</b>: inaccessible to JavaScript (XSS protection)</li>
-        <li><b>SameSite=Strict</b>: cookie not sent on cross-site requests (strongest CSRF protection)</li>
-        <li><b>Max-Age</b>: expiry in seconds. <b>Expires</b>: absolute GMT date for expiry</li>
-        <li>Cookie max size is ~4KB. Browser limits vary on how many cookies per domain</li>
-      </ul>
-    </div>
-
-      <div class="related-tools">
+    
+<div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
     <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
@@ -169,17 +160,16 @@
   </div>
 </div>
 <div class="wooa-orig-anchor"></div>
-<section class="faq-section">
-      <h2>FAQ</h2>
-      <div class="faq-item">
-        <div class="faq-q">What is the difference between the Cookie and Set-Cookie headers?</div>
-        <div class="faq-a">The Cookie header is sent by the browser to the server and contains only name=value pairs. The Set-Cookie header is sent by the server to the browser and includes attributes like Expires, Domain, Path, Secure, and HttpOnly.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">What are the requirements for SameSite=None?</div>
-        <div class="faq-a">When using SameSite=None, the Secure flag must also be present. Without Secure, modern browsers will reject the cookie. SameSite=None allows cross-site requests to carry the cookie, so use it only when necessary (e.g., embedded widgets, OAuth).</div>
-      </div>
-    </section>
+<div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li><b>Secure</b>: cookie only sent over HTTPS. <b>HttpOnly</b>: inaccessible to JavaScript (XSS protection)</li>
+        <li><b>SameSite=Strict</b>: cookie not sent on cross-site requests (strongest CSRF protection)</li>
+        <li><b>Max-Age</b>: expiry in seconds. <b>Expires</b>: absolute GMT date for expiry</li>
+        <li>Cookie max size is ~4KB. Browser limits vary on how many cookies per domain</li>
+      </ul>
+    </div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What is the difference between the Cookie and Set-Cookie headers?</summary><p>The Cookie header is sent by the browser to the server and contains only name=value pairs. The Set-Cookie header is sent by the server to the browser and includes attributes like Expires, Domain, Path, Secure, and HttpOnly.</p></details><details><summary>What are the requirements for SameSite=None?</summary><p>When using SameSite=None, the Secure flag must also be present. Without Secure, modern browsers will reject the cookie. SameSite=None allows cross-site requests to carry the cookie, so use it only when necessary (e.g., embedded widgets, OAuth).</p></details></div>
   </div>
 
   <aside class="tool-sidebar"></aside>

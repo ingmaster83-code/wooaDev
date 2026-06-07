@@ -120,17 +120,8 @@
       </div>
     </div>
 
-    <div class="tips-panel">
-      <h3>💡 Tips</h3>
-      <ul>
-        <li>Nested objects generate separate interfaces automatically</li>
-        <li>Arrays use the first element to infer the item type (e.g., <code>string[]</code>)</li>
-        <li>Enable <b>Optional (?)</b> to mark all fields as optional</li>
-        <li>Works with JSON arrays at the root level too</li>
-      </ul>
-    </div>
-
-      <div class="related-tools">
+    
+<div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
     <a href="base64.html" class="related-card"><span class="related-icon">🔐</span><span>Base64</span></a>
@@ -140,17 +131,16 @@
   </div>
 </div>
 <div class="wooa-orig-anchor"></div>
-<section class="faq-section">
-      <h2>FAQ</h2>
-      <div class="faq-item">
-        <div class="faq-q">What happens with null values?</div>
-        <div class="faq-a">Null values are typed as <code>null</code>. If you want nullable types, use a union: <code>string | null</code> — you can edit the output after generation.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Does it handle deeply nested JSON?</div>
-        <div class="faq-a">Yes. Each nested object generates its own interface, and the parent interface references it by name. Interface names are derived from the property key (PascalCase).</div>
-      </div>
-    </section>
+<div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li>Nested objects generate separate interfaces automatically</li>
+        <li>Arrays use the first element to infer the item type (e.g., <code>string[]</code>)</li>
+        <li>Enable <b>Optional (?)</b> to mark all fields as optional</li>
+        <li>Works with JSON arrays at the root level too</li>
+      </ul>
+    </div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What happens with null values?</summary><p>Null values are typed as <code>null</code>. If you want nullable types, use a union: <code>string | null</code> — you can edit the output after generation.</p></details><details><summary>Does it handle deeply nested JSON?</summary><p>Yes. Each nested object generates its own interface, and the parent interface references it by name. Interface names are derived from the property key (PascalCase).</p></details></div>
   </div>
 
   <aside class="tool-sidebar"></aside>

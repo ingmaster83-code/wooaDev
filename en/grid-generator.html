@@ -154,17 +154,8 @@
       </div>
     </div>
 
-    <div class="tips-panel">
-      <h3>💡 Tips</h3>
-      <ul>
-        <li><code>1fr</code> distributes remaining space equally among columns</li>
-        <li>Use <code>repeat(3, 1fr)</code> as shorthand for 3 equal columns</li>
-        <li><code>minmax(200px, 1fr)</code> sets minimum and maximum sizes</li>
-        <li><code>auto-fill</code> / <code>auto-fit</code> with <code>minmax()</code> creates responsive grids</li>
-      </ul>
-    </div>
-
-      <div class="related-tools">
+    
+<div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
     <a href="uuid-generator.html" class="related-card"><span class="related-icon">🆔</span><span>UUID 생성기</span></a>
@@ -174,17 +165,16 @@
   </div>
 </div>
 <div class="wooa-orig-anchor"></div>
-<section class="faq-section">
-      <h2>FAQ</h2>
-      <div class="faq-item">
-        <div class="faq-q">What is the difference between auto-fill and auto-fit?</div>
-        <div class="faq-a">Both automatically create as many columns as possible. The difference is that <code>auto-fit</code> collapses empty tracks so items stretch to fill the container, while <code>auto-fill</code> keeps empty tracks.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">How do I make a responsive grid without media queries?</div>
-        <div class="faq-a">Use <code>grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))</code>. Items will wrap automatically when the viewport is too narrow.</div>
-      </div>
-    </section>
+<div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li><code>1fr</code> distributes remaining space equally among columns</li>
+        <li>Use <code>repeat(3, 1fr)</code> as shorthand for 3 equal columns</li>
+        <li><code>minmax(200px, 1fr)</code> sets minimum and maximum sizes</li>
+        <li><code>auto-fill</code> / <code>auto-fit</code> with <code>minmax()</code> creates responsive grids</li>
+      </ul>
+    </div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What is the difference between auto-fill and auto-fit?</summary><p>Both automatically create as many columns as possible. The difference is that <code>auto-fit</code> collapses empty tracks so items stretch to fill the container, while <code>auto-fill</code> keeps empty tracks.</p></details><details><summary>How do I make a responsive grid without media queries?</summary><p>Use <code>grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))</code>. Items will wrap automatically when the viewport is too narrow.</p></details></div>
   </div>
 
   <aside class="tool-sidebar"></aside>

@@ -178,17 +178,8 @@
       </div>
     </div>
 
-    <div class="tips-panel">
-      <h3>💡 Tips</h3>
-      <ul>
-        <li><b>sub</b>: subject (user ID), <b>iss</b>: issuer, <b>exp</b>: expiry (Unix timestamp)</li>
-        <li>JWT payload is Base64URL encoded — it is NOT encrypted, just signed</li>
-        <li>Never put sensitive data (passwords, credit cards) in the payload</li>
-        <li>HS256 uses a shared secret; RS256 uses a public/private key pair</li>
-      </ul>
-    </div>
-
-      <div class="related-tools">
+    
+<div class="related-tools">
   <h2>Related Tools</h2>
   <div class="related-grid">
     <a href="uuid-generator.html" class="related-card"><span class="related-icon">🆔</span><span>UUID 생성기</span></a>
@@ -198,17 +189,16 @@
   </div>
 </div>
 <div class="wooa-orig-anchor"></div>
-<section class="faq-section">
-      <h2>FAQ</h2>
-      <div class="faq-item">
-        <div class="faq-q">How does JWT work?</div>
-        <div class="faq-a">A JWT consists of three parts: Header.Payload.Signature. The server signs the token with a secret key. Clients send the JWT with each request, and the server verifies the signature to confirm authenticity without a database lookup.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Can anyone read the JWT payload?</div>
-        <div class="faq-a">Yes — the payload is Base64URL encoded, not encrypted, so anyone can decode it. JWT security relies on signature verification, not secrecy. Never put sensitive information in the payload.</div>
-      </div>
-    </section>
+<div class="tips-panel">
+      <h3>💡 Tips</h3>
+      <ul>
+        <li><b>sub</b>: subject (user ID), <b>iss</b>: issuer, <b>exp</b>: expiry (Unix timestamp)</li>
+        <li>JWT payload is Base64URL encoded — it is NOT encrypted, just signed</li>
+        <li>Never put sensitive data (passwords, credit cards) in the payload</li>
+        <li>HS256 uses a shared secret; RS256 uses a public/private key pair</li>
+      </ul>
+    </div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>How does JWT work?</summary><p>A JWT consists of three parts: Header.Payload.Signature. The server signs the token with a secret key. Clients send the JWT with each request, and the server verifies the signature to confirm authenticity without a database lookup.</p></details><details><summary>Can anyone read the JWT payload?</summary><p>Yes — the payload is Base64URL encoded, not encrypted, so anyone can decode it. JWT security relies on signature verification, not secrecy. Never put sensitive information in the payload.</p></details></div>
   </div>
 
   <aside class="tool-sidebar"></aside>
