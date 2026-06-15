@@ -167,7 +167,7 @@ function decode() {
 }
 </script>
 <div class="tips-panel"><h3>💡 Tips</h3><ul><li>A JWT consists of three Base64URL-encoded parts: header, payload, and signature.</li><li>The <code>exp</code> claim is a Unix timestamp — divide by 1000 to get a JavaScript Date.</li><li>Never trust JWT payload data without verifying the signature on the server side.</li></ul></div>
-<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Is it safe to decode JWTs here?</summary><p>Yes. Decoding is done entirely in your browser. Your token is never sent to any server.</p></details><details><summary>Can this tool verify the signature?</summary><p>Signature verification requires the secret key or public key, which should never be shared client-side.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens locally in your browser. Nothing is transmitted to any server.</p></details></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Is it safe to decode JWTs here?</summary><p>Yes. Decoding is done entirely in your browser. Your token is never sent to any server.</p></details><details><summary>Can this tool verify the signature?</summary><p>Signature verification requires the secret key or public key, which should never be shared client-side.</p></details><details><summary>Is my data sent to a server?</summary><p>No. All processing happens entirely within your browser — your files are never uploaded to any server. This zero-server architecture keeps your data 100% private, safe for sensitive documents and enterprise security environments.</p></details></div>
 </div>
 <aside class="tool-sidebar"></aside>
 </div><script src="../js/wooahouse-originals-tool-en.js"></script>
