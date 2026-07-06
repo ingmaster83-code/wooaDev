@@ -54,6 +54,30 @@
   <meta name="twitter:title" content="JWT Generator - Create & Decode JSON Web Tokens Online – Free No Install | WooaDev">
   <meta name="twitter:description" content="Generate and decode JWT (JSON Web Token) entirely in the browser. Supports HS256, HS384, HS512 signing. Edit claims, set expiry, verify signatures. Free online JWT tool No installation required.">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does JWT work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A JWT consists of three parts: Header.Payload.Signature. The server signs the token with a secret key. Clients send the JWT with each request, and the server verifies the signature to confirm authenticity without a database lookup."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can anyone read the JWT payload?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — the payload is Base64URL encoded, not encrypted, so anyone can decode it. JWT security relies on signature verification, not secrecy. Never put sensitive information in the payload."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header class="header">

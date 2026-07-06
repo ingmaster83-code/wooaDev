@@ -55,6 +55,38 @@
     .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
     .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
   </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "JWT 토큰의 구조는 어떻게 되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Header.Payload.Signature 세 부분을 점(.)으로 구분한 구조입니다. Header와 Payload는 Base64로 인코딩됩니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "이 도구로 토큰 유효성을 검증할 수 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Header·Payload 내용 확인은 가능하나, Signature 검증은 서버 비밀키가 필요합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "파일이 서버에 저장되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 개인정보와 민감한 데이터가 외부로 유출될 걱정이 없으며, 기업 보안 환경에서도 안심하고 사용할 수 있습니다."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header>

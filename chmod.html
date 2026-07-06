@@ -61,6 +61,38 @@
     .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
     .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
   </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "chmod 755와 chmod 644의 차이는 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "755는 소유자 읽기/쓰기/실행, 그룹·기타 읽기/실행 권한입니다. 644는 소유자 읽기/쓰기, 그룹·기타 읽기만 허용합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "실행 파일 권한은 어떻게 설정하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "실행 권한은 숫자 1 또는 기호 x에 해당합니다. 예: 755(rwxr-xr-x)로 설정하면 소유자와 그룹·기타 사용자 모두 실행 가능합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "파일이 서버에 저장되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 개인정보와 민감한 데이터가 외부로 유출될 걱정이 없으며, 기업 보안 환경에서도 안심하고 사용할 수 있습니다."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header>

@@ -45,6 +45,38 @@
     .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
     .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
   </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "URL 인코딩이 필요한 경우는 어떤 때인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "URL에 한글, 공백, 특수문자를 포함할 때 %XX 형식으로 인코딩해야 브라우저와 서버가 올바르게 처리합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "전체 URL을 인코딩하면 안 되는 이유는 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "/, ?, & 등 URL 구조 문자도 인코딩되어 URL이 깨집니다. 쿼리 파라미터 값 부분만 인코딩하세요."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "파일이 서버에 저장되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 개인정보와 민감한 데이터가 외부로 유출될 걱정이 없으며, 기업 보안 환경에서도 안심하고 사용할 수 있습니다."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header>

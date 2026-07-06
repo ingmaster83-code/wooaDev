@@ -44,6 +44,38 @@
     .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
     .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
   </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "JSON과 YAML 중 어떤 것을 사용해야 하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "JSON은 API 통신에, YAML은 가독성이 중요한 설정 파일(CI/CD, Docker, Kubernetes)에 주로 사용됩니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "YAML에서 들여쓰기가 중요한 이유는 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "YAML은 들여쓰기로 계층 구조를 표현합니다. 탭 대신 스페이스를 사용해야 오류가 없습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "파일이 서버에 저장되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "아니요. 모든 처리는 브라우저 안에서만 이루어지며 파일은 서버로 전송되지 않습니다. 개인정보와 민감한 데이터가 외부로 유출될 걱정이 없으며, 기업 보안 환경에서도 안심하고 사용할 수 있습니다."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header>

@@ -56,6 +56,38 @@
     .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
     .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
   </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What regex engine does this use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "JavaScript RegExp, which is compatible with most modern browsers and Node.js."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I match a literal dot?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Escape it with a backslash: \\. . Without escaping, . matches any character."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my data sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely within your browser — your files are never uploaded to any server. This zero-server architecture keeps your data 100% private, safe for sensitive documents and enterprise security environments."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header>

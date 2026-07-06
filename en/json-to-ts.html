@@ -54,6 +54,30 @@
   <meta name="twitter:title" content="JSON to TypeScript Interface Generator - Online Free No Install | WooaDev">
   <meta name="twitter:description" content="Convert JSON to TypeScript interfaces automatically. Handles nested objects, arrays, optional fields, and exports. Free online JSON to TypeScript converter No installation required.">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What happens with null values?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Null values are typed as null . If you want nullable types, use a union: string | null — you can edit the output after generation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it handle deeply nested JSON?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Each nested object generates its own interface, and the parent interface references it by name. Interface names are derived from the property key (PascalCase)."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header class="header">

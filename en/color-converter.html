@@ -57,6 +57,30 @@
   .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
   .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does it support 3-digit HEX codes (#RGB)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Entering a 3-digit HEX code like #F5A automatically expands it to #FF55AA before converting."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which format should I use in CSS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "HEX is the most common and widely supported. HSL is great for intuitive adjustments, and RGB is preferred when you need to add transparency (rgba)."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header>

@@ -52,6 +52,38 @@
     .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
     .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
   </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is it safe to decode JWTs here?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Decoding is done entirely in your browser. Your token is never sent to any server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can this tool verify the signature?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Signature verification requires the secret key or public key, which should never be shared client-side."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my data sent to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All processing happens entirely within your browser — your files are never uploaded to any server. This zero-server architecture keeps your data 100% private, safe for sensitive documents and enterprise security environments."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header>

@@ -48,6 +48,38 @@
   .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
   .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What's the difference between JSON Formatter and XML Formatter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "JSON uses JavaScript object notation while XML uses a tag-based markup language. XML supports attributes, namespaces, CDATA sections, and processing instructions that JSON doesn't have, so a separate parser is required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I do if validation fails?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Check for mismatched tag names, missing closing tags, unquoted attribute values, or illegal characters. The error message will point to the specific location of the problem."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I process large XML files?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Processing happens in browser memory, so files up to several MB are supported. Very large files may take a moment to process depending on your device."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header>

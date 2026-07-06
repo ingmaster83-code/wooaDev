@@ -56,6 +56,30 @@
   <meta name="twitter:title" content="Cookie Parser - HTTP Cookie String Analyzer & Generator – Free No Install | WooaDev">
   <meta name="twitter:description" content="Parse HTTP cookie strings into key-value pairs and generate Set-Cookie headers. Supports Expires, SameSite, Secure, HttpOnly attributes. Free online cookie parser No installation required.">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between the Cookie and Set-Cookie headers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Cookie header is sent by the browser to the server and contains only name=value pairs. The Set-Cookie header is sent by the server to the browser and includes attributes like Expires, Domain, Path, Secure, and HttpOnly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the requirements for SameSite=None?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When using SameSite=None, the Secure flag must also be present. Without Secure, modern browsers will reject the cookie. SameSite=None allows cross-site requests to carry the cookie, so use it only when necessary (e.g., embedded widgets, OAuth)."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header class="header">

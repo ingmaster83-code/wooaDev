@@ -51,6 +51,30 @@
   .map-link { display:inline-block; margin-top:10px; font-size:0.82rem; color:#C4956A; text-decoration:none; }
   .map-link:hover { text-decoration:underline; }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does my IP location differ from my actual location?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "IP geolocation databases use registration data from ISPs, which may point to the ISP's office rather than your physical address. VPN users will see the VPN server's location."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does a company or school IP appear?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Institutional IPs typically show the organization's name in the ISP/Organization field, and the location reflects where the network is registered."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header>
