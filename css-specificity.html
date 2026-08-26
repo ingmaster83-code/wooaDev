@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 명시도(Specificity) 계산기 — 선택자 우선순위 확인 무료 | WooaDev</title>
+  <meta name="description" content="CSS 선택자의 명시도(specificity)를 즉시 계산합니다. 여러 선택자를 입력하면 어떤 규칙이 이기는지 자동으로 비교해줍니다. ID·클래스·태그 개수를 한눈에.">
+  <meta name="keywords" content="CSS명시도, CSS specificity, 선택자우선순위, CSS우선순위계산기, css selector specificity calculator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/css-specificity.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/css-specificity.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/css-specificity.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/css-specificity.html">
+  <meta property="og:title" content="CSS 명시도(Specificity) 계산기 — 선택자 우선순위 확인 무료 | WooaDev">
+  <meta property="og:description" content="CSS 선택자의 명시도를 즉시 계산하고 여러 선택자 중 어떤 규칙이 이기는지 비교합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/css-specificity.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS 명시도(Specificity) 계산기 — 선택자 우선순위 확인 무료 | WooaDev">
+  <meta name="twitter:description" content="CSS 선택자의 명시도를 즉시 계산합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSS 명시도 계산기","url":"https://wooadev.wooahouse.com/css-specificity.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .spec-result-list { display:flex; flex-direction:column; gap:8px; margin-top:14px; }
+    .spec-result-item { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 14px; border-radius:8px; border:1.5px solid #E5E7EB; background:#F8F9FA; flex-wrap:wrap; }
+    .spec-result-item.winner { border-color:#22C55E; background:#F0FDF4; }
+    .spec-selector { font-family:monospace; font-size:0.9rem; }
+    .spec-score { display:flex; gap:6px; align-items:center; }
+    .spec-num { background:white; border:1.5px solid #E5E7EB; border-radius:6px; padding:3px 9px; font-family:monospace; font-weight:700; font-size:0.84rem; }
+    .spec-winner-badge { font-size:0.72rem; font-weight:700; padding:2px 8px; border-radius:10px; background:#DCFCE7; color:#16A34A; }
+    .lang-switcher { display:flex; align-items:center; gap:4px; }
+    .lang-switcher a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.8rem; font-weight:600; padding:3px 8px; border-radius:12px; transition:background 0.15s; }
+    .lang-switcher a.active { color:white; background:rgba(255,255,255,0.25); }
+    .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
+    .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
+  </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"명시도는 어떻게 계산되나요?","acceptedAnswer":{"@type":"Answer","text":"(인라인 style, ID 개수, 클래스·속성·가상클래스 개수, 태그·가상요소 개수) 네 자리 값으로 계산되며, 앞자리가 클수록 우선순위가 높습니다."}},
+    {"@type":"Question","name":"!important는 명시도에 포함되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. !important는 명시도 계산과 별개로 다른 모든 규칙보다 우선 적용됩니다. 명시도 비교는 !important가 없는 경우에만 의미가 있습니다."}},
+    {"@type":"Question","name":"파일이 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 계산은 브라우저 안에서만 이루어지며 입력값은 서버로 전송되지 않습니다."}}
+  ]
+}
+</script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+  <div class="header-right">
+    <div class="lang-switcher">
+      <a href="css-specificity.html" class="active">KO</a>
+      <span>|</span>
+      <a href="en/css-specificity.html">EN</a>
+    </div>
+    <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CSS 명시도 계산기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🎯</span>
+    <h1>CSS 명시도(Specificity) 계산기</h1>
+    <p>여러 선택자를 입력하면 명시도를 계산하고 어떤 규칙이 이기는지 비교해줍니다.</p>
+  </div>
+
+  <div class="dev-panel">
+    <div class="dev-label">CSS 선택자 (한 줄에 하나씩)</div>
+    <textarea class="dev-textarea" id="selInput" rows="6" placeholder="#header .nav a&#10;.nav a:hover&#10;a">#header .nav a
+.nav a:hover
+a</textarea>
+    <div class="dev-btn-row"><button class="dev-btn" onclick="calcAll()">계산하기</button></div>
+    <div class="spec-result-list" id="specResults"></div>
+  </div>
+
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="css-gradient.html" class="related-card"><span class="related-icon">🎨</span><span>CSS 그라디언트</span></a>
+    <a href="flexbox-generator.html" class="related-card"><span class="related-icon">📐</span><span>Flexbox 생성기</span></a>
+    <a href="grid-generator.html" class="related-card"><span class="related-icon">⬛</span><span>CSS Grid 생성기</span></a>
+    <a href="regex-tester.html" class="related-card"><span class="related-icon">🔍</span><span>Regex 테스터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>ID(#)는 클래스(.)보다, 클래스는 태그(div, a 등)보다 명시도가 높습니다.</li><li>같은 명시도라면 CSS 파일에서 나중에 선언된 규칙이 이깁니다.</li><li>명시도 전쟁을 피하려면 !important 대신 선택자를 단순하게 유지하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>명시도는 어떻게 계산되나요?</summary><p>(인라인 style, ID 개수, 클래스·속성·가상클래스 개수, 태그·가상요소 개수) 네 자리 값으로 계산되며, 앞자리가 클수록 우선순위가 높습니다.</p></details><details><summary>!important는 명시도에 포함되나요?</summary><p>아니요. !important는 명시도 계산과 별개로 다른 모든 규칙보다 우선 적용됩니다. 명시도 비교는 !important가 없는 경우에만 의미가 있습니다.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 계산은 브라우저 안에서만 이루어지며 입력값은 서버로 전송되지 않습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script>
+// CSS 선택자를 콤파운드 단위로 분리(콤비네이터 공백, >, +, ~ 무시하고 각 조각의 종류만 카운트)
+function calcSpecificity(selector) {
+  let s = selector.trim();
+  let ids = 0, classes = 0, tags = 0;
+  // 속성 선택자 [type="text"] 먼저 추출 (클래스급)
+  s = s.replace(/\[[^\]]*\]/g, () => { classes++; return ' '; });
+  // 가상클래스 :hover, :not(.x) 등 (클래스급) — :not()/:is()/:where() 내부는 재귀적으로 별도 계산해야 정확하지만 간단화해서 내부도 일반 카운트에 포함
+  s = s.replace(/::[a-zA-Z-]+/g, () => { tags++; return ' '; }); // 가상요소(::before 등)는 태그급
+  s = s.replace(/:not\(([^()]*)\)/gi, (m, inner) => { return ' ' + inner + ' '; }); // :not() 자체는 명시도 없음, 내부만 카운트
+  s = s.replace(/:[a-zA-Z-]+(\([^()]*\))?/g, () => { classes++; return ' '; });
+  // ID 선택자
+  s = s.replace(/#[a-zA-Z0-9_-]+/g, () => { ids++; return ' '; });
+  // 클래스 선택자
+  s = s.replace(/\.[a-zA-Z0-9_-]+/g, () => { classes++; return ' '; });
+  // 남은 태그명 (콤비네이터, *, 공백 제외)
+  const tagMatches = s.match(/[a-zA-Z][a-zA-Z0-9-]*/g) || [];
+  tags += tagMatches.length;
+  return { inline: 0, ids, classes, tags };
+}
+
+function compareSpec(a, b) {
+  if (a.inline !== b.inline) return a.inline - b.inline;
+  if (a.ids !== b.ids) return a.ids - b.ids;
+  if (a.classes !== b.classes) return a.classes - b.classes;
+  return a.tags - b.tags;
+}
+
+function calcAll() {
+  const lines = document.getElementById('selInput').value.split('\n').map(l => l.trim()).filter(Boolean);
+  const box = document.getElementById('specResults');
+  if (!lines.length) { box.innerHTML = ''; return; }
+  const results = lines.map(sel => ({ sel, spec: calcSpecificity(sel) }));
+  let winnerIdx = 0;
+  for (let i = 1; i < results.length; i++) {
+    if (compareSpec(results[i].spec, results[winnerIdx].spec) > 0) winnerIdx = i;
+  }
+  box.innerHTML = results.map((r, i) => {
+    const s = r.spec;
+    return `<div class="spec-result-item ${lines.length>1 && i===winnerIdx ? 'winner' : ''}">
+      <span class="spec-selector">${escHtml(r.sel)}</span>
+      <span class="spec-score">
+        <span class="spec-num">${s.inline}</span>
+        <span class="spec-num">${s.ids}</span>
+        <span class="spec-num">${s.classes}</span>
+        <span class="spec-num">${s.tags}</span>
+        ${lines.length>1 && i===winnerIdx ? '<span class="spec-winner-badge">최우선 적용</span>' : ''}
+      </span>
+    </div>`;
+  }).join('');
+}
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+window.onload = calcAll;
+</script><script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

@@ -70,4 +70,24 @@
   <url><loc>https://wooadev.wooahouse.com/en/cookie-parser.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/favicon-generator.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://wooadev.wooahouse.com/en/favicon-generator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/semver-calculator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/en/semver-calculator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/email-validator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/en/email-validator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/css-specificity.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/en/css-specificity.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/url-parser.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/en/url-parser.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/password-strength.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/en/password-strength.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/license-generator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/en/license-generator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/readme-generator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/en/readme-generator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/gitignore-generator.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/en/gitignore-generator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/curl-to-code.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/en/curl-to-code.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/code-screenshot.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/en/code-screenshot.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이메일 형식 검증기 — 오타 감지·형식 체크 무료 | WooaDev</title>
+  <meta name="description" content="이메일 주소 형식을 즉시 검증하고 gmial.com 같은 흔한 도메인 오타를 감지해 올바른 도메인을 제안합니다. 여러 개를 한 번에 검사할 수 있습니다.">
+  <meta name="keywords" content="이메일검증, 이메일형식체크, 이메일유효성검사, 이메일오타감지, 이메일확인기, email validator online">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/email-validator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/email-validator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/email-validator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/email-validator.html">
+  <meta property="og:title" content="이메일 형식 검증기 — 오타 감지·형식 체크 무료 | WooaDev">
+  <meta property="og:description" content="이메일 형식을 즉시 검증하고 흔한 도메인 오타를 감지합니다. 여러 개 한 번에 검사, 브라우저에서 즉시 처리.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/email-validator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="이메일 형식 검증기 — 오타 감지·형식 체크 무료 | WooaDev">
+  <meta name="twitter:description" content="이메일 형식을 즉시 검증하고 흔한 도메인 오타를 감지합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"이메일 검증기","url":"https://wooadev.wooahouse.com/email-validator.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .email-result-list { display:flex; flex-direction:column; gap:8px; margin-top:14px; }
+    .email-result-item { display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:8px; border:1.5px solid #E5E7EB; background:#F8F9FA; font-family:monospace; font-size:0.88rem; flex-wrap:wrap; }
+    .email-result-item.valid { border-color:#22C55E; background:#F0FDF4; }
+    .email-result-item.invalid { border-color:#EF4444; background:#FEF2F2; }
+    .email-badge { font-family:var(--font-main, inherit); font-size:0.72rem; font-weight:700; padding:2px 8px; border-radius:10px; }
+    .email-badge.valid { background:#DCFCE7; color:#16A34A; }
+    .email-badge.invalid { background:#FEE2E2; color:#DC2626; }
+    .email-suggest { font-family:var(--font-main, inherit); font-size:0.78rem; color:#D97706; }
+    .lang-switcher { display:flex; align-items:center; gap:4px; }
+    .lang-switcher a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.8rem; font-weight:600; padding:3px 8px; border-radius:12px; transition:background 0.15s; }
+    .lang-switcher a.active { color:white; background:rgba(255,255,255,0.25); }
+    .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
+    .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
+  </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"이 도구가 실제로 이메일이 존재하는지 확인해주나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 형식(구문)만 검증합니다. 실제 수신 가능 여부를 확인하려면 인증 메일을 보내는 방식이 필요합니다."}},
+    {"@type":"Question","name":"어떤 오타를 감지하나요?","acceptedAnswer":{"@type":"Answer","text":"gmial.com, naverr.com처럼 gmail.com·naver.com·daum.net 등 널리 쓰이는 도메인과 철자가 비슷한 경우 올바른 도메인을 제안합니다."}},
+    {"@type":"Question","name":"파일이 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력값은 서버로 전송되지 않습니다."}}
+  ]
+}
+</script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+  <div class="header-right">
+    <div class="lang-switcher">
+      <a href="email-validator.html" class="active">KO</a>
+      <span>|</span>
+      <a href="en/email-validator.html">EN</a>
+    </div>
+    <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>이메일 검증기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📧</span>
+    <h1>이메일 형식 검증기</h1>
+    <p>여러 이메일 주소를 한 번에 검사하고 흔한 도메인 오타를 감지합니다.</p>
+  </div>
+
+  <div class="dev-panel">
+    <div class="dev-label">이메일 주소 (한 줄에 하나씩, 여러 개 가능)</div>
+    <textarea class="dev-textarea" id="emailInput" rows="6" placeholder="example@gmial.com&#10;user@naver.com&#10;invalid-email">example@gmial.com
+user@naver.com
+invalid-email</textarea>
+    <div class="dev-btn-row"><button class="dev-btn" onclick="validateAll()">검증하기</button></div>
+    <div class="email-result-list" id="emailResults"></div>
+  </div>
+
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="regex-tester.html" class="related-card"><span class="related-icon">🔍</span><span>Regex 테스터</span></a>
+    <a href="password-strength.html" class="related-card"><span class="related-icon">🔒</span><span>비밀번호 강도 체크</span></a>
+    <a href="url-parser.html" class="related-card"><span class="related-icon">🔗</span><span>URL 파서</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>회원가입 폼 테스트 시 여러 이메일을 한 번에 검증할 수 있습니다.</li><li>형식이 맞아도 실제 존재하지 않는 주소일 수 있습니다 — 발송 후 반송 여부로 최종 확인하세요.</li><li>도메인 오타는 자동으로 감지해 올바른 철자를 제안합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>이 도구가 실제로 이메일이 존재하는지 확인해주나요?</summary><p>아니요. 형식(구문)만 검증합니다. 실제 수신 가능 여부를 확인하려면 인증 메일을 보내는 방식이 필요합니다.</p></details><details><summary>어떤 오타를 감지하나요?</summary><p>gmial.com, naverr.com처럼 gmail.com·naver.com·daum.net 등 널리 쓰이는 도메인과 철자가 비슷한 경우 올바른 도메인을 제안합니다.</p></details><details><summary>파일이 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력값은 서버로 전송되지 않습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script>
+const EMAIL_RE = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+const COMMON_DOMAINS = ['gmail.com','naver.com','daum.net','hanmail.net','nate.com','kakao.com','yahoo.com','outlook.com','hotmail.com','icloud.com'];
+
+function levenshtein(a, b) {
+  const m = a.length, n = b.length;
+  const dp = Array.from({length:m+1}, (_,i) => [i, ...Array(n).fill(0)]);
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+    }
+  }
+  return dp[m][n];
+}
+
+function suggestDomain(domain) {
+  if (!domain) return null;
+  let best = null, bestDist = 3;
+  for (const d of COMMON_DOMAINS) {
+    if (d === domain) return null; // exact match, no suggestion needed
+    const dist = levenshtein(domain, d);
+    if (dist > 0 && dist <= 2 && dist < bestDist) { best = d; bestDist = dist; }
+  }
+  return best;
+}
+
+function validateAll() {
+  const lines = document.getElementById('emailInput').value.split('\n').map(l => l.trim()).filter(Boolean);
+  const box = document.getElementById('emailResults');
+  if (!lines.length) { box.innerHTML = ''; return; }
+  box.innerHTML = lines.map(email => {
+    const valid = EMAIL_RE.test(email);
+    const domain = email.includes('@') ? email.split('@').pop().toLowerCase() : '';
+    const suggestion = valid ? suggestDomain(domain) : null;
+    let extra = '';
+    if (!valid) extra = `<span class="email-badge invalid">형식 오류</span>`;
+    else if (suggestion) extra = `<span class="email-badge valid">유효</span><span class="email-suggest">혹시 ${email.split('@')[0]}@${suggestion} 을(를) 의도하셨나요?</span>`;
+    else extra = `<span class="email-badge valid">유효</span>`;
+    return `<div class="email-result-item ${valid ? 'valid' : 'invalid'}"><span>${escHtml(email)}</span>${extra}</div>`;
+  }).join('');
+}
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+window.onload = validateAll;
+</script><script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

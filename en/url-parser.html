@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Parser & Query Parameter Editor Free | WooaDev</title>
+  <meta name="description" content="Break a URL down into protocol, host, path, and query parameters, then add, edit, or remove query params in a table to build a new URL instantly. Runs entirely in your browser.">
+  <meta name="keywords" content="url parser, query parameter editor, url analyzer, query string builder, url parser online">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/url-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/url-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/url-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/url-parser.html">
+  <meta property="og:title" content="URL Parser & Query Parameter Editor Free | WooaDev">
+  <meta property="og:description" content="Break a URL into its components and edit query parameters to build a new URL instantly.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/url-parser.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="URL Parser & Query Parameter Editor Free | WooaDev">
+  <meta name="twitter:description" content="Break a URL into its components and edit query parameters.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"URL Parser","url":"https://wooadev.wooahouse.com/en/url-parser.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .url-parts-grid { display:grid; grid-template-columns:120px 1fr; gap:8px 12px; margin-top:12px; font-size:0.88rem; }
+    .url-part-label { color:var(--text-light); font-weight:600; }
+    .url-part-val { font-family:monospace; word-break:break-all; }
+    .qp-table { width:100%; margin-top:12px; border-collapse:collapse; }
+    .qp-table th { text-align:left; font-size:0.76rem; color:var(--text-light); padding:4px 6px; }
+    .qp-table td { padding:4px 6px; }
+    .qp-table input { width:100%; box-sizing:border-box; padding:6px 8px; border:1.5px solid #E5E7EB; border-radius:6px; font-family:monospace; font-size:0.84rem; }
+    .qp-remove { background:#FEE2E2; color:#DC2626; border:none; border-radius:6px; width:28px; height:28px; cursor:pointer; font-size:0.9rem; }
+    .qp-output { margin-top:14px; padding:12px 14px; background:#F8F9FA; border:1.5px solid #E5E7EB; border-radius:8px; font-family:monospace; font-size:0.86rem; word-break:break-all; cursor:pointer; }
+    .lang-switcher { display:flex; align-items:center; gap:4px; }
+    .lang-switcher a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.8rem; font-weight:600; padding:3px 8px; border-radius:12px; transition:background 0.15s; }
+    .lang-switcher a.active { color:white; background:rgba(255,255,255,0.25); }
+    .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
+    .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
+  </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Does it handle non-ASCII characters or special symbols in a URL?","acceptedAnswer":{"@type":"Answer","text":"Yes, it uses the browser's URL/URLSearchParams APIs, which handle encoding and decoding automatically."}},
+    {"@type":"Question","name":"Does adding/removing query params change the original URL?","acceptedAnswer":{"@type":"Answer","text":"No. Your original input URL stays untouched — the edited result is shown as a new URL below."}},
+    {"@type":"Question","name":"Are inputs stored on a server?","acceptedAnswer":{"@type":"Answer","text":"No. All processing happens entirely in your browser and inputs are never sent to a server."}}
+  ]
+}
+</script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="../index.html">All Tools ›</a>
+    </nav>
+  <div class="header-right">
+    <div class="lang-switcher">
+      <a href="../url-parser.html">KO</a>
+      <span>|</span>
+      <a href="url-parser.html" class="active">EN</a>
+    </div>
+    <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="../index.html">WooaDev</a><span>›</span><span>URL Parser</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔗</span>
+    <h1>URL Parser & Query Parameter Editor</h1>
+    <p>Break a URL into its parts and edit query parameters to build a new URL.</p>
+  </div>
+
+  <div class="dev-panel">
+    <div class="dev-label">URL to analyze</div>
+    <input class="dev-input" id="urlInput" style="width:100%;" value="https://example.com/search?q=hello+world&page=2&sort=date">
+    <div class="dev-btn-row"><button class="dev-btn" onclick="parseUrl()">Parse</button></div>
+
+    <div class="url-parts-grid" id="urlParts"></div>
+
+    <div class="dev-label" style="margin-top:20px;">Edit query parameters</div>
+    <table class="qp-table">
+      <thead><tr><th>Key</th><th>Value</th><th></th></tr></thead>
+      <tbody id="qpBody"></tbody>
+    </table>
+    <div class="dev-btn-row">
+      <button class="dev-btn secondary" onclick="addParam()">+ Add Parameter</button>
+      <button class="dev-btn" onclick="copyResult()">Copy Result URL</button>
+    </div>
+    <div class="qp-output" id="qpOutput" onclick="copyResult()" title="Click to copy"></div>
+  </div>
+
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="url-encoder.html" class="related-card"><span class="related-icon">🔤</span><span>URL Encoder</span></a>
+    <a href="email-validator.html" class="related-card"><span class="related-icon">📧</span><span>Email Validator</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON Formatter</span></a>
+    <a href="regex-tester.html" class="related-card"><span class="related-icon">🔍</span><span>Regex Tester</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Add or edit UTM parameters (utm_source, etc.) to quickly build marketing links.</li><li>Add the same key multiple times to build array-style query parameters.</li><li>Click the result URL box to copy it to your clipboard instantly.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Does it handle non-ASCII characters or special symbols in a URL?</summary><p>Yes, it uses the browser's URL/URLSearchParams APIs, which handle encoding and decoding automatically.</p></details><details><summary>Does adding/removing query params change the original URL?</summary><p>No. Your original input URL stays untouched — the edited result is shown as a new URL below.</p></details><details><summary>Are inputs stored on a server?</summary><p>No. All processing happens entirely in your browser and inputs are never sent to a server.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script>
+let baseUrl = null;
+let params = [];
+
+function parseUrl() {
+  const raw = document.getElementById('urlInput').value.trim();
+  let u;
+  try { u = new URL(raw); } catch(e) {
+    document.getElementById('urlParts').innerHTML = `<div style="color:#DC2626;grid-column:1/-1;">Not a valid URL. (e.g. https://example.com/path?a=1)</div>`;
+    document.getElementById('qpBody').innerHTML = '';
+    document.getElementById('qpOutput').textContent = '';
+    return;
+  }
+  baseUrl = u;
+  const parts = [
+    ['Protocol', u.protocol],
+    ['Host', u.hostname],
+    ['Port', u.port || '(default)'],
+    ['Path', u.pathname],
+    ['Hash', u.hash || '(none)'],
+  ];
+  document.getElementById('urlParts').innerHTML = parts.map(([k,v]) =>
+    `<div class="url-part-label">${k}</div><div class="url-part-val">${escHtml(v)}</div>`
+  ).join('');
+
+  params = Array.from(u.searchParams.entries()).map(([k,v]) => ({k, v}));
+  renderParams();
+}
+
+function renderParams() {
+  document.getElementById('qpBody').innerHTML = params.map((p, i) => `
+    <tr>
+      <td><input value="${escAttr(p.k)}" oninput="params[${i}].k=this.value; updateOutput()"></td>
+      <td><input value="${escAttr(p.v)}" oninput="params[${i}].v=this.value; updateOutput()"></td>
+      <td><button class="qp-remove" onclick="removeParam(${i})">✕</button></td>
+    </tr>`).join('');
+  updateOutput();
+}
+
+function addParam() {
+  params.push({k:'', v:''});
+  renderParams();
+}
+function removeParam(i) {
+  params.splice(i, 1);
+  renderParams();
+}
+
+function updateOutput() {
+  if (!baseUrl) { document.getElementById('qpOutput').textContent = ''; return; }
+  const u = new URL(baseUrl.href);
+  const sp = new URLSearchParams();
+  params.forEach(p => { if (p.k) sp.append(p.k, p.v); });
+  u.search = sp.toString();
+  document.getElementById('qpOutput').textContent = u.toString();
+}
+
+function copyResult() {
+  const txt = document.getElementById('qpOutput').textContent;
+  if (!txt) return;
+  navigator.clipboard.writeText(txt).then(() => {
+    const el = document.getElementById('qpOutput');
+    const orig = el.textContent;
+    el.textContent = '✅ Copied!';
+    setTimeout(() => el.textContent = orig, 1000);
+  });
+}
+
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;'); }
+window.onload = parseUrl;
+</script><script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

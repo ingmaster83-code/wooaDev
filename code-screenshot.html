@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>코드 스크린샷 생성기 — 예쁜 코드 이미지 만들기 무료 | WooaDev</title>
+  <meta name="description" content="코드를 붙여넣으면 문법 강조와 창 디자인이 적용된 예쁜 코드 스크린샷을 즉시 만듭니다. SNS·블로그·발표자료 공유용 PNG로 다운로드하세요.">
+  <meta name="keywords" content="코드스크린샷, 코드이미지생성, carbon대체, 코드하이라이트이미지, code screenshot generator, 프로그래밍코드이미지">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/code-screenshot.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/code-screenshot.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/code-screenshot.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/code-screenshot.html">
+  <meta property="og:title" content="코드 스크린샷 생성기 — 예쁜 코드 이미지 만들기 무료 | WooaDev">
+  <meta property="og:description" content="코드를 붙여넣으면 문법 강조가 적용된 예쁜 코드 스크린샷을 즉시 만듭니다. PNG로 다운로드.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/code-screenshot.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="코드 스크린샷 생성기 — 예쁜 코드 이미지 만들기 무료 | WooaDev">
+  <meta name="twitter:description" content="코드를 붙여넣으면 예쁜 코드 스크린샷을 즉시 만듭니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"코드 스크린샷 생성기","url":"https://wooadev.wooahouse.com/code-screenshot.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+    .cs-controls { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+    .cs-controls > div { flex:1; min-width:140px; }
+    .cs-bg-swatches { display:flex; gap:8px; margin-top:6px; }
+    .cs-swatch { width:32px; height:32px; border-radius:8px; cursor:pointer; border:2px solid transparent; }
+    .cs-swatch.active { border-color:#1A1A2E; }
+    .cs-preview-wrap { display:flex; justify-content:center; padding:32px; border-radius:12px; margin:16px 0; overflow-x:auto; }
+    .cs-window { border-radius:10px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.3); min-width:320px; }
+    .cs-titlebar { background:#3a3a4a; padding:10px 14px; display:flex; align-items:center; gap:8px; }
+    .cs-dot { width:11px; height:11px; border-radius:50%; }
+    .cs-filename { flex:1; text-align:center; color:#9CA3AF; font-size:0.78rem; font-family:'Fira Code',monospace; margin-right:40px; }
+    .cs-code-area { padding:22px 26px; overflow-x:auto; }
+    .cs-code-area pre { margin:0 !important; background:transparent !important; }
+    .cs-code-area code { font-family:'Fira Code',monospace !important; font-size:0.86rem !important; line-height:1.6 !important; }
+    .lang-switcher { display:flex; align-items:center; gap:4px; }
+    .lang-switcher a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.8rem; font-weight:600; padding:3px 8px; border-radius:12px; transition:background 0.15s; }
+    .lang-switcher a.active { color:white; background:rgba(255,255,255,0.25); }
+    .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
+    .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
+  </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"어떤 프로그래밍 언어를 지원하나요?","acceptedAnswer":{"@type":"Answer","text":"JavaScript, TypeScript, Python, HTML, CSS, JSON, Bash 등 주요 언어의 문법 강조를 지원합니다."}},
+    {"@type":"Question","name":"다운로드한 이미지를 어디에 쓸 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"트위터·인스타그램 등 SNS 공유, 블로그 포스트, 발표자료(PPT) 삽입 등 코드를 시각적으로 보여줄 때 자유롭게 사용할 수 있습니다."}},
+    {"@type":"Question","name":"입력한 코드가 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 코드는 서버로 전송되지 않습니다."}}
+  ]
+}
+</script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+  <div class="header-right">
+    <div class="lang-switcher">
+      <a href="code-screenshot.html" class="active">KO</a>
+      <span>|</span>
+      <a href="en/code-screenshot.html">EN</a>
+    </div>
+    <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>코드 스크린샷 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📸</span>
+    <h1>코드 스크린샷 생성기</h1>
+    <p>코드를 붙여넣으면 문법 강조가 적용된 예쁜 이미지로 즉시 만들어줍니다.</p>
+  </div>
+
+  <div class="dev-panel">
+    <div class="dev-label">코드</div>
+    <textarea class="dev-textarea" id="csCode" rows="8" spellcheck="false">function greet(name) {
+  console.log(`Hello, ${name}!`);
+  return true;
+}
+
+greet("WooaDev");</textarea>
+
+    <div class="cs-controls">
+      <div>
+        <div class="dev-label">언어</div>
+        <select class="dev-select" id="csLang" style="width:100%;">
+          <option value="javascript">JavaScript</option>
+          <option value="typescript">TypeScript</option>
+          <option value="python">Python</option>
+          <option value="markup">HTML</option>
+          <option value="css">CSS</option>
+          <option value="json">JSON</option>
+          <option value="bash">Bash</option>
+        </select>
+      </div>
+      <div>
+        <div class="dev-label">파일명 (선택)</div>
+        <input class="dev-input" id="csFilename" style="width:100%;" placeholder="app.js" value="app.js">
+      </div>
+    </div>
+    <div class="dev-label">배경색</div>
+    <div class="cs-bg-swatches" id="csSwatches"></div>
+
+    <div class="cs-preview-wrap" id="csPreviewWrap">
+      <div class="cs-window" id="csWindow">
+        <div class="cs-titlebar">
+          <div class="cs-dot" style="background:#ff5f56;"></div>
+          <div class="cs-dot" style="background:#ffbd2e;"></div>
+          <div class="cs-dot" style="background:#27c93f;"></div>
+          <div class="cs-filename" id="csFilenameLabel">app.js</div>
+        </div>
+        <div class="cs-code-area"><pre><code id="csCodeOut" class="language-javascript"></code></pre></div>
+      </div>
+    </div>
+
+    <div class="dev-btn-row"><button class="dev-btn" onclick="downloadImage()">🖼️ PNG로 다운로드</button></div>
+  </div>
+
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="minifier.html" class="related-card"><span class="related-icon">🗜️</span><span>코드 압축</span></a>
+    <a href="markdown-preview.html" class="related-card"><span class="related-icon">📝</span><span>Markdown 미리보기</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+    <a href="regex-tester.html" class="related-card"><span class="related-icon">🔍</span><span>Regex 테스터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>핵심 코드 몇 줄만 짧게 보여줄 때 가장 예쁘게 나옵니다.</li><li>파일명을 입력하면 실제 에디터 창처럼 보입니다.</li><li>배경색을 바꿔가며 블로그·SNS 톤에 맞는 이미지를 만들어보세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>어떤 프로그래밍 언어를 지원하나요?</summary><p>JavaScript, TypeScript, Python, HTML, CSS, JSON, Bash 등 주요 언어의 문법 강조를 지원합니다.</p></details><details><summary>다운로드한 이미지를 어디에 쓸 수 있나요?</summary><p>트위터·인스타그램 등 SNS 공유, 블로그 포스트, 발표자료(PPT) 삽입 등 코드를 시각적으로 보여줄 때 자유롭게 사용할 수 있습니다.</p></details><details><summary>입력한 코드가 서버에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 코드는 서버로 전송되지 않습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-clike.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+const BG_COLORS = ['#667eea','#f5576c','#43e97b','#4facfe','#fa709a','#30343f','#1a1a2e'];
+let curBg = BG_COLORS[0];
+
+function buildSwatches() {
+  document.getElementById('csSwatches').innerHTML = BG_COLORS.map(c =>
+    `<div class="cs-swatch ${c===curBg?'active':''}" style="background:${c}" onclick="selectBg('${c}')"></div>`
+  ).join('');
+}
+function selectBg(c) {
+  curBg = c;
+  buildSwatches();
+  render();
+}
+
+function render() {
+  const code = document.getElementById('csCode').value;
+  const lang = document.getElementById('csLang').value;
+  const filename = document.getElementById('csFilename').value || ' ';
+  document.getElementById('csFilenameLabel').textContent = filename;
+
+  const codeEl = document.getElementById('csCodeOut');
+  codeEl.className = 'language-' + lang;
+  codeEl.textContent = code;
+  if (window.Prism) Prism.highlightElement(codeEl);
+
+  document.getElementById('csPreviewWrap').style.background = curBg;
+}
+
+['csCode','csLang','csFilename'].forEach(id => {
+  document.getElementById(id).addEventListener('input', render);
+});
+
+async function downloadImage() {
+  const target = document.getElementById('csWindow');
+  const canvas = await html2canvas(target, { backgroundColor: null, scale: 2 });
+  const url = canvas.toDataURL('image/png');
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'code-screenshot.png';
+  a.click();
+}
+
+buildSwatches();
+render();
+</script><script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

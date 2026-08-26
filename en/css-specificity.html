@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Specificity Calculator — Compare Selector Priority Free | WooaDev</title>
+  <meta name="description" content="Instantly calculate CSS selector specificity. Enter multiple selectors and see exactly which rule wins. ID, class, and element counts at a glance.">
+  <meta name="keywords" content="css specificity calculator, selector priority, css specificity, css selector weight, which css rule wins">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/css-specificity.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/css-specificity.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/css-specificity.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/css-specificity.html">
+  <meta property="og:title" content="CSS Specificity Calculator — Compare Selector Priority Free | WooaDev">
+  <meta property="og:description" content="Instantly calculate CSS selector specificity and compare which rule wins among multiple selectors.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/css-specificity.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS Specificity Calculator — Compare Selector Priority Free | WooaDev">
+  <meta name="twitter:description" content="Instantly calculate CSS selector specificity.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSS Specificity Calculator","url":"https://wooadev.wooahouse.com/en/css-specificity.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .spec-result-list { display:flex; flex-direction:column; gap:8px; margin-top:14px; }
+    .spec-result-item { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 14px; border-radius:8px; border:1.5px solid #E5E7EB; background:#F8F9FA; flex-wrap:wrap; }
+    .spec-result-item.winner { border-color:#22C55E; background:#F0FDF4; }
+    .spec-selector { font-family:monospace; font-size:0.9rem; }
+    .spec-score { display:flex; gap:6px; align-items:center; }
+    .spec-num { background:white; border:1.5px solid #E5E7EB; border-radius:6px; padding:3px 9px; font-family:monospace; font-weight:700; font-size:0.84rem; }
+    .spec-winner-badge { font-size:0.72rem; font-weight:700; padding:2px 8px; border-radius:10px; background:#DCFCE7; color:#16A34A; }
+    .lang-switcher { display:flex; align-items:center; gap:4px; }
+    .lang-switcher a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.8rem; font-weight:600; padding:3px 8px; border-radius:12px; transition:background 0.15s; }
+    .lang-switcher a.active { color:white; background:rgba(255,255,255,0.25); }
+    .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
+    .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
+  </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How is specificity calculated?","acceptedAnswer":{"@type":"Answer","text":"As a four-part value (inline style, ID count, class/attribute/pseudo-class count, element/pseudo-element count). Higher values in the leftmost position win."}},
+    {"@type":"Question","name":"Does !important count toward specificity?","acceptedAnswer":{"@type":"Answer","text":"No. !important overrides all other rules regardless of specificity. Specificity comparison only matters when !important isn't used."}},
+    {"@type":"Question","name":"Are inputs stored on a server?","acceptedAnswer":{"@type":"Answer","text":"No. All calculations happen entirely in your browser and inputs are never sent to a server."}}
+  ]
+}
+</script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="../index.html">All Tools ›</a>
+    </nav>
+  <div class="header-right">
+    <div class="lang-switcher">
+      <a href="../css-specificity.html">KO</a>
+      <span>|</span>
+      <a href="css-specificity.html" class="active">EN</a>
+    </div>
+    <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="../index.html">WooaDev</a><span>›</span><span>CSS Specificity Calculator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🎯</span>
+    <h1>CSS Specificity Calculator</h1>
+    <p>Enter multiple selectors to calculate specificity and see which rule wins.</p>
+  </div>
+
+  <div class="dev-panel">
+    <div class="dev-label">CSS selectors (one per line)</div>
+    <textarea class="dev-textarea" id="selInput" rows="6" placeholder="#header .nav a&#10;.nav a:hover&#10;a">#header .nav a
+.nav a:hover
+a</textarea>
+    <div class="dev-btn-row"><button class="dev-btn" onclick="calcAll()">Calculate</button></div>
+    <div class="spec-result-list" id="specResults"></div>
+  </div>
+
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="css-gradient.html" class="related-card"><span class="related-icon">🎨</span><span>CSS Gradient</span></a>
+    <a href="flexbox-generator.html" class="related-card"><span class="related-icon">📐</span><span>Flexbox Generator</span></a>
+    <a href="grid-generator.html" class="related-card"><span class="related-icon">⬛</span><span>CSS Grid Generator</span></a>
+    <a href="regex-tester.html" class="related-card"><span class="related-icon">🔍</span><span>Regex Tester</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>An ID (#) beats a class (.), and a class beats an element (div, a, etc.).</li><li>With equal specificity, the rule declared later in the CSS file wins.</li><li>Avoid specificity wars — keep selectors simple instead of reaching for !important.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>How is specificity calculated?</summary><p>As a four-part value (inline style, ID count, class/attribute/pseudo-class count, element/pseudo-element count). Higher values in the leftmost position win.</p></details><details><summary>Does !important count toward specificity?</summary><p>No. !important overrides all other rules regardless of specificity. Specificity comparison only matters when !important isn't used.</p></details><details><summary>Are inputs stored on a server?</summary><p>No. All calculations happen entirely in your browser and inputs are never sent to a server.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script>
+function calcSpecificity(selector) {
+  let s = selector.trim();
+  let ids = 0, classes = 0, tags = 0;
+  s = s.replace(/\[[^\]]*\]/g, () => { classes++; return ' '; });
+  s = s.replace(/::[a-zA-Z-]+/g, () => { tags++; return ' '; });
+  s = s.replace(/:not\(([^()]*)\)/gi, (m, inner) => { return ' ' + inner + ' '; });
+  s = s.replace(/:[a-zA-Z-]+(\([^()]*\))?/g, () => { classes++; return ' '; });
+  s = s.replace(/#[a-zA-Z0-9_-]+/g, () => { ids++; return ' '; });
+  s = s.replace(/\.[a-zA-Z0-9_-]+/g, () => { classes++; return ' '; });
+  const tagMatches = s.match(/[a-zA-Z][a-zA-Z0-9-]*/g) || [];
+  tags += tagMatches.length;
+  return { inline: 0, ids, classes, tags };
+}
+
+function compareSpec(a, b) {
+  if (a.inline !== b.inline) return a.inline - b.inline;
+  if (a.ids !== b.ids) return a.ids - b.ids;
+  if (a.classes !== b.classes) return a.classes - b.classes;
+  return a.tags - b.tags;
+}
+
+function calcAll() {
+  const lines = document.getElementById('selInput').value.split('\n').map(l => l.trim()).filter(Boolean);
+  const box = document.getElementById('specResults');
+  if (!lines.length) { box.innerHTML = ''; return; }
+  const results = lines.map(sel => ({ sel, spec: calcSpecificity(sel) }));
+  let winnerIdx = 0;
+  for (let i = 1; i < results.length; i++) {
+    if (compareSpec(results[i].spec, results[winnerIdx].spec) > 0) winnerIdx = i;
+  }
+  box.innerHTML = results.map((r, i) => {
+    const s = r.spec;
+    return `<div class="spec-result-item ${lines.length>1 && i===winnerIdx ? 'winner' : ''}">
+      <span class="spec-selector">${escHtml(r.sel)}</span>
+      <span class="spec-score">
+        <span class="spec-num">${s.inline}</span>
+        <span class="spec-num">${s.ids}</span>
+        <span class="spec-num">${s.classes}</span>
+        <span class="spec-num">${s.tags}</span>
+        ${lines.length>1 && i===winnerIdx ? '<span class="spec-winner-badge">Wins</span>' : ''}
+      </span>
+    </div>`;
+  }).join('');
+}
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+window.onload = calcAll;
+</script><script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

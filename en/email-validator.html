@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Format Validator — Typo Detection Free | WooaDev</title>
+  <meta name="description" content="Instantly validate email address format and catch common domain typos like gmial.com, suggesting the correct domain. Check multiple addresses at once.">
+  <meta name="keywords" content="email validator, email format checker, email syntax validation, email typo detector, bulk email checker">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/email-validator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/email-validator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/email-validator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/email-validator.html">
+  <meta property="og:title" content="Email Format Validator — Typo Detection Free | WooaDev">
+  <meta property="og:description" content="Instantly validate email format and catch common domain typos. Check multiple addresses at once, processed entirely in your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/email-validator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Email Format Validator — Typo Detection Free | WooaDev">
+  <meta name="twitter:description" content="Instantly validate email format and catch common domain typos.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Email Validator","url":"https://wooadev.wooahouse.com/en/email-validator.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .email-result-list { display:flex; flex-direction:column; gap:8px; margin-top:14px; }
+    .email-result-item { display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:8px; border:1.5px solid #E5E7EB; background:#F8F9FA; font-family:monospace; font-size:0.88rem; flex-wrap:wrap; }
+    .email-result-item.valid { border-color:#22C55E; background:#F0FDF4; }
+    .email-result-item.invalid { border-color:#EF4444; background:#FEF2F2; }
+    .email-badge { font-family:var(--font-main, inherit); font-size:0.72rem; font-weight:700; padding:2px 8px; border-radius:10px; }
+    .email-badge.valid { background:#DCFCE7; color:#16A34A; }
+    .email-badge.invalid { background:#FEE2E2; color:#DC2626; }
+    .email-suggest { font-family:var(--font-main, inherit); font-size:0.78rem; color:#D97706; }
+    .lang-switcher { display:flex; align-items:center; gap:4px; }
+    .lang-switcher a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.8rem; font-weight:600; padding:3px 8px; border-radius:12px; transition:background 0.15s; }
+    .lang-switcher a.active { color:white; background:rgba(255,255,255,0.25); }
+    .lang-switcher a:hover { color:white; background:rgba(255,255,255,0.18); }
+    .lang-switcher span { color:rgba(255,255,255,0.3); font-size:0.75rem; }
+  </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Does this confirm the email address actually exists?","acceptedAnswer":{"@type":"Answer","text":"No, it only validates syntax/format. To confirm deliverability, you'd need to send a verification email."}},
+    {"@type":"Question","name":"What typos does it detect?","acceptedAnswer":{"@type":"Answer","text":"It compares your domain against common providers like gmail.com and outlook.com and suggests a correction when the spelling is close, e.g. gmial.com → gmail.com."}},
+    {"@type":"Question","name":"Are inputs stored on a server?","acceptedAnswer":{"@type":"Answer","text":"No. All processing happens entirely in your browser and inputs are never sent to a server."}}
+  ]
+}
+</script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="../index.html">All Tools ›</a>
+    </nav>
+  <div class="header-right">
+    <div class="lang-switcher">
+      <a href="../email-validator.html">KO</a>
+      <span>|</span>
+      <a href="email-validator.html" class="active">EN</a>
+    </div>
+    <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="../index.html">WooaDev</a><span>›</span><span>Email Validator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📧</span>
+    <h1>Email Format Validator</h1>
+    <p>Check multiple email addresses at once and catch common domain typos.</p>
+  </div>
+
+  <div class="dev-panel">
+    <div class="dev-label">Email addresses (one per line, multiple allowed)</div>
+    <textarea class="dev-textarea" id="emailInput" rows="6" placeholder="example@gmial.com&#10;user@gmail.com&#10;invalid-email">example@gmial.com
+user@gmail.com
+invalid-email</textarea>
+    <div class="dev-btn-row"><button class="dev-btn" onclick="validateAll()">Validate</button></div>
+    <div class="email-result-list" id="emailResults"></div>
+  </div>
+
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="regex-tester.html" class="related-card"><span class="related-icon">🔍</span><span>Regex Tester</span></a>
+    <a href="password-strength.html" class="related-card"><span class="related-icon">🔒</span><span>Password Strength</span></a>
+    <a href="url-parser.html" class="related-card"><span class="related-icon">🔗</span><span>URL Parser</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON Formatter</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Great for validating a batch of addresses while testing a signup form.</li><li>A valid format doesn't guarantee the address exists — confirm delivery by checking for bounces.</li><li>Domain typos are detected automatically and a correction is suggested.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Does this confirm the email address actually exists?</summary><p>No, it only validates syntax/format. To confirm deliverability, you'd need to send a verification email.</p></details><details><summary>What typos does it detect?</summary><p>It compares your domain against common providers like gmail.com and outlook.com and suggests a correction when the spelling is close, e.g. gmial.com → gmail.com.</p></details><details><summary>Are inputs stored on a server?</summary><p>No. All processing happens entirely in your browser and inputs are never sent to a server.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script>
+const EMAIL_RE = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+const COMMON_DOMAINS = ['gmail.com','yahoo.com','outlook.com','hotmail.com','icloud.com','naver.com','daum.net','hanmail.net','aol.com','protonmail.com'];
+
+function levenshtein(a, b) {
+  const m = a.length, n = b.length;
+  const dp = Array.from({length:m+1}, (_,i) => [i, ...Array(n).fill(0)]);
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+    }
+  }
+  return dp[m][n];
+}
+
+function suggestDomain(domain) {
+  if (!domain) return null;
+  let best = null, bestDist = 3;
+  for (const d of COMMON_DOMAINS) {
+    if (d === domain) return null;
+    const dist = levenshtein(domain, d);
+    if (dist > 0 && dist <= 2 && dist < bestDist) { best = d; bestDist = dist; }
+  }
+  return best;
+}
+
+function validateAll() {
+  const lines = document.getElementById('emailInput').value.split('\n').map(l => l.trim()).filter(Boolean);
+  const box = document.getElementById('emailResults');
+  if (!lines.length) { box.innerHTML = ''; return; }
+  box.innerHTML = lines.map(email => {
+    const valid = EMAIL_RE.test(email);
+    const domain = email.includes('@') ? email.split('@').pop().toLowerCase() : '';
+    const suggestion = valid ? suggestDomain(domain) : null;
+    let extra = '';
+    if (!valid) extra = `<span class="email-badge invalid">Invalid</span>`;
+    else if (suggestion) extra = `<span class="email-badge valid">Valid</span><span class="email-suggest">Did you mean ${email.split('@')[0]}@${suggestion}?</span>`;
+    else extra = `<span class="email-badge valid">Valid</span>`;
+    return `<div class="email-result-item ${valid ? 'valid' : 'invalid'}"><span>${escHtml(email)}</span>${extra}</div>`;
+  }).join('');
+}
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+window.onload = validateAll;
+</script><script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>
