@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BIND Zone File Editor – Add Records, Bump SOA Serial, Find Errors | WooaDev</title>
+  <meta name="description" content="Parse BIND zone files, print them aligned, add A/AAAA/CNAME/MX/TXT/SRV/CAA records, bump the SOA serial and catch CNAME conflicts, missing trailing dots and invalid IPs.">
+  <meta name="keywords" content="BIND zone file editor, DNS zone file validator, zone file generator, add DNS record, SOA serial increment, CNAME conflict check">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/dns-zone-editor.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/dns-zone-editor.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/dns-zone-editor.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/dns-zone-editor.html">
+  <meta property="og:title" content="BIND Zone File Editor – Add Records, Bump SOA Serial, Find Errors | WooaDev">
+  <meta property="og:description" content="Parse BIND zone files, print them aligned, add A/AAAA/CNAME/MX/TXT/SRV/CAA records, bump the SOA serial and catch CNAME conflicts, missing trailing dots and invalid IPs.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/dns-zone-editor.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BIND Zone File Editor – Add Records, Bump SOA Serial, Find Errors | WooaDev">
+  <meta name="twitter:description" content="Parse BIND zone files, print them aligned, add A/AAAA/CNAME/MX/TXT/SRV/CAA records, bump the SOA serial and catch CNAME conflicts, missing trailing dots and invalid IPs.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"DNS Zone File Editor","url":"https://wooadev.wooahouse.com/en/dns-zone-editor.html","description":"Parse BIND zone files, print them aligned, add A/AAAA/CNAME/MX/TXT/SRV/CAA records, bump the SOA serial and catch CNAME conflicts, missing trailing dots and invalid IPs.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Supports $ORIGIN, $TTL, multi-line SOA (parentheses), ; comments, blank-owner continuation and A, AAAA, CNAME, MX, NS, TXT, SRV, CAA, PTR…","Output: an aligned zone file and a record table","Add a record by type, name, value and TTL (TXT values are quoted automatically)","SOA serial: keep / +1 / today's date (YYYYMMDDnn)","Checks: missing SOA or apex NS, CNAME coexisting with other records, apex CNAME, A/AAAA values, MX form, targets missing a trailing dot, TXT strings over 255 bytes, TTL syntax"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why can't the apex have a CNAME?","acceptedAnswer":{"@type":"Answer","text":"The apex must carry SOA and NS records, and a CNAME cannot coexist with other records at the same name. Use an A record or your provider's ALIAS/ANAME feature."}},{"@type":"Question","name":"What if a TXT value exceeds 255 characters?","acceptedAnswer":{"@type":"Answer","text":"One string holds at most 255 bytes, so long values (such as DKIM keys) are split into several quoted strings within the same record."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"DNS Zone File Editor","item":"https://wooadev.wooahouse.com/en/dns-zone-editor.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../dns-zone-editor.html">KO</a>
+        <span>|</span>
+        <a href="dns-zone-editor.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>DNS Zone File Editor</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🗂️</span>
+    <h1>DNS Record Generator &amp; BIND Zone File Editor</h1>
+    <p>Reads a BIND-format zone file, rewrites it in aligned form, adds records, bumps the SOA serial and finds common configuration mistakes.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>⚠️ 9 records — 1 item(s) to check</p>
+<h3>Input — BIND zone file</h3><pre>$ORIGIN example.com.
+$TTL 3600
+@   IN SOA ns1.example.com. admin.example.com. (
+        2026101601 ; serial
+        7200       ; refresh
+        3600       ; retry
+        1209600    ; expire
+        3600 )     ; minimum
+    IN NS  ns1.example.com.
+    IN NS  ns2.example.com.
+    IN MX  10 mail.example.com.
+@   IN A   203.0.113.10
+www IN CNAME @
+mail IN A  203.0.113.20
+@   IN TXT "v=spf1 mx -all"
+ftp IN CNAME www.example.com</pre>
+<h3>Result — Formatted zone file</h3><pre>$ORIGIN example.com.
+$TTL 3600
+@           IN SOA    ns1.example.com. admin.example.com. (
+        2026101601 ; serial
+        7200 ; refresh
+        3600 ; retry
+        1209600 ; expire
+        3600 ; minimum
+        )
+@           IN NS     ns1.example.com.
+@           IN NS     ns2.example.com.
+@           IN MX     10 mail.example.com.
+@           IN A      203.0.113.10
+www         IN CNAME  @
+mail        IN A      203.0.113.20
+@           IN TXT    "v=spf1 mx -all"
+ftp         IN CNAME  www.example.com
+</pre>
+<h3>Result — Records</h3><pre>Name | TTL | Type | Value
+@ | (3600) | SOA | ns1.example.com. admin.example.com. 2026101601 7200 3600 1209600 3600
+@ | (3600) | NS | ns1.example.com.
+@ | (3600) | NS | ns2.example.com.
+@ | (3600) | MX | 10 mail.example.com.
+@ | (3600) | A | 203.0.113.10
+www | (3600) | CNAME | @
+mail | (3600) | A | 203.0.113.20
+@ | (3600) | TXT | "v=spf1 mx -all"
+ftp | (3600) | CNAME | www.example.com</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Self-hosted BIND, NSD or PowerDNS zone files suffer from parenthesised SOAs, relative vs absolute names and forgotten trailing dots. Paste one and it is parsed, checked and tidied.</p>
+<ul><li>Supports $ORIGIN, $TTL, multi-line SOA (parentheses), ; comments, blank-owner continuation and A, AAAA, CNAME, MX, NS, TXT, SRV, CAA, PTR…</li><li>Output: an aligned zone file and a record table</li><li>Add a record by type, name, value and TTL (TXT values are quoted automatically)</li><li>SOA serial: keep / +1 / today's date (YYYYMMDDnn)</li><li>Checks: missing SOA or apex NS, CNAME coexisting with other records, apex CNAME, A/AAAA values, MX form, targets missing a trailing dot, TXT strings over 255 bytes, TTL syntax</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="reverse-dns-generator.html" class="related-card"><span class="related-icon">↩️</span><span>Reverse DNS Name Generator</span></a>
+    <a href="domain-validator.html" class="related-card"><span class="related-icon">✔️</span><span>Domain &amp; Hostname Validator</span></a>
+    <a href="cron-generator.html" class="related-card"><span class="related-icon">⏰</span><span>Cron Generator</span></a>
+    <a href="email-validator.html" class="related-card"><span class="related-icon">📧</span><span>Email Validator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>The classic mistake is a CNAME target without a trailing dot: the origin is appended, giving www.example.com.example.com.</li><li>Always bump the SOA serial after editing so secondary servers pick up the change.</li><li>$INCLUDE and $GENERATE directives are skipped, not interpreted.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Why can't the apex have a CNAME?</summary><p>The apex must carry SOA and NS records, and a CNAME cannot coexist with other records at the same name. Use an A record or your provider's ALIAS/ANAME feature.</p></details><details><summary>What if a TXT value exceeds 255 characters?</summary><p>One string holds at most 255 bytes, so long values (such as DKIM keys) are split into several quoted strings within the same record.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-net.js"></script>
+<script src="../js/tools/dns-zone-editor.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

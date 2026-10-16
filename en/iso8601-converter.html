@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISO 8601 Converter – RFC 2822 &amp; HTTP Dates, Nanoseconds | WooaDev</title>
+  <meta name="description" content="Parse ISO 8601, RFC 2822 and HTTP-date values into UTC ISO, Unix seconds/milliseconds, weekday and other formats. Keeps up to 9 fractional digits and UTC offsets; handles many lines at once.">
+  <meta name="keywords" content="ISO 8601 converter, RFC 2822 date parser, HTTP date parser, ISO 8601 to unix, nanosecond timestamp, date format converter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/iso8601-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/iso8601-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/iso8601-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/iso8601-converter.html">
+  <meta property="og:title" content="ISO 8601 Converter – RFC 2822 &amp; HTTP Dates, Nanoseconds | WooaDev">
+  <meta property="og:description" content="Parse ISO 8601, RFC 2822 and HTTP-date values into UTC ISO, Unix seconds/milliseconds, weekday and other formats. Keeps up to 9 fractional digits and UTC offsets; handles many lines at once.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/iso8601-converter.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ISO 8601 Converter – RFC 2822 &amp; HTTP Dates, Nanoseconds | WooaDev">
+  <meta name="twitter:description" content="Parse ISO 8601, RFC 2822 and HTTP-date values into UTC ISO, Unix seconds/milliseconds, weekday and other formats. Keeps up to 9 fractional digits and UTC offsets; handles many lines at once.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"ISO 8601 / RFC Date Converter","url":"https://wooadev.wooahouse.com/en/iso8601-converter.html","description":"Parse ISO 8601, RFC 2822 and HTTP-date values into UTC ISO, Unix seconds/milliseconds, weekday and other formats. Keeps up to 9 fractional digits and UTC offsets; handles many lines at once.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Formats: ISO 8601 (date only, time, fractions, Z / offsets), RFC 2822 and HTTP-date (IMF-fixdate)","JavaScript Date stops at milliseconds; this tool uses BigInt to keep up to nanoseconds (9 digits)","Output: UTC ISO, original-offset ISO, Unix seconds/milliseconds, RFC 2822, HTTP date, weekday","Values without a zone are treated as UTC and labelled as such"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Are ISO 8601 and RFC 3339 the same?","acceptedAnswer":{"@type":"Answer","text":"RFC 3339 is a profile (subset) of ISO 8601. Common forms such as 2026-10-16T09:30:00Z or 2026-10-16T18:30:00+09:00 satisfy both."}},{"@type":"Question","name":"How are leap seconds (23:59:60) handled?","acceptedAnswer":{"@type":"Answer","text":"A second value of 60 is accepted and converted to the next minute's :00, because Unix time doesn't count leap seconds separately."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"ISO 8601 / RFC Date Converter","item":"https://wooadev.wooahouse.com/en/iso8601-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../iso8601-converter.html">KO</a>
+        <span>|</span>
+        <a href="iso8601-converter.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>ISO 8601 / RFC Date Converter</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📅</span>
+    <h1>ISO 8601 · RFC 2822 · HTTP Date Converter</h1>
+    <p>Reads ISO 8601, e-mail (RFC 2822) and HTTP header dates and converts them to UTC, Unix time and other notations — fractional seconds are never truncated.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Converted 4</p>
+<h3>Input — Date-times (one per line)</h3><pre>2026-10-16T09:30:15.123456789+09:00
+Sun, 06 Nov 1994 08:49:37 GMT
+Thu, 16 Oct 2026 12:00:00 -0500
+2026-10-16</pre>
+<h3>Result — Conversions</h3><pre>Input | UTC (ISO 8601) | Unix s | Unix ms | Offset
+2026-10-16T09:30:15.123456789+09:00 | 2026-10-16T00:30:15.123456789Z | 1792110615 | 1792110615123 | +09:00
+Sun, 06 Nov 1994 08:49:37 GMT | 1994-11-06T08:49:37.000Z | 784111777 | 784111777000 | +00:00
+Thu, 16 Oct 2026 12:00:00 -0500 | 2026-10-16T17:00:00.000Z | 1792170000 | 1792170000000 | -05:00
+2026-10-16 | 2026-10-16T00:00:00.000Z | 1792108800 | 1792108800000 | none (as UTC)</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Logs say 2026-10-16T09:30:15.123456789+09:00, mail headers say Thu, 16 Oct 2026 12:00:00 -0500, HTTP responses say Fri, 16 Oct 2026 03:00:00 GMT — the same moment in different notations. Interpret them all in one place.</p>
+<ul><li>Formats: ISO 8601 (date only, time, fractions, Z / offsets), RFC 2822 and HTTP-date (IMF-fixdate)</li><li>JavaScript Date stops at milliseconds; this tool uses BigInt to keep up to nanoseconds (9 digits)</li><li>Output: UTC ISO, original-offset ISO, Unix seconds/milliseconds, RFC 2822, HTTP date, weekday</li><li>Values without a zone are treated as UTC and labelled as such</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="timestamp.html" class="related-card"><span class="related-icon">🕐</span><span>Timestamp Converter</span></a>
+    <a href="timezone-converter.html" class="related-card"><span class="related-icon">🌏</span><span>Time Zone Converter</span></a>
+    <a href="duration-parser.html" class="related-card"><span class="related-icon">⏱️</span><span>Duration Converter</span></a>
+    <a href="http-status.html" class="related-card"><span class="related-icon">🌐</span><span>HTTP Status Codes</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>A date-time without an offset is read as UTC. For local wall-clock times use the Time Zone Converter.</li><li>Leave fraction digits on "As input" to keep the precision you typed.</li><li>When debugging HTTP caching, paste Last-Modified / Expires values here to see them as ISO.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Are ISO 8601 and RFC 3339 the same?</summary><p>RFC 3339 is a profile (subset) of ISO 8601. Common forms such as 2026-10-16T09:30:00Z or 2026-10-16T18:30:00+09:00 satisfy both.</p></details><details><summary>How are leap seconds (23:59:60) handled?</summary><p>A second value of 60 is accepted and converted to the next minute's :00, because Unix time doesn't count leap seconds separately.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-time.js"></script>
+<script src="../js/tools/iso8601-converter.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

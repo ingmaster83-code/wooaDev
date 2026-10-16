@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snowflake ID Decoder – Find When a Tweet or Discord ID Was Created | WooaDev</title>
+  <meta name="description" content="Decode Twitter (X), Discord, Instagram, Sonyflake and custom Snowflake IDs into creation time, datacenter, worker and sequence in any time zone. Runs in your browser.">
+  <meta name="keywords" content="Snowflake ID decoder, Twitter ID to date, Discord ID creation date, decode snowflake id, tweet timestamp from ID">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/snowflake-id-decoder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/snowflake-id-decoder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/snowflake-id-decoder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/snowflake-id-decoder.html">
+  <meta property="og:title" content="Snowflake ID Decoder – Find When a Tweet or Discord ID Was Created | WooaDev">
+  <meta property="og:description" content="Decode Twitter (X), Discord, Instagram, Sonyflake and custom Snowflake IDs into creation time, datacenter, worker and sequence in any time zone. Runs in your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/snowflake-id-decoder.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Snowflake ID Decoder – Find When a Tweet or Discord ID Was Created | WooaDev">
+  <meta name="twitter:description" content="Decode Twitter (X), Discord, Instagram, Sonyflake and custom Snowflake IDs into creation time, datacenter, worker and sequence in any time zone. Runs in your browser.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Snowflake ID Decoder","url":"https://wooadev.wooahouse.com/en/snowflake-id-decoder.html","description":"Decode Twitter (X), Discord, Instagram, Sonyflake and custom Snowflake IDs into creation time, datacenter, worker and sequence in any time zone. Runs in your browser.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Twitter (X): 41-bit time + 5-bit datacenter + 5-bit worker + 12-bit sequence (epoch 2010-11-04)","Discord: epoch 2015-01-01, worker / process / increment; Instagram: 13-bit shard + 10-bit sequence","Sonyflake: 10 ms time units + sequence + machine ID; Custom: set your own epoch and bit widths","Shows UTC and a time zone of your choice (e.g. Asia/Seoul); analyses one ID per line"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does one ID give the exact creation time?","acceptedAnswer":{"@type":"Answer","text":"Yes, to the millisecond. It can't reveal any clock error on the server that generated it."}},{"@type":"Question","name":"Why do platforms use different epochs?","acceptedAnswer":{"@type":"Answer","text":"A Snowflake stores time since an epoch in 41 bits (about 69 years). Each service picked an epoch near its launch to stretch the usable lifetime."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Snowflake ID Decoder","item":"https://wooadev.wooahouse.com/en/snowflake-id-decoder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../snowflake-id-decoder.html">KO</a>
+        <span>|</span>
+        <a href="snowflake-id-decoder.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Snowflake ID Decoder</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">❄️</span>
+    <h1>Snowflake ID Decoder — Creation Time, Worker &amp; Sequence</h1>
+    <p>Pulls the creation time, worker and sequence out of Twitter (X), Discord, Instagram, Sonyflake or custom Snowflake IDs.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Decoded 3</p>
+<h3>Input — Snowflake IDs (one per line)</h3><pre>1541815603606036480
+175928847299117063
+1543244810129002496</pre>
+<h3>Result — Decoded</h3><pre>ID | Created (UTC) | Selected zone | Components
+1541815603606036480 | 2022-06-28T16:07:40.105Z | 2022-06-29 01:07:40 (UTC+09:00) | datacenter 11, worker 26, seq 0
+175928847299117063 | 2012-03-03T13:01:20.453Z | 2012-03-03 22:01:20 (UTC+09:00) | datacenter 1, worker 0, seq 7
+1543244810129002496 | 2022-07-02T14:46:49.493Z | 2022-07-02 23:46:49 (UTC+09:00) | datacenter 26, worker 5, seq 0</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>A Snowflake ID is a 64-bit integer with a timestamp in the high bits followed by a worker number and a sequence. From a tweet, Discord message or user ID alone you can tell when it was created.</p>
+<ul><li>Twitter (X): 41-bit time + 5-bit datacenter + 5-bit worker + 12-bit sequence (epoch 2010-11-04)</li><li>Discord: epoch 2015-01-01, worker / process / increment; Instagram: 13-bit shard + 10-bit sequence</li><li>Sonyflake: 10 ms time units + sequence + machine ID; Custom: set your own epoch and bit widths</li><li>Shows UTC and a time zone of your choice (e.g. Asia/Seoul); analyses one ID per line</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="uuid-decoder.html" class="related-card"><span class="related-icon">🆔</span><span>UUID Decoder</span></a>
+    <a href="timestamp.html" class="related-card"><span class="related-icon">🕐</span><span>Timestamp Converter</span></a>
+    <a href="ulid-tool.html" class="related-card"><span class="related-icon">🔢</span><span>ULID Generator &amp; Decoder</span></a>
+    <a href="modern-id-generator.html" class="related-card"><span class="related-icon">✨</span><span>Nano ID, KSUID &amp; UUID v7 Generator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Picking the wrong platform gives silly years (1970s or the far future) — try another one.</li><li>Always treat IDs as strings: JavaScript numbers lose precision. This tool uses BigInt.</li><li>IDs created within the same millisecond are told apart by the sequence value.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Does one ID give the exact creation time?</summary><p>Yes, to the millisecond. It can't reveal any clock error on the server that generated it.</p></details><details><summary>Why do platforms use different epochs?</summary><p>A Snowflake stores time since an epoch in 41 bits (about 69 years). Each service picked an epoch near its launch to stretch the usable lifetime.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-time.js"></script>
+<script src="../js/tools/snowflake-id-decoder.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

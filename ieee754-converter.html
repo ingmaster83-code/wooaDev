@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IEEE 754 변환기 — 0.1이 float에서 왜 틀리는지 비트로 확인 | WooaDev</title>
+  <meta name="description" content="숫자를 IEEE 754 단정밀도(32비트)·배정밀도(64비트)·반정밀도(16비트) 16진수와 부호/지수/가수로 분해하고, 16진수 비트 패턴을 숫자로 해석합니다. 저장되는 실제 값과 반올림 오차, NaN·무한대·비정규수 분류를 알려 줍니다.">
+  <meta name="keywords" content="IEEE 754 변환기, 부동소수점 변환, float 16진수 변환, float32 float64, 0.1 부동소수점 오차, 반정밀도 float16, 부호 지수 가수">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/ieee754-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/ieee754-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/ieee754-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/ieee754-converter.html">
+  <meta property="og:title" content="IEEE 754 변환기 — 0.1이 float에서 왜 틀리는지 비트로 확인 | WooaDev">
+  <meta property="og:description" content="숫자를 IEEE 754 단정밀도(32비트)·배정밀도(64비트)·반정밀도(16비트) 16진수와 부호/지수/가수로 분해하고, 16진수 비트 패턴을 숫자로 해석합니다. 저장되는 실제 값과 반올림 오차, NaN·무한대·비정규수 분류를 알려 줍니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/ieee754-converter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="IEEE 754 변환기 — 0.1이 float에서 왜 틀리는지 비트로 확인 | WooaDev">
+  <meta name="twitter:description" content="숫자를 IEEE 754 단정밀도(32비트)·배정밀도(64비트)·반정밀도(16비트) 16진수와 부호/지수/가수로 분해하고, 16진수 비트 패턴을 숫자로 해석합니다. 저장되는 실제 값과 반올림 오차, NaN·무한대·비정규수 분류를 알려 줍니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"부동소수점(IEEE 754) 변환기","url":"https://wooadev.wooahouse.com/ieee754-converter.html","description":"숫자를 IEEE 754 단정밀도(32비트)·배정밀도(64비트)·반정밀도(16비트) 16진수와 부호/지수/가수로 분해하고, 16진수 비트 패턴을 숫자로 해석합니다. 저장되는 실제 값과 반올림 오차, NaN·무한대·비정규수 분류를 알려 줍니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["숫자 → 비트: 부호 1비트 | 지수(5/8/11비트) | 가수(10/23/52비트)로 분해하고 16진수로 표시","비트 → 숫자: 0x40490FDB 같은 비트 패턴을 float로 해석 (또는 일반 정수로 취급 선택)","저장되는 실제 값과 입력과의 절대 오차를 표시 (예: float32의 0.1 = 0.10000000149011612)","정규수·비정규수(subnormal)·0·무한대·NaN(quiet/signaling) 분류와 지수","16비트(half) 변환은 머신러닝·그래픽에서 쓰는 형식 확인에 유용"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"0.1을 float로 저장하면 왜 정확하지 않나요?","acceptedAnswer":{"@type":"Answer","text":"0.1은 2진수로 0.0001100110011… 처럼 무한히 반복되어 유한한 가수 비트로는 근삿값만 담을 수 있기 때문입니다."}},{"@type":"Question","name":"quiet NaN과 signaling NaN의 차이는?","acceptedAnswer":{"@type":"Answer","text":"가수의 최상위 비트가 1이면 quiet NaN(연산을 조용히 전파), 0이면 signaling NaN(예외를 일으킬 수 있음)입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"부동소수점(IEEE 754) 변환기","item":"https://wooadev.wooahouse.com/ieee754-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="ieee754-converter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/ieee754-converter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>부동소수점(IEEE 754) 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔬</span>
+    <h1>IEEE 754 부동소수점 변환기</h1>
+    <p>숫자를 float16·32·64 비트 패턴(16진수)으로, 비트 패턴을 숫자로 바꾸고 부호·지수·가수와 반올림 오차를 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 32비트 IEEE 754 — 부호 1 / 지수 8 / 가수 23비트</p>
+<h3>입력 — 숫자 또는 16진수 비트열 (한 줄에 하나)</h3><pre>0.1
+-3.14159
+1e-320
+0x40490FDB
+Infinity
+NaN</pre>
+<h3>결과 — 변환 결과</h3><pre>입력 | 저장되는 값 | 16진수 | 부호 | 지수 | 가수 | 분류 | 절대 오차
+0.1 | 0.10000000149011612  (입력과 오차 있음) | 0x3DCCCCCD | 0 | 01111011 | 10011001100110011001101 | 정규 · exp -4 | 1.490e-9
+-3.14159 | -3.141590118408203  (입력과 오차 있음) | 0xC0490FD0 | 1 | 10000000 | 10010010000111111010000 | 정규 · exp 1 | 1.184e-7
+1e-320 | 0  (입력과 오차 있음) | 0x00000000 | 0 | 00000000 | 00000000000000000000000 | 0 · exp -126 | 1.000e-320
+0x40490FDB | 3.1415927410125732 | 0x40490FDB | 0 | 10000000 | 10010010000111111011011 | 정규 · exp 1 | 
+Infinity | Infinity | 0x7F800000 | 0 | 11111111 | 00000000000000000000000 | Infinity · exp 128 | 
+NaN | NaN | 0x7FC00000 | 0 | 11111111 | 10000000000000000000000 | NaN (quiet) · exp 128 | </pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>0.1 + 0.2 ≠ 0.3 같은 현상은 모두 부동소수점 표현에서 나옵니다. 숫자가 실제로 어떤 비트로 저장되는지, 얼마나 오차가 생기는지 직접 볼 수 있습니다.</p>
+<ul><li>숫자 → 비트: 부호 1비트 | 지수(5/8/11비트) | 가수(10/23/52비트)로 분해하고 16진수로 표시</li><li>비트 → 숫자: 0x40490FDB 같은 비트 패턴을 float로 해석 (또는 일반 정수로 취급 선택)</li><li>저장되는 실제 값과 입력과의 절대 오차를 표시 (예: float32의 0.1 = 0.10000000149011612)</li><li>정규수·비정규수(subnormal)·0·무한대·NaN(quiet/signaling) 분류와 지수</li><li>16비트(half) 변환은 머신러닝·그래픽에서 쓰는 형식 확인에 유용</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="integer-representation.html" class="related-card"><span class="related-icon">➖</span><span>2의 보수 계산기</span></a>
+    <a href="bitwise-calculator.html" class="related-card"><span class="related-icon">🧮</span><span>비트 연산 계산기</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+    <a href="text-binary.html" class="related-card"><span class="related-icon">01</span><span>텍스트 ↔ 바이너리</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>float32는 약 7자리, float64는 약 15~16자리까지만 10진수를 정확히 표현합니다.</li><li>2의 거듭제곱 분수(0.5, 0.25, 0.125)는 오차 없이 저장됩니다. 0.1처럼 이진 무한소수가 되는 값이 오차의 원인입니다.</li><li>비정규수는 0 근처에서 정밀도를 희생하며 값을 이어 주는 영역입니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>0.1을 float로 저장하면 왜 정확하지 않나요?</summary><p>0.1은 2진수로 0.0001100110011… 처럼 무한히 반복되어 유한한 가수 비트로는 근삿값만 담을 수 있기 때문입니다.</p></details><details><summary>quiet NaN과 signaling NaN의 차이는?</summary><p>가수의 최상위 비트가 1이면 quiet NaN(연산을 조용히 전파), 0이면 signaling NaN(예외를 일으킬 수 있음)입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/ieee754-converter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

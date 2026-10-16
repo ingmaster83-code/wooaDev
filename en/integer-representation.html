@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Two's Complement Calculator – Negative Numbers to Binary and Back | WooaDev</title>
+  <meta name="description" content="Convert integers to two&#x27;s complement, one&#x27;s complement and sign-magnitude and read 0b/0x bit strings as signed integers for 4–64 bit widths, with range checks.">
+  <meta name="keywords" content="two&#x27;s complement calculator, two&#x27;s complement converter, one&#x27;s complement, negative binary numbers, signed integer representation, bit string to integer">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/integer-representation.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/integer-representation.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/integer-representation.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/integer-representation.html">
+  <meta property="og:title" content="Two&#x27;s Complement Calculator – Negative Numbers to Binary and Back | WooaDev">
+  <meta property="og:description" content="Convert integers to two&#x27;s complement, one&#x27;s complement and sign-magnitude and read 0b/0x bit strings as signed integers for 4–64 bit widths, with range checks.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/integer-representation.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Two&#x27;s Complement Calculator – Negative Numbers to Binary and Back | WooaDev">
+  <meta name="twitter:description" content="Convert integers to two&#x27;s complement, one&#x27;s complement and sign-magnitude and read 0b/0x bit strings as signed integers for 4–64 bit widths, with range checks.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Two's Complement Calculator","url":"https://wooadev.wooahouse.com/en/integer-representation.html","description":"Convert integers to two's complement, one's complement and sign-magnitude and read 0b/0x bit strings as signed integers for 4–64 bit widths, with range checks.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Integer → bits: two's complement, one's complement, sign-magnitude and hex at the chosen width (4–64 bits)","Bits → integer: 0b… / 0x… input read as both signed and unsigned values","Shows representable ranges (e.g. 8-bit −128…127 and 0…255) and explains out-of-range input","Flags that the most negative value (−128) has no one's-complement or sign-magnitude form","Pairs well with the Bitwise Calculator for mask checks"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why two's complement?","acceptedAnswer":{"@type":"Answer","text":"The same adder circuit works for signed and unsigned numbers, there is only one zero (no +0/−0), and the range gains one extra value."}},{"@type":"Question","name":"Are one's complement and sign-magnitude still used?","acceptedAnswer":{"@type":"Answer","text":"Rarely for integers, but the ideas live on in checksums (the Internet checksum is a one's-complement sum) and in the sign bit of floating-point numbers."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Two's Complement Calculator","item":"https://wooadev.wooahouse.com/en/integer-representation.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../integer-representation.html">KO</a>
+        <span>|</span>
+        <a href="integer-representation.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Two's Complement Calculator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">➖</span>
+    <h1>Two's Complement Calculator — Binary Integer Representation</h1>
+    <p>Enter an integer or a bit string to see its two's complement, one's complement, sign-magnitude form, hex and signed/unsigned readings at 4 to 64 bits.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ 8-bit — signed range -128 to 127, unsigned 0 to 255</p>
+<h3>Input — Integers or bit strings (one per line)</h3><pre>-42
+127
+-128
+0b11010110
+0xFFD6</pre>
+<h3>Result — Representations</h3><pre>Input | Signed value | Two's complement | Hex | One's complement | Sign-magnitude | Unsigned
+-42 | -42 | 1101 0110 | 0xD6 | 1101 0101 | 1010 1010 | 214
+127 | 127 | 0111 1111 | 0x7F | 0111 1111 | 0111 1111 | 127
+-128 | -128 | 1000 0000 | 0x80 | n/a | n/a | 128
+0b11010110 | -42 | 1101 0110 | 0xD6 | 1101 0101 | 1010 1010 | 214
+0xFFD6 | Exceeds 8 bits |  |  |  |  | </pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Computers store negative integers as two's complement almost everywhere. You no longer have to turn -42 into 1101 0110 by hand.</p>
+<ul><li>Integer → bits: two's complement, one's complement, sign-magnitude and hex at the chosen width (4–64 bits)</li><li>Bits → integer: 0b… / 0x… input read as both signed and unsigned values</li><li>Shows representable ranges (e.g. 8-bit −128…127 and 0…255) and explains out-of-range input</li><li>Flags that the most negative value (−128) has no one's-complement or sign-magnitude form</li><li>Pairs well with the Bitwise Calculator for mask checks</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="bitwise-calculator.html" class="related-card"><span class="related-icon">🧮</span><span>Bitwise Calculator</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>Number Base Converter</span></a>
+    <a href="ieee754-converter.html" class="related-card"><span class="related-icon">🔬</span><span>IEEE 754 Floating-Point Converter</span></a>
+    <a href="text-binary.html" class="related-card"><span class="related-icon">01</span><span>Text ↔ Binary</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>To negate in two's complement: invert all bits (one's complement) and add 1.</li><li>−1 is all ones (1111 1111 / 0xFF in 8 bits).</li><li>To read a string of 0s and 1s as a bit pattern rather than a decimal number, choose the bit-string option.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Why two's complement?</summary><p>The same adder circuit works for signed and unsigned numbers, there is only one zero (no +0/−0), and the range gains one extra value.</p></details><details><summary>Are one's complement and sign-magnitude still used?</summary><p>Rarely for integers, but the ideas live on in checksums (the Internet checksum is a one's-complement sum) and in the sign bit of floating-point numbers.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/integer-representation.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

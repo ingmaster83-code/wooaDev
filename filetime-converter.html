@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FILETIME 변환기 — Windows FILETIME ↔ 날짜 (100ns 정밀도) | WooaDev</title>
+  <meta name="description" content="Windows FILETIME(1601-01-01 기준 100ns 단위)을 UTC 날짜·Unix 시간으로, 날짜를 FILETIME으로 변환합니다. 10진수, 0x 16진수, dwHighDateTime·dwLowDateTime 쌍 입력과 소수 7자리 정밀도를 지원합니다.">
+  <meta name="keywords" content="FILETIME 변환, Windows FILETIME, FILETIME to date, filetime converter, dwHighDateTime, Active Directory 타임스탬프, 1601 에포크">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/filetime-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/filetime-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/filetime-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/filetime-converter.html">
+  <meta property="og:title" content="FILETIME 변환기 — Windows FILETIME ↔ 날짜 (100ns 정밀도) | WooaDev">
+  <meta property="og:description" content="Windows FILETIME(1601-01-01 기준 100ns 단위)을 UTC 날짜·Unix 시간으로, 날짜를 FILETIME으로 변환합니다. 10진수, 0x 16진수, dwHighDateTime·dwLowDateTime 쌍 입력과 소수 7자리 정밀도를 지원합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/filetime-converter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="FILETIME 변환기 — Windows FILETIME ↔ 날짜 (100ns 정밀도) | WooaDev">
+  <meta name="twitter:description" content="Windows FILETIME(1601-01-01 기준 100ns 단위)을 UTC 날짜·Unix 시간으로, 날짜를 FILETIME으로 변환합니다. 10진수, 0x 16진수, dwHighDateTime·dwLowDateTime 쌍 입력과 소수 7자리 정밀도를 지원합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"FILETIME 변환기","url":"https://wooadev.wooahouse.com/filetime-converter.html","description":"Windows FILETIME(1601-01-01 기준 100ns 단위)을 UTC 날짜·Unix 시간으로, 날짜를 FILETIME으로 변환합니다. 10진수, 0x 16진수, dwHighDateTime·dwLowDateTime 쌍 입력과 소수 7자리 정밀도를 지원합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: 133700000000000000 같은 10진수, 0x01DB… 16진수, \"0x01DB1234 0x5678ABCD\"(상위 DWORD 하위 DWORD) 쌍","출력: UTC ISO 8601(100ns), Unix 초·밀리초, 10진/16진, dwHigh/dwLow","날짜를 넣으면 FILETIME 값으로 역변환","64비트 부호 없는 정수 범위와 표시 가능한 날짜 범위를 검사"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"왜 1601년인가요?","acceptedAnswer":{"@type":"Answer","text":"1601년은 400년 주기 그레고리력의 시작 해로, 윤년 규칙이 한 주기 단위로 깔끔하게 반복되어 Windows가 기준으로 삼았습니다."}},{"@type":"Question","name":"FILETIME과 .NET Ticks는 어떻게 다른가요?","acceptedAnswer":{"@type":"Answer","text":"둘 다 100ns 단위지만 기준이 다릅니다. FILETIME은 1601-01-01, .NET Ticks는 0001-01-01입니다. 차이는 504911232000000000 ticks 입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"FILETIME 변환기","item":"https://wooadev.wooahouse.com/filetime-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="filetime-converter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/filetime-converter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>FILETIME 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🪟</span>
+    <h1>Windows FILETIME 변환기</h1>
+    <p>Windows FILETIME(1601-01-01 이후 100ns 수)을 날짜로, 날짜를 FILETIME으로 바꿉니다. 10진수·16진수·상위/하위 DWORD 입력을 모두 받습니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 5개 변환</p>
+<h3>입력 — FILETIME 또는 날짜 (한 줄에 하나)</h3><pre>134052684151234567
+0x01DC4B3A12345678
+0x01DC4B3A 0x12345678
+2026-10-16T09:30:15.1234567Z
+116444736000000000</pre>
+<h3>결과 — 변환 결과</h3><pre>입력 | FILETIME | 16진수 | UTC (ISO 8601, 100ns)
+134052684151234567 | 134052684151234567 | 0x01DC4034BC05A007 | 2025-10-18T13:40:15.1234567Z
+0x01DC4B3A12345678 | 134064801699878520 | 0x01DC4B3A12345678 | 2025-11-01T14:16:09.9878520Z
+0x01DC4B3A 0x12345678 | 134064801699878520 | 0x01DC4B3A12345678 | 2025-11-01T14:16:09.9878520Z
+2026-10-16T09:30:15.1234567Z | 134366166151234567 | 0x01DD5D50F3468407 | 2026-10-16T09:30:15.1234567Z
+116444736000000000 | 116444736000000000 | 0x019DB1DED53E8000 | 1970-01-01T00:00:00.0000000Z</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>NTFS 파일 시간, Active Directory의 lastLogon·pwdLastSet, Windows 레지스트리와 이벤트 로그는 FILETIME으로 시각을 저장합니다. 1601-01-01부터 지난 100나노초 수라서 사람이 읽을 수 없습니다.</p>
+<ul><li>입력: 133700000000000000 같은 10진수, 0x01DB… 16진수, "0x01DB1234 0x5678ABCD"(상위 DWORD 하위 DWORD) 쌍</li><li>출력: UTC ISO 8601(100ns), Unix 초·밀리초, 10진/16진, dwHigh/dwLow</li><li>날짜를 넣으면 FILETIME 값으로 역변환</li><li>64비트 부호 없는 정수 범위와 표시 가능한 날짜 범위를 검사</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="dotnet-ticks-converter.html" class="related-card"><span class="related-icon">🟣</span><span>.NET Ticks 변환기</span></a>
+    <a href="webkit-timestamp-converter.html" class="related-card"><span class="related-icon">🌐</span><span>WebKit·Chrome 타임스탬프 변환기</span></a>
+    <a href="timestamp.html" class="related-card"><span class="related-icon">🕐</span><span>타임스탬프 변환</span></a>
+    <a href="iso8601-converter.html" class="related-card"><span class="related-icon">📅</span><span>ISO 8601 / RFC 날짜 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Active Directory 속성 값이 9223372036854775807 이면 "만료 없음"을 뜻하는 특수값이라 날짜가 아닙니다.</li><li>0은 1601-01-01입니다. lastLogon이 0이면 "한 번도 로그온하지 않음"이라는 뜻이 많습니다.</li><li>FILETIME은 항상 UTC 기준입니다. 로컬 시각은 시간대 변환기로 바꾸세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>왜 1601년인가요?</summary><p>1601년은 400년 주기 그레고리력의 시작 해로, 윤년 규칙이 한 주기 단위로 깔끔하게 반복되어 Windows가 기준으로 삼았습니다.</p></details><details><summary>FILETIME과 .NET Ticks는 어떻게 다른가요?</summary><p>둘 다 100ns 단위지만 기준이 다릅니다. FILETIME은 1601-01-01, .NET Ticks는 0001-01-01입니다. 차이는 504911232000000000 ticks 입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-time.js"></script>
+<script src="js/tools/filetime-converter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

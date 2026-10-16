@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subnet Calculator – Network, Broadcast &amp; Host Count from CIDR | WooaDev</title>
+  <meta name="description" content="Calculate network, mask, wildcard, broadcast, host range and count for CIDR like 192.168.1.10/24. Handles /31 and /32, private/CGNAT ranges and IPv6 prefixes.">
+  <meta name="keywords" content="subnet calculator, CIDR calculator, subnet mask calculator, network address calculator, broadcast address, usable hosts, IPv6 subnet calculator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/subnet-calculator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/subnet-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/subnet-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/subnet-calculator.html">
+  <meta property="og:title" content="Subnet Calculator – Network, Broadcast &amp; Host Count from CIDR | WooaDev">
+  <meta property="og:description" content="Calculate network, mask, wildcard, broadcast, host range and count for CIDR like 192.168.1.10/24. Handles /31 and /32, private/CGNAT ranges and IPv6 prefixes.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/subnet-calculator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Subnet Calculator – Network, Broadcast &amp; Host Count from CIDR | WooaDev">
+  <meta name="twitter:description" content="Calculate network, mask, wildcard, broadcast, host range and count for CIDR like 192.168.1.10/24. Handles /31 and /32, private/CGNAT ranges and IPv6 prefixes.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Subnet Calculator","url":"https://wooadev.wooahouse.com/en/subnet-calculator.html","description":"Calculate network, mask, wildcard, broadcast, host range and count for CIDR like 192.168.1.10/24. Handles /31 and /32, private/CGNAT ranges and IPv6 prefixes.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Input: 192.168.1.10/24, 10.0.0.0 255.255.0.0 (IP + mask), 2001:db8::/32 (IPv6)","Result: network address, subnet mask, wildcard, broadcast, first/last host, total addresses and usable hosts","/31 (point-to-point, RFC 3021) and /32 (single host) are computed differently from the usual −2 rule","Detects class A–E and private (RFC 1918), CGNAT (100.64/10), link-local, loopback and documentation (TEST-NET) ranges","Non-contiguous masks such as 255.0.255.0 are rejected"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why subtract 2 for hosts?","acceptedAnswer":{"@type":"Answer","text":"The first address is the network address and the last is the broadcast address; neither can be assigned to a device. A /31 is for point-to-point links and uses both addresses."}},{"@type":"Question","name":"Doesn't IPv6 have a broadcast address?","acceptedAnswer":{"@type":"Answer","text":"No — IPv6 uses multicast instead, so every address in the subnet (including the first) can be a host. A /64 is normally assigned per link."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Subnet Calculator","item":"https://wooadev.wooahouse.com/en/subnet-calculator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../subnet-calculator.html">KO</a>
+        <span>|</span>
+        <a href="subnet-calculator.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Subnet Calculator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🌐</span>
+    <h1>Subnet Calculator — IPv4 &amp; IPv6 CIDR</h1>
+    <p>Calculates network address, broadcast, usable host range and count from an IP with CIDR or subnet mask. /31, /32 and IPv6 are handled too.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Calculated 5</p>
+<h3>Input — IP/CIDR or IP + subnet mask (one per line)</h3><pre>192.168.1.10/24
+10.0.0.0 255.255.0.0
+172.16.5.130/26
+203.0.113.5/31
+2001:db8:abcd::/48</pre>
+<h3>Result — Results</h3><pre>Input | Network | Mask | Host range | Broadcast | Hosts
+192.168.1.10/24 | 192.168.1.0/24 | 255.255.255.0 | 192.168.1.1 – 192.168.1.254 | 192.168.1.255 | 254
+10.0.0.0 255.255.0.0 | 10.0.0.0/16 | 255.255.0.0 | 10.0.0.1 – 10.0.255.254 | 10.0.255.255 | 65,534
+172.16.5.130/26 | 172.16.5.128/26 | 255.255.255.192 | 172.16.5.129 – 172.16.5.190 | 172.16.5.191 | 62
+203.0.113.5/31 | 203.0.113.4/31 | 255.255.255.254 | 203.0.113.4 – 203.0.113.5 | none (RFC 3021 point-to-point) | 2
+2001:db8:abcd::/48 | 2001:db8:abcd::/48 | /48 | 2001:db8:abcd:: – 2001:db8:abcd:ffff:ffff:ffff:ffff:ffff | — | 1,208,925,819,614,629,174,706,176</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>The calculation you do most often in network design and firewall or security-group rules. Enter several lines to compare them in a table.</p>
+<ul><li>Input: 192.168.1.10/24, 10.0.0.0 255.255.0.0 (IP + mask), 2001:db8::/32 (IPv6)</li><li>Result: network address, subnet mask, wildcard, broadcast, first/last host, total addresses and usable hosts</li><li>/31 (point-to-point, RFC 3021) and /32 (single host) are computed differently from the usual −2 rule</li><li>Detects class A–E and private (RFC 1918), CGNAT (100.64/10), link-local, loopback and documentation (TEST-NET) ranges</li><li>Non-contiguous masks such as 255.0.255.0 are rejected</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="cidr-set-calculator.html" class="related-card"><span class="related-icon">🧱</span><span>CIDR Set Calculator</span></a>
+    <a href="ip-range-to-cidr.html" class="related-card"><span class="related-icon">↔️</span><span>IP Range to CIDR Converter</span></a>
+    <a href="ip-converter.html" class="related-card"><span class="related-icon">🔁</span><span>IP Address Converter</span></a>
+    <a href="ip-lookup.html" class="related-card"><span class="related-icon">🌐</span><span>IP Lookup</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Cloud subnets (e.g. AWS VPC) reserve the first four and the last address, so five fewer are really usable.</li><li>A Cisco ACL wildcard mask is the inverse of the subnet mask.</li><li>To merge many CIDRs into fewer blocks, use the CIDR Set Calculator.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Why subtract 2 for hosts?</summary><p>The first address is the network address and the last is the broadcast address; neither can be assigned to a device. A /31 is for point-to-point links and uses both addresses.</p></details><details><summary>Doesn't IPv6 have a broadcast address?</summary><p>No — IPv6 uses multicast instead, so every address in the subnet (including the first) can be a host. A /64 is normally assigned per link.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-net.js"></script>
+<script src="../js/tools/subnet-calculator.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>서브넷 계산기 — CIDR로 네트워크·브로드캐스트·호스트 수 계산 | WooaDev</title>
+  <meta name="description" content="192.168.1.10/24 같은 CIDR이나 IP+서브넷 마스크로 네트워크 주소, 서브넷 마스크, 와일드카드, 브로드캐스트, 첫·마지막 호스트와 호스트 수를 계산합니다. /31(RFC 3021)·/32 예외, 사설·CGNAT·문서용 대역 판별, IPv6 프리픽스를 지원합니다.">
+  <meta name="keywords" content="서브넷 계산기, CIDR 계산기, 서브넷 마스크 계산, 네트워크 주소 계산, 브로드캐스트 주소, 호스트 수 계산, subnet calculator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/subnet-calculator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/subnet-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/subnet-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/subnet-calculator.html">
+  <meta property="og:title" content="서브넷 계산기 — CIDR로 네트워크·브로드캐스트·호스트 수 계산 | WooaDev">
+  <meta property="og:description" content="192.168.1.10/24 같은 CIDR이나 IP+서브넷 마스크로 네트워크 주소, 서브넷 마스크, 와일드카드, 브로드캐스트, 첫·마지막 호스트와 호스트 수를 계산합니다. /31(RFC 3021)·/32 예외, 사설·CGNAT·문서용 대역 판별, IPv6 프리픽스를 지원합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/subnet-calculator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="서브넷 계산기 — CIDR로 네트워크·브로드캐스트·호스트 수 계산 | WooaDev">
+  <meta name="twitter:description" content="192.168.1.10/24 같은 CIDR이나 IP+서브넷 마스크로 네트워크 주소, 서브넷 마스크, 와일드카드, 브로드캐스트, 첫·마지막 호스트와 호스트 수를 계산합니다. /31(RFC 3021)·/32 예외, 사설·CGNAT·문서용 대역 판별, IPv6 프리픽스를 지원합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"서브넷 계산기","url":"https://wooadev.wooahouse.com/subnet-calculator.html","description":"192.168.1.10/24 같은 CIDR이나 IP+서브넷 마스크로 네트워크 주소, 서브넷 마스크, 와일드카드, 브로드캐스트, 첫·마지막 호스트와 호스트 수를 계산합니다. /31(RFC 3021)·/32 예외, 사설·CGNAT·문서용 대역 판별, IPv6 프리픽스를 지원합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: 192.168.1.10/24, 10.0.0.0 255.255.0.0(IP + 마스크), 2001:db8::/32(IPv6)","결과: 네트워크 주소, 서브넷 마스크, 와일드카드, 브로드캐스트, 첫/마지막 호스트, 전체 주소 수, 사용 가능한 호스트 수","/31(점대점, RFC 3021)과 /32(단일 호스트)는 일반 규칙(−2)과 다르게 계산","클래스(A~E)와 사설(RFC 1918)·CGNAT(100.64/10)·링크 로컬·루프백·문서용(TEST-NET) 대역을 판별","이어지지 않는 서브넷 마스크(255.0.255.0)는 오류로 알려 줌"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"호스트 수가 왜 2를 빼나요?","acceptedAnswer":{"@type":"Answer","text":"서브넷의 첫 주소는 네트워크 주소, 마지막 주소는 브로드캐스트 주소로 예약되어 장비에 할당할 수 없기 때문입니다. /31은 점대점 링크 용도로 2개 모두 사용 가능합니다."}},{"@type":"Question","name":"IPv6에는 브로드캐스트가 없나요?","acceptedAnswer":{"@type":"Answer","text":"없습니다. IPv6는 멀티캐스트를 사용하므로 서브넷의 모든 주소(첫 주소 포함)를 호스트에 쓸 수 있고, 보통 /64를 하나의 링크에 할당합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"서브넷 계산기","item":"https://wooadev.wooahouse.com/subnet-calculator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="subnet-calculator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/subnet-calculator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>서브넷 계산기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🌐</span>
+    <h1>서브넷 계산기 — IPv4 · IPv6 CIDR</h1>
+    <p>IP 주소와 CIDR(또는 서브넷 마스크)로 네트워크 주소, 브로드캐스트, 사용 가능한 호스트 범위와 개수를 계산합니다. /31·/32 예외와 IPv6도 처리합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 5개 계산</p>
+<h3>입력 — IP/CIDR 또는 IP + 서브넷 마스크 (한 줄에 하나)</h3><pre>192.168.1.10/24
+10.0.0.0 255.255.0.0
+172.16.5.130/26
+203.0.113.5/31
+2001:db8:abcd::/48</pre>
+<h3>결과 — 계산 결과</h3><pre>입력 | 네트워크 | 마스크 | 호스트 범위 | 브로드캐스트 | 호스트 수
+192.168.1.10/24 | 192.168.1.0/24 | 255.255.255.0 | 192.168.1.1 – 192.168.1.254 | 192.168.1.255 | 254
+10.0.0.0 255.255.0.0 | 10.0.0.0/16 | 255.255.0.0 | 10.0.0.1 – 10.0.255.254 | 10.0.255.255 | 65,534
+172.16.5.130/26 | 172.16.5.128/26 | 255.255.255.192 | 172.16.5.129 – 172.16.5.190 | 172.16.5.191 | 62
+203.0.113.5/31 | 203.0.113.4/31 | 255.255.255.254 | 203.0.113.4 – 203.0.113.5 | 없음 (RFC 3021 점대점) | 2
+2001:db8:abcd::/48 | 2001:db8:abcd::/48 | /48 | 2001:db8:abcd:: – 2001:db8:abcd:ffff:ffff:ffff:ffff:ffff | — | 1,208,925,819,614,629,174,706,176</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>네트워크 설계나 방화벽·보안 그룹 설정에서 가장 자주 하는 계산입니다. 한 줄에 하나씩 여러 개를 넣으면 표로 한꺼번에 비교합니다.</p>
+<ul><li>입력: 192.168.1.10/24, 10.0.0.0 255.255.0.0(IP + 마스크), 2001:db8::/32(IPv6)</li><li>결과: 네트워크 주소, 서브넷 마스크, 와일드카드, 브로드캐스트, 첫/마지막 호스트, 전체 주소 수, 사용 가능한 호스트 수</li><li>/31(점대점, RFC 3021)과 /32(단일 호스트)는 일반 규칙(−2)과 다르게 계산</li><li>클래스(A~E)와 사설(RFC 1918)·CGNAT(100.64/10)·링크 로컬·루프백·문서용(TEST-NET) 대역을 판별</li><li>이어지지 않는 서브넷 마스크(255.0.255.0)는 오류로 알려 줌</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="cidr-set-calculator.html" class="related-card"><span class="related-icon">🧱</span><span>CIDR 집합 계산기</span></a>
+    <a href="ip-range-to-cidr.html" class="related-card"><span class="related-icon">↔️</span><span>IP 범위 → CIDR 변환기</span></a>
+    <a href="ip-converter.html" class="related-card"><span class="related-icon">🔁</span><span>IP 주소 변환기</span></a>
+    <a href="ip-lookup.html" class="related-card"><span class="related-icon">🌐</span><span>IP 주소 조회</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>클라우드(AWS VPC 등)는 서브넷마다 앞 4개와 마지막 1개 주소를 예약하므로 실제 사용 가능 수는 5개 적습니다.</li><li>방화벽 규칙의 와일드카드 마스크(Cisco ACL)는 서브넷 마스크를 뒤집은 값입니다.</li><li>여러 CIDR을 하나로 합치려면 CIDR 집합 계산기를 이용하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>호스트 수가 왜 2를 빼나요?</summary><p>서브넷의 첫 주소는 네트워크 주소, 마지막 주소는 브로드캐스트 주소로 예약되어 장비에 할당할 수 없기 때문입니다. /31은 점대점 링크 용도로 2개 모두 사용 가능합니다.</p></details><details><summary>IPv6에는 브로드캐스트가 없나요?</summary><p>없습니다. IPv6는 멀티캐스트를 사용하므로 서브넷의 모든 주소(첫 주소 포함)를 호스트에 쓸 수 있고, 보통 /64를 하나의 링크에 할당합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-net.js"></script>
+<script src="js/tools/subnet-calculator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>엑셀 날짜 일련번호 변환기 — 45292 → 2024-01-01 (1900·1904 체계) | WooaDev</title>
+  <meta name="description" content="Excel 날짜 일련번호를 날짜·시간으로, 날짜를 일련번호로 변환합니다. 1900 체계(Windows)와 1904 체계(구 Mac)를 지원하고 가짜 1900-02-29(일련번호 60)와 소수 부분(시간)을 올바르게 처리합니다.">
+  <meta name="keywords" content="엑셀 날짜 변환, 엑셀 일련번호 날짜, Excel serial date, 45292 날짜, 엑셀 숫자 날짜로, 1900 1904 날짜 체계, excel date converter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/excel-date-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/excel-date-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/excel-date-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/excel-date-converter.html">
+  <meta property="og:title" content="엑셀 날짜 일련번호 변환기 — 45292 → 2024-01-01 (1900·1904 체계) | WooaDev">
+  <meta property="og:description" content="Excel 날짜 일련번호를 날짜·시간으로, 날짜를 일련번호로 변환합니다. 1900 체계(Windows)와 1904 체계(구 Mac)를 지원하고 가짜 1900-02-29(일련번호 60)와 소수 부분(시간)을 올바르게 처리합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/excel-date-converter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="엑셀 날짜 일련번호 변환기 — 45292 → 2024-01-01 (1900·1904 체계) | WooaDev">
+  <meta name="twitter:description" content="Excel 날짜 일련번호를 날짜·시간으로, 날짜를 일련번호로 변환합니다. 1900 체계(Windows)와 1904 체계(구 Mac)를 지원하고 가짜 1900-02-29(일련번호 60)와 소수 부분(시간)을 올바르게 처리합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"엑셀 날짜 일련번호 변환기","url":"https://wooadev.wooahouse.com/excel-date-converter.html","description":"Excel 날짜 일련번호를 날짜·시간으로, 날짜를 일련번호로 변환합니다. 1900 체계(Windows)와 1904 체계(구 Mac)를 지원하고 가짜 1900-02-29(일련번호 60)와 소수 부분(시간)을 올바르게 처리합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["정수 부분 = 날짜(1900-01-01을 1로 시작), 소수 부분 = 하루 중 시각 (0.5 = 정오)","1900 체계: 1900년을 윤년으로 잘못 취급하는 Excel의 오래된 버그를 그대로 반영 (60 = 존재하지 않는 1900-02-29)","1904 체계: 구 Mac용 Excel 기준(0 = 1904-01-01), 파일 옵션에서 켤 수 있음","날짜·시간을 넣으면 일련번호로 역변환, 한 줄에 하나씩 여러 값 처리","지원 범위: 1900-01-01(1) ~ 9999-12-31(2958465)"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"왜 일련번호 60이 이상한가요?","acceptedAnswer":{"@type":"Answer","text":"Lotus 1-2-3과의 호환을 위해 Excel은 1900년을 윤년으로 취급해 2월 29일이 있는 것처럼 번호를 매깁니다. 실제로는 없는 날짜이므로 60은 날짜로 변환되지 않습니다."}},{"@type":"Question","name":"1900 체계와 1904 체계는 얼마나 차이 나나요?","acceptedAnswer":{"@type":"Answer","text":"같은 일련번호가 1462일(4년 + 1일) 차이 나는 날짜를 가리킵니다. 두 체계의 통합 문서를 합칠 때 날짜가 밀리는 원인입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"엑셀 날짜 일련번호 변환기","item":"https://wooadev.wooahouse.com/excel-date-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="excel-date-converter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/excel-date-converter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>엑셀 날짜 일련번호 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📗</span>
+    <h1>엑셀 날짜 일련번호 변환기 — 1900 · 1904 체계</h1>
+    <p>Excel이 날짜를 저장하는 일련번호(예: 45292)를 실제 날짜로, 날짜를 일련번호로 바꿉니다. 1900년 윤년 버그와 1904 체계도 정확히 반영합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 7개 변환</p>
+<h3>입력 — 일련번호 또는 날짜 (한 줄에 하나)</h3><pre>46311.395833333
+1
+59
+60
+61
+2026-10-16 09:30
+1900-03-01</pre>
+<h3>결과 — 변환 결과</h3><pre>입력 | 일련번호 | 날짜·시간 (UTC 기준 표기)
+46311.395833333 | 46311.395833333 | 2026-10-16 09:30:00.000
+1 | 1 | 1900-01-01 00:00:00.000
+59 | 59 | 1900-02-28 00:00:00.000
+60 | 60 | 1900-02-29 (Excel 1900 윤년 버그로 존재하지 않는 날짜)
+61 | 61 | 1900-03-01 00:00:00.000
+2026-10-16 09:30 | 46311.395833333 | 2026-10-16 09:30:00.000
+1900-03-01 | 61 | 1900-03-01 00:00:00.000</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>엑셀 셀의 서식이 "일반"이면 날짜가 45292 같은 숫자로 보입니다. CSV로 내보내거나 다른 시스템에서 읽을 때 자주 마주치는 값입니다.</p>
+<ul><li>정수 부분 = 날짜(1900-01-01을 1로 시작), 소수 부분 = 하루 중 시각 (0.5 = 정오)</li><li>1900 체계: 1900년을 윤년으로 잘못 취급하는 Excel의 오래된 버그를 그대로 반영 (60 = 존재하지 않는 1900-02-29)</li><li>1904 체계: 구 Mac용 Excel 기준(0 = 1904-01-01), 파일 옵션에서 켤 수 있음</li><li>날짜·시간을 넣으면 일련번호로 역변환, 한 줄에 하나씩 여러 값 처리</li><li>지원 범위: 1900-01-01(1) ~ 9999-12-31(2958465)</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="timestamp.html" class="related-card"><span class="related-icon">🕐</span><span>타임스탬프 변환</span></a>
+    <a href="iso8601-converter.html" class="related-card"><span class="related-icon">📅</span><span>ISO 8601 / RFC 날짜 변환기</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+    <a href="duration-parser.html" class="related-card"><span class="related-icon">⏱️</span><span>시간 단위·기간 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>엑셀과 Google 시트의 일련번호는 1900-03-01(61) 이후로 같지만 그 이전은 하루 차이가 날 수 있습니다.</li><li>파일이 1904 체계인지 모르면 같은 숫자를 두 체계로 변환해 보세요. 4년 하루 차이가 납니다(1462일).</li><li>시각이 필요 없으면 정수 부분만 사용하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>왜 일련번호 60이 이상한가요?</summary><p>Lotus 1-2-3과의 호환을 위해 Excel은 1900년을 윤년으로 취급해 2월 29일이 있는 것처럼 번호를 매깁니다. 실제로는 없는 날짜이므로 60은 날짜로 변환되지 않습니다.</p></details><details><summary>1900 체계와 1904 체계는 얼마나 차이 나나요?</summary><p>같은 일련번호가 1462일(4년 + 1일) 차이 나는 날짜를 가리킵니다. 두 체계의 통합 문서를 합칠 때 날짜가 밀리는 원인입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-time.js"></script>
+<script src="js/tools/excel-date-converter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

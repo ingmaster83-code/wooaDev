@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIDR 병합·교집합 계산기 — 방화벽 규칙·IP 허용 목록 최적화 | WooaDev</title>
+  <meta name="description" content="CIDR 목록을 최소 개수로 병합(집계)하고, A∩B 교집합, A−B 제외, A∪B 합집합을 계산합니다. 단일 IP·범위 입력, 주석 지원, B 항목이 A에 포함되는지 검사하며 IPv4/IPv6를 BigInt로 정확히 처리합니다.">
+  <meta name="keywords" content="CIDR 병합, CIDR 교집합, CIDR 제외 계산, IP 대역 합치기, CIDR aggregation, IP 허용 목록 최적화, 방화벽 규칙 정리, merge CIDR">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/cidr-set-calculator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/cidr-set-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/cidr-set-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/cidr-set-calculator.html">
+  <meta property="og:title" content="CIDR 병합·교집합 계산기 — 방화벽 규칙·IP 허용 목록 최적화 | WooaDev">
+  <meta property="og:description" content="CIDR 목록을 최소 개수로 병합(집계)하고, A∩B 교집합, A−B 제외, A∪B 합집합을 계산합니다. 단일 IP·범위 입력, 주석 지원, B 항목이 A에 포함되는지 검사하며 IPv4/IPv6를 BigInt로 정확히 처리합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/cidr-set-calculator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CIDR 병합·교집합 계산기 — 방화벽 규칙·IP 허용 목록 최적화 | WooaDev">
+  <meta name="twitter:description" content="CIDR 목록을 최소 개수로 병합(집계)하고, A∩B 교집합, A−B 제외, A∪B 합집합을 계산합니다. 단일 IP·범위 입력, 주석 지원, B 항목이 A에 포함되는지 검사하며 IPv4/IPv6를 BigInt로 정확히 처리합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CIDR 집합 계산기","url":"https://wooadev.wooahouse.com/cidr-set-calculator.html","description":"CIDR 목록을 최소 개수로 병합(집계)하고, A∩B 교집합, A−B 제외, A∪B 합집합을 계산합니다. 단일 IP·범위 입력, 주석 지원, B 항목이 A에 포함되는지 검사하며 IPv4/IPv6를 BigInt로 정확히 처리합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["병합: 겹치거나 맞닿은 블록을 가장 적은 수의 CIDR로 집계 (10.0.0.0/24 + 10.0.1.0/24 → 10.0.0.0/23)","교집합(A∩B), 제외(A−B), 합집합(A∪B): 허용 목록에서 특정 대역만 빼거나 두 목록의 공통부를 찾을 때","포함 여부: B의 각 항목이 A에 전부 들어가는지, 일부만 겹치는지, 전혀 아닌지 검사","입력: CIDR, 단일 IP, \"시작 - 끝\" 범위, # 주석을 한 줄에 하나씩","결과의 총 주소 수와 CIDR 개수도 함께 표시"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"병합하면 허용 범위가 넓어지지 않나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 이 도구는 정확히 같은 주소 집합을 가장 적은 CIDR로 다시 표현할 뿐, 새 주소를 추가하지 않습니다."}},{"@type":"Question","name":"범위 입력(시작 - 끝)은 어떻게 처리되나요?","acceptedAnswer":{"@type":"Answer","text":"범위를 최소 개수의 CIDR로 분해해 다른 항목과 함께 병합합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"CIDR 집합 계산기","item":"https://wooadev.wooahouse.com/cidr-set-calculator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="cidr-set-calculator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/cidr-set-calculator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CIDR 집합 계산기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧱</span>
+    <h1>CIDR 집합 계산기 — 병합 · 교집합 · 제외</h1>
+    <p>여러 CIDR 블록을 하나로 합치고, 두 목록의 교집합·합집합·제외를 구하거나 IP가 대역 안에 있는지 확인합니다. IPv4와 IPv6 모두 지원합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 5개 → 12개 CIDR</p>
+<h3>입력 — CIDR 목록 A (한 줄에 하나, 단일 IP·범위 허용)</h3><pre>10.0.0.0/24
+10.0.1.0/24
+10.0.2.0/23
+192.168.0.0/16
+172.16.0.1 - 172.16.0.200</pre>
+<h3>입력 — CIDR 목록 B (교집합·제외·포함 확인용)</h3><pre>10.0.2.0/24
+192.168.10.0/24</pre>
+<h3>결과 — 결과 CIDR</h3><pre>10.0.0.0/22
+172.16.0.1/32
+172.16.0.2/31
+172.16.0.4/30
+172.16.0.8/29
+172.16.0.16/28
+172.16.0.32/27
+172.16.0.64/26
+172.16.0.128/26
+172.16.0.192/29
+172.16.0.200/32
+192.168.0.0/16</pre>
+<h3>결과 — 요약</h3><pre>입력 항목 수: 5
+결과 CIDR 수: 12
+IPv4 주소 수: 66,760</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>방화벽, 보안 그룹, nginx allow 목록, 클라우드 IP 대역이 길어지면 겹치거나 인접한 항목을 정리해 개수를 줄여야 할 때가 많습니다.</p>
+<ul><li>병합: 겹치거나 맞닿은 블록을 가장 적은 수의 CIDR로 집계 (10.0.0.0/24 + 10.0.1.0/24 → 10.0.0.0/23)</li><li>교집합(A∩B), 제외(A−B), 합집합(A∪B): 허용 목록에서 특정 대역만 빼거나 두 목록의 공통부를 찾을 때</li><li>포함 여부: B의 각 항목이 A에 전부 들어가는지, 일부만 겹치는지, 전혀 아닌지 검사</li><li>입력: CIDR, 단일 IP, "시작 - 끝" 범위, # 주석을 한 줄에 하나씩</li><li>결과의 총 주소 수와 CIDR 개수도 함께 표시</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="subnet-calculator.html" class="related-card"><span class="related-icon">🌐</span><span>서브넷 계산기</span></a>
+    <a href="ip-range-to-cidr.html" class="related-card"><span class="related-icon">↔️</span><span>IP 범위 → CIDR 변환기</span></a>
+    <a href="ip-converter.html" class="related-card"><span class="related-icon">🔁</span><span>IP 주소 변환기</span></a>
+    <a href="ip-lookup.html" class="related-card"><span class="related-icon">🌐</span><span>IP 주소 조회</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>제외(A−B)를 하면 결과가 여러 CIDR로 쪼개질 수 있습니다. 이는 CIDR이 2의 거듭제곱 크기만 표현하기 때문입니다.</li><li>클라우드 공급사가 공개하는 IP 목록을 붙여 넣어 병합하면 규칙 수를 크게 줄일 수 있습니다.</li><li>IPv4와 IPv6가 섞여 있어도 각각 따로 계산합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>병합하면 허용 범위가 넓어지지 않나요?</summary><p>아니요. 이 도구는 정확히 같은 주소 집합을 가장 적은 CIDR로 다시 표현할 뿐, 새 주소를 추가하지 않습니다.</p></details><details><summary>범위 입력(시작 - 끝)은 어떻게 처리되나요?</summary><p>범위를 최소 개수의 CIDR로 분해해 다른 항목과 함께 병합합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-net.js"></script>
+<script src="js/tools/cidr-set-calculator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

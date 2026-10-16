@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User-Agent Parser – Browser, OS, Device &amp; Bot Detection | WooaDev</title>
+  <meta name="description" content="Parse User-Agent strings into browser, engine, OS, device, in-app browser (KakaoTalk, NAVER) and crawler (Googlebot, GPTBot) — one string per line.">
+  <meta name="keywords" content="user agent parser, UA string analyzer, browser detection, KakaoTalk in-app browser UA, Googlebot user agent, detect mobile device from user agent">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/user-agent-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/user-agent-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/user-agent-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/user-agent-parser.html">
+  <meta property="og:title" content="User-Agent Parser – Browser, OS, Device &amp; Bot Detection | WooaDev">
+  <meta property="og:description" content="Parse User-Agent strings into browser, engine, OS, device, in-app browser (KakaoTalk, NAVER) and crawler (Googlebot, GPTBot) — one string per line.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/user-agent-parser.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="User-Agent Parser – Browser, OS, Device &amp; Bot Detection | WooaDev">
+  <meta name="twitter:description" content="Parse User-Agent strings into browser, engine, OS, device, in-app browser (KakaoTalk, NAVER) and crawler (Googlebot, GPTBot) — one string per line.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"User-Agent Parser","url":"https://wooadev.wooahouse.com/en/user-agent-parser.html","description":"Parse User-Agent strings into browser, engine, OS, device, in-app browser (KakaoTalk, NAVER) and crawler (Googlebot, GPTBot) — one string per line.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Browsers: Chrome, Edge, Safari, Firefox, Opera, Samsung Internet, Naver Whale, Vivaldi, Brave, IE and versions","Engine (Blink, WebKit, Gecko, Trident) and OS (Windows version mapping, macOS, iOS/iPadOS, Android, Linux, ChromeOS)","Device: desktop, mobile, tablet, TV and model names (Samsung Galaxy SM-…)","In-app browsers: KakaoTalk, NAVER app, Daum app, Facebook, Instagram, LINE, Android WebView","Bots: Googlebot, Bingbot, Naver Yeti, Daum, OpenAI / Anthropic / Perplexity crawlers, curl, requests and other HTTP clients"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can the UA alone identify the exact device?","acceptedAnswer":{"@type":"Answer","text":"Only roughly. With UA reduction and spoofing, exact OS versions and models need User-Agent Client Hints (Sec-CH-UA-*)."}},{"@type":"Question","name":"How do I verify a real Googlebot?","acceptedAnswer":{"@type":"Answer","text":"Anyone can fake the UA, so check that the visiting IP's reverse DNS ends in googlebot.com or google.com and that the forward lookup returns the same IP."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"User-Agent Parser","item":"https://wooadev.wooahouse.com/en/user-agent-parser.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../user-agent-parser.html">KO</a>
+        <span>|</span>
+        <a href="user-agent-parser.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>User-Agent Parser</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🕵️</span>
+    <h1>User-Agent Parser — Browser · OS · Device · Bot</h1>
+    <p>Extracts the browser and version, engine, operating system, device type, in-app browsers such as KakaoTalk or NAVER, and search/AI crawlers from a User-Agent string.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Parsed 8</p>
+<h3>Input — User-Agent strings (one per line)</h3><pre>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36
+Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1
+Mozilla/5.0 (Linux; Android 14; SM-S918N) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/25.0 Chrome/121.0.0.0 Mobile Safari/537.36
+Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36 NAVER(inapp; search; 2000; 12.0.0)
+Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Whale/3.28.0.0 Safari/537.36
+Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+Mozilla/5.0 (compatible; Yeti/1.1; +http://naver.me/spd)
+Mozilla/5.0 (X11; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0</pre>
+<h3>Result — Results</h3><pre>Browser | Engine | OS | Device | Notes
+Chrome 130.0 | Blink 537 | Windows 10 / 11 | Desktop | 
+Safari 18.0 | WebKit 605 | iOS 18.0 | Mobile · iPhone | 
+Samsung Internet 25.0 | Blink 537 | Android 14 | Mobile · SM-S918N (Samsung Galaxy) | 
+Chrome 129.0 | Blink 537 | Android 13 | Mobile · Pixel 7 | NAVER 앱
+Naver Whale 3.28 | Blink 537 | macOS 10.15.7 | Desktop | 
+Googlebot | — | — | Bot / crawler | crawler
+Naver Yeti | — | — | Bot / crawler | crawler
+Firefox 131.0 | Gecko 131 | Linux | Desktop | </pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Turns the long User-Agent left in access logs and error reports into readable facts. Put several in, one per line, to compare them in a table.</p>
+<ul><li>Browsers: Chrome, Edge, Safari, Firefox, Opera, Samsung Internet, Naver Whale, Vivaldi, Brave, IE and versions</li><li>Engine (Blink, WebKit, Gecko, Trident) and OS (Windows version mapping, macOS, iOS/iPadOS, Android, Linux, ChromeOS)</li><li>Device: desktop, mobile, tablet, TV and model names (Samsung Galaxy SM-…)</li><li>In-app browsers: KakaoTalk, NAVER app, Daum app, Facebook, Instagram, LINE, Android WebView</li><li>Bots: Googlebot, Bingbot, Naver Yeti, Daum, OpenAI / Anthropic / Perplexity crawlers, curl, requests and other HTTP clients</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="http-headers-parser.html" class="related-card"><span class="related-icon">📨</span><span>HTTP Headers Parser</span></a>
+    <a href="ip-lookup.html" class="related-card"><span class="related-icon">🌐</span><span>IP Lookup</span></a>
+    <a href="cookie-parser.html" class="related-card"><span class="related-icon">🍪</span><span>Cookie Parser</span></a>
+    <a href="regex-tester.html" class="related-card"><span class="related-icon">🔍</span><span>Regex Tester</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Chrome, Edge and Safari UAs contain each other's tokens for compatibility, so order matters — this tool tests Edge → Opera → Whale → … → Chrome → Safari.</li><li>Browsers are reducing UA detail, so macOS may always read 10.15.7 and Windows 10.</li><li>UA alone is easy to forge for bot detection — pair important blocks with reverse DNS verification.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Can the UA alone identify the exact device?</summary><p>Only roughly. With UA reduction and spoofing, exact OS versions and models need User-Agent Client Hints (Sec-CH-UA-*).</p></details><details><summary>How do I verify a real Googlebot?</summary><p>Anyone can fake the UA, so check that the visiting IP's reverse DNS ends in googlebot.com or google.com and that the forward lookup returns the same IP.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/user-agent-parser.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

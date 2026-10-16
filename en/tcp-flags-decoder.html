@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TCP Flags Decoder – 0x12 = SYN+ACK and tcpdump [S.] Notation | WooaDev</title>
+  <meta name="description" content="Convert TCP flag bits between hex, decimal, binary, names and tcpdump notation (S., P., F.) and learn what handshake, teardown and NULL/XMAS scan combinations mean.">
+  <meta name="keywords" content="TCP flags decoder, TCP flags hex, SYN ACK flag value, 0x12 TCP flags, tcpdump flags notation, TCP handshake flags, XMAS scan">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/tcp-flags-decoder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/tcp-flags-decoder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/tcp-flags-decoder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/tcp-flags-decoder.html">
+  <meta property="og:title" content="TCP Flags Decoder – 0x12 = SYN+ACK and tcpdump [S.] Notation | WooaDev">
+  <meta property="og:description" content="Convert TCP flag bits between hex, decimal, binary, names and tcpdump notation (S., P., F.) and learn what handshake, teardown and NULL/XMAS scan combinations mean.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/tcp-flags-decoder.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TCP Flags Decoder – 0x12 = SYN+ACK and tcpdump [S.] Notation | WooaDev">
+  <meta name="twitter:description" content="Convert TCP flag bits between hex, decimal, binary, names and tcpdump notation (S., P., F.) and learn what handshake, teardown and NULL/XMAS scan combinations mean.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"TCP Flags Decoder","url":"https://wooadev.wooahouse.com/en/tcp-flags-decoder.html","description":"Convert TCP flag bits between hex, decimal, binary, names and tcpdump notation (S., P., F.) and learn what handshake, teardown and NULL/XMAS scan combinations mean.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Input: 0x12, 18, 0b010010, SYN+ACK, SYN,ECE,CWR, tcpdump notation S. / P. / FPU","Output: the set flags, hex/decimal/binary values, tcpdump notation and meaning (0x02 = connection request, 0x12 = accepted)","Known combos: SYN / SYN+ACK / ACK, PSH+ACK, FIN+ACK, RST, NULL (0x00), XMAS (FIN+PSH+URG), FIN scan, ECN setup","9-bit flags (including NS) and a per-bit reference table"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which flags make up the three-way handshake?","acceptedAnswer":{"@type":"Answer","text":"Client SYN (0x02) → server SYN+ACK (0x12) → client ACK (0x10)."}},{"@type":"Question","name":"Why are NULL and XMAS scans suspicious?","acceptedAnswer":{"@type":"Answer","text":"They use flag combinations (0x00, FIN+PSH+URG) that never occur in normal traffic to slip past simple firewalls and probe for open ports, so IDS systems flag them."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"TCP Flags Decoder","item":"https://wooadev.wooahouse.com/en/tcp-flags-decoder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../tcp-flags-decoder.html">KO</a>
+        <span>|</span>
+        <a href="tcp-flags-decoder.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>TCP Flags Decoder</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🚦</span>
+    <h1>TCP Flags Decoder — Values ↔ Flag Names</h1>
+    <p>Interprets TCP flag values such as 0x12, 18 or S. and name combinations like SYN+ACK, and explains handshake and scan patterns.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Processed 8</p>
+<h3>Input — Flag values or names (one per line)</h3><pre>0x02
+0x12
+0x18
+0x011
+0x04
+SYN,ECE,CWR
+S.
+FPU</pre>
+<h3>Result — Decoded</h3><pre>Input | Flags set | Value (hex · dec · bin) | tcpdump notation | Meaning
+0x02 | SYN | 0x002 = 2 = 000000010 | S | Connection request (handshake step 1)
+0x12 | ACK + SYN | 0x012 = 18 = 000010010 | S. | Connection accepted (handshake step 2)
+0x18 | ACK + PSH | 0x018 = 24 = 000011000 | P. | Data push (PSH+ACK)
+0x011 | ACK + FIN | 0x011 = 17 = 000010001 | F. | Close (FIN+ACK)
+0x04 | RST | 0x004 = 4 = 000000100 | R | Reset
+SYN,ECE,CWR | CWR + ECE + SYN | 0x0C2 = 194 = 011000010 | SEW | ECN-setup SYN (SYN+ECE+CWR)
+S. | ACK + SYN | 0x012 = 18 = 000010010 | S. | Connection accepted (handshake step 2)
+FPU | URG + PSH + FIN | 0x029 = 41 = 000101001 | FPU | XMAS scan (FIN+PSH+URG)</pre>
+<h3>Result — TCP flag bits</h3><pre>Flag | Bit | Meaning
+NS | 0x100 (256) | ECN-nonce (experimental)
+CWR | 0x080 (128) | Congestion Window Reduced
+ECE | 0x040 (64) | ECN-Echo
+URG | 0x020 (32) | Urgent pointer valid
+ACK | 0x010 (16) | Acknowledgment
+PSH | 0x008 (8) | Push
+RST | 0x004 (4) | Reset
+SYN | 0x002 (2) | Synchronize
+FIN | 0x001 (1) | Finish</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Use it to decode the flags value you see in Wireshark or tcpdump, or to get the bit value when writing a firewall rule or packet filter.</p>
+<ul><li>Input: 0x12, 18, 0b010010, SYN+ACK, SYN,ECE,CWR, tcpdump notation S. / P. / FPU</li><li>Output: the set flags, hex/decimal/binary values, tcpdump notation and meaning (0x02 = connection request, 0x12 = accepted)</li><li>Known combos: SYN / SYN+ACK / ACK, PSH+ACK, FIN+ACK, RST, NULL (0x00), XMAS (FIN+PSH+URG), FIN scan, ECN setup</li><li>9-bit flags (including NS) and a per-bit reference table</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="http-status.html" class="related-card"><span class="related-icon">🌐</span><span>HTTP Status Codes</span></a>
+    <a href="subnet-calculator.html" class="related-card"><span class="related-icon">🌐</span><span>Subnet Calculator</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>Number Base Converter</span></a>
+    <a href="bitwise-calculator.html" class="related-card"><span class="related-icon">🧮</span><span>Bitwise Calculator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>For a tcpdump filter such as tcp[tcpflags] &amp; tcp-syn != 0, use this tool to confirm the numeric values.</li><li>Many packets with SYN but no ACK can indicate a SYN flood or a port scan.</li><li>In tcpdump a '.' means ACK ([S.] = SYN+ACK).</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Which flags make up the three-way handshake?</summary><p>Client SYN (0x02) → server SYN+ACK (0x12) → client ACK (0x10).</p></details><details><summary>Why are NULL and XMAS scans suspicious?</summary><p>They use flag combinations (0x00, FIN+PSH+URG) that never occur in normal traffic to slip past simple firewalls and probe for open ports, so IDS systems flag them.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/tcp-flags-decoder.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

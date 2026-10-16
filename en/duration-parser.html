@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Duration Converter – ISO 8601, 1h30m &amp; hh:mm:ss to ms | WooaDev</title>
+  <meta name="description" content="Convert ISO 8601 durations (PT1H30M), unit text (1h 30m) and clock notation (01:30:00.250) to milliseconds, seconds, minutes and hours — and back to ISO 8601.">
+  <meta name="keywords" content="duration converter, ISO 8601 duration parser, PT1H30M to seconds, milliseconds converter, parse duration string, timeout unit converter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/duration-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/duration-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/duration-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/duration-parser.html">
+  <meta property="og:title" content="Duration Converter – ISO 8601, 1h30m &amp; hh:mm:ss to ms | WooaDev">
+  <meta property="og:description" content="Convert ISO 8601 durations (PT1H30M), unit text (1h 30m) and clock notation (01:30:00.250) to milliseconds, seconds, minutes and hours — and back to ISO 8601.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/duration-parser.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Duration Converter – ISO 8601, 1h30m &amp; hh:mm:ss to ms | WooaDev">
+  <meta name="twitter:description" content="Convert ISO 8601 durations (PT1H30M), unit text (1h 30m) and clock notation (01:30:00.250) to milliseconds, seconds, minutes and hours — and back to ISO 8601.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Duration Converter","url":"https://wooadev.wooahouse.com/en/duration-parser.html","description":"Convert ISO 8601 durations (PT1H30M), unit text (1h 30m) and clock notation (01:30:00.250) to milliseconds, seconds, minutes and hours — and back to ISO 8601.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["ISO 8601: P1DT2H30M15.5S, PT90S, P2W (with years/months, 1 year = 365 days and 1 month = 30 days are used and flagged)","Unit text: 1h 30m 20s, 2 days 3 hours, 1.5 hours, 90s","Clock notation: 01:30:00.250, 03:25 (mm:ss); bare numbers use the unit you choose","Output: ms, seconds, minutes, hours, days, ISO 8601, human-readable text and hh:mm:ss"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does the M in an ISO 8601 duration mean months or minutes?","acceptedAnswer":{"@type":"Answer","text":"An M before the T is months (P1M); after the T it is minutes (PT1M). The T marks where the time part starts."}},{"@type":"Question","name":"How many days is one month?","acceptedAnswer":{"@type":"Answer","text":"Months differ in length, so 30 days (and 365 for a year) are used as an approximation and flagged. Exact calendar math needs a reference date."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Duration Converter","item":"https://wooadev.wooahouse.com/en/duration-parser.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../duration-parser.html">KO</a>
+        <span>|</span>
+        <a href="duration-parser.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Duration Converter</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">⏱️</span>
+    <h1>Duration &amp; Time Unit Converter</h1>
+    <p>Reads durations written as PT1H30M, 1h 30m, 01:30:00 or 90 minutes and converts them between milliseconds, seconds, minutes, hours and ISO 8601.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Converted 6</p>
+<h3>Input — Durations (one per line)</h3><pre>PT1H30M
+P1DT2H30M15.5S
+1h 30m 20s
+01:30:00.250
+2 days 3 hours
+5400000</pre>
+<h3>Result — Conversions</h3><pre>Input | ms | Seconds | ISO 8601 | Readable
+PT1H30M | 5,400,000 | 5,400 | PT1H30M | 1h 30m
+P1DT2H30M15.5S | 95,415,500 | 95,415.5 | P1DT2H30M15.5S | 1d 2h 30m 15.5s
+1h 30m 20s | 5,420,000 | 5,420 | PT1H30M20S | 1h 30m 20s
+01:30:00.250 | 5,400,250 | 5,400.25 | PT1H30M0.25S | 1h 30m 0.25s
+2 days 3 hours | 183,600,000 | 183,600 | P2DT3H | 2d 3h
+5400000 | 5,400,000 | 5,400 | PT1H30M | 1h 30m</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Timeouts are in milliseconds, cache TTLs in seconds, config files say 1h 30m and APIs say PT1H30M. Enter a duration in any of these forms and see every unit.</p>
+<ul><li>ISO 8601: P1DT2H30M15.5S, PT90S, P2W (with years/months, 1 year = 365 days and 1 month = 30 days are used and flagged)</li><li>Unit text: 1h 30m 20s, 2 days 3 hours, 1.5 hours, 90s</li><li>Clock notation: 01:30:00.250, 03:25 (mm:ss); bare numbers use the unit you choose</li><li>Output: ms, seconds, minutes, hours, days, ISO 8601, human-readable text and hh:mm:ss</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="iso8601-converter.html" class="related-card"><span class="related-icon">📅</span><span>ISO 8601 / RFC Date Converter</span></a>
+    <a href="timestamp.html" class="related-card"><span class="related-icon">🕐</span><span>Timestamp Converter</span></a>
+    <a href="cron-generator.html" class="related-card"><span class="related-icon">⏰</span><span>Cron Generator</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>Number Base Converter</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>JavaScript's setTimeout takes milliseconds and Redis TTLs are seconds — check unit slips here.</li><li>Enter several lines to compare them in a table.</li><li>Negative durations such as -PT30S are supported.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Does the M in an ISO 8601 duration mean months or minutes?</summary><p>An M before the T is months (P1M); after the T it is minutes (PT1M). The T marks where the time part starts.</p></details><details><summary>How many days is one month?</summary><p>Months differ in length, so 30 days (and 365 for a year) are used as an approximation and flagged. Exact calendar math needs a reference date.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/duration-parser.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

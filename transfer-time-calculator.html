@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>다운로드 시간 계산기 — 파일 크기·Mbps로 전송 시간 계산 | WooaDev</title>
+  <meta name="description" content="파일 크기(GB·MiB 등)와 전송 속도(Mbps·Gbps·MB/s)로 다운로드·업로드 시간을 계산합니다. 실효 효율(%)을 반영하고 10Mbps부터 10Gbps, USB·HDD·NVMe까지 속도별 소요 시간을 비교해 줍니다.">
+  <meta name="keywords" content="다운로드 시간 계산기, 전송 시간 계산, Mbps MB/s 변환, 파일 전송 시간, 대역폭 계산기, download time calculator, 업로드 시간">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/transfer-time-calculator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/transfer-time-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/transfer-time-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/transfer-time-calculator.html">
+  <meta property="og:title" content="다운로드 시간 계산기 — 파일 크기·Mbps로 전송 시간 계산 | WooaDev">
+  <meta property="og:description" content="파일 크기(GB·MiB 등)와 전송 속도(Mbps·Gbps·MB/s)로 다운로드·업로드 시간을 계산합니다. 실효 효율(%)을 반영하고 10Mbps부터 10Gbps, USB·HDD·NVMe까지 속도별 소요 시간을 비교해 줍니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/transfer-time-calculator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="다운로드 시간 계산기 — 파일 크기·Mbps로 전송 시간 계산 | WooaDev">
+  <meta name="twitter:description" content="파일 크기(GB·MiB 등)와 전송 속도(Mbps·Gbps·MB/s)로 다운로드·업로드 시간을 계산합니다. 실효 효율(%)을 반영하고 10Mbps부터 10Gbps, USB·HDD·NVMe까지 속도별 소요 시간을 비교해 줍니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"다운로드·전송 시간 계산기","url":"https://wooadev.wooahouse.com/transfer-time-calculator.html","description":"파일 크기(GB·MiB 등)와 전송 속도(Mbps·Gbps·MB/s)로 다운로드·업로드 시간을 계산합니다. 실효 효율(%)을 반영하고 10Mbps부터 10Gbps, USB·HDD·NVMe까지 속도별 소요 시간을 비교해 줍니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["크기 입력: 4.7 GB, 700MB, 1.5 TiB 등 (GB=10억 바이트, GiB=2^30 바이트를 구분)","속도 입력: 100 Mbps, 1 Gbps(비트), 12 MB/s(바이트) — 대문자 B가 바이트, 소문자 b가 비트","실효 효율: 프로토콜 오버헤드·혼잡을 반영해 실제로는 이론값보다 길게 걸리는 점을 보정 (기본 90%)","10 Mbps ~ 10 Gbps, USB 3.0, HDD, NVMe SSD 속도별 예상 시간 비교표"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Mbps와 MB/s는 어떻게 다른가요?","acceptedAnswer":{"@type":"Answer","text":"Mbps는 초당 메가비트, MB/s는 초당 메가바이트입니다. 1바이트=8비트이므로 100Mbps는 12.5MB/s입니다."}},{"@type":"Question","name":"GB와 GiB 중 무엇을 쓰나요?","acceptedAnswer":{"@type":"Answer","text":"파일 탐색기(Windows)는 GiB를 GB로 표시하는 경우가 많고, 저장장치 제조사는 GB(10^9)를 씁니다. 정확한 값을 알면 단위를 구분해 입력하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"다운로드·전송 시간 계산기","item":"https://wooadev.wooahouse.com/transfer-time-calculator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="transfer-time-calculator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/transfer-time-calculator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>다운로드·전송 시간 계산기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📥</span>
+    <h1>다운로드 · 전송 시간 계산기</h1>
+    <p>파일 크기와 네트워크 속도를 넣으면 걸리는 시간을 계산합니다. Mbps와 MB/s의 차이, 프로토콜 오버헤드까지 반영합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 약 6분 58초 걸립니다</p>
+<h3>입력 — 파일 크기 (예: 4.7 GB, 700MB, 1.5 TiB)</h3><pre>4.7 GB</pre>
+<h3>입력 — 전송 속도 (예: 100 Mbps, 1 Gbps, 12 MB/s)</h3><pre>100 Mbps</pre>
+<h3>결과 — 예상 소요 시간</h3><pre>파일 크기: 4.7 GB (4,700,000,000 bytes)
+전송 속도: 100 Mbps = 12.5 MB/s
+이론상 시간 (효율 100%): 6분 16초
+예상 시간 (효율 90%): 6분 58초</pre>
+<h3>결과 — 속도별 비교</h3><pre>속도 | 예상 시간
+10 Mbps | 1시간 9분 38초
+50 Mbps | 13분 56초
+100 Mbps | 6분 58초
+500 Mbps | 1분 24초
+1 Gbps | 42초
+2.5 Gbps | 17초
+10 Gbps | 4초
+USB 3.0 (5 Gbps) | 8초
+HDD (150 MB/s) | 35초
+NVMe SSD (3 GB/s) | 2초</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>"500Mbps 인터넷으로 4.7GB 파일을 받으면 얼마나 걸리지?"에 바로 답합니다. 많은 사람이 헷갈리는 비트와 바이트의 차이를 자동으로 처리합니다.</p>
+<ul><li>크기 입력: 4.7 GB, 700MB, 1.5 TiB 등 (GB=10억 바이트, GiB=2^30 바이트를 구분)</li><li>속도 입력: 100 Mbps, 1 Gbps(비트), 12 MB/s(바이트) — 대문자 B가 바이트, 소문자 b가 비트</li><li>실효 효율: 프로토콜 오버헤드·혼잡을 반영해 실제로는 이론값보다 길게 걸리는 점을 보정 (기본 90%)</li><li>10 Mbps ~ 10 Gbps, USB 3.0, HDD, NVMe SSD 속도별 예상 시간 비교표</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+    <a href="bitwise-calculator.html" class="related-card"><span class="related-icon">🧮</span><span>비트 연산 계산기</span></a>
+    <a href="subnet-calculator.html" class="related-card"><span class="related-icon">🌐</span><span>서브넷 계산기</span></a>
+    <a href="ieee754-converter.html" class="related-card"><span class="related-icon">🔬</span><span>부동소수점(IEEE 754) 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>통신사 광고 속도는 비트 단위(Mbps)입니다. 8로 나누면 초당 메가바이트가 됩니다. 100Mbps ≈ 12.5MB/s.</li><li>Wi-Fi는 표기 속도의 절반 이하가 나오는 경우가 많으니 효율을 50~70%로 낮춰 보세요.</li><li>SSD 복사 속도는 용량이 큰 파일에서만 최대치에 가깝습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>Mbps와 MB/s는 어떻게 다른가요?</summary><p>Mbps는 초당 메가비트, MB/s는 초당 메가바이트입니다. 1바이트=8비트이므로 100Mbps는 12.5MB/s입니다.</p></details><details><summary>GB와 GiB 중 무엇을 쓰나요?</summary><p>파일 탐색기(Windows)는 GiB를 GB로 표시하는 경우가 많고, 저장장치 제조사는 GB(10^9)를 씁니다. 정확한 값을 알면 단위를 구분해 입력하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/transfer-time-calculator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

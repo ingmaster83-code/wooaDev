@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Punycode Converter – Unicode Domains to xn-- and Back (IDN) | WooaDev</title>
+  <meta name="description" content="Encode and decode internationalised domain names (IDN) to Punycode (xn--) with an RFC 3492 implementation; checks length limits and converts only the host of a pasted URL.">
+  <meta name="keywords" content="punycode converter, IDN to punycode, xn-- decoder, internationalized domain name converter, unicode domain to ascii, punycode online">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/punycode-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/punycode-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/punycode-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/punycode-converter.html">
+  <meta property="og:title" content="Punycode Converter – Unicode Domains to xn-- and Back (IDN) | WooaDev">
+  <meta property="og:description" content="Encode and decode internationalised domain names (IDN) to Punycode (xn--) with an RFC 3492 implementation; checks length limits and converts only the host of a pasted URL.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/punycode-converter.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Punycode Converter – Unicode Domains to xn-- and Back (IDN) | WooaDev">
+  <meta name="twitter:description" content="Encode and decode internationalised domain names (IDN) to Punycode (xn--) with an RFC 3492 implementation; checks length limits and converts only the host of a pasted URL.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Punycode Converter","url":"https://wooadev.wooahouse.com/en/punycode-converter.html","description":"Encode and decode internationalised domain names (IDN) to Punycode (xn--) with an RFC 3492 implementation; checks length limits and converts only the host of a pasted URL.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Unicode → Punycode: each label is NFKC-normalised, lowercased and encoded with RFC 3492 (例え → xn--r8jz45g)","Punycode → Unicode: restores xn-- labels; auto mode decodes whenever xn-- is present","Ideographic full stops (。) count as dots; a URL converts only its host","Checks the 63-character label and 253-character name limits"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Punycode encryption?","acceptedAnswer":{"@type":"Answer","text":"No — it's a reversible encoding of Unicode into ASCII that anyone can decode."}},{"@type":"Question","name":"Does it implement the full IDNA rules?","acceptedAnswer":{"@type":"Answer","text":"Only NFKC normalisation and lowercasing; full IDNA (UTS #46) mapping and prohibited-character checks aren't done. Registrability depends on the registry's rules."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Punycode Converter","item":"https://wooadev.wooahouse.com/en/punycode-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../punycode-converter.html">KO</a>
+        <span>|</span>
+        <a href="punycode-converter.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Punycode Converter</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🈳</span>
+    <h1>Punycode Converter — IDN ↔ xn--</h1>
+    <p>Converts internationalised domain names such as bücher.example or 例え.jp into ASCII Punycode starting with xn--, and decodes Punycode back to the original characters.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Converted 6</p>
+<h3>Input — Domains (one per line)</h3><pre>한글도메인.한국
+bücher.example
+例え.jp
+xn--bcher-kva.example
+xn--e1afmkfd.xn--p1ai
+😀.fm</pre>
+<h3>Result — Conversion</h3><pre>Input | Direction | Result | Notes
+한글도메인.한국 | Unicode → Punycode | xn--bj0bj3i97fq8o5lq.xn--3e0b707e | 2 label(s)
+bücher.example | Unicode → Punycode | xn--bcher-kva.example | 2 label(s)
+例え.jp | Unicode → Punycode | xn--r8jz45g.jp | 2 label(s)
+xn--bcher-kva.example | Punycode → Unicode | bücher.example | 2 label(s)
+xn--e1afmkfd.xn--p1ai | Punycode → Unicode | пример.рф | 2 label(s)
+😀.fm | Unicode → Punycode | xn--e28h.fm | 2 label(s)</pre>
+<h3>Result — Converted list</h3><pre>xn--bj0bj3i97fq8o5lq.xn--3e0b707e
+xn--bcher-kva.example
+xn--r8jz45g.jp
+bücher.example
+пример.рф
+xn--e28h.fm</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>DNS only allows ASCII, so domains with Korean, Chinese or Cyrillic characters are registered and resolved as Punycode labels starting with xn--. DNS records and certificates (SAN) need this form.</p>
+<ul><li>Unicode → Punycode: each label is NFKC-normalised, lowercased and encoded with RFC 3492 (例え → xn--r8jz45g)</li><li>Punycode → Unicode: restores xn-- labels; auto mode decodes whenever xn-- is present</li><li>Ideographic full stops (。) count as dots; a URL converts only its host</li><li>Checks the 63-character label and 253-character name limits</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="domain-validator.html" class="related-card"><span class="related-icon">✔️</span><span>Domain &amp; Hostname Validator</span></a>
+    <a href="url-parser.html" class="related-card"><span class="related-icon">🔗</span><span>URL Parser</span></a>
+    <a href="url-normalizer.html" class="related-card"><span class="related-icon">🧼</span><span>URL Normalizer</span></a>
+    <a href="url-encoder.html" class="related-card"><span class="related-icon">🔗</span><span>URL Encoder</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Use the xn-- form in TLS certificate SANs and DNS records; only the address bar displays Unicode.</li><li>Check that long non-Latin labels don't exceed 63 characters once encoded.</li><li>Homograph phishing domains (look-alike characters) are exposed when converted to Punycode.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Is Punycode encryption?</summary><p>No — it's a reversible encoding of Unicode into ASCII that anyone can decode.</p></details><details><summary>Does it implement the full IDNA rules?</summary><p>Only NFKC normalisation and lowercasing; full IDNA (UTS #46) mapping and prohibited-character checks aren't done. Registrability depends on the registry's rules.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-dns.js"></script>
+<script src="../js/tools/punycode-converter.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URI 템플릿 테스터 — RFC 6570 {id}·{?q}·{/path*} 확장 확인 | WooaDev</title>
+  <meta name="description" content="RFC 6570 URI 템플릿을 JSON 변수로 확장해 줍니다. Level 1~4(단순·예약·프래그먼트·점·슬래시·세미콜론·쿼리·&amp; 연산자, 접두어 :n, 폭발 *)를 모두 지원하고 정의되지 않은 변수와 잘못된 표현식을 알려 줍니다.">
+  <meta name="keywords" content="URI 템플릿, RFC 6570, URI template tester, {?query} 확장, HATEOAS 링크 템플릿, OpenAPI 링크, URI template expand">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/uri-template-tester.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/uri-template-tester.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/uri-template-tester.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/uri-template-tester.html">
+  <meta property="og:title" content="URI 템플릿 테스터 — RFC 6570 {id}·{?q}·{/path*} 확장 확인 | WooaDev">
+  <meta property="og:description" content="RFC 6570 URI 템플릿을 JSON 변수로 확장해 줍니다. Level 1~4(단순·예약·프래그먼트·점·슬래시·세미콜론·쿼리·&amp; 연산자, 접두어 :n, 폭발 *)를 모두 지원하고 정의되지 않은 변수와 잘못된 표현식을 알려 줍니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/uri-template-tester.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="URI 템플릿 테스터 — RFC 6570 {id}·{?q}·{/path*} 확장 확인 | WooaDev">
+  <meta name="twitter:description" content="RFC 6570 URI 템플릿을 JSON 변수로 확장해 줍니다. Level 1~4(단순·예약·프래그먼트·점·슬래시·세미콜론·쿼리·&amp; 연산자, 접두어 :n, 폭발 *)를 모두 지원하고 정의되지 않은 변수와 잘못된 표현식을 알려 줍니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"URI 템플릿 테스터","url":"https://wooadev.wooahouse.com/uri-template-tester.html","description":"RFC 6570 URI 템플릿을 JSON 변수로 확장해 줍니다. Level 1~4(단순·예약·프래그먼트·점·슬래시·세미콜론·쿼리·& 연산자, 접두어 :n, 폭발 *)를 모두 지원하고 정의되지 않은 변수와 잘못된 표현식을 알려 줍니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["연산자: {var} 단순, {+var} 예약 확장, {#var} 프래그먼트, {.var} 점, {/var} 경로, {;var} 세미콜론, {?var} 쿼리, {&var} 쿼리 연결","변경자: {var:3} 앞 3글자만(접두어), {list*} 배열·객체 폭발(explode)","변수는 JSON 객체(문자열·숫자·배열·객체)로 입력 — 값이 없는 변수는 생략","표현식별 확장 결과를 표로 보여 주고, 퍼센트 인코딩 규칙(예약 문자 허용 여부)을 자동 적용"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"URI 템플릿과 정규식 경로 패턴은 다른가요?","acceptedAnswer":{"@type":"Answer","text":"URI 템플릿은 변수를 넣어 URL을 만드는(확장) 규격이고, URLPattern·정규식은 들어온 URL을 매칭하는 용도입니다. 방향이 반대입니다."}},{"@type":"Question","name":"정의되지 않은 변수는 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"RFC 6570에 따라 표현식에서 그 변수 부분이 통째로 생략됩니다. 도구에서도 어떤 변수가 빠졌는지 알려 줍니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"URI 템플릿 테스터","item":"https://wooadev.wooahouse.com/uri-template-tester.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="uri-template-tester.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/uri-template-tester.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>URI 템플릿 테스터</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧷</span>
+    <h1>URI 템플릿(RFC 6570) 테스터</h1>
+    <p>/users/{id}{?page,limit} 같은 URI 템플릿에 변수를 넣어 실제 URL로 확장하고 표현식별 결과를 확인합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 3개 표현식 확장</p>
+<h3>입력 — URI 템플릿 (RFC 6570)</h3><pre>https://api.example.com/users/{id}/posts{?page,limit,tags*}{#section}</pre>
+<h3>입력 — 변수 (JSON)</h3><pre>{
+  "id": "42",
+  "page": 2,
+  "limit": 20,
+  "tags": ["a b", "c&amp;d"],
+  "section": "top 10"
+}</pre>
+<h3>결과 — 확장된 URI</h3><pre>https://api.example.com/users/42/posts?page=2&amp;limit=20&amp;tags=a%20b&amp;tags=c%26d#top%2010</pre>
+<h3>결과 — 표현식 분석</h3><pre>표현식 | 연산자 | 변수 | 확장 결과
+{id} | (없음) | id | 42
+{?page,limit,tags*} | ? | page,limit,tags* | ?page=2&amp;limit=20&amp;tags=a%20b&amp;tags=c%26d
+{#section} | # | section | #top%2010</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>REST API의 링크(HAL, OpenAPI Links, GitHub API의 url 필드)는 "https://api.github.com/repos/{owner}/{repo}/issues{/number}" 같은 URI 템플릿으로 주어집니다. 변수를 넣었을 때 실제 URL이 어떻게 되는지 확인할 수 있습니다.</p>
+<ul><li>연산자: {var} 단순, {+var} 예약 확장, {#var} 프래그먼트, {.var} 점, {/var} 경로, {;var} 세미콜론, {?var} 쿼리, {&amp;var} 쿼리 연결</li><li>변경자: {var:3} 앞 3글자만(접두어), {list*} 배열·객체 폭발(explode)</li><li>변수는 JSON 객체(문자열·숫자·배열·객체)로 입력 — 값이 없는 변수는 생략</li><li>표현식별 확장 결과를 표로 보여 주고, 퍼센트 인코딩 규칙(예약 문자 허용 여부)을 자동 적용</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="url-parser.html" class="related-card"><span class="related-icon">🔗</span><span>URL 파서</span></a>
+    <a href="url-encoder.html" class="related-card"><span class="related-icon">🔗</span><span>URL 인코더</span></a>
+    <a href="query-string-builder.html" class="related-card"><span class="related-icon">❓</span><span>쿼리 문자열 파서·빌더</span></a>
+    <a href="curl-to-code.html" class="related-card"><span class="related-icon">🔄</span><span>cURL → 코드 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>쿼리는 {?q,page}처럼 쓰면 첫 변수에 ?, 이후에 &amp;가 붙습니다.</li><li>경로에 슬래시를 그대로 두려면 {+path}, 인코딩하려면 {path}를 쓰세요.</li><li>배열을 {?tags*}로 쓰면 tags=a&amp;tags=b, {?tags}로 쓰면 tags=a,b 가 됩니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>URI 템플릿과 정규식 경로 패턴은 다른가요?</summary><p>URI 템플릿은 변수를 넣어 URL을 만드는(확장) 규격이고, URLPattern·정규식은 들어온 URL을 매칭하는 용도입니다. 방향이 반대입니다.</p></details><details><summary>정의되지 않은 변수는 어떻게 되나요?</summary><p>RFC 6570에 따라 표현식에서 그 변수 부분이 통째로 생략됩니다. 도구에서도 어떤 변수가 빠졌는지 알려 줍니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tools/uri-template-tester.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>쿼리 문자열 파서 — URL 쿼리 ↔ JSON, 배열·중첩(a[b]=1) 지원 | WooaDev</title>
+  <meta name="description" content="URL이나 쿼리 문자열을 디코딩해 파라미터 표와 JSON으로 보여 주고(중복 키·a[]=1·a[b]=1 처리), JSON을 쿼리 문자열로 만듭니다. 배열 표기(반복·대괄호·인덱스·쉼표), 공백 인코딩(%20/+), 키 정렬, 빈 값 제외 옵션을 지원합니다.">
+  <meta name="keywords" content="쿼리 스트링 파서, 쿼리 문자열 JSON 변환, URL 파라미터 분석, query string parser, 쿼리스트링 만들기, a[]=1 배열 파라미터, URL 쿼리 디코딩">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/query-string-builder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/query-string-builder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/query-string-builder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/query-string-builder.html">
+  <meta property="og:title" content="쿼리 문자열 파서 — URL 쿼리 ↔ JSON, 배열·중첩(a[b]=1) 지원 | WooaDev">
+  <meta property="og:description" content="URL이나 쿼리 문자열을 디코딩해 파라미터 표와 JSON으로 보여 주고(중복 키·a[]=1·a[b]=1 처리), JSON을 쿼리 문자열로 만듭니다. 배열 표기(반복·대괄호·인덱스·쉼표), 공백 인코딩(%20/+), 키 정렬, 빈 값 제외 옵션을 지원합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/query-string-builder.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="쿼리 문자열 파서 — URL 쿼리 ↔ JSON, 배열·중첩(a[b]=1) 지원 | WooaDev">
+  <meta name="twitter:description" content="URL이나 쿼리 문자열을 디코딩해 파라미터 표와 JSON으로 보여 주고(중복 키·a[]=1·a[b]=1 처리), JSON을 쿼리 문자열로 만듭니다. 배열 표기(반복·대괄호·인덱스·쉼표), 공백 인코딩(%20/+), 키 정렬, 빈 값 제외 옵션을 지원합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"쿼리 문자열 파서·빌더","url":"https://wooadev.wooahouse.com/query-string-builder.html","description":"URL이나 쿼리 문자열을 디코딩해 파라미터 표와 JSON으로 보여 주고(중복 키·a[]=1·a[b]=1 처리), JSON을 쿼리 문자열로 만듭니다. 배열 표기(반복·대괄호·인덱스·쉼표), 공백 인코딩(%20/+), 키 정렬, 빈 값 제외 옵션을 지원합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["분석: 전체 URL 또는 ?a=1&b=2 입력 → 파라미터 표(디코딩 값, 원문), 중복 키 표시, 경로·#프래그먼트 분리","JSON 변환: 같은 키 반복(tag=a&tag=b)과 a[]=1, a[0]=1은 배열로, filter[status]=open은 중첩 객체로 (끌 수 있음)","만들기: JSON 객체 → 쿼리 문자열. 배열은 반복(a=1&a=2), 대괄호(a[]=), 인덱스(a[0]=), 쉼표(a=1,2) 중 선택","옵션: 공백을 %20 또는 +로, 키 정렬, null·빈 값 제외, 객체는 a[b]=1 형태로 평탄화","'+'를 공백으로, %XX를 UTF-8 문자로 디코딩"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"'+'와 '%20'은 같은가요?","acceptedAnswer":{"@type":"Answer","text":"쿼리 문자열(application/x-www-form-urlencoded)에서는 둘 다 공백입니다. 하지만 URL 경로에서 +는 그냥 더하기 문자입니다."}},{"@type":"Question","name":"같은 키가 여러 번 나오면 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"서버마다 첫 값·마지막 값·배열로 다르게 처리합니다. 이 도구는 배열로 모아서 보여 주고 중복 키를 표시합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"쿼리 문자열 파서·빌더","item":"https://wooadev.wooahouse.com/query-string-builder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="query-string-builder.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/query-string-builder.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>쿼리 문자열 파서·빌더</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">❓</span>
+    <h1>쿼리 문자열 파서 · 빌더</h1>
+    <p>URL의 쿼리 문자열을 키-값 표와 JSON으로 풀어 보고(배열·중첩 포함), 반대로 JSON 객체를 올바르게 인코딩된 쿼리 문자열로 만듭니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 파라미터 9개 · 경로 https://example.com/search · 프래그먼트 #results · 중복 키: tag</p>
+<h3>입력 — 입력</h3><pre>https://example.com/search?q=hello+world&amp;tag=a&amp;tag=b&amp;filter[status]=open&amp;filter[owner]=kim&amp;ids[]=1&amp;ids[]=2&amp;empty=&amp;page=2#results</pre>
+<h3>결과 — 파라미터 목록</h3><pre># | 키 | 값 (디코딩) | 원문
+1 | q | hello world | q=hello+world
+2 | tag | a | tag=a
+3 | tag | b | tag=b
+4 | filter[status] | open | filter[status]=open
+5 | filter[owner] | kim | filter[owner]=kim
+6 | ids[] | 1 | ids[]=1
+7 | ids[] | 2 | ids[]=2
+8 | empty | (빈 문자열) | empty=
+9 | page | 2 | page=2</pre>
+<h3>결과 — 결과</h3><pre>{
+  "q": "hello world",
+  "tag": [
+    "a",
+    "b"
+  ],
+  "filter": {
+    "status": "open",
+    "owner": "kim"
+  },
+  "ids": [
+    "1",
+    "2"
+  ],
+  "empty": "",
+  "page": "2"
+}</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>API 호출이 안 될 때 가장 먼저 의심하는 것이 쿼리 문자열입니다. 인코딩이 풀린 값과 배열·중첩 구조를 보면서 확인하세요.</p>
+<ul><li>분석: 전체 URL 또는 ?a=1&amp;b=2 입력 → 파라미터 표(디코딩 값, 원문), 중복 키 표시, 경로·#프래그먼트 분리</li><li>JSON 변환: 같은 키 반복(tag=a&amp;tag=b)과 a[]=1, a[0]=1은 배열로, filter[status]=open은 중첩 객체로 (끌 수 있음)</li><li>만들기: JSON 객체 → 쿼리 문자열. 배열은 반복(a=1&amp;a=2), 대괄호(a[]=), 인덱스(a[0]=), 쉼표(a=1,2) 중 선택</li><li>옵션: 공백을 %20 또는 +로, 키 정렬, null·빈 값 제외, 객체는 a[b]=1 형태로 평탄화</li><li>'+'를 공백으로, %XX를 UTF-8 문자로 디코딩</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="url-parser.html" class="related-card"><span class="related-icon">🔗</span><span>URL 파서</span></a>
+    <a href="uri-template-tester.html" class="related-card"><span class="related-icon">🧷</span><span>URI 템플릿 테스터</span></a>
+    <a href="url-encoder.html" class="related-card"><span class="related-icon">🔗</span><span>URL 인코더</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>배열 표기는 서버 프레임워크마다 다릅니다: Express(qs)·PHP·Rails는 a[]=, Spring은 반복 키를 기대합니다.</li><li>한글이 깨져 보이면 %ED%95%9C 같은 UTF-8 퍼센트 인코딩인지 확인하세요. 이 도구는 자동으로 디코딩합니다.</li><li>공백은 쿼리에서 + 로도 쓰이지만 경로에서는 %20만 유효합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>'+'와 '%20'은 같은가요?</summary><p>쿼리 문자열(application/x-www-form-urlencoded)에서는 둘 다 공백입니다. 하지만 URL 경로에서 +는 그냥 더하기 문자입니다.</p></details><details><summary>같은 키가 여러 번 나오면 어떻게 되나요?</summary><p>서버마다 첫 값·마지막 값·배열로 다르게 처리합니다. 이 도구는 배열로 모아서 보여 주고 중복 키를 표시합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tools/query-string-builder.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

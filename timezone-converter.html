@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>시간대 변환기 — 서머타임 반영, 여러 도시 시각 한번에 비교 | WooaDev</title>
+  <meta name="description" content="입력 시각을 IANA 시간대(Asia/Seoul, America/New_York …)별 현지 시각으로 변환합니다. 서머타임(DST) 전환 구간의 존재하지 않는/두 번 있는 시각을 감지하고, 날짜 변경과 UTC 오프셋을 함께 보여 줍니다.">
+  <meta name="keywords" content="시간대 변환기, 타임존 변환, 서울 뉴욕 시차, 시간대 계산기, 서머타임 변환, timezone converter, 해외 미팅 시간">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/timezone-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/timezone-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/timezone-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/timezone-converter.html">
+  <meta property="og:title" content="시간대 변환기 — 서머타임 반영, 여러 도시 시각 한번에 비교 | WooaDev">
+  <meta property="og:description" content="입력 시각을 IANA 시간대(Asia/Seoul, America/New_York …)별 현지 시각으로 변환합니다. 서머타임(DST) 전환 구간의 존재하지 않는/두 번 있는 시각을 감지하고, 날짜 변경과 UTC 오프셋을 함께 보여 줍니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/timezone-converter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="시간대 변환기 — 서머타임 반영, 여러 도시 시각 한번에 비교 | WooaDev">
+  <meta name="twitter:description" content="입력 시각을 IANA 시간대(Asia/Seoul, America/New_York …)별 현지 시각으로 변환합니다. 서머타임(DST) 전환 구간의 존재하지 않는/두 번 있는 시각을 감지하고, 날짜 변경과 UTC 오프셋을 함께 보여 줍니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"시간대 변환기","url":"https://wooadev.wooahouse.com/timezone-converter.html","description":"입력 시각을 IANA 시간대(Asia/Seoul, America/New_York …)별 현지 시각으로 변환합니다. 서머타임(DST) 전환 구간의 존재하지 않는/두 번 있는 시각을 감지하고, 날짜 변경과 UTC 오프셋을 함께 보여 줍니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력 시간대와 변환할 시간대를 IANA 이름(Asia/Seoul, Europe/London …)으로 지정","서머타임 규칙은 브라우저의 시간대 데이터(Intl)를 그대로 사용해 연도별 규칙을 반영","서머타임 때문에 존재하지 않는 시각(봄)이나 두 번 있는 시각(가을)을 감지해 알려 줌","날짜가 바뀌는 경우 (+1일/-1일)와 요일을 함께 표시","입력에 +09:00 같은 오프셋이 있으면 그 값을 우선 사용, 비우면 현재 시각 기준"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"서머타임 전환일의 시각은 어떻게 해석하나요?","acceptedAnswer":{"@type":"Answer","text":"봄에 건너뛰는 시각(예: 뉴욕 2026-03-08 02:30)은 존재하지 않아 경고와 함께 이전 오프셋으로, 가을에 두 번 있는 시각은 첫 번째 시각으로 해석하고 알려 드립니다."}},{"@type":"Question","name":"한국은 서머타임이 없나요?","acceptedAnswer":{"@type":"Answer","text":"현재 대한민국은 서머타임을 쓰지 않아 일 년 내내 UTC+9입니다. 미국·유럽 등은 연중 오프셋이 바뀝니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"시간대 변환기","item":"https://wooadev.wooahouse.com/timezone-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="timezone-converter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/timezone-converter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>시간대 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🌏</span>
+    <h1>시간대 변환기 — 한 시각을 여러 도시 시간으로</h1>
+    <p>한 시각을 서울, 뉴욕, 런던, 도쿄 등 원하는 IANA 시간대의 현지 시각으로 한꺼번에 바꿔 날짜 차이와 UTC 오프셋까지 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 변환 완료 — 2026-10-16T00:30:00Z</p>
+<h3>입력 — 날짜·시간 (비우면 현재 시각)</h3><pre>2026-10-16 09:30</pre>
+<h3>결과 — 시간대별 시각</h3><pre>시간대 | 현지 시각 | UTC 오프셋 | 요일
+UTC | 2026-10-16 00:30:00 | UTC+00:00 | 금 / Fri
+Asia/Seoul | 2026-10-16 09:30:00 | UTC+09:00 | 금 / Fri
+Asia/Tokyo | 2026-10-16 09:30:00 | UTC+09:00 | 금 / Fri
+America/New_York | 2026-10-15 20:30:00 (-1일) | UTC-04:00 | 목 / Thu
+America/Los_Angeles | 2026-10-15 17:30:00 (-1일) | UTC-07:00 | 목 / Thu
+Europe/London | 2026-10-16 01:30:00 | UTC+01:00 | 금 / Fri
+Europe/Paris | 2026-10-16 02:30:00 | UTC+02:00 | 금 / Fri
+Asia/Kolkata | 2026-10-16 06:00:00 | UTC+05:30 | 금 / Fri
+Australia/Sydney | 2026-10-16 11:30:00 | UTC+11:00 | 금 / Fri</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>해외 미팅, 서버 점검 공지, 로그 분석에서 "그 시각이 거기서는 몇 시지?"를 매번 계산하기는 번거롭습니다. 시각과 기준 시간대를 넣으면 여러 시간대의 결과를 표로 보여 줍니다.</p>
+<ul><li>입력 시간대와 변환할 시간대를 IANA 이름(Asia/Seoul, Europe/London …)으로 지정</li><li>서머타임 규칙은 브라우저의 시간대 데이터(Intl)를 그대로 사용해 연도별 규칙을 반영</li><li>서머타임 때문에 존재하지 않는 시각(봄)이나 두 번 있는 시각(가을)을 감지해 알려 줌</li><li>날짜가 바뀌는 경우 (+1일/-1일)와 요일을 함께 표시</li><li>입력에 +09:00 같은 오프셋이 있으면 그 값을 우선 사용, 비우면 현재 시각 기준</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="iso8601-converter.html" class="related-card"><span class="related-icon">📅</span><span>ISO 8601 / RFC 날짜 변환기</span></a>
+    <a href="timestamp.html" class="related-card"><span class="related-icon">🕐</span><span>타임스탬프 변환</span></a>
+    <a href="cron-generator.html" class="related-card"><span class="related-icon">⏰</span><span>Cron 생성기</span></a>
+    <a href="duration-parser.html" class="related-card"><span class="related-icon">⏱️</span><span>시간 단위·기간 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>회의 시각을 공유할 때는 UTC와 참석자 도시 몇 곳을 함께 적어 주면 오해가 없습니다.</li><li>시간대 이름은 UTC+9 같은 숫자가 아니라 Asia/Seoul처럼 지역/도시 형식이어야 서머타임이 정확합니다.</li><li>입력 칸을 비워 두면 지금 이 순간의 시각을 기준으로 변환합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>서머타임 전환일의 시각은 어떻게 해석하나요?</summary><p>봄에 건너뛰는 시각(예: 뉴욕 2026-03-08 02:30)은 존재하지 않아 경고와 함께 이전 오프셋으로, 가을에 두 번 있는 시각은 첫 번째 시각으로 해석하고 알려 드립니다.</p></details><details><summary>한국은 서머타임이 없나요?</summary><p>현재 대한민국은 서머타임을 쓰지 않아 일 년 내내 UTC+9입니다. 미국·유럽 등은 연중 오프셋이 바뀝니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-time.js"></script>
+<script src="js/tools/timezone-converter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

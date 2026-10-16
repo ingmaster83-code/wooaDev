@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIDR Merge &amp; Intersection Calculator for Allow Lists | WooaDev</title>
+  <meta name="description" content="Aggregate CIDR lists into the fewest blocks and compute A∩B, A−B and A∪B. Accepts single IPs, ranges and comments, checks whether B entries are inside A, and handles IPv4/IPv6 exactly with BigInt.">
+  <meta name="keywords" content="CIDR merge, CIDR aggregation, CIDR intersection calculator, subtract CIDR, merge IP ranges, optimise firewall rules, IP allow list">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/cidr-set-calculator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/cidr-set-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/cidr-set-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/cidr-set-calculator.html">
+  <meta property="og:title" content="CIDR Merge &amp; Intersection Calculator for Allow Lists | WooaDev">
+  <meta property="og:description" content="Aggregate CIDR lists into the fewest blocks and compute A∩B, A−B and A∪B. Accepts single IPs, ranges and comments, checks whether B entries are inside A, and handles IPv4/IPv6 exactly with BigInt.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/cidr-set-calculator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CIDR Merge &amp; Intersection Calculator for Allow Lists | WooaDev">
+  <meta name="twitter:description" content="Aggregate CIDR lists into the fewest blocks and compute A∩B, A−B and A∪B. Accepts single IPs, ranges and comments, checks whether B entries are inside A, and handles IPv4/IPv6 exactly with BigInt.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CIDR Set Calculator","url":"https://wooadev.wooahouse.com/en/cidr-set-calculator.html","description":"Aggregate CIDR lists into the fewest blocks and compute A∩B, A−B and A∪B. Accepts single IPs, ranges and comments, checks whether B entries are inside A, and handles IPv4/IPv6 exactly with BigInt.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Merge: aggregate overlapping or touching blocks into the fewest CIDRs (10.0.0.0/24 + 10.0.1.0/24 → 10.0.0.0/23)","Intersection (A∩B), difference (A−B), union (A∪B): remove a range from an allow list or find what two lists share","Containment: is each B entry fully inside A, partly overlapping, or outside?","Input: CIDRs, single IPs, \"start - end\" ranges and # comments, one per line","Reports total address and CIDR counts"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Doesn't merging widen the allowed range?","acceptedAnswer":{"@type":"Answer","text":"No. The tool re-expresses exactly the same set of addresses with the fewest CIDRs; it never adds addresses."}},{"@type":"Question","name":"How are ranges (start - end) handled?","acceptedAnswer":{"@type":"Answer","text":"They're decomposed into the minimal CIDRs and merged with the other entries."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"CIDR Set Calculator","item":"https://wooadev.wooahouse.com/en/cidr-set-calculator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../cidr-set-calculator.html">KO</a>
+        <span>|</span>
+        <a href="cidr-set-calculator.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CIDR Set Calculator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧱</span>
+    <h1>CIDR Set Calculator — Merge · Intersect · Exclude</h1>
+    <p>Aggregates CIDR blocks into fewer entries, computes intersection, union and difference of two lists, or checks whether IPs fall inside a range. IPv4 and IPv6 are supported.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ 5 entries → 12 CIDR(s)</p>
+<h3>Input — CIDR list A (one per line; single IPs and ranges allowed)</h3><pre>10.0.0.0/24
+10.0.1.0/24
+10.0.2.0/23
+192.168.0.0/16
+172.16.0.1 - 172.16.0.200</pre>
+<h3>Input — CIDR list B (for intersect / exclude / contains)</h3><pre>10.0.2.0/24
+192.168.10.0/24</pre>
+<h3>Result — Resulting CIDRs</h3><pre>10.0.0.0/22
+172.16.0.1/32
+172.16.0.2/31
+172.16.0.4/30
+172.16.0.8/29
+172.16.0.16/28
+172.16.0.32/27
+172.16.0.64/26
+172.16.0.128/26
+172.16.0.192/29
+172.16.0.200/32
+192.168.0.0/16</pre>
+<h3>Result — Summary</h3><pre>Input entries: 5
+Resulting CIDRs: 12
+IPv4 addresses: 66,760</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Firewalls, security groups, nginx allow lists and cloud IP ranges grow long, and overlapping or adjacent entries should be consolidated.</p>
+<ul><li>Merge: aggregate overlapping or touching blocks into the fewest CIDRs (10.0.0.0/24 + 10.0.1.0/24 → 10.0.0.0/23)</li><li>Intersection (A∩B), difference (A−B), union (A∪B): remove a range from an allow list or find what two lists share</li><li>Containment: is each B entry fully inside A, partly overlapping, or outside?</li><li>Input: CIDRs, single IPs, "start - end" ranges and # comments, one per line</li><li>Reports total address and CIDR counts</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="subnet-calculator.html" class="related-card"><span class="related-icon">🌐</span><span>Subnet Calculator</span></a>
+    <a href="ip-range-to-cidr.html" class="related-card"><span class="related-icon">↔️</span><span>IP Range to CIDR Converter</span></a>
+    <a href="ip-converter.html" class="related-card"><span class="related-icon">🔁</span><span>IP Address Converter</span></a>
+    <a href="ip-lookup.html" class="related-card"><span class="related-icon">🌐</span><span>IP Lookup</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>A difference (A−B) can split into several CIDRs because CIDR blocks are powers of two.</li><li>Paste a cloud provider's published IP list and merge it to shrink your rule count dramatically.</li><li>IPv4 and IPv6 can be mixed; each family is computed separately.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Doesn't merging widen the allowed range?</summary><p>No. The tool re-expresses exactly the same set of addresses with the fewest CIDRs; it never adds addresses.</p></details><details><summary>How are ranges (start - end) handled?</summary><p>They're decomposed into the minimal CIDRs and merged with the other entries.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-net.js"></script>
+<script src="../js/tools/cidr-set-calculator.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

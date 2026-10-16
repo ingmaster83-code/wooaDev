@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>역방향 DNS 이름 생성기 — PTR·in-addr.arpa·ip6.arpa·RFC 2317 | WooaDev</title>
+  <meta name="description" content="IPv4/IPv6 주소로 PTR 이름(1.2.0.192.in-addr.arpa.)을, CIDR로 역방향 존 이름을 만듭니다. 옥텟·니블 경계가 아닌 대역은 여러 존으로 나누거나 RFC 2317 클래스리스 위임 이름으로 안내합니다.">
+  <meta name="keywords" content="역방향 DNS, PTR 레코드 이름, in-addr.arpa 생성, ip6.arpa 변환, RFC 2317, reverse DNS generator, 역방향 존 파일">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/reverse-dns-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/reverse-dns-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/reverse-dns-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/reverse-dns-generator.html">
+  <meta property="og:title" content="역방향 DNS 이름 생성기 — PTR·in-addr.arpa·ip6.arpa·RFC 2317 | WooaDev">
+  <meta property="og:description" content="IPv4/IPv6 주소로 PTR 이름(1.2.0.192.in-addr.arpa.)을, CIDR로 역방향 존 이름을 만듭니다. 옥텟·니블 경계가 아닌 대역은 여러 존으로 나누거나 RFC 2317 클래스리스 위임 이름으로 안내합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/reverse-dns-generator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="역방향 DNS 이름 생성기 — PTR·in-addr.arpa·ip6.arpa·RFC 2317 | WooaDev">
+  <meta name="twitter:description" content="IPv4/IPv6 주소로 PTR 이름(1.2.0.192.in-addr.arpa.)을, CIDR로 역방향 존 이름을 만듭니다. 옥텟·니블 경계가 아닌 대역은 여러 존으로 나누거나 RFC 2317 클래스리스 위임 이름으로 안내합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"역방향 DNS 이름 생성기","url":"https://wooadev.wooahouse.com/reverse-dns-generator.html","description":"IPv4/IPv6 주소로 PTR 이름(1.2.0.192.in-addr.arpa.)을, CIDR로 역방향 존 이름을 만듭니다. 옥텟·니블 경계가 아닌 대역은 여러 존으로 나누거나 RFC 2317 클래스리스 위임 이름으로 안내합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["IP 주소 → PTR 이름: 203.0.113.45 → 45.113.0.203.in-addr.arpa.","IPv6: 128비트를 니블 단위로 뒤집어 ip6.arpa. 이름 생성","CIDR → 역방향 존: /8·/16·/24는 한 존, /22처럼 경계가 아니면 /24 여러 개를 나열","/25~/31 대역은 RFC 2317 클래스리스 위임 이름(64/26.2.0.192.in-addr.arpa)과 CNAME 설정 방법을 안내","끝의 점(.) 포함 여부 선택"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"역방향 DNS는 왜 필요한가요?","acceptedAnswer":{"@type":"Answer","text":"IP로 도메인 이름을 조회하는 기능입니다. 메일 서버 신뢰도, 로그 가독성, 일부 보안 도구에서 사용합니다."}},{"@type":"Question","name":"RFC 2317 클래스리스 위임이란?","acceptedAnswer":{"@type":"Answer","text":"/24보다 작은 대역을 받은 고객이 자기 역방향 DNS를 직접 관리하도록, 부모 /24 존에 CNAME으로 하위 존 이름을 가리키게 하는 방식입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"역방향 DNS 이름 생성기","item":"https://wooadev.wooahouse.com/reverse-dns-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="reverse-dns-generator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/reverse-dns-generator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>역방향 DNS 이름 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">↩️</span>
+    <h1>역방향 DNS(PTR) 이름 생성기</h1>
+    <p>IPv4·IPv6 주소의 PTR 레코드 이름과 CIDR 대역의 역방향 존 이름(in-addr.arpa, ip6.arpa)을 만들고 클래스리스(RFC 2317) 위임 이름도 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 6개 처리</p>
+<h3>입력 — IP 주소 또는 CIDR (한 줄에 하나)</h3><pre>203.0.113.45
+192.0.2.0/24
+198.51.100.0/22
+192.0.2.64/26
+2001:db8::1
+2001:db8:abcd::/48</pre>
+<h3>결과 — PTR / 역방향 존 이름</h3><pre>입력 | 종류 | 역방향 이름 | 설명
+203.0.113.45 | PTR | 45.113.0.203.in-addr.arpa. | IPv4 단일 주소
+192.0.2.0/24 | 존 | 2.0.192.in-addr.arpa. | 옥텟 경계 — 일반 위임
+198.51.100.0/22 | 존 4개 | 100.51.198.in-addr.arpa.
+101.51.198.in-addr.arpa.
+102.51.198.in-addr.arpa.
+103.51.198.in-addr.arpa. | 옥텟 경계가 아니라 여러 존을 각각 위임
+192.0.2.64/26 | RFC 2317 | 64/26.2.0.192.in-addr.arpa. | 부모 /24 존에 CNAME(64~127 → 위 이름)을 두는 클래스리스 위임
+2001:db8::1 | PTR | 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa. | IPv6 단일 주소
+2001:db8:abcd::/48 | 존 | d.c.b.a.8.b.d.0.1.0.0.2.ip6.arpa. | 니블 경계 — 일반 위임</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>메일 서버의 PTR(rDNS) 설정이나 ISP에 역방향 존 위임을 요청할 때 정확한 이름이 필요합니다. IPv4는 옥텟을 뒤집고, IPv6는 니블(16진수 한 자리)마다 점으로 뒤집습니다.</p>
+<ul><li>IP 주소 → PTR 이름: 203.0.113.45 → 45.113.0.203.in-addr.arpa.</li><li>IPv6: 128비트를 니블 단위로 뒤집어 ip6.arpa. 이름 생성</li><li>CIDR → 역방향 존: /8·/16·/24는 한 존, /22처럼 경계가 아니면 /24 여러 개를 나열</li><li>/25~/31 대역은 RFC 2317 클래스리스 위임 이름(64/26.2.0.192.in-addr.arpa)과 CNAME 설정 방법을 안내</li><li>끝의 점(.) 포함 여부 선택</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="ip-converter.html" class="related-card"><span class="related-icon">🔁</span><span>IP 주소 변환기</span></a>
+    <a href="dns-zone-editor.html" class="related-card"><span class="related-icon">🗂️</span><span>DNS 존 파일 편집기</span></a>
+    <a href="subnet-calculator.html" class="related-card"><span class="related-icon">🌐</span><span>서브넷 계산기</span></a>
+    <a href="ip-lookup.html" class="related-card"><span class="related-icon">🌐</span><span>IP 주소 조회</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>메일 발송 서버는 PTR과 정방향 A 레코드가 서로 일치해야 스팸으로 분류되지 않습니다(FCrDNS).</li><li>IPv6 PTR은 길어서 직접 입력하면 틀리기 쉽습니다. 이 도구의 결과를 복사하세요.</li><li>ISP에 위임받은 /24 미만 대역이라면 RFC 2317 방식을 사용합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>역방향 DNS는 왜 필요한가요?</summary><p>IP로 도메인 이름을 조회하는 기능입니다. 메일 서버 신뢰도, 로그 가독성, 일부 보안 도구에서 사용합니다.</p></details><details><summary>RFC 2317 클래스리스 위임이란?</summary><p>/24보다 작은 대역을 받은 고객이 자기 역방향 DNS를 직접 관리하도록, 부모 /24 존에 CNAME으로 하위 존 이름을 가리키게 하는 방식입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-net.js"></script>
+<script src="js/tools/reverse-dns-generator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

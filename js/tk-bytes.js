@@ -5,6 +5,9 @@
   var B = TK.bytes = TK.bytes || {};
   var t = function (a, b) { return TK.t(a, b); };
 
+  B.random = function (n) { var a = new Uint8Array(n); (g.crypto || window.crypto).getRandomValues(a); return a; };
+  /** 0 이상 max 미만 균일 난수(BigInt 아님, max ≤ 2^32) */
+  B.randInt = function (max) { var lim = Math.floor(4294967296 / max) * max, x; do { x = new Uint32Array(1); (g.crypto || window.crypto).getRandomValues(x); x = x[0]; } while (x >= lim); return x % max; };
   B.utf8 = function (s) { return Array.from(new TextEncoder().encode(String(s))); };
   B.fromUtf8 = function (arr, strict) {
     var u8 = Uint8Array.from(arr);

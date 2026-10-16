@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAC 주소 변환기 — 콜론·하이픈·Cisco 표기 변환과 EUI-64 계산 | WooaDev</title>
+  <meta name="description" content="MAC 주소를 00:1A:2B:3C:4D:5E, 00-1A-…, 001a.2b3c.4d5e, 구분자 없음 형식으로 상호 변환하고 검증합니다. 유니캐스트/멀티캐스트, 범용/로컬 관리(LAA), 제조사 식별자(OUI), EUI-64 링크 로컬 IPv6 주소를 표시합니다.">
+  <meta name="keywords" content="MAC 주소 변환, MAC 주소 검증, MAC 주소 형식, Cisco MAC 표기, EUI-64 계산, mac address converter, OUI 확인, 맥주소 변환">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/mac-address-tool.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/mac-address-tool.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/mac-address-tool.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/mac-address-tool.html">
+  <meta property="og:title" content="MAC 주소 변환기 — 콜론·하이픈·Cisco 표기 변환과 EUI-64 계산 | WooaDev">
+  <meta property="og:description" content="MAC 주소를 00:1A:2B:3C:4D:5E, 00-1A-…, 001a.2b3c.4d5e, 구분자 없음 형식으로 상호 변환하고 검증합니다. 유니캐스트/멀티캐스트, 범용/로컬 관리(LAA), 제조사 식별자(OUI), EUI-64 링크 로컬 IPv6 주소를 표시합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/mac-address-tool.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MAC 주소 변환기 — 콜론·하이픈·Cisco 표기 변환과 EUI-64 계산 | WooaDev">
+  <meta name="twitter:description" content="MAC 주소를 00:1A:2B:3C:4D:5E, 00-1A-…, 001a.2b3c.4d5e, 구분자 없음 형식으로 상호 변환하고 검증합니다. 유니캐스트/멀티캐스트, 범용/로컬 관리(LAA), 제조사 식별자(OUI), EUI-64 링크 로컬 IPv6 주소를 표시합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"MAC 주소 검증·변환기","url":"https://wooadev.wooahouse.com/mac-address-tool.html","description":"MAC 주소를 00:1A:2B:3C:4D:5E, 00-1A-…, 001a.2b3c.4d5e, 구분자 없음 형식으로 상호 변환하고 검증합니다. 유니캐스트/멀티캐스트, 범용/로컬 관리(LAA), 제조사 식별자(OUI), EUI-64 링크 로컬 IPv6 주소를 표시합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: 00:1A:2B:3C:4D:5E, 00-1a-2b-3c-4d-5e, 001a.2b3c.4d5e, 001A2B3C4D5E, 0x1a2b3c4d5e","출력 형식 선택(콜론/하이픈/Cisco/구분자 없음)과 대소문자 선택, 여러 줄 한꺼번에 처리","첫 바이트 비트로 유니캐스트/멀티캐스트와 범용(UAA)/로컬(LAA) 관리 주소를 판별 — 가상 머신·컨테이너·무작위 MAC은 LAA","앞 3바이트 OUI(제조사 식별자)와 EUI-64 방식으로 만든 링크 로컬 IPv6(fe80::) 주소 계산","브로드캐스트(FF:FF:FF:FF:FF:FF)와 모두 0 주소 구분"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"LAA와 UAA는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"첫 바이트의 두 번째 비트가 0이면 제조사가 부여한 범용 관리 주소(UAA), 1이면 소프트웨어나 관리자가 임의로 지정한 로컬 관리 주소(LAA)입니다."}},{"@type":"Question","name":"EUI-64 링크 로컬 주소는 어떻게 만드나요?","acceptedAnswer":{"@type":"Answer","text":"MAC 가운데에 FF:FE를 끼워 넣고 첫 바이트의 U/L 비트를 뒤집은 64비트 값을 fe80::/64 뒤에 붙입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"MAC 주소 검증·변환기","item":"https://wooadev.wooahouse.com/mac-address-tool.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="mac-address-tool.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/mac-address-tool.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>MAC 주소 검증·변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔌</span>
+    <h1>MAC 주소 검증 · 변환기</h1>
+    <p>MAC 주소를 콜론·하이픈·Cisco 점 표기로 바꾸고, 유효성·유니캐스트/멀티캐스트·로컬 관리 여부와 EUI-64 링크 로컬 IPv6 주소를 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 5개 변환, 1개 오류</p>
+<h3>입력 — MAC 주소 (한 줄에 하나)</h3><pre>00:1A:2B:3C:4D:5E
+3c-22-fb-12-34-56
+001a.2b3c.4d5e
+FF:FF:FF:FF:FF:FF
+02:42:ac:11:00:02
+zz:00:11:22:33:44</pre>
+<h3>결과 — 검증·변환 결과</h3><pre>입력 | 변환 | 성격 | 제조사 식별자 | EUI-64 링크 로컬 IPv6
+00:1A:2B:3C:4D:5E | 00:1A:2B:3C:4D:5E | 유니캐스트 · 범용 관리(UAA) — 제조사 할당 | OUI 00-1A-2B | fe80::21a:2bff:fe3c:4d5e
+3c-22-fb-12-34-56 | 3C:22:FB:12:34:56 | 유니캐스트 · 범용 관리(UAA) — 제조사 할당 | OUI 3C-22-FB | fe80::3e22:fbff:fe12:3456
+001a.2b3c.4d5e | 00:1A:2B:3C:4D:5E | 유니캐스트 · 범용 관리(UAA) — 제조사 할당 | OUI 00-1A-2B | fe80::21a:2bff:fe3c:4d5e
+FF:FF:FF:FF:FF:FF | FF:FF:FF:FF:FF:FF | 브로드캐스트 · 로컬 관리(LAA) — 가상·무작위 주소 가능성 | OUI FF-FF-FF | fe80::fdff:ffff:feff:ffff
+02:42:ac:11:00:02 | 02:42:AC:11:00:02 | 유니캐스트 · 로컬 관리(LAA) — 가상·무작위 주소 가능성 | OUI 02-42-AC | fe80::42:acff:fe11:2
+zz:00:11:22:33:44 | MAC 주소 형식이 아닙니다 (16진수 12자리) |  |  | </pre>
+<h3>결과 — 변환된 목록</h3><pre>00:1A:2B:3C:4D:5E
+3C:22:FB:12:34:56
+00:1A:2B:3C:4D:5E
+FF:FF:FF:FF:FF:FF
+02:42:AC:11:00:02</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>장비마다 MAC 주소 표기법이 달라 복사해서 붙여 넣을 때마다 형식을 고쳐야 합니다. Linux/Windows는 콜론·하이픈, Cisco는 점으로 쓰기 때문입니다.</p>
+<ul><li>입력: 00:1A:2B:3C:4D:5E, 00-1a-2b-3c-4d-5e, 001a.2b3c.4d5e, 001A2B3C4D5E, 0x1a2b3c4d5e</li><li>출력 형식 선택(콜론/하이픈/Cisco/구분자 없음)과 대소문자 선택, 여러 줄 한꺼번에 처리</li><li>첫 바이트 비트로 유니캐스트/멀티캐스트와 범용(UAA)/로컬(LAA) 관리 주소를 판별 — 가상 머신·컨테이너·무작위 MAC은 LAA</li><li>앞 3바이트 OUI(제조사 식별자)와 EUI-64 방식으로 만든 링크 로컬 IPv6(fe80::) 주소 계산</li><li>브로드캐스트(FF:FF:FF:FF:FF:FF)와 모두 0 주소 구분</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="ip-converter.html" class="related-card"><span class="related-icon">🔁</span><span>IP 주소 변환기</span></a>
+    <a href="subnet-calculator.html" class="related-card"><span class="related-icon">🌐</span><span>서브넷 계산기</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+    <a href="text-binary.html" class="related-card"><span class="related-icon">01</span><span>텍스트 ↔ 바이너리</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>스마트폰의 "비공개 Wi-Fi 주소"는 무작위 LAA MAC을 씁니다. 2번째 16진수 자리가 2·6·A·E이면 LAA입니다.</li><li>제조사 이름 조회는 최신 IEEE OUI 목록이 필요해 이 도구에서는 OUI 값만 보여 줍니다.</li><li>Docker 기본 MAC은 02:42:로 시작합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>LAA와 UAA는 무엇인가요?</summary><p>첫 바이트의 두 번째 비트가 0이면 제조사가 부여한 범용 관리 주소(UAA), 1이면 소프트웨어나 관리자가 임의로 지정한 로컬 관리 주소(LAA)입니다.</p></details><details><summary>EUI-64 링크 로컬 주소는 어떻게 만드나요?</summary><p>MAC 가운데에 FF:FE를 끼워 넣고 첫 바이트의 U/L 비트를 뒤집은 64비트 값을 fe80::/64 뒤에 붙입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/mac-address-tool.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebKit 타임스탬프 변환기 — Chrome 쿠키·방문기록 DB 시각 변환 | WooaDev</title>
+  <meta name="description" content="Chrome/WebKit(1601-01-01 기준 마이크로초), Firefox PRTime, Apple Cocoa/Core Data(2001-01-01 기준 초), Unix 마이크로초 값을 UTC 날짜로 변환하고 서로 환산합니다. 마이크로초 정밀도를 유지합니다.">
+  <meta name="keywords" content="WebKit 타임스탬프, Chrome 타임스탬프 변환, 크롬 쿠키 만료 시각, PRTime, Cocoa timestamp, Core Data 날짜, 마이크로초 변환">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/webkit-timestamp-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/webkit-timestamp-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/webkit-timestamp-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/webkit-timestamp-converter.html">
+  <meta property="og:title" content="WebKit 타임스탬프 변환기 — Chrome 쿠키·방문기록 DB 시각 변환 | WooaDev">
+  <meta property="og:description" content="Chrome/WebKit(1601-01-01 기준 마이크로초), Firefox PRTime, Apple Cocoa/Core Data(2001-01-01 기준 초), Unix 마이크로초 값을 UTC 날짜로 변환하고 서로 환산합니다. 마이크로초 정밀도를 유지합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/webkit-timestamp-converter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="WebKit 타임스탬프 변환기 — Chrome 쿠키·방문기록 DB 시각 변환 | WooaDev">
+  <meta name="twitter:description" content="Chrome/WebKit(1601-01-01 기준 마이크로초), Firefox PRTime, Apple Cocoa/Core Data(2001-01-01 기준 초), Unix 마이크로초 값을 UTC 날짜로 변환하고 서로 환산합니다. 마이크로초 정밀도를 유지합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"WebKit·Chrome 타임스탬프 변환기","url":"https://wooadev.wooahouse.com/webkit-timestamp-converter.html","description":"Chrome/WebKit(1601-01-01 기준 마이크로초), Firefox PRTime, Apple Cocoa/Core Data(2001-01-01 기준 초), Unix 마이크로초 값을 UTC 날짜로 변환하고 서로 환산합니다. 마이크로초 정밀도를 유지합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["Chrome/WebKit: 1601-01-01부터의 마이크로초 (쿠키 expires_utc, 방문 시각)","Firefox PRTime: 1970-01-01부터의 마이크로초 / Unix 마이크로초","Apple Cocoa(Core Data, NSDate): 2001-01-01부터의 초(소수 포함)","어떤 기준으로 입력해도 UTC ISO(마이크로초)와 다른 기준 값들을 함께 보여 줌","날짜를 넣으면 선택한 기준의 정수로 역변환"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Chrome이 1601년 기준을 쓰는 이유는?","acceptedAnswer":{"@type":"Answer","text":"Chrome은 Windows FILETIME과 같은 1601-01-01 에포크를 쓰되 100ns 대신 마이크로초 단위로 저장합니다. 그래서 Unix 마이크로초에 11644473600000000을 더한 값이 됩니다."}},{"@type":"Question","name":"Cocoa 타임스탬프에 음수가 있나요?","acceptedAnswer":{"@type":"Answer","text":"2001-01-01 이전 시각은 음수입니다. 이 도구는 음수와 소수 값도 처리합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"WebKit·Chrome 타임스탬프 변환기","item":"https://wooadev.wooahouse.com/webkit-timestamp-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="webkit-timestamp-converter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/webkit-timestamp-converter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>WebKit·Chrome 타임스탬프 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🌐</span>
+    <h1>WebKit(Chrome) · PRTime · Cocoa 타임스탬프 변환기</h1>
+    <p>Chrome 쿠키·방문기록 DB의 1601년 기준 마이크로초 값, Firefox PRTime, Apple Core Data 초 값을 날짜로 바꾸고 서로 환산합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 3개 변환</p>
+<h3>입력 — 타임스탬프 또는 날짜 (한 줄에 하나)</h3><pre>13411234567890123
+13300000000000000
+2026-10-16T09:30:15.123456Z</pre>
+<h3>결과 — 변환 결과</h3><pre>입력 | UTC (ISO 8601) | 값 (µs)
+13411234567890123 | 2025-12-26T14:56:07.890123Z | 13411234567890123
+13300000000000000 | 2022-06-18T04:26:40.000000Z | 13300000000000000
+2026-10-16T09:30:15.123456Z | 2026-10-16T09:30:15.123456Z | 13436616615123456</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>브라우저와 앱의 SQLite DB(Chrome의 Cookies·History, Safari, iOS 앱)에는 13300000000000000 같은 큰 정수나 7xxxxxxxx.xxx 같은 소수가 시각으로 들어 있습니다. 기준 에포크가 제각각이라 단순히 Unix 시간으로 읽으면 틀립니다.</p>
+<ul><li>Chrome/WebKit: 1601-01-01부터의 마이크로초 (쿠키 expires_utc, 방문 시각)</li><li>Firefox PRTime: 1970-01-01부터의 마이크로초 / Unix 마이크로초</li><li>Apple Cocoa(Core Data, NSDate): 2001-01-01부터의 초(소수 포함)</li><li>어떤 기준으로 입력해도 UTC ISO(마이크로초)와 다른 기준 값들을 함께 보여 줌</li><li>날짜를 넣으면 선택한 기준의 정수로 역변환</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="filetime-converter.html" class="related-card"><span class="related-icon">🪟</span><span>FILETIME 변환기</span></a>
+    <a href="timestamp.html" class="related-card"><span class="related-icon">🕐</span><span>타임스탬프 변환</span></a>
+    <a href="dotnet-ticks-converter.html" class="related-card"><span class="related-icon">🟣</span><span>.NET Ticks 변환기</span></a>
+    <a href="cookie-parser.html" class="related-card"><span class="related-icon">🍪</span><span>쿠키 파서</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Chrome 쿠키의 expires_utc 값이 0이면 세션 쿠키입니다.</li><li>값의 자릿수로 기준을 짐작할 수 있습니다: 17자리 안팎=WebKit, 16자리=PRTime, 9자리 소수=Cocoa.</li><li>결과가 1601년이나 1970년 같은 이상한 연도면 기준 선택이 틀린 것입니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>Chrome이 1601년 기준을 쓰는 이유는?</summary><p>Chrome은 Windows FILETIME과 같은 1601-01-01 에포크를 쓰되 100ns 대신 마이크로초 단위로 저장합니다. 그래서 Unix 마이크로초에 11644473600000000을 더한 값이 됩니다.</p></details><details><summary>Cocoa 타임스탬프에 음수가 있나요?</summary><p>2001-01-01 이전 시각은 음수입니다. 이 도구는 음수와 소수 값도 처리합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-time.js"></script>
+<script src="js/tools/webkit-timestamp-converter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cache-Control 생성기 — max-age·no-store·SWR 해석 | WooaDev</title>
+  <meta name="description" content="Cache-Control 헤더를 프리셋(정적 파일 1년 immutable, HTML 재검증, 개인 API no-store, CDN s-maxage, SWR)과 직접 설정으로 만들고, 기존 헤더를 지시어별로 설명합니다. public+private 모순, no-store 충돌, 1년 초과 등을 점검합니다.">
+  <meta name="keywords" content="Cache-Control 생성기, Cache-Control 설정, max-age 설정, no-store no-cache 차이, stale-while-revalidate, immutable 캐시, Cache-Control 분석, CDN 캐시 설정">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/cache-control-builder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/cache-control-builder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/cache-control-builder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/cache-control-builder.html">
+  <meta property="og:title" content="Cache-Control 생성기 — max-age·no-store·SWR 해석 | WooaDev">
+  <meta property="og:description" content="Cache-Control 헤더를 프리셋(정적 파일 1년 immutable, HTML 재검증, 개인 API no-store, CDN s-maxage, SWR)과 직접 설정으로 만들고, 기존 헤더를 지시어별로 설명합니다. public+private 모순, no-store 충돌, 1년 초과 등을 점검합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/cache-control-builder.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cache-Control 생성기 — max-age·no-store·SWR 해석 | WooaDev">
+  <meta name="twitter:description" content="Cache-Control 헤더를 프리셋(정적 파일 1년 immutable, HTML 재검증, 개인 API no-store, CDN s-maxage, SWR)과 직접 설정으로 만들고, 기존 헤더를 지시어별로 설명합니다. public+private 모순, no-store 충돌, 1년 초과 등을 점검합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Cache-Control 생성·분석기","url":"https://wooadev.wooahouse.com/cache-control-builder.html","description":"Cache-Control 헤더를 프리셋(정적 파일 1년 immutable, HTML 재검증, 개인 API no-store, CDN s-maxage, SWR)과 직접 설정으로 만들고, 기존 헤더를 지시어별로 설명합니다. public+private 모순, no-store 충돌, 1년 초과 등을 점검합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["만들기: 공개 범위(public/private), max-age, s-maxage, no-cache, no-store, must-revalidate, immutable, stale-while-revalidate, stale-if-error 등을 선택","프리셋: 해시가 붙은 정적 파일(1년+immutable), HTML(매번 재검증), 개인 API(no-store), CDN 위주, SWR","분석: 붙여 넣은 헤더를 지시어별 의미와 시간(예: 31536000 → 1년)으로 설명하고 브라우저/공유 캐시 신선 시간을 요약","점검: public·private 동시 사용, no-store와 max-age 충돌, immutable 단독 사용, max-age=0만 쓴 경우, 1년 초과, stale-* 단독 사용 등"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"no-cache와 no-store의 차이는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"no-cache는 저장은 하되 매번 서버에 재검증(304 가능)하고, no-store는 아예 저장하지 않습니다. 민감한 개인 정보에는 no-store를 쓰세요."}},{"@type":"Question","name":"stale-while-revalidate는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"만료된 응답을 지정한 시간 동안 우선 보여 주면서 뒤에서 새 응답을 받아 오는 방식입니다. 체감 속도가 빨라집니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"Cache-Control 생성·분석기","item":"https://wooadev.wooahouse.com/cache-control-builder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="cache-control-builder.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/cache-control-builder.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Cache-Control 생성·분석기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🗄️</span>
+    <h1>Cache-Control 헤더 생성 · 분석기</h1>
+    <p>정적 파일·HTML·API 상황별 프리셋으로 Cache-Control 헤더를 만들고, 이미 있는 헤더를 지시어별로 풀어 설명하며 모순을 찾아 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 브라우저: 1년 / 공유 캐시: 1년</p>
+<h3>입력 — 분석할 Cache-Control 값</h3><pre>public, max-age=31536000, immutable, stale-while-revalidate=600</pre>
+<h3>결과 — Cache-Control 헤더</h3><pre>Cache-Control: public, max-age=31536000, immutable, stale-while-revalidate=600</pre>
+<h3>결과 — 지시어 설명</h3><pre>지시어 | 값 | 의미
+public |  | 모든 캐시(CDN·프록시 포함)에 저장 가능
+max-age | 31536000 | 신선한 것으로 간주하는 시간(초) → 1년
+immutable |  | 신선한 동안 재검증 요청(새로고침 포함) 불필요
+stale-while-revalidate | 600 | 만료 후 지정 시간 동안은 낡은 응답을 먼저 쓰고 뒤에서 갱신 → 10분</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>캐시 설정을 잘못하면 배포했는데 사용자 화면이 안 바뀌거나, 반대로 CDN이 매번 서버를 두드립니다. 상황에 맞는 값을 만들고 이미 쓰는 값이 의도대로인지 확인하세요.</p>
+<ul><li>만들기: 공개 범위(public/private), max-age, s-maxage, no-cache, no-store, must-revalidate, immutable, stale-while-revalidate, stale-if-error 등을 선택</li><li>프리셋: 해시가 붙은 정적 파일(1년+immutable), HTML(매번 재검증), 개인 API(no-store), CDN 위주, SWR</li><li>분석: 붙여 넣은 헤더를 지시어별 의미와 시간(예: 31536000 → 1년)으로 설명하고 브라우저/공유 캐시 신선 시간을 요약</li><li>점검: public·private 동시 사용, no-store와 max-age 충돌, immutable 단독 사용, max-age=0만 쓴 경우, 1년 초과, stale-* 단독 사용 등</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="http-headers-parser.html" class="related-card"><span class="related-icon">📨</span><span>HTTP 헤더 파서</span></a>
+    <a href="http-status.html" class="related-card"><span class="related-icon">🌐</span><span>HTTP 상태코드</span></a>
+    <a href="minifier.html" class="related-card"><span class="related-icon">🗜️</span><span>CSS·JS·HTML 압축</span></a>
+    <a href="cookie-parser.html" class="related-card"><span class="related-icon">🍪</span><span>쿠키 파서</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>파일명에 해시가 들어가는 JS·CSS는 max-age=31536000, immutable로 영구 캐시하고 HTML만 짧게 두는 것이 정석입니다.</li><li>no-cache는 "캐시하지 말라"가 아니라 "쓰기 전에 재검증하라"입니다. 저장 자체를 막으려면 no-store를 쓰세요.</li><li>CDN과 브라우저 시간을 다르게 하려면 s-maxage를 쓰세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>no-cache와 no-store의 차이는 무엇인가요?</summary><p>no-cache는 저장은 하되 매번 서버에 재검증(304 가능)하고, no-store는 아예 저장하지 않습니다. 민감한 개인 정보에는 no-store를 쓰세요.</p></details><details><summary>stale-while-revalidate는 무엇인가요?</summary><p>만료된 응답을 지정한 시간 동안 우선 보여 주면서 뒤에서 새 응답을 받아 오는 방식입니다. 체감 속도가 빨라집니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/cache-control-builder.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

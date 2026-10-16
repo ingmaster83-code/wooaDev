@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2의 보수 계산기 — -42를 8비트 이진수로, 비트열을 정수로 | WooaDev</title>
+  <meta name="description" content="정수를 2의 보수·1의 보수·부호-크기 표현으로 변환하고, 0b/0x 비트열을 부호 있는 정수로 해석합니다. 4·8·16·32·64비트와 표현 가능한 범위를 보여 주며 범위를 넘으면 이유를 알려 줍니다.">
+  <meta name="keywords" content="2의 보수 계산기, 2의 보수 변환, two&#x27;s complement, 1의 보수, 음수 이진수, 부호 있는 정수 표현, 비트열 정수 변환">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/integer-representation.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/integer-representation.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/integer-representation.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/integer-representation.html">
+  <meta property="og:title" content="2의 보수 계산기 — -42를 8비트 이진수로, 비트열을 정수로 | WooaDev">
+  <meta property="og:description" content="정수를 2의 보수·1의 보수·부호-크기 표현으로 변환하고, 0b/0x 비트열을 부호 있는 정수로 해석합니다. 4·8·16·32·64비트와 표현 가능한 범위를 보여 주며 범위를 넘으면 이유를 알려 줍니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/integer-representation.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="2의 보수 계산기 — -42를 8비트 이진수로, 비트열을 정수로 | WooaDev">
+  <meta name="twitter:description" content="정수를 2의 보수·1의 보수·부호-크기 표현으로 변환하고, 0b/0x 비트열을 부호 있는 정수로 해석합니다. 4·8·16·32·64비트와 표현 가능한 범위를 보여 주며 범위를 넘으면 이유를 알려 줍니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"2의 보수 계산기","url":"https://wooadev.wooahouse.com/integer-representation.html","description":"정수를 2의 보수·1의 보수·부호-크기 표현으로 변환하고, 0b/0x 비트열을 부호 있는 정수로 해석합니다. 4·8·16·32·64비트와 표현 가능한 범위를 보여 주며 범위를 넘으면 이유를 알려 줍니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["정수 → 비트열: 선택한 폭(4~64비트)에서의 2의 보수, 1의 보수, 부호-크기 표현과 16진수","비트열 → 정수: 0b…/0x… 입력을 부호 있는 값과 부호 없는 값 두 가지로 해석","표현 가능한 범위(예: 8비트 -128 ~ 127, 0 ~ 255)를 표시하고 범위를 넘으면 안내","가장 작은 음수(-128)는 1의 보수·부호-크기로 표현할 수 없다는 점도 표시","비트 연산 계산기와 함께 쓰면 마스크 연산 확인에 편리"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"왜 2의 보수를 쓰나요?","acceptedAnswer":{"@type":"Answer","text":"덧셈·뺄셈 회로를 부호와 무관하게 똑같이 쓸 수 있고, 0이 하나뿐이며(+0과 -0 구분 없음) 표현 범위를 하나 더 확보할 수 있기 때문입니다."}},{"@type":"Question","name":"1의 보수와 부호-크기는 지금도 쓰이나요?","acceptedAnswer":{"@type":"Answer","text":"정수 표현으로는 거의 쓰이지 않지만 체크섬(인터넷 체크섬은 1의 보수 합)과 부동소수점의 부호 비트에서 개념이 남아 있습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"2의 보수 계산기","item":"https://wooadev.wooahouse.com/integer-representation.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="integer-representation.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/integer-representation.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>2의 보수 계산기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">➖</span>
+    <h1>2의 보수 계산기 — 정수의 이진 표현</h1>
+    <p>정수나 비트열을 넣으면 2의 보수, 1의 보수, 부호-크기 표현과 16진수, 부호 있는/없는 해석을 4~64비트에서 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 8비트 — 부호 있는 범위 -128 ~ 127, 부호 없는 범위 0 ~ 255</p>
+<h3>입력 — 정수 또는 이진수 (한 줄에 하나)</h3><pre>-42
+127
+-128
+0b11010110
+0xFFD6</pre>
+<h3>결과 — 표현 방식별 결과</h3><pre>입력 | 부호 있는 값 | 2의 보수 (2진) | 16진수 | 1의 보수 | 부호-크기 | 부호 없는 해석
+-42 | -42 | 1101 0110 | 0xD6 | 1101 0101 | 1010 1010 | 214
+127 | 127 | 0111 1111 | 0x7F | 0111 1111 | 0111 1111 | 127
+-128 | -128 | 1000 0000 | 0x80 | 표현 불가 | 표현 불가 | 128
+0b11010110 | -42 | 1101 0110 | 0xD6 | 1101 0101 | 1010 1010 | 214
+0xFFD6 | 8비트를 넘는 비트열 |  |  |  |  | </pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>컴퓨터는 음수를 대부분 2의 보수로 저장합니다. 교과서의 -42 → 1101 0110 변환을 손으로 하지 않아도 됩니다.</p>
+<ul><li>정수 → 비트열: 선택한 폭(4~64비트)에서의 2의 보수, 1의 보수, 부호-크기 표현과 16진수</li><li>비트열 → 정수: 0b…/0x… 입력을 부호 있는 값과 부호 없는 값 두 가지로 해석</li><li>표현 가능한 범위(예: 8비트 -128 ~ 127, 0 ~ 255)를 표시하고 범위를 넘으면 안내</li><li>가장 작은 음수(-128)는 1의 보수·부호-크기로 표현할 수 없다는 점도 표시</li><li>비트 연산 계산기와 함께 쓰면 마스크 연산 확인에 편리</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="bitwise-calculator.html" class="related-card"><span class="related-icon">🧮</span><span>비트 연산 계산기</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+    <a href="ieee754-converter.html" class="related-card"><span class="related-icon">🔬</span><span>부동소수점(IEEE 754) 변환기</span></a>
+    <a href="text-binary.html" class="related-card"><span class="related-icon">01</span><span>텍스트 ↔ 바이너리</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>2의 보수 만드는 법: 모든 비트를 뒤집고(1의 보수) 1을 더합니다.</li><li>-1은 모든 비트가 1인 값입니다 (8비트에서 1111 1111, 0xFF).</li><li>0과 1만 쓴 문자열을 10진수가 아니라 비트열로 읽으려면 "비트열" 옵션을 선택하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>왜 2의 보수를 쓰나요?</summary><p>덧셈·뺄셈 회로를 부호와 무관하게 똑같이 쓸 수 있고, 0이 하나뿐이며(+0과 -0 구분 없음) 표현 범위를 하나 더 확보할 수 있기 때문입니다.</p></details><details><summary>1의 보수와 부호-크기는 지금도 쓰이나요?</summary><p>정수 표현으로는 거의 쓰이지 않지만 체크섬(인터넷 체크섬은 1의 보수 합)과 부동소수점의 부호 비트에서 개념이 남아 있습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/integer-representation.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

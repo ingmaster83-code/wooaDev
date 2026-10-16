@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snowflake ID 디코더 — Twitter·Discord ID 생성 시각 확인 | WooaDev</title>
+  <meta name="description" content="Twitter(X), Discord, Instagram, Sonyflake, 사용자 정의 Snowflake ID에서 생성 시각(밀리초)과 데이터센터·워커·시퀀스를 추출합니다. 원하는 시간대로 표시하고 여러 ID를 한 번에 분석하며 브라우저에서만 처리됩니다.">
+  <meta name="keywords" content="Snowflake ID 디코더, 트위터 ID 시간, 디스코드 ID 생성일, Snowflake ID 변환, snowflake id decoder, 트윗 작성 시각">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/snowflake-id-decoder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/snowflake-id-decoder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/snowflake-id-decoder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/snowflake-id-decoder.html">
+  <meta property="og:title" content="Snowflake ID 디코더 — Twitter·Discord ID 생성 시각 확인 | WooaDev">
+  <meta property="og:description" content="Twitter(X), Discord, Instagram, Sonyflake, 사용자 정의 Snowflake ID에서 생성 시각(밀리초)과 데이터센터·워커·시퀀스를 추출합니다. 원하는 시간대로 표시하고 여러 ID를 한 번에 분석하며 브라우저에서만 처리됩니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/snowflake-id-decoder.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Snowflake ID 디코더 — Twitter·Discord ID 생성 시각 확인 | WooaDev">
+  <meta name="twitter:description" content="Twitter(X), Discord, Instagram, Sonyflake, 사용자 정의 Snowflake ID에서 생성 시각(밀리초)과 데이터센터·워커·시퀀스를 추출합니다. 원하는 시간대로 표시하고 여러 ID를 한 번에 분석하며 브라우저에서만 처리됩니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Snowflake ID 디코더","url":"https://wooadev.wooahouse.com/snowflake-id-decoder.html","description":"Twitter(X), Discord, Instagram, Sonyflake, 사용자 정의 Snowflake ID에서 생성 시각(밀리초)과 데이터센터·워커·시퀀스를 추출합니다. 원하는 시간대로 표시하고 여러 ID를 한 번에 분석하며 브라우저에서만 처리됩니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["Twitter(X): 41비트 시각 + 5비트 데이터센터 + 5비트 워커 + 12비트 시퀀스 (에포크 2010-11-04)","Discord: 에포크 2015-01-01, 워커·프로세스·증가값 / Instagram: 13비트 샤드 + 10비트 시퀀스","Sonyflake: 10ms 단위 시각 + 시퀀스 + 머신 ID / 사용자 정의: 에포크와 비트 폭을 직접 지정","UTC와 선택한 시간대(예: Asia/Seoul)로 함께 표시, 한 줄에 하나씩 여러 ID 분석"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"ID 하나로 정확한 생성 시각을 알 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"네. 시각 부분은 밀리초 단위로 정확합니다. 다만 서버가 시계를 조금 틀리게 쓰는 경우의 오차까지 알 수는 없습니다."}},{"@type":"Question","name":"에포크가 플랫폼마다 다른 이유는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"Snowflake는 시각을 에포크 이후 경과 시간으로 저장해 41비트로 약 69년을 표현합니다. 각 서비스가 시작 시점 근처로 에포크를 잡아 사용 가능 기간을 늘렸습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"Snowflake ID 디코더","item":"https://wooadev.wooahouse.com/snowflake-id-decoder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="snowflake-id-decoder.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/snowflake-id-decoder.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Snowflake ID 디코더</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">❄️</span>
+    <h1>Snowflake ID 디코더 — 생성 시각과 노드·시퀀스</h1>
+    <p>Twitter(X), Discord, Instagram, Sonyflake 또는 직접 정의한 Snowflake ID에서 생성 시각, 워커, 시퀀스를 뽑아냅니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 3개 해석</p>
+<h3>입력 — Snowflake ID (한 줄에 하나)</h3><pre>1541815603606036480
+175928847299117063
+1543244810129002496</pre>
+<h3>결과 — 분석 결과</h3><pre>ID | 생성 시각 (UTC) | 선택한 시간대 | 구성 요소
+1541815603606036480 | 2022-06-28T16:07:40.105Z | 2022-06-29 01:07:40 (UTC+09:00) | datacenter 11, worker 26, seq 0
+175928847299117063 | 2012-03-03T13:01:20.453Z | 2012-03-03 22:01:20 (UTC+09:00) | datacenter 1, worker 0, seq 7
+1543244810129002496 | 2022-07-02T14:46:49.493Z | 2022-07-02 23:46:49 (UTC+09:00) | datacenter 26, worker 5, seq 0</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>Snowflake ID는 상위 비트에 시각, 그 아래에 서버(워커) 번호와 순번을 넣은 64비트 정수입니다. 트윗·디스코드 메시지·사용자 ID만 보고도 만들어진 시각을 알 수 있습니다.</p>
+<ul><li>Twitter(X): 41비트 시각 + 5비트 데이터센터 + 5비트 워커 + 12비트 시퀀스 (에포크 2010-11-04)</li><li>Discord: 에포크 2015-01-01, 워커·프로세스·증가값 / Instagram: 13비트 샤드 + 10비트 시퀀스</li><li>Sonyflake: 10ms 단위 시각 + 시퀀스 + 머신 ID / 사용자 정의: 에포크와 비트 폭을 직접 지정</li><li>UTC와 선택한 시간대(예: Asia/Seoul)로 함께 표시, 한 줄에 하나씩 여러 ID 분석</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="uuid-decoder.html" class="related-card"><span class="related-icon">🆔</span><span>UUID 디코더</span></a>
+    <a href="timestamp.html" class="related-card"><span class="related-icon">🕐</span><span>타임스탬프 변환</span></a>
+    <a href="ulid-tool.html" class="related-card"><span class="related-icon">🔢</span><span>ULID 생성기·분석기</span></a>
+    <a href="modern-id-generator.html" class="related-card"><span class="related-icon">✨</span><span>Nano ID·KSUID·UUID v7 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>플랫폼을 잘못 고르면 시각이 엉뚱한 해(1970년대나 먼 미래)로 나옵니다. 그럴 땐 다른 플랫폼을 선택해 보세요.</li><li>JavaScript의 Number로 읽으면 정밀도가 깨지므로 ID는 항상 문자열로 다루세요. 이 도구는 BigInt로 계산합니다.</li><li>같은 밀리초 안에서 만들어진 ID는 시퀀스 값으로 구분됩니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>ID 하나로 정확한 생성 시각을 알 수 있나요?</summary><p>네. 시각 부분은 밀리초 단위로 정확합니다. 다만 서버가 시계를 조금 틀리게 쓰는 경우의 오차까지 알 수는 없습니다.</p></details><details><summary>에포크가 플랫폼마다 다른 이유는 무엇인가요?</summary><p>Snowflake는 시각을 에포크 이후 경과 시간으로 저장해 41비트로 약 69년을 표현합니다. 각 서비스가 시작 시점 근처로 에포크를 잡아 사용 가능 기간을 늘렸습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-time.js"></script>
+<script src="js/tools/snowflake-id-decoder.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

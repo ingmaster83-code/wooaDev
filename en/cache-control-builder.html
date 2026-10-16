@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cache-Control Builder – max-age, no-store &amp; SWR Explained | WooaDev</title>
+  <meta name="description" content="Build Cache-Control headers from presets (1-year immutable assets, HTML revalidation, private API no-store, CDN s-maxage) or parse existing ones and flag conflicts.">
+  <meta name="keywords" content="Cache-Control builder, Cache-Control generator, max-age header, no-cache vs no-store, stale-while-revalidate, immutable cache header, parse Cache-Control, CDN caching">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/cache-control-builder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/cache-control-builder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/cache-control-builder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/cache-control-builder.html">
+  <meta property="og:title" content="Cache-Control Builder – max-age, no-store &amp; SWR Explained | WooaDev">
+  <meta property="og:description" content="Build Cache-Control headers from presets (1-year immutable assets, HTML revalidation, private API no-store, CDN s-maxage) or parse existing ones and flag conflicts.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/cache-control-builder.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cache-Control Builder – max-age, no-store &amp; SWR Explained | WooaDev">
+  <meta name="twitter:description" content="Build Cache-Control headers from presets (1-year immutable assets, HTML revalidation, private API no-store, CDN s-maxage) or parse existing ones and flag conflicts.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Cache-Control Builder & Parser","url":"https://wooadev.wooahouse.com/en/cache-control-builder.html","description":"Build Cache-Control headers from presets (1-year immutable assets, HTML revalidation, private API no-store, CDN s-maxage) or parse existing ones and flag conflicts.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Build: choose public/private, max-age, s-maxage, no-cache, no-store, must-revalidate, immutable, stale-while-revalidate, stale-if-error…","Presets: fingerprinted static assets (1 year + immutable), HTML (always revalidate), private API (no-store), CDN-centric, SWR","Parse: each directive explained with its time (31536000 → 1 yr) and a summary of browser vs shared-cache freshness","Checks: public with private, no-store with max-age, lone immutable, max-age=0 alone, over a year, stale-* without max-age"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the difference between no-cache and no-store?","acceptedAnswer":{"@type":"Answer","text":"no-cache stores the response but revalidates it every time (a 304 is possible); no-store never stores it. Use no-store for sensitive personal data."}},{"@type":"Question","name":"What is stale-while-revalidate?","acceptedAnswer":{"@type":"Answer","text":"It lets a cache serve an expired response for a set time while fetching a fresh one in the background, which feels faster."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Cache-Control Builder & Parser","item":"https://wooadev.wooahouse.com/en/cache-control-builder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../cache-control-builder.html">KO</a>
+        <span>|</span>
+        <a href="cache-control-builder.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Cache-Control Builder &amp; Parser</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🗄️</span>
+    <h1>Cache-Control Header Builder &amp; Parser</h1>
+    <p>Build a Cache-Control header from presets for static files, HTML and APIs — or paste an existing one to have each directive explained and contradictions flagged.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Browser: 1 yr / Shared cache: 1 yr</p>
+<h3>Input — Cache-Control value to parse</h3><pre>public, max-age=31536000, immutable, stale-while-revalidate=600</pre>
+<h3>Result — Cache-Control header</h3><pre>Cache-Control: public, max-age=31536000, immutable, stale-while-revalidate=600</pre>
+<h3>Result — Directive explanations</h3><pre>Directive | Value | Meaning
+public |  | Any cache (CDN, proxies) may store it
+max-age | 31536000 | Seconds the response is considered fresh → 1 yr
+immutable |  | Will not change while fresh — skip revalidation
+stale-while-revalidate | 600 | Serve stale for N seconds while revalidating in the background → 10 min</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Wrong cache settings mean users don't see a deployment, or the CDN hits your server on every request. Build the right value for each case and verify what you already use.</p>
+<ul><li>Build: choose public/private, max-age, s-maxage, no-cache, no-store, must-revalidate, immutable, stale-while-revalidate, stale-if-error…</li><li>Presets: fingerprinted static assets (1 year + immutable), HTML (always revalidate), private API (no-store), CDN-centric, SWR</li><li>Parse: each directive explained with its time (31536000 → 1 yr) and a summary of browser vs shared-cache freshness</li><li>Checks: public with private, no-store with max-age, lone immutable, max-age=0 alone, over a year, stale-* without max-age</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="http-headers-parser.html" class="related-card"><span class="related-icon">📨</span><span>HTTP Headers Parser</span></a>
+    <a href="http-status.html" class="related-card"><span class="related-icon">🌐</span><span>HTTP Status Codes</span></a>
+    <a href="minifier.html" class="related-card"><span class="related-icon">🗜️</span><span>CSS·JS·HTML Minifier</span></a>
+    <a href="cookie-parser.html" class="related-card"><span class="related-icon">🍪</span><span>Cookie Parser</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Cache hashed JS/CSS for a year with immutable and keep only the HTML short — the standard recipe.</li><li>no-cache doesn't mean "don't cache" but "revalidate before use". Use no-store to prevent storage.</li><li>Use s-maxage to give the CDN a different lifetime than browsers.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What is the difference between no-cache and no-store?</summary><p>no-cache stores the response but revalidates it every time (a 304 is possible); no-store never stores it. Use no-store for sensitive personal data.</p></details><details><summary>What is stale-while-revalidate?</summary><p>It lets a cache serve an expired response for a set time while fetching a fresh one in the background, which feels faster.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/cache-control-builder.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

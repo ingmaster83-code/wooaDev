@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nano ID, KSUID &amp; UUID v7 Generator – Short, Sortable IDs | WooaDev</title>
+  <meta name="description" content="Generate Nano IDs (custom length and alphabet, entropy shown), KSUIDs, UUID v7 and TypeIDs with the browser&#x27;s cryptographic RNG, and decode KSUID timestamps.">
+  <meta name="keywords" content="Nano ID generator, KSUID generator, KSUID decoder, UUID v7 generator, TypeID, nanoid online, short unique id">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/modern-id-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/modern-id-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/modern-id-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/modern-id-generator.html">
+  <meta property="og:title" content="Nano ID, KSUID &amp; UUID v7 Generator – Short, Sortable IDs | WooaDev">
+  <meta property="og:description" content="Generate Nano IDs (custom length and alphabet, entropy shown), KSUIDs, UUID v7 and TypeIDs with the browser&#x27;s cryptographic RNG, and decode KSUID timestamps.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/modern-id-generator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Nano ID, KSUID &amp; UUID v7 Generator – Short, Sortable IDs | WooaDev">
+  <meta name="twitter:description" content="Generate Nano IDs (custom length and alphabet, entropy shown), KSUIDs, UUID v7 and TypeIDs with the browser&#x27;s cryptographic RNG, and decode KSUID timestamps.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Nano ID, KSUID & UUID v7 Generator","url":"https://wooadev.wooahouse.com/en/modern-id-generator.html","description":"Generate Nano IDs (custom length and alphabet, entropy shown), KSUIDs, UUID v7 and TypeIDs with the browser's cryptographic RNG, and decode KSUID timestamps.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Nano ID: 21 characters of A-Za-z0-9_- by default; choose length and alphabet, with the entropy in bits shown to judge collision risk; unbiased selection via rejection sampling","KSUID: 4-byte timestamp (seconds) + 16 random bytes as 27 Base62 characters, sortable by time; generate and decode","UUID v7: 48-bit Unix millisecond time + randomness in standard UUID form / TypeID: prefix_Base32(UUIDv7), e.g. user_01h455vb4pex5vsknk084sn02q","Everything uses crypto.getRandomValues — not the predictable Math.random"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How safe is a Nano ID?","acceptedAnswer":{"@type":"Answer","text":"The default 21 characters from a 64-symbol alphabet give about 126 bits of entropy — comparable to UUID v4's 122. Shorter lengths or smaller alphabets reduce it, so watch the displayed value."}},{"@type":"Question","name":"Why is there no CUID2?","acceptedAnswer":{"@type":"Answer","text":"CUID2 requires SHA-3, which the standard browser crypto API doesn't offer, so output could deviate from the spec. It is left out on purpose."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Nano ID, KSUID & UUID v7 Generator","item":"https://wooadev.wooahouse.com/en/modern-id-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../modern-id-generator.html">KO</a>
+        <span>|</span>
+        <a href="modern-id-generator.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Nano ID, KSUID &amp; UUID v7 Generator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">✨</span>
+    <h1>Modern ID Generator — Nano ID · KSUID · UUID v7 · TypeID</h1>
+    <p>Creates short URL-safe Nano IDs and time-sortable KSUID, UUID v7 and TypeID values, and reads the creation time out of a KSUID.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Decoded 2</p>
+<h3>Input — KSUIDs to decode (one per line)</h3><pre>0ujtsYcgvSTl8PAuAdqWYSMnLOv
+0ujsswThIGTUYm2K8FjOOfXtY1K</pre>
+<h3>Result — Decoded</h3><pre>KSUID | Time (UTC) | Unix s | Payload 128 bits (hex)
+0ujtsYcgvSTl8PAuAdqWYSMnLOv | 2017-10-10T04:00:47Z | 1507608047 | b5a1cd34b5f99d1154fb6853345c9735
+0ujsswThIGTUYm2K8FjOOfXtY1K | 2017-10-10T03:52:37Z | 1507607557 | 67ad536455c1813d788f57ca54679412</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>UUID v4 is long (36 characters) and unsortable. Depending on the use, several alternatives are better.</p>
+<ul><li>Nano ID: 21 characters of A-Za-z0-9_- by default; choose length and alphabet, with the entropy in bits shown to judge collision risk; unbiased selection via rejection sampling</li><li>KSUID: 4-byte timestamp (seconds) + 16 random bytes as 27 Base62 characters, sortable by time; generate and decode</li><li>UUID v7: 48-bit Unix millisecond time + randomness in standard UUID form / TypeID: prefix_Base32(UUIDv7), e.g. user_01h455vb4pex5vsknk084sn02q</li><li>Everything uses crypto.getRandomValues — not the predictable Math.random</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="ulid-tool.html" class="related-card"><span class="related-icon">🔢</span><span>ULID Generator &amp; Decoder</span></a>
+    <a href="uuid-generator.html" class="related-card"><span class="related-icon">🆔</span><span>UUID Generator</span></a>
+    <a href="uuid-decoder.html" class="related-card"><span class="related-icon">🆔</span><span>UUID Decoder</span></a>
+    <a href="random-generator.html" class="related-card"><span class="related-icon">🎲</span><span>Random String &amp; Number Generator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>For short public URLs, 10–12 Nano ID characters are often enough; check the entropy figure for collision risk.</li><li>To avoid look-alikes, remove 0O1lI from the alphabet.</li><li>KSUID time has second resolution; UUID v7 and ULID use milliseconds.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>How safe is a Nano ID?</summary><p>The default 21 characters from a 64-symbol alphabet give about 126 bits of entropy — comparable to UUID v4's 122. Shorter lengths or smaller alphabets reduce it, so watch the displayed value.</p></details><details><summary>Why is there no CUID2?</summary><p>CUID2 requires SHA-3, which the standard browser crypto API doesn't offer, so output could deviate from the spec. It is left out on purpose.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-bytes.js"></script>
+<script src="../js/tk-time.js"></script>
+<script src="../js/tools/modern-id-generator.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

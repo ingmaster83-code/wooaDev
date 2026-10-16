@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Domain Name Validator – Length, Hyphen, IDN &amp; Wildcard Rules | WooaDev</title>
+  <meta name="description" content="Validate domains and hostnames in bulk: 63/253-character limits, hyphens, underscores, numeric TLDs, wildcards and IDN with Punycode — with the reason for each failure.">
+  <meta name="keywords" content="domain validator, hostname validator, valid domain name rules, domain name length limit, wildcard domain check, check domain format">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/domain-validator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/domain-validator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/domain-validator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/domain-validator.html">
+  <meta property="og:title" content="Domain Name Validator – Length, Hyphen, IDN &amp; Wildcard Rules | WooaDev">
+  <meta property="og:description" content="Validate domains and hostnames in bulk: 63/253-character limits, hyphens, underscores, numeric TLDs, wildcards and IDN with Punycode — with the reason for each failure.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/domain-validator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Domain Name Validator – Length, Hyphen, IDN &amp; Wildcard Rules | WooaDev">
+  <meta name="twitter:description" content="Validate domains and hostnames in bulk: 63/253-character limits, hyphens, underscores, numeric TLDs, wildcards and IDN with Punycode — with the reason for each failure.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Domain & Hostname Validator","url":"https://wooadev.wooahouse.com/en/domain-validator.html","description":"Validate domains and hostnames in bulk: 63/253-character limits, hyphens, underscores, numeric TLDs, wildcards and IDN with Punycode — with the reason for each failure.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Domain mode: at least two labels including a TLD; hostname mode (single labels allowed); DNS-name mode (underscores allowed: _dmarc, _domainkey)","Rules: labels 1–63 characters, 253 total, letters/digits/hyphens only, no leading/trailing hyphen, no empty labels (..), no all-digit TLD","Distinguishes IP addresses mistaken for domains and URLs (spaces, / : @) pasted by mistake","Options for wildcards (*.example.com) and IDN; allowed IDNs are shown normalised as Punycode","Valid entries can be copied separately"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is a name with an underscore invalid?","acceptedAnswer":{"@type":"Answer","text":"It isn't allowed in hostnames (web server addresses) but is fine in DNS record names (_dmarc, _sip._tcp…). Pick the mode that matches your use."}},{"@type":"Question","name":"Why 253 characters at most?","acceptedAnswer":{"@type":"Answer","text":"The wire format limits a whole name to 255 bytes; after the length bytes and the root label, that leaves 253 characters of text."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Domain & Hostname Validator","item":"https://wooadev.wooahouse.com/en/domain-validator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../domain-validator.html">KO</a>
+        <span>|</span>
+        <a href="domain-validator.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Domain &amp; Hostname Validator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">✔️</span>
+    <h1>Domain &amp; Hostname Validator</h1>
+    <p>Validates domain names line by line and tells you exactly which rule failed. Internationalised names are normalised to Punycode.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ 4 valid / 6 invalid</p>
+<h3>Input — Domains / hostnames (one per line)</h3><pre>example.com
+www.wooahouse.com
+한글도메인.한국
+-bad-start.com
+under_score.example.com
+*.example.com
+localhost
+192.168.0.1
+example..com
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com</pre>
+<h3>Result — Validation results</h3><pre>Input | Result | Normalized | Details
+example.com | ✅ | example.com | 2 label(s), 11 chars
+www.wooahouse.com | ✅ | www.wooahouse.com | 3 label(s), 17 chars
+한글도메인.한국 | ✅ | xn--bj0bj3i97fq8o5lq.xn--3e0b707e | IDN → Punycode · 2 label(s), 33 chars
+-bad-start.com | ❌ | -bad-start.com | Label starts or ends with a hyphen: -bad-start
+under_score.example.com | ❌ | under_score.example.com | Underscore is not allowed in hostnames: under_score (allowed in DNS-name mode)
+*.example.com | ✅ | *.example.com | wildcard · 2 label(s), 11 chars
+localhost | ❌ | localhost | No TLD — at least 2 labels are required
+192.168.0.1 | ❌ | 192.168.0.1 | This is an IP address, not a domain name / TLD is too short
+example..com | ❌ | example..com | Empty label (consecutive or leading dots)
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com | ❌ | aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com | Label over 63 characters: aaaaaaaaaa…</pre>
+<h3>Result — Valid entries (normalized)</h3><pre>example.com
+www.wooahouse.com
+xn--bj0bj3i97fq8o5lq.xn--3e0b707e
+*.example.com</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>When a form accepts a domain or you audit a host list in a config file, one regex misses many rules. Each label is checked on its own and failures are explained.</p>
+<ul><li>Domain mode: at least two labels including a TLD; hostname mode (single labels allowed); DNS-name mode (underscores allowed: _dmarc, _domainkey)</li><li>Rules: labels 1–63 characters, 253 total, letters/digits/hyphens only, no leading/trailing hyphen, no empty labels (..), no all-digit TLD</li><li>Distinguishes IP addresses mistaken for domains and URLs (spaces, / : @) pasted by mistake</li><li>Options for wildcards (*.example.com) and IDN; allowed IDNs are shown normalised as Punycode</li><li>Valid entries can be copied separately</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="punycode-converter.html" class="related-card"><span class="related-icon">🈳</span><span>Punycode Converter</span></a>
+    <a href="email-validator.html" class="related-card"><span class="related-icon">📧</span><span>Email Validator</span></a>
+    <a href="url-parser.html" class="related-card"><span class="related-icon">🔗</span><span>URL Parser</span></a>
+    <a href="dns-zone-editor.html" class="related-card"><span class="related-icon">🗂️</span><span>DNS Zone File Editor</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Use hostname mode for sign-up forms and domain mode for e-mail domains.</li><li>TXT record names such as _dmarc.example.com only pass in DNS-name mode.</li><li>The tool checks format only — it doesn't verify that the TLD exists.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Is a name with an underscore invalid?</summary><p>It isn't allowed in hostnames (web server addresses) but is fine in DNS record names (_dmarc, _sip._tcp…). Pick the mode that matches your use.</p></details><details><summary>Why 253 characters at most?</summary><p>The wire format limits a whole name to 255 bytes; after the length bytes and the root label, that leaves 253 characters of text.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-dns.js"></script>
+<script src="../js/tools/domain-validator.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

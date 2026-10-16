@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TCP 플래그 디코더 — 0x12 = SYN+ACK, tcpdump [S.] 표기 해석 | WooaDev</title>
+  <meta name="description" content="TCP 헤더의 플래그 비트(NS·CWR·ECE·URG·ACK·PSH·RST·SYN·FIN)를 16진수·10진수·2진수·이름·tcpdump 표기(S., P., F.) 사이에서 변환하고 핸드셰이크, 연결 종료, NULL/XMAS 스캔 등 조합의 의미를 설명합니다.">
+  <meta name="keywords" content="TCP 플래그, TCP flags decoder, SYN ACK 플래그 값, 0x12 TCP, tcpdump 플래그 표기, 3-way 핸드셰이크 플래그, XMAS 스캔">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/tcp-flags-decoder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/tcp-flags-decoder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/tcp-flags-decoder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/tcp-flags-decoder.html">
+  <meta property="og:title" content="TCP 플래그 디코더 — 0x12 = SYN+ACK, tcpdump [S.] 표기 해석 | WooaDev">
+  <meta property="og:description" content="TCP 헤더의 플래그 비트(NS·CWR·ECE·URG·ACK·PSH·RST·SYN·FIN)를 16진수·10진수·2진수·이름·tcpdump 표기(S., P., F.) 사이에서 변환하고 핸드셰이크, 연결 종료, NULL/XMAS 스캔 등 조합의 의미를 설명합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/tcp-flags-decoder.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TCP 플래그 디코더 — 0x12 = SYN+ACK, tcpdump [S.] 표기 해석 | WooaDev">
+  <meta name="twitter:description" content="TCP 헤더의 플래그 비트(NS·CWR·ECE·URG·ACK·PSH·RST·SYN·FIN)를 16진수·10진수·2진수·이름·tcpdump 표기(S., P., F.) 사이에서 변환하고 핸드셰이크, 연결 종료, NULL/XMAS 스캔 등 조합의 의미를 설명합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"TCP 플래그 분석기","url":"https://wooadev.wooahouse.com/tcp-flags-decoder.html","description":"TCP 헤더의 플래그 비트(NS·CWR·ECE·URG·ACK·PSH·RST·SYN·FIN)를 16진수·10진수·2진수·이름·tcpdump 표기(S., P., F.) 사이에서 변환하고 핸드셰이크, 연결 종료, NULL/XMAS 스캔 등 조합의 의미를 설명합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: 0x12, 18, 0b010010, SYN+ACK, SYN,ECE,CWR, tcpdump 표기 S. / P. / FPU","출력: 설정된 플래그 목록, 16진·10진·2진 값, tcpdump 표기, 의미 (예: 0x02 = 연결 요청, 0x12 = 연결 수락)","알려진 조합 설명: SYN/SYN+ACK/ACK, PSH+ACK, FIN+ACK, RST, NULL(0x00)·XMAS(FIN+PSH+URG)·FIN 스캔, ECN 협상","9비트(NS 포함) 플래그와 비트별 참조표 제공"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"3-way 핸드셰이크의 플래그는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"클라이언트 SYN(0x02) → 서버 SYN+ACK(0x12) → 클라이언트 ACK(0x10) 순서입니다."}},{"@type":"Question","name":"NULL·XMAS 스캔은 왜 위험한가요?","acceptedAnswer":{"@type":"Answer","text":"정상 통신에서는 나오지 않는 플래그 조합(0x00, FIN+PSH+URG)으로 방화벽을 우회해 열린 포트를 탐지하려는 스캔 기법이라 IDS가 이를 탐지합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"TCP 플래그 분석기","item":"https://wooadev.wooahouse.com/tcp-flags-decoder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="tcp-flags-decoder.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/tcp-flags-decoder.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>TCP 플래그 분석기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🚦</span>
+    <h1>TCP 플래그 분석기 — 값 ↔ 플래그 이름</h1>
+    <p>0x12, 18, S. 같은 TCP 플래그 값이나 SYN+ACK 같은 이름 조합을 해석하고 3-way 핸드셰이크·스캔 패턴의 의미를 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 8개 처리</p>
+<h3>입력 — 플래그 값 또는 이름 (한 줄에 하나)</h3><pre>0x02
+0x12
+0x18
+0x011
+0x04
+SYN,ECE,CWR
+S.
+FPU</pre>
+<h3>결과 — 해석 결과</h3><pre>입력 | 설정된 플래그 | 값 (16진·10진·2진) | tcpdump 표기 | 의미
+0x02 | SYN | 0x002 = 2 = 000000010 | S | 연결 요청 (3-way 1단계)
+0x12 | ACK + SYN | 0x012 = 18 = 000010010 | S. | 연결 수락 (3-way 2단계)
+0x18 | ACK + PSH | 0x018 = 24 = 000011000 | P. | 데이터 전송(PSH+ACK)
+0x011 | ACK + FIN | 0x011 = 17 = 000010001 | F. | 연결 종료 요청(FIN+ACK)
+0x04 | RST | 0x004 = 4 = 000000100 | R | 연결 거부·리셋
+SYN,ECE,CWR | CWR + ECE + SYN | 0x0C2 = 194 = 011000010 | SEW | ECN 협상 SYN (SYN+ECE+CWR)
+S. | ACK + SYN | 0x012 = 18 = 000010010 | S. | 연결 수락 (3-way 2단계)
+FPU | URG + PSH + FIN | 0x029 = 41 = 000101001 | FPU | XMAS 스캔 (FIN+PSH+URG)</pre>
+<h3>결과 — TCP 플래그 비트</h3><pre>플래그 | 비트 값 | 의미
+NS | 0x100 (256) | ECN-nonce (실험적)
+CWR | 0x080 (128) | 혼잡 윈도우 감소
+ECE | 0x040 (64) | ECN 에코
+URG | 0x020 (32) | 긴급 포인터 유효
+ACK | 0x010 (16) | 확인 응답
+PSH | 0x008 (8) | 즉시 전달(푸시)
+RST | 0x004 (4) | 연결 리셋
+SYN | 0x002 (2) | 연결 요청·동기화
+FIN | 0x001 (1) | 연결 종료</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>Wireshark나 tcpdump에서 보는 flags 값을 이름으로 풀거나, 방화벽 규칙·패킷 필터를 만들 때 비트 값이 필요할 때 씁니다.</p>
+<ul><li>입력: 0x12, 18, 0b010010, SYN+ACK, SYN,ECE,CWR, tcpdump 표기 S. / P. / FPU</li><li>출력: 설정된 플래그 목록, 16진·10진·2진 값, tcpdump 표기, 의미 (예: 0x02 = 연결 요청, 0x12 = 연결 수락)</li><li>알려진 조합 설명: SYN/SYN+ACK/ACK, PSH+ACK, FIN+ACK, RST, NULL(0x00)·XMAS(FIN+PSH+URG)·FIN 스캔, ECN 협상</li><li>9비트(NS 포함) 플래그와 비트별 참조표 제공</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="http-status.html" class="related-card"><span class="related-icon">🌐</span><span>HTTP 상태코드</span></a>
+    <a href="subnet-calculator.html" class="related-card"><span class="related-icon">🌐</span><span>서브넷 계산기</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+    <a href="bitwise-calculator.html" class="related-card"><span class="related-icon">🧮</span><span>비트 연산 계산기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>tcpdump 필터에서 SYN만: tcp[tcpflags] &amp; tcp-syn != 0 처럼 이름 대신 값을 써야 할 때 이 도구로 값을 확인하세요.</li><li>SYN만 있고 ACK가 없는 패킷이 많으면 SYN 플러드나 포트 스캔을 의심할 수 있습니다.</li><li>tcpdump의 '.'은 ACK를 뜻합니다 ([S.] = SYN+ACK).</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>3-way 핸드셰이크의 플래그는 무엇인가요?</summary><p>클라이언트 SYN(0x02) → 서버 SYN+ACK(0x12) → 클라이언트 ACK(0x10) 순서입니다.</p></details><details><summary>NULL·XMAS 스캔은 왜 위험한가요?</summary><p>정상 통신에서는 나오지 않는 플래그 조합(0x00, FIN+PSH+URG)으로 방화벽을 우회해 열린 포트를 탐지하려는 스캔 기법이라 IDS가 이를 탐지합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/tcp-flags-decoder.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

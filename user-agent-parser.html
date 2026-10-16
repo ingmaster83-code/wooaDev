@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User-Agent 파서 — 브라우저·OS·기기·카카오톡·네이버 앱·봇 분석 | WooaDev</title>
+  <meta name="description" content="User-Agent 문자열을 분석해 Chrome·Edge·Safari·Firefox·웨일·삼성 인터넷, 엔진, 운영체제, 기기 종류, 카카오톡·네이버 인앱 브라우저, Googlebot·Yeti·GPTBot 등 크롤러를 판별합니다.">
+  <meta name="keywords" content="User-Agent 파서, UA 분석, 브라우저 판별, user agent parser, 카카오톡 인앱 브라우저, 네이버 웨일 UA, Googlebot 확인, 모바일 기기 판별">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/user-agent-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/user-agent-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/user-agent-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/user-agent-parser.html">
+  <meta property="og:title" content="User-Agent 파서 — 브라우저·OS·기기·카카오톡·네이버 앱·봇 분석 | WooaDev">
+  <meta property="og:description" content="User-Agent 문자열을 분석해 Chrome·Edge·Safari·Firefox·웨일·삼성 인터넷, 엔진, 운영체제, 기기 종류, 카카오톡·네이버 인앱 브라우저, Googlebot·Yeti·GPTBot 등 크롤러를 판별합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/user-agent-parser.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="User-Agent 파서 — 브라우저·OS·기기·카카오톡·네이버 앱·봇 분석 | WooaDev">
+  <meta name="twitter:description" content="User-Agent 문자열을 분석해 Chrome·Edge·Safari·Firefox·웨일·삼성 인터넷, 엔진, 운영체제, 기기 종류, 카카오톡·네이버 인앱 브라우저, Googlebot·Yeti·GPTBot 등 크롤러를 판별합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"User-Agent 파서","url":"https://wooadev.wooahouse.com/user-agent-parser.html","description":"User-Agent 문자열을 분석해 Chrome·Edge·Safari·Firefox·웨일·삼성 인터넷, 엔진, 운영체제, 기기 종류, 카카오톡·네이버 인앱 브라우저, Googlebot·Yeti·GPTBot 등 크롤러를 판별합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["브라우저: Chrome, Edge, Safari, Firefox, Opera, Samsung Internet, 네이버 웨일, Vivaldi, Brave, IE 등과 버전","렌더링 엔진(Blink·WebKit·Gecko·Trident)과 운영체제(Windows 버전 매핑, macOS, iOS/iPadOS, Android, Linux, ChromeOS)","기기: 데스크톱·모바일·태블릿·TV, 모델명(삼성 갤럭시 SM-… 등)","인앱 브라우저: 카카오톡, 네이버 앱, 다음 앱, Facebook, Instagram, LINE, Android WebView","봇: Googlebot, Bingbot, 네이버 Yeti, Daum, OpenAI·Anthropic·Perplexity 크롤러, curl·requests 등 HTTP 클라이언트"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"UA 문자열만으로 정확한 기기를 알 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"대략적인 정보만 알 수 있습니다. 브라우저의 UA 축소와 위장 때문에 정확한 OS 버전·모델은 User-Agent Client Hints(Sec-CH-UA-*)를 함께 확인해야 합니다."}},{"@type":"Question","name":"Googlebot을 진짜인지 어떻게 확인하나요?","acceptedAnswer":{"@type":"Answer","text":"UA는 누구나 흉내 낼 수 있으므로 접속 IP의 역방향 DNS가 googlebot.com 또는 google.com으로 끝나고 정방향 조회가 같은 IP인지 확인하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"User-Agent 파서","item":"https://wooadev.wooahouse.com/user-agent-parser.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="user-agent-parser.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/user-agent-parser.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>User-Agent 파서</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🕵️</span>
+    <h1>User-Agent 파서 — 브라우저 · OS · 기기 · 봇 판별</h1>
+    <p>User-Agent 문자열에서 브라우저와 버전, 렌더링 엔진, 운영체제, 기기 종류, 카카오톡·네이버 같은 인앱 브라우저, 검색·AI 봇을 알아냅니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 8개 분석</p>
+<h3>입력 — User-Agent 문자열 (한 줄에 하나)</h3><pre>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36
+Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1
+Mozilla/5.0 (Linux; Android 14; SM-S918N) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/25.0 Chrome/121.0.0.0 Mobile Safari/537.36
+Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36 NAVER(inapp; search; 2000; 12.0.0)
+Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Whale/3.28.0.0 Safari/537.36
+Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+Mozilla/5.0 (compatible; Yeti/1.1; +http://naver.me/spd)
+Mozilla/5.0 (X11; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0</pre>
+<h3>결과 — 분석 결과</h3><pre>브라우저 | 엔진 | 운영체제 | 기기 | 비고
+Chrome 130.0 | Blink 537 | Windows 10 / 11 | 데스크톱 | 
+Safari 18.0 | WebKit 605 | iOS 18.0 | 모바일 · iPhone | 
+Samsung Internet 25.0 | Blink 537 | Android 14 | 모바일 · SM-S918N (삼성 갤럭시) | 
+Chrome 129.0 | Blink 537 | Android 13 | 모바일 · Pixel 7 | NAVER 앱
+Naver Whale 3.28 | Blink 537 | macOS 10.15.7 | 데스크톱 | 
+Googlebot | — | — | 봇/크롤러 | 크롤러
+Naver Yeti | — | — | 봇/크롤러 | 크롤러
+Firefox 131.0 | Gecko 131 | Linux | 데스크톱 | </pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>접속 로그나 오류 리포트에 남은 긴 User-Agent를 사람이 읽을 수 있는 정보로 풀어 줍니다. 한 줄에 하나씩 여러 개를 넣으면 표로 비교합니다.</p>
+<ul><li>브라우저: Chrome, Edge, Safari, Firefox, Opera, Samsung Internet, 네이버 웨일, Vivaldi, Brave, IE 등과 버전</li><li>렌더링 엔진(Blink·WebKit·Gecko·Trident)과 운영체제(Windows 버전 매핑, macOS, iOS/iPadOS, Android, Linux, ChromeOS)</li><li>기기: 데스크톱·모바일·태블릿·TV, 모델명(삼성 갤럭시 SM-… 등)</li><li>인앱 브라우저: 카카오톡, 네이버 앱, 다음 앱, Facebook, Instagram, LINE, Android WebView</li><li>봇: Googlebot, Bingbot, 네이버 Yeti, Daum, OpenAI·Anthropic·Perplexity 크롤러, curl·requests 등 HTTP 클라이언트</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="http-headers-parser.html" class="related-card"><span class="related-icon">📨</span><span>HTTP 헤더 파서</span></a>
+    <a href="ip-lookup.html" class="related-card"><span class="related-icon">🌐</span><span>IP 주소 조회</span></a>
+    <a href="cookie-parser.html" class="related-card"><span class="related-icon">🍪</span><span>쿠키 파서</span></a>
+    <a href="regex-tester.html" class="related-card"><span class="related-icon">🔍</span><span>Regex 테스터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Chrome·Edge·Safari의 UA는 호환성 때문에 서로 비슷한 토큰을 포함합니다. 순서가 중요해 이 도구는 Edge→Opera→웨일→…→Chrome→Safari 순으로 판별합니다.</li><li>최신 브라우저는 UA를 줄이는(UA reduction) 추세라 macOS는 항상 10.15.7, Windows는 10으로 보일 수 있습니다.</li><li>봇 판별은 UA만으로 하면 위조가 쉽습니다. 중요한 차단은 역방향 DNS 검증을 병행하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>UA 문자열만으로 정확한 기기를 알 수 있나요?</summary><p>대략적인 정보만 알 수 있습니다. 브라우저의 UA 축소와 위장 때문에 정확한 OS 버전·모델은 User-Agent Client Hints(Sec-CH-UA-*)를 함께 확인해야 합니다.</p></details><details><summary>Googlebot을 진짜인지 어떻게 확인하나요?</summary><p>UA는 누구나 흉내 낼 수 있으므로 접속 IP의 역방향 DNS가 googlebot.com 또는 google.com으로 끝나고 정방향 조회가 같은 IP인지 확인하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/user-agent-parser.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

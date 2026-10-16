@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random String Generator – Secure Random Tokens, Numbers &amp; Picks | WooaDev</title>
+  <meta name="description" content="Generate random strings, integers and decimals, and pick or shuffle list items with crypto.getRandomValues. Custom charsets, no-duplicates option and entropy shown.">
+  <meta name="keywords" content="random string generator, random number generator, secure random token, random picker, shuffle list, random hex generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/random-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/random-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/random-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/random-generator.html">
+  <meta property="og:title" content="Random String Generator – Secure Random Tokens, Numbers &amp; Picks | WooaDev">
+  <meta property="og:description" content="Generate random strings, integers and decimals, and pick or shuffle list items with crypto.getRandomValues. Custom charsets, no-duplicates option and entropy shown.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/random-generator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Random String Generator – Secure Random Tokens, Numbers &amp; Picks | WooaDev">
+  <meta name="twitter:description" content="Generate random strings, integers and decimals, and pick or shuffle list items with crypto.getRandomValues. Custom charsets, no-duplicates option and entropy shown.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Random String & Number Generator","url":"https://wooadev.wooahouse.com/en/random-generator.html","description":"Generate random strings, integers and decimals, and pick or shuffle list items with crypto.getRandomValues. Custom charsets, no-duplicates option and entropy shown.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Random strings: letters+digits, lowercase, uppercase, digits, hex, Base64url, no look-alikes, or your own character set; entropy in bits per string","Random integers and decimals: set the range and count, unique draws, decimal places","List picking: choose n of the lines you enter (with or without repeats), or shuffle the whole list (Fisher–Yates)","Uniform draws without modulo bias"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How is this different from Math.random?","acceptedAnswer":{"@type":"Answer","text":"Math.random is a predictable pseudo-random generator, unsuitable for security. crypto.getRandomValues uses the operating system's secure source and is unpredictable."}},{"@type":"Question","name":"Can I reproduce a result?","acceptedAnswer":{"@type":"Answer","text":"Seeded randomness isn't offered. For reproducible test data use the seed option in the JSON Mock Data Generator."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Random String & Number Generator","item":"https://wooadev.wooahouse.com/en/random-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../random-generator.html">KO</a>
+        <span>|</span>
+        <a href="random-generator.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Random String &amp; Number Generator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🎲</span>
+    <h1>Random String &amp; Number Generator</h1>
+    <p>Makes random strings for tokens and codes, integers and decimals in a range, and picks or shuffles list items with your browser's cryptographic RNG.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ 5 generated — about 95 bits of entropy each (cryptographic RNG)</p>
+<h3>Input — List (one item per line)</h3><pre>김민준
+이서연
+박지호
+최유나
+정현우</pre>
+<h3>Result — Result</h3><pre>TzQaHNwM8MVb3SUY
+ZMrcx68YTWKjIdGW
+dsypkTr4eTC33lLa
+cwbyvJsuf3v9ELsL
+FpVbfCElLAxCj24n</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Example API keys, invite codes, test data, prize draws — plenty of jobs need randomness. This tool only uses unpredictable cryptographic randomness (crypto.getRandomValues).</p>
+<ul><li>Random strings: letters+digits, lowercase, uppercase, digits, hex, Base64url, no look-alikes, or your own character set; entropy in bits per string</li><li>Random integers and decimals: set the range and count, unique draws, decimal places</li><li>List picking: choose n of the lines you enter (with or without repeats), or shuffle the whole list (Fisher–Yates)</li><li>Uniform draws without modulo bias</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="password-generator.html" class="related-card"><span class="related-icon">🔒</span><span>Password Generator</span></a>
+    <a href="uuid-generator.html" class="related-card"><span class="related-icon">🆔</span><span>UUID Generator</span></a>
+    <a href="ulid-tool.html" class="related-card"><span class="related-icon">🔢</span><span>ULID Generator &amp; Decoder</span></a>
+    <a href="lorem-ipsum.html" class="related-card"><span class="related-icon">📝</span><span>Lorem Ipsum</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>For codes people copy by hand, choose "No look-alikes".</li><li>If a draw must be provably fair, record the time and input list together with the result.</li><li>For passwords, the dedicated Password Generator is more convenient.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>How is this different from Math.random?</summary><p>Math.random is a predictable pseudo-random generator, unsuitable for security. crypto.getRandomValues uses the operating system's secure source and is unpredictable.</p></details><details><summary>Can I reproduce a result?</summary><p>Seeded randomness isn't offered. For reproducible test data use the seed option in the JSON Mock Data Generator.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-bytes.js"></script>
+<script src="../js/tools/random-generator.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

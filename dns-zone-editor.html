@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BIND 존 파일 편집기 — 레코드 추가·SOA serial 증가·오류 검사 | WooaDev</title>
+  <meta name="description" content="BIND 존 파일(SOA 괄호, $ORIGIN·$TTL, 주석)을 파싱해 정렬된 형식으로 출력하고 A·AAAA·CNAME·MX·TXT·SRV·CAA 레코드를 추가합니다. SOA serial 증가, CNAME 공존·루트 CNAME·끝 점 누락·잘못된 IP 등을 검사합니다.">
+  <meta name="keywords" content="BIND 존 파일, DNS 존 파일 편집, 존 파일 검증, DNS 레코드 생성, SOA serial 증가, zone file editor, CNAME 오류 검사, named zone">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/dns-zone-editor.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/dns-zone-editor.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/dns-zone-editor.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/dns-zone-editor.html">
+  <meta property="og:title" content="BIND 존 파일 편집기 — 레코드 추가·SOA serial 증가·오류 검사 | WooaDev">
+  <meta property="og:description" content="BIND 존 파일(SOA 괄호, $ORIGIN·$TTL, 주석)을 파싱해 정렬된 형식으로 출력하고 A·AAAA·CNAME·MX·TXT·SRV·CAA 레코드를 추가합니다. SOA serial 증가, CNAME 공존·루트 CNAME·끝 점 누락·잘못된 IP 등을 검사합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/dns-zone-editor.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BIND 존 파일 편집기 — 레코드 추가·SOA serial 증가·오류 검사 | WooaDev">
+  <meta name="twitter:description" content="BIND 존 파일(SOA 괄호, $ORIGIN·$TTL, 주석)을 파싱해 정렬된 형식으로 출력하고 A·AAAA·CNAME·MX·TXT·SRV·CAA 레코드를 추가합니다. SOA serial 증가, CNAME 공존·루트 CNAME·끝 점 누락·잘못된 IP 등을 검사합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"DNS 존 파일 편집기","url":"https://wooadev.wooahouse.com/dns-zone-editor.html","description":"BIND 존 파일(SOA 괄호, $ORIGIN·$TTL, 주석)을 파싱해 정렬된 형식으로 출력하고 A·AAAA·CNAME·MX·TXT·SRV·CAA 레코드를 추가합니다. SOA serial 증가, CNAME 공존·루트 CNAME·끝 점 누락·잘못된 IP 등을 검사합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["지원: $ORIGIN, $TTL, 여러 줄 SOA(괄호), ; 주석, 이전 이름 이어쓰기, A·AAAA·CNAME·MX·NS·TXT·SRV·CAA·PTR 등","출력: 이름·TTL·종류가 정렬된 존 파일, 레코드 표","레코드 추가: 종류·이름·값·TTL을 입력하면 파일에 추가 (TXT는 자동으로 따옴표 처리)","SOA serial: 그대로 / +1 / 오늘 날짜(YYYYMMDDnn)로 갱신","검사: SOA·루트 NS 누락, CNAME과 다른 레코드의 공존, 루트 CNAME, A/AAAA 값 형식, MX 형식, 끝 점이 없어 도메인이 덧붙는 대상, TXT 255바이트 초과, TTL 형식"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"루트(@)에는 왜 CNAME을 못 쓰나요?","acceptedAnswer":{"@type":"Answer","text":"루트에는 SOA·NS 같은 다른 레코드가 반드시 있어야 하고, CNAME은 같은 이름의 다른 레코드와 공존할 수 없기 때문입니다. A 레코드나 업체의 ALIAS/ANAME 기능을 쓰세요."}},{"@type":"Question","name":"TXT 레코드가 255자를 넘으면 어떻게 하나요?","acceptedAnswer":{"@type":"Answer","text":"하나의 문자열은 255바이트까지라서 긴 값(DKIM 키 등)은 \"...\" \"...\" 처럼 여러 문자열로 나눠 한 레코드에 넣습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"DNS 존 파일 편집기","item":"https://wooadev.wooahouse.com/dns-zone-editor.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="dns-zone-editor.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/dns-zone-editor.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>DNS 존 파일 편집기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🗂️</span>
+    <h1>DNS 레코드 생성 · BIND 존 파일 편집기</h1>
+    <p>BIND 형식 존 파일을 읽어 정렬된 형태로 다시 쓰고, 레코드를 추가하고, SOA serial을 올리고, 흔한 설정 실수를 찾아 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>⚠️ 레코드 9개 — 확인할 항목 1개</p>
+<h3>입력 — BIND 존 파일</h3><pre>$ORIGIN example.com.
+$TTL 3600
+@   IN SOA ns1.example.com. admin.example.com. (
+        2026101601 ; serial
+        7200       ; refresh
+        3600       ; retry
+        1209600    ; expire
+        3600 )     ; minimum
+    IN NS  ns1.example.com.
+    IN NS  ns2.example.com.
+    IN MX  10 mail.example.com.
+@   IN A   203.0.113.10
+www IN CNAME @
+mail IN A  203.0.113.20
+@   IN TXT "v=spf1 mx -all"
+ftp IN CNAME www.example.com</pre>
+<h3>결과 — 정리된 존 파일</h3><pre>$ORIGIN example.com.
+$TTL 3600
+@           IN SOA    ns1.example.com. admin.example.com. (
+        2026101601 ; serial
+        7200 ; refresh
+        3600 ; retry
+        1209600 ; expire
+        3600 ; minimum
+        )
+@           IN NS     ns1.example.com.
+@           IN NS     ns2.example.com.
+@           IN MX     10 mail.example.com.
+@           IN A      203.0.113.10
+www         IN CNAME  @
+mail        IN A      203.0.113.20
+@           IN TXT    "v=spf1 mx -all"
+ftp         IN CNAME  www.example.com
+</pre>
+<h3>결과 — 레코드 목록</h3><pre>이름 | TTL | 종류 | 값
+@ | (3600) | SOA | ns1.example.com. admin.example.com. 2026101601 7200 3600 1209600 3600
+@ | (3600) | NS | ns1.example.com.
+@ | (3600) | NS | ns2.example.com.
+@ | (3600) | MX | 10 mail.example.com.
+@ | (3600) | A | 203.0.113.10
+www | (3600) | CNAME | @
+mail | (3600) | A | 203.0.113.20
+@ | (3600) | TXT | "v=spf1 mx -all"
+ftp | (3600) | CNAME | www.example.com</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>직접 운영하는 BIND·NSD·PowerDNS 존 파일은 괄호 안의 SOA, 상대 이름과 절대 이름, 끝 점(.) 누락 같은 실수가 잦습니다. 붙여 넣으면 구조를 읽어 검사하고 정리해 줍니다.</p>
+<ul><li>지원: $ORIGIN, $TTL, 여러 줄 SOA(괄호), ; 주석, 이전 이름 이어쓰기, A·AAAA·CNAME·MX·NS·TXT·SRV·CAA·PTR 등</li><li>출력: 이름·TTL·종류가 정렬된 존 파일, 레코드 표</li><li>레코드 추가: 종류·이름·값·TTL을 입력하면 파일에 추가 (TXT는 자동으로 따옴표 처리)</li><li>SOA serial: 그대로 / +1 / 오늘 날짜(YYYYMMDDnn)로 갱신</li><li>검사: SOA·루트 NS 누락, CNAME과 다른 레코드의 공존, 루트 CNAME, A/AAAA 값 형식, MX 형식, 끝 점이 없어 도메인이 덧붙는 대상, TXT 255바이트 초과, TTL 형식</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="reverse-dns-generator.html" class="related-card"><span class="related-icon">↩️</span><span>역방향 DNS 이름 생성기</span></a>
+    <a href="domain-validator.html" class="related-card"><span class="related-icon">✔️</span><span>도메인·호스트 이름 검증기</span></a>
+    <a href="cron-generator.html" class="related-card"><span class="related-icon">⏰</span><span>Cron 생성기</span></a>
+    <a href="email-validator.html" class="related-card"><span class="related-icon">📧</span><span>이메일 검증기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>CNAME 대상 이름 끝에 점(.)을 붙이지 않으면 $ORIGIN이 덧붙어 www.example.com.example.com. 이 되는 실수가 가장 흔합니다.</li><li>존 파일을 수정한 뒤에는 SOA serial을 반드시 올려야 보조 네임서버가 변경을 가져갑니다.</li><li>$INCLUDE·$GENERATE 지시자는 해석하지 않고 건너뜁니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>루트(@)에는 왜 CNAME을 못 쓰나요?</summary><p>루트에는 SOA·NS 같은 다른 레코드가 반드시 있어야 하고, CNAME은 같은 이름의 다른 레코드와 공존할 수 없기 때문입니다. A 레코드나 업체의 ALIAS/ANAME 기능을 쓰세요.</p></details><details><summary>TXT 레코드가 255자를 넘으면 어떻게 하나요?</summary><p>하나의 문자열은 255바이트까지라서 긴 값(DKIM 키 등)은 "..." "..." 처럼 여러 문자열로 나눠 한 레코드에 넣습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-net.js"></script>
+<script src="js/tools/dns-zone-editor.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

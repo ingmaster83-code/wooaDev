@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UUID Decoder – Check Version, Variant &amp; Timestamp (v1, v6, v7) | WooaDev</title>
+  <meta name="description" content="Analyse UUIDs: version (v1–v8), variant, Nil/Max detection, and the embedded creation time (100 ns precision) and node of v1, v6 and v7 UUIDs. Paste many at once; nothing is uploaded.">
+  <meta name="keywords" content="UUID decoder, UUID version checker, UUID v7 timestamp, UUID v1 timestamp, decode UUID, UUID creation time">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/uuid-decoder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/uuid-decoder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/uuid-decoder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/uuid-decoder.html">
+  <meta property="og:title" content="UUID Decoder – Check Version, Variant &amp; Timestamp (v1, v6, v7) | WooaDev">
+  <meta property="og:description" content="Analyse UUIDs: version (v1–v8), variant, Nil/Max detection, and the embedded creation time (100 ns precision) and node of v1, v6 and v7 UUIDs. Paste many at once; nothing is uploaded.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/uuid-decoder.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="UUID Decoder – Check Version, Variant &amp; Timestamp (v1, v6, v7) | WooaDev">
+  <meta name="twitter:description" content="Analyse UUIDs: version (v1–v8), variant, Nil/Max detection, and the embedded creation time (100 ns precision) and node of v1, v6 and v7 UUIDs. Paste many at once; nothing is uploaded.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"UUID Decoder","url":"https://wooadev.wooahouse.com/en/uuid-decoder.html","description":"Analyse UUIDs: version (v1–v8), variant, Nil/Max detection, and the embedded creation time (100 ns precision) and node of v1, v6 and v7 UUIDs. Paste many at once; nothing is uploaded.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Detects the version (v1–v8) and variant (RFC 9562 / Microsoft / NCS), plus Nil and Max UUIDs","v1 / v6: decodes the 100 ns timestamp since 1582-10-15, clock_seq and node (MAC or random)","v7: extracts the 48-bit Unix millisecond timestamp — the reason v7 keys sort by creation order","v3 / v5 are hashes of a namespace and name, so the original name cannot be recovered","Accepts 32 hex digits without hyphens, {braces} and urn:uuid: prefixes"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How is UUID v7 different from v4?","acceptedAnswer":{"@type":"Answer","text":"All 122 bits of v4 are random, while v7 starts with a 48-bit Unix millisecond timestamp, so values sort by creation order. That reduces index fragmentation, which makes v7 better for database keys."}},{"@type":"Question","name":"Is the node of a v1 UUID really a MAC address?","acceptedAnswer":{"@type":"Answer","text":"It was originally, but many implementations use random bytes for privacy. When the multicast bit of the first node byte is 1, the node is flagged as random."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"UUID Decoder","item":"https://wooadev.wooahouse.com/en/uuid-decoder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../uuid-decoder.html">KO</a>
+        <span>|</span>
+        <a href="uuid-decoder.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>UUID Decoder</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🆔</span>
+    <h1>UUID Decoder — Version, Variant &amp; Time Fields</h1>
+    <p>Tells you which version and variant a UUID is and, for v1, v6 and v7, when it was created.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Decoded 5 of 5</p>
+<h3>Input — UUIDs (one per line)</h3><pre>018f3c5e-7b1a-7c3e-9a1b-2d4e6f8a0b1c
+6ba7b810-9dad-11d1-80b4-00c04fd430c8
+550e8400-e29b-41d4-a716-446655440000
+1ef7a5c4-3b1f-6a3e-8c11-0242ac120002
+00000000-0000-0000-0000-000000000000</pre>
+<h3>Result — Decoded</h3><pre>UUID | Version | Variant | Time (UTC) | Details
+018f3c5e-7b1a-7c3e-9a1b-2d4e6f8a0b1c | v7 · Unix time + random | RFC 9562 (4122) | 2024-05-03T02:52:55.962Z | rand_a c3e, rand_b 9a1b2d4e6f8a0b1c
+6ba7b810-9dad-11d1-80b4-00c04fd430c8 | v1 · Time-based (MAC) | RFC 9562 (4122) | 1998-02-04T22:13:53.151Z | clock_seq 180, node 00:c0:4f:d4:30:c8
+550e8400-e29b-41d4-a716-446655440000 | v4 · Random | RFC 9562 (4122) | — | 122 random bits
+1ef7a5c4-3b1f-6a3e-8c11-0242ac120002 | v6 · Reordered time-based | RFC 9562 (4122) | 2024-09-24T10:03:36.309Z | clock_seq 3089, node 02:42:ac:12:00:02
+00000000-0000-0000-0000-000000000000 | nil | — | — | The Nil UUID (all zeros)</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>A UUID looks like a random string, but its version digit and variant bits are fixed, and some versions embed a timestamp. Use this when you find a UUID in a log or database and want to know when it was created.</p>
+<ul><li>Detects the version (v1–v8) and variant (RFC 9562 / Microsoft / NCS), plus Nil and Max UUIDs</li><li>v1 / v6: decodes the 100 ns timestamp since 1582-10-15, clock_seq and node (MAC or random)</li><li>v7: extracts the 48-bit Unix millisecond timestamp — the reason v7 keys sort by creation order</li><li>v3 / v5 are hashes of a namespace and name, so the original name cannot be recovered</li><li>Accepts 32 hex digits without hyphens, {braces} and urn:uuid: prefixes</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="uuid-generator.html" class="related-card"><span class="related-icon">🆔</span><span>UUID Generator</span></a>
+    <a href="ulid-tool.html" class="related-card"><span class="related-icon">🔢</span><span>ULID Generator &amp; Decoder</span></a>
+    <a href="modern-id-generator.html" class="related-card"><span class="related-icon">✨</span><span>Nano ID, KSUID &amp; UUID v7 Generator</span></a>
+    <a href="snowflake-id-decoder.html" class="related-card"><span class="related-icon">❄️</span><span>Snowflake ID Decoder</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>A v4 (random) UUID carries no time. If you need a creation time, use v7 or a ULID.</li><li>v1 / v6 times are in 100-nanosecond units — switch the precision option to see the native value.</li><li>Paste several lines and compare the time column to see which UUID came first.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>How is UUID v7 different from v4?</summary><p>All 122 bits of v4 are random, while v7 starts with a 48-bit Unix millisecond timestamp, so values sort by creation order. That reduces index fragmentation, which makes v7 better for database keys.</p></details><details><summary>Is the node of a v1 UUID really a MAC address?</summary><p>It was originally, but many implementations use random bytes for privacy. When the multicast bit of the first node byte is 1, the node is flagged as random.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-time.js"></script>
+<script src="../js/tools/uuid-decoder.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

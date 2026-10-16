@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>기간 변환기 — ISO 8601 Duration·1h30m·hh:mm:ss ↔ 밀리초 | WooaDev</title>
+  <meta name="description" content="ISO 8601 기간(PT1H30M), 단위 표기(1h 30m, 2 days 3 hours), 시계 표기(01:30:00.250)를 밀리초·초·분·시간·일과 ISO 8601 기간으로 변환합니다. 타임아웃·캐시 TTL·영상 길이 계산에 유용합니다.">
+  <meta name="keywords" content="Duration 변환, ISO 8601 기간, PT1H30M 변환, 시간 밀리초 변환, duration parser, 시분초 변환, 타임아웃 단위 변환">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/duration-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/duration-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/duration-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/duration-parser.html">
+  <meta property="og:title" content="기간 변환기 — ISO 8601 Duration·1h30m·hh:mm:ss ↔ 밀리초 | WooaDev">
+  <meta property="og:description" content="ISO 8601 기간(PT1H30M), 단위 표기(1h 30m, 2 days 3 hours), 시계 표기(01:30:00.250)를 밀리초·초·분·시간·일과 ISO 8601 기간으로 변환합니다. 타임아웃·캐시 TTL·영상 길이 계산에 유용합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/duration-parser.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="기간 변환기 — ISO 8601 Duration·1h30m·hh:mm:ss ↔ 밀리초 | WooaDev">
+  <meta name="twitter:description" content="ISO 8601 기간(PT1H30M), 단위 표기(1h 30m, 2 days 3 hours), 시계 표기(01:30:00.250)를 밀리초·초·분·시간·일과 ISO 8601 기간으로 변환합니다. 타임아웃·캐시 TTL·영상 길이 계산에 유용합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"시간 단위·기간 변환기","url":"https://wooadev.wooahouse.com/duration-parser.html","description":"ISO 8601 기간(PT1H30M), 단위 표기(1h 30m, 2 days 3 hours), 시계 표기(01:30:00.250)를 밀리초·초·분·시간·일과 ISO 8601 기간으로 변환합니다. 타임아웃·캐시 TTL·영상 길이 계산에 유용합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["ISO 8601: P1DT2H30M15.5S, PT90S, P2W (연·월 포함 시 1년=365일, 1개월=30일 근사 안내)","단위 표기: 1h 30m 20s, 2 days 3 hours, 1.5 hours, 90s, 한글 단위(시간·분·초)도 가능","시계 표기: 01:30:00.250, 03:25(mm:ss) / 단위 없는 숫자는 선택한 단위로 해석","결과: 밀리초, 초, 분, 시간, 일, ISO 8601 기간, 읽기 쉬운 표기, hh:mm:ss"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"ISO 8601 기간의 M은 월인가요, 분인가요?","acceptedAnswer":{"@type":"Answer","text":"T 앞의 M은 월(P1M), T 뒤의 M은 분(PT1M)입니다. 구분자 T가 시각 부분의 시작을 알립니다."}},{"@type":"Question","name":"1개월은 며칠로 계산되나요?","acceptedAnswer":{"@type":"Answer","text":"달마다 길이가 달라 정확한 일수를 정할 수 없어 30일(1년은 365일)로 근사하고 그 사실을 알려 줍니다. 정확한 달력 계산이 필요하면 기준 날짜가 필요합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"시간 단위·기간 변환기","item":"https://wooadev.wooahouse.com/duration-parser.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="duration-parser.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/duration-parser.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>시간 단위·기간 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">⏱️</span>
+    <h1>시간 단위 · 기간(Duration) 변환기</h1>
+    <p>PT1H30M, 1h 30m, 01:30:00, 90 minutes 같은 기간 표기를 읽어 밀리초·초·분·시간·ISO 8601로 서로 바꿉니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 6개 변환</p>
+<h3>입력 — 기간 (한 줄에 하나)</h3><pre>PT1H30M
+P1DT2H30M15.5S
+1h 30m 20s
+01:30:00.250
+2 days 3 hours
+5400000</pre>
+<h3>결과 — 변환 결과</h3><pre>입력 | 밀리초 | 초 | ISO 8601 | 표기
+PT1H30M | 5,400,000 | 5,400 | PT1H30M | 1시간 30분
+P1DT2H30M15.5S | 95,415,500 | 95,415.5 | P1DT2H30M15.5S | 1일 2시간 30분 15.5초
+1h 30m 20s | 5,420,000 | 5,420 | PT1H30M20S | 1시간 30분 20초
+01:30:00.250 | 5,400,250 | 5,400.25 | PT1H30M0.25S | 1시간 30분 0.25초
+2 days 3 hours | 183,600,000 | 183,600 | P2DT3H | 2일 3시간
+5400000 | 5,400,000 | 5,400 | PT1H30M | 1시간 30분</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>타임아웃은 밀리초, 캐시 TTL은 초, 설정 파일은 1h 30m, API는 PT1H30M … 같은 기간을 서로 다른 단위로 표현하는 경우가 많습니다. 어떤 형식으로 넣어도 모든 단위로 환산해 줍니다.</p>
+<ul><li>ISO 8601: P1DT2H30M15.5S, PT90S, P2W (연·월 포함 시 1년=365일, 1개월=30일 근사 안내)</li><li>단위 표기: 1h 30m 20s, 2 days 3 hours, 1.5 hours, 90s, 한글 단위(시간·분·초)도 가능</li><li>시계 표기: 01:30:00.250, 03:25(mm:ss) / 단위 없는 숫자는 선택한 단위로 해석</li><li>결과: 밀리초, 초, 분, 시간, 일, ISO 8601 기간, 읽기 쉬운 표기, hh:mm:ss</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="iso8601-converter.html" class="related-card"><span class="related-icon">📅</span><span>ISO 8601 / RFC 날짜 변환기</span></a>
+    <a href="timestamp.html" class="related-card"><span class="related-icon">🕐</span><span>타임스탬프 변환</span></a>
+    <a href="cron-generator.html" class="related-card"><span class="related-icon">⏰</span><span>Cron 생성기</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>JavaScript의 setTimeout은 밀리초, Redis TTL은 초 — 이 도구로 단위 실수를 확인하세요.</li><li>여러 줄을 입력하면 표로 한꺼번에 비교할 수 있습니다.</li><li>음수 기간(-PT30S)도 지원합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>ISO 8601 기간의 M은 월인가요, 분인가요?</summary><p>T 앞의 M은 월(P1M), T 뒤의 M은 분(PT1M)입니다. 구분자 T가 시각 부분의 시작을 알립니다.</p></details><details><summary>1개월은 며칠로 계산되나요?</summary><p>달마다 길이가 달라 정확한 일수를 정할 수 없어 30일(1년은 365일)로 근사하고 그 사실을 알려 줍니다. 정확한 달력 계산이 필요하면 기준 날짜가 필요합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/duration-parser.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

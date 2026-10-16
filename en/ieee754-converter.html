@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IEEE 754 Converter – See Why 0.1 Isn't Exact in Float Bits | WooaDev</title>
+  <meta name="description" content="Decompose numbers into IEEE 754 half, single and double precision hex with sign/exponent/fraction, decode bit patterns, and see rounding error and NaN/subnormal classes.">
+  <meta name="keywords" content="IEEE 754 converter, float to hex, float32 float64 converter, 0.1 floating point error, half precision float16, sign exponent mantissa">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/ieee754-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/ieee754-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/ieee754-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/ieee754-converter.html">
+  <meta property="og:title" content="IEEE 754 Converter – See Why 0.1 Isn&#x27;t Exact in Float Bits | WooaDev">
+  <meta property="og:description" content="Decompose numbers into IEEE 754 half, single and double precision hex with sign/exponent/fraction, decode bit patterns, and see rounding error and NaN/subnormal classes.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/ieee754-converter.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="IEEE 754 Converter – See Why 0.1 Isn&#x27;t Exact in Float Bits | WooaDev">
+  <meta name="twitter:description" content="Decompose numbers into IEEE 754 half, single and double precision hex with sign/exponent/fraction, decode bit patterns, and see rounding error and NaN/subnormal classes.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"IEEE 754 Floating-Point Converter","url":"https://wooadev.wooahouse.com/en/ieee754-converter.html","description":"Decompose numbers into IEEE 754 half, single and double precision hex with sign/exponent/fraction, decode bit patterns, and see rounding error and NaN/subnormal classes.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Number → bits: split into 1 sign bit | exponent (5/8/11 bits) | fraction (10/23/52 bits) and show hex","Bits → number: interpret a pattern like 0x40490FDB as a float (or treat 0x values as plain integers)","Shows the actually stored value and the absolute error (e.g. float32 0.1 = 0.10000000149011612)","Classifies normal, subnormal, zero, infinity and NaN (quiet/signaling) and shows the exponent","The 16-bit (half) conversion helps inspect formats used in machine learning and graphics"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why isn't 0.1 exact as a float?","acceptedAnswer":{"@type":"Answer","text":"In binary 0.1 is 0.0001100110011… repeating forever, so a finite fraction can only hold an approximation."}},{"@type":"Question","name":"What's the difference between quiet and signaling NaN?","acceptedAnswer":{"@type":"Answer","text":"If the top fraction bit is 1 it's a quiet NaN (propagates silently); if 0 it's a signaling NaN (may raise an exception)."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"IEEE 754 Floating-Point Converter","item":"https://wooadev.wooahouse.com/en/ieee754-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../ieee754-converter.html">KO</a>
+        <span>|</span>
+        <a href="ieee754-converter.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>IEEE 754 Floating-Point Converter</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔬</span>
+    <h1>IEEE 754 Floating-Point Converter</h1>
+    <p>Converts numbers to float16/32/64 bit patterns (hex) and back, and shows sign, exponent, fraction and rounding error.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ IEEE 754 binary32 — 1 sign / 8 exponent / 23 fraction bits</p>
+<h3>Input — Numbers or hex bit patterns (one per line)</h3><pre>0.1
+-3.14159
+1e-320
+0x40490FDB
+Infinity
+NaN</pre>
+<h3>Result — Conversion</h3><pre>Input | Stored value | Hex | Sign | Exponent | Fraction | Class | Abs. error
+0.1 | 0.10000000149011612  (rounded) | 0x3DCCCCCD | 0 | 01111011 | 10011001100110011001101 | normal · exp -4 | 1.490e-9
+-3.14159 | -3.141590118408203  (rounded) | 0xC0490FD0 | 1 | 10000000 | 10010010000111111010000 | normal · exp 1 | 1.184e-7
+1e-320 | 0  (rounded) | 0x00000000 | 0 | 00000000 | 00000000000000000000000 | zero · exp -126 | 1.000e-320
+0x40490FDB | 3.1415927410125732 | 0x40490FDB | 0 | 10000000 | 10010010000111111011011 | normal · exp 1 | 
+Infinity | Infinity | 0x7F800000 | 0 | 11111111 | 00000000000000000000000 | Infinity · exp 128 | 
+NaN | NaN | 0x7FC00000 | 0 | 11111111 | 10000000000000000000000 | NaN (quiet) · exp 128 | </pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Oddities like 0.1 + 0.2 ≠ 0.3 all come from floating-point representation. See exactly which bits get stored and how large the error is.</p>
+<ul><li>Number → bits: split into 1 sign bit | exponent (5/8/11 bits) | fraction (10/23/52 bits) and show hex</li><li>Bits → number: interpret a pattern like 0x40490FDB as a float (or treat 0x values as plain integers)</li><li>Shows the actually stored value and the absolute error (e.g. float32 0.1 = 0.10000000149011612)</li><li>Classifies normal, subnormal, zero, infinity and NaN (quiet/signaling) and shows the exponent</li><li>The 16-bit (half) conversion helps inspect formats used in machine learning and graphics</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="integer-representation.html" class="related-card"><span class="related-icon">➖</span><span>Two's Complement Calculator</span></a>
+    <a href="bitwise-calculator.html" class="related-card"><span class="related-icon">🧮</span><span>Bitwise Calculator</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>Number Base Converter</span></a>
+    <a href="text-binary.html" class="related-card"><span class="related-icon">01</span><span>Text ↔ Binary</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>float32 holds about 7 decimal digits exactly, float64 about 15–16.</li><li>Dyadic fractions (0.5, 0.25, 0.125) are stored exactly; values like 0.1 that repeat in binary cause the error.</li><li>Subnormals trade precision for a smooth gradual underflow near zero.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Why isn't 0.1 exact as a float?</summary><p>In binary 0.1 is 0.0001100110011… repeating forever, so a finite fraction can only hold an approximation.</p></details><details><summary>What's the difference between quiet and signaling NaN?</summary><p>If the top fraction bit is 1 it's a quiet NaN (propagates silently); if 0 it's a signaling NaN (may raise an exception).</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/ieee754-converter.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

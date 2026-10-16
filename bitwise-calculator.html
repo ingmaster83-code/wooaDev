@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>비트 연산 계산기 — AND·OR·XOR·시프트 결과를 2진수로 | WooaDev</title>
+  <meta name="description" content="두 정수 A, B의 AND·OR·XOR·NAND·NOR·XNOR·NOT·왼쪽/오른쪽(논리·산술) 시프트·덧셈·뺄셈 결과를 10/16/2진수로 보여 줍니다. 8~64비트, 부호 있는 정수와 0x·0b·0o 입력을 지원하며 BigInt로 64비트도 정확합니다.">
+  <meta name="keywords" content="비트 연산 계산기, AND OR XOR 계산, 비트 시프트 계산, bitwise calculator, 2진수 연산, 비트 마스크 계산, 16진수 비트 연산">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/bitwise-calculator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/bitwise-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/bitwise-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/bitwise-calculator.html">
+  <meta property="og:title" content="비트 연산 계산기 — AND·OR·XOR·시프트 결과를 2진수로 | WooaDev">
+  <meta property="og:description" content="두 정수 A, B의 AND·OR·XOR·NAND·NOR·XNOR·NOT·왼쪽/오른쪽(논리·산술) 시프트·덧셈·뺄셈 결과를 10/16/2진수로 보여 줍니다. 8~64비트, 부호 있는 정수와 0x·0b·0o 입력을 지원하며 BigInt로 64비트도 정확합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/bitwise-calculator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="비트 연산 계산기 — AND·OR·XOR·시프트 결과를 2진수로 | WooaDev">
+  <meta name="twitter:description" content="두 정수 A, B의 AND·OR·XOR·NAND·NOR·XNOR·NOT·왼쪽/오른쪽(논리·산술) 시프트·덧셈·뺄셈 결과를 10/16/2진수로 보여 줍니다. 8~64비트, 부호 있는 정수와 0x·0b·0o 입력을 지원하며 BigInt로 64비트도 정확합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"비트 연산 계산기","url":"https://wooadev.wooahouse.com/bitwise-calculator.html","description":"두 정수 A, B의 AND·OR·XOR·NAND·NOR·XNOR·NOT·왼쪽/오른쪽(논리·산술) 시프트·덧셈·뺄셈 결과를 10/16/2진수로 보여 줍니다. 8~64비트, 부호 있는 정수와 0x·0b·0o 입력을 지원하며 BigInt로 64비트도 정확합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: 10진수, 0x16진수, 0b2진수, 0o8진수 (언더스코어·공백 구분 허용)","연산: AND, OR, XOR, NAND, NOR, XNOR, NOT, 왼쪽 시프트, 오른쪽 논리/산술 시프트, +, −","비트 폭 8/16/32/64를 선택하면 해당 폭에서 넘치는 값은 잘려 나가는 실제 하드웨어 동작을 재현","부호 있는 정수 해석을 켜면 결과가 음수로도 표시되고 산술 시프트는 부호를 유지","4비트씩 끊어 2진수를 표시하고 켜진 비트 수도 알려 줌"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"논리 시프트와 산술 시프트의 차이는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"논리 시프트(>>>)는 왼쪽을 0으로 채우고, 산술 시프트(>>)는 부호 비트를 복사해 음수의 부호를 유지합니다. 부호 없는 값에서는 같습니다."}},{"@type":"Question","name":"NOT 결과가 왜 큰 양수로 나오나요?","acceptedAnswer":{"@type":"Answer","text":"부호 없는 해석에서는 모든 비트를 뒤집은 값이 폭 안의 큰 수입니다. 부호 있는 정수 옵션을 켜면 -1 같은 음수로 표시됩니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"비트 연산 계산기","item":"https://wooadev.wooahouse.com/bitwise-calculator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="bitwise-calculator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/bitwise-calculator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>비트 연산 계산기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧮</span>
+    <h1>비트 연산 계산기 — AND · OR · XOR · NOT · 시프트</h1>
+    <p>두 정수의 모든 비트 연산 결과를 10진수·16진수·2진수로 한 번에 보여 줍니다. 8·16·32·64비트와 부호 있는/없는 정수를 지원합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 16비트 부호 없는 정수 — A의 1 비트 8개, B의 1 비트 8개</p>
+<h3>입력 — 값 A (10진수·0x16진수·0b2진수·0o8진수)</h3><pre>0xF0F0</pre>
+<h3>입력 — 값 B</h3><pre>0b1010101010101010</pre>
+<h3>결과 — 연산 결과</h3><pre>연산 | 10진수 | 16진수 | 2진수
+A | 61680 | 0xF0F0 | 1111 0000 1111 0000
+B | 43690 | 0xAAAA | 1010 1010 1010 1010
+A &amp; B (AND) | 41120 | 0xA0A0 | 1010 0000 1010 0000
+A | B (OR) | 64250 | 0xFAFA | 1111 1010 1111 1010
+A ^ B (XOR) | 23130 | 0x5A5A | 0101 1010 0101 1010
+~(A &amp; B) (NAND) | 24415 | 0x5F5F | 0101 1111 0101 1111
+~(A | B) (NOR) | 1285 | 0x0505 | 0000 0101 0000 0101
+~(A ^ B) (XNOR) | 42405 | 0xA5A5 | 1010 0101 1010 0101
+~A (NOT) | 3855 | 0x0F0F | 0000 1111 0000 1111
+~B (NOT) | 21845 | 0x5555 | 0101 0101 0101 0101
+A &lt;&lt; 3 | 34688 | 0x8780 | 1000 0111 1000 0000
+A &gt;&gt; 3 (논리) | 7710 | 0x1E1E | 0001 1110 0001 1110
+A &gt;&gt; 3 (산술) | 7710 | 0x1E1E | 0001 1110 0001 1110
+B &lt;&lt; 3 | 21840 | 0x5550 | 0101 0101 0101 0000
+B &gt;&gt; 3 (논리) | 5461 | 0x1555 | 0001 0101 0101 0101
+A + B | 39834 | 0x9B9A | 1001 1011 1001 1010
+A − B | 17990 | 0x4646 | 0100 0110 0100 0110</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>플래그 필드, 비트 마스크, 해시, 네트워크 프로토콜을 다루다 보면 손으로 2진수를 쓰며 연산 결과를 확인하고 싶을 때가 많습니다.</p>
+<ul><li>입력: 10진수, 0x16진수, 0b2진수, 0o8진수 (언더스코어·공백 구분 허용)</li><li>연산: AND, OR, XOR, NAND, NOR, XNOR, NOT, 왼쪽 시프트, 오른쪽 논리/산술 시프트, +, −</li><li>비트 폭 8/16/32/64를 선택하면 해당 폭에서 넘치는 값은 잘려 나가는 실제 하드웨어 동작을 재현</li><li>부호 있는 정수 해석을 켜면 결과가 음수로도 표시되고 산술 시프트는 부호를 유지</li><li>4비트씩 끊어 2진수를 표시하고 켜진 비트 수도 알려 줌</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+    <a href="integer-representation.html" class="related-card"><span class="related-icon">➖</span><span>2의 보수 계산기</span></a>
+    <a href="ieee754-converter.html" class="related-card"><span class="related-icon">🔬</span><span>부동소수점(IEEE 754) 변환기</span></a>
+    <a href="chmod.html" class="related-card"><span class="related-icon">🔐</span><span>Chmod 계산기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>특정 비트가 켜졌는지 확인하려면 값 AND 마스크를 계산해 0이 아닌지 보세요.</li><li>특정 비트를 끄려면 값 AND (NOT 마스크), 뒤집으려면 XOR을 씁니다.</li><li>JavaScript의 비트 연산은 32비트로 제한되지만 이 도구는 BigInt로 64비트도 정확합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>논리 시프트와 산술 시프트의 차이는 무엇인가요?</summary><p>논리 시프트(&gt;&gt;&gt;)는 왼쪽을 0으로 채우고, 산술 시프트(&gt;&gt;)는 부호 비트를 복사해 음수의 부호를 유지합니다. 부호 없는 값에서는 같습니다.</p></details><details><summary>NOT 결과가 왜 큰 양수로 나오나요?</summary><p>부호 없는 해석에서는 모든 비트를 뒤집은 값이 폭 안의 큰 수입니다. 부호 있는 정수 옵션을 켜면 -1 같은 음수로 표시됩니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/bitwise-calculator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

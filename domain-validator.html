@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>도메인 이름 검증기 — 길이·하이픈·밑줄·IDN·와일드카드 규칙 검사 | WooaDev</title>
+  <meta name="description" content="도메인, 호스트 이름(RFC 1123), DNS 이름 규칙으로 여러 줄을 한꺼번에 검증합니다. 레이블 63자·전체 253자, 하이픈·밑줄·숫자 TLD, IP 혼동, 와일드카드(*.), 국제화 도메인(Punycode 정규화)을 검사하고 이유를 설명합니다.">
+  <meta name="keywords" content="도메인 검증, 도메인 이름 규칙, 호스트 이름 검증, 도메인 유효성 검사, hostname validator, 도메인 길이 제한, 와일드카드 도메인">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/domain-validator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/domain-validator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/domain-validator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/domain-validator.html">
+  <meta property="og:title" content="도메인 이름 검증기 — 길이·하이픈·밑줄·IDN·와일드카드 규칙 검사 | WooaDev">
+  <meta property="og:description" content="도메인, 호스트 이름(RFC 1123), DNS 이름 규칙으로 여러 줄을 한꺼번에 검증합니다. 레이블 63자·전체 253자, 하이픈·밑줄·숫자 TLD, IP 혼동, 와일드카드(*.), 국제화 도메인(Punycode 정규화)을 검사하고 이유를 설명합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/domain-validator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="도메인 이름 검증기 — 길이·하이픈·밑줄·IDN·와일드카드 규칙 검사 | WooaDev">
+  <meta name="twitter:description" content="도메인, 호스트 이름(RFC 1123), DNS 이름 규칙으로 여러 줄을 한꺼번에 검증합니다. 레이블 63자·전체 253자, 하이픈·밑줄·숫자 TLD, IP 혼동, 와일드카드(*.), 국제화 도메인(Punycode 정규화)을 검사하고 이유를 설명합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"도메인·호스트 이름 검증기","url":"https://wooadev.wooahouse.com/domain-validator.html","description":"도메인, 호스트 이름(RFC 1123), DNS 이름 규칙으로 여러 줄을 한꺼번에 검증합니다. 레이블 63자·전체 253자, 하이픈·밑줄·숫자 TLD, IP 혼동, 와일드카드(*.), 국제화 도메인(Punycode 정규화)을 검사하고 이유를 설명합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["도메인 모드: 최상위 도메인(TLD) 포함 2개 이상의 레이블, 호스트 이름 모드(단일 레이블 허용), DNS 이름 모드(밑줄 허용: _dmarc, _domainkey)","규칙: 레이블 1~63자, 전체 253자, 영문·숫자·하이픈만, 하이픈으로 시작·끝 금지, 빈 레이블(..) 금지, 숫자만으로 된 TLD 금지","IP 주소를 도메인으로 착각한 입력, URL(공백·/·:·@)이 섞인 입력을 구분","와일드카드(*.example.com) 허용 여부, IDN 허용 여부를 선택 — 허용 시 Punycode로 정규화한 결과를 표시","유효한 항목만 모아 복사할 수 있음"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"밑줄(_)이 들어간 이름은 잘못된 도메인인가요?","acceptedAnswer":{"@type":"Answer","text":"호스트 이름(웹 서버 주소)에는 쓸 수 없지만 DNS 레코드 이름(_dmarc, _sip._tcp 등)에는 쓸 수 있습니다. 용도에 맞는 모드를 선택하세요."}},{"@type":"Question","name":"최대 길이가 253자인 이유는?","acceptedAnswer":{"@type":"Answer","text":"DNS 와이어 형식에서 이름 전체가 255바이트로 제한되고 길이 바이트와 끝의 루트를 빼면 텍스트로는 253자가 됩니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"도메인·호스트 이름 검증기","item":"https://wooadev.wooahouse.com/domain-validator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="domain-validator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/domain-validator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>도메인·호스트 이름 검증기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">✔️</span>
+    <h1>도메인 · 호스트 이름 검증기</h1>
+    <p>도메인 이름이 규칙에 맞는지 줄마다 검사하고, 어떤 규칙을 어겼는지 이유를 알려 줍니다. IDN은 Punycode로 정규화합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 4개 유효 / 6개 오류</p>
+<h3>입력 — 도메인·호스트 이름 (한 줄에 하나)</h3><pre>example.com
+www.wooahouse.com
+한글도메인.한국
+-bad-start.com
+under_score.example.com
+*.example.com
+localhost
+192.168.0.1
+example..com
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com</pre>
+<h3>결과 — 검사 결과</h3><pre>입력 | 결과 | 정규화 | 상세
+example.com | ✅ | example.com | 2개 레이블, 11자
+www.wooahouse.com | ✅ | www.wooahouse.com | 3개 레이블, 17자
+한글도메인.한국 | ✅ | xn--bj0bj3i97fq8o5lq.xn--3e0b707e | IDN → Punycode · 2개 레이블, 33자
+-bad-start.com | ❌ | -bad-start.com | 레이블이 하이픈으로 시작하거나 끝납니다: -bad-start
+under_score.example.com | ❌ | under_score.example.com | 밑줄(_)은 호스트 이름에 쓸 수 없습니다: under_score (DNS 이름 모드에서는 허용)
+*.example.com | ✅ | *.example.com | 와일드카드 · 2개 레이블, 11자
+localhost | ❌ | localhost | 최상위 도메인이 없습니다 (레이블이 2개 이상 필요)
+192.168.0.1 | ❌ | 192.168.0.1 | IP 주소입니다 (도메인 이름이 아님) / 최상위 도메인이 너무 짧습니다
+example..com | ❌ | example..com | 빈 레이블(연속된 점 또는 시작/끝의 점)
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com | ❌ | aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com | 레이블이 63자를 넘습니다: aaaaaaaaaa…</pre>
+<h3>결과 — 유효한 항목 (정규화)</h3><pre>example.com
+www.wooahouse.com
+xn--bj0bj3i97fq8o5lq.xn--3e0b707e
+*.example.com</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>입력 폼에서 도메인을 받거나 설정 파일의 호스트 목록을 점검할 때, 정규식 하나로는 놓치는 규칙이 많습니다. 레이블 단위로 하나씩 검사해 이유를 알려 줍니다.</p>
+<ul><li>도메인 모드: 최상위 도메인(TLD) 포함 2개 이상의 레이블, 호스트 이름 모드(단일 레이블 허용), DNS 이름 모드(밑줄 허용: _dmarc, _domainkey)</li><li>규칙: 레이블 1~63자, 전체 253자, 영문·숫자·하이픈만, 하이픈으로 시작·끝 금지, 빈 레이블(..) 금지, 숫자만으로 된 TLD 금지</li><li>IP 주소를 도메인으로 착각한 입력, URL(공백·/·:·@)이 섞인 입력을 구분</li><li>와일드카드(*.example.com) 허용 여부, IDN 허용 여부를 선택 — 허용 시 Punycode로 정규화한 결과를 표시</li><li>유효한 항목만 모아 복사할 수 있음</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="punycode-converter.html" class="related-card"><span class="related-icon">🈳</span><span>퓨니코드 변환기</span></a>
+    <a href="email-validator.html" class="related-card"><span class="related-icon">📧</span><span>이메일 검증기</span></a>
+    <a href="url-parser.html" class="related-card"><span class="related-icon">🔗</span><span>URL 파서</span></a>
+    <a href="dns-zone-editor.html" class="related-card"><span class="related-icon">🗂️</span><span>DNS 존 파일 편집기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>가입 폼 검증에는 호스트 이름 모드를, 메일 도메인 검증에는 도메인 모드를 쓰세요.</li><li>TXT 레코드 이름(_dmarc.example.com)은 DNS 이름 모드에서만 통과합니다.</li><li>TLD의 실제 존재 여부(.kr, .com)는 확인하지 않습니다. 형식만 검사합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>밑줄(_)이 들어간 이름은 잘못된 도메인인가요?</summary><p>호스트 이름(웹 서버 주소)에는 쓸 수 없지만 DNS 레코드 이름(_dmarc, _sip._tcp 등)에는 쓸 수 있습니다. 용도에 맞는 모드를 선택하세요.</p></details><details><summary>최대 길이가 253자인 이유는?</summary><p>DNS 와이어 형식에서 이름 전체가 255바이트로 제한되고 길이 바이트와 끝의 루트를 빼면 텍스트로는 253자가 됩니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-dns.js"></script>
+<script src="js/tools/domain-validator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

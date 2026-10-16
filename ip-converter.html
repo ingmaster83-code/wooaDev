@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IP 주소 변환기 — IPv4를 정수·16진수로, IPv6 압축·확장 표기 | WooaDev</title>
+  <meta name="description" content="IPv4/IPv6 주소를 10진 정수·16진수·2진수·8진수로 변환하고, 정수나 0xC0A80001 같은 값을 IP로 되돌립니다. IPv6 압축/전체 표기, IPv4-매핑(::ffff:), 6to4 접두어, 역방향 DNS 이름을 보여 줍니다.">
+  <meta name="keywords" content="IP 주소 정수 변환, IPv4 16진수 변환, IPv6 압축 표기, IP to integer, IPv4 mapped IPv6, IP 변환기, 역방향 DNS 이름">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/ip-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/ip-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/ip-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/ip-converter.html">
+  <meta property="og:title" content="IP 주소 변환기 — IPv4를 정수·16진수로, IPv6 압축·확장 표기 | WooaDev">
+  <meta property="og:description" content="IPv4/IPv6 주소를 10진 정수·16진수·2진수·8진수로 변환하고, 정수나 0xC0A80001 같은 값을 IP로 되돌립니다. IPv6 압축/전체 표기, IPv4-매핑(::ffff:), 6to4 접두어, 역방향 DNS 이름을 보여 줍니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/ip-converter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="IP 주소 변환기 — IPv4를 정수·16진수로, IPv6 압축·확장 표기 | WooaDev">
+  <meta name="twitter:description" content="IPv4/IPv6 주소를 10진 정수·16진수·2진수·8진수로 변환하고, 정수나 0xC0A80001 같은 값을 IP로 되돌립니다. IPv6 압축/전체 표기, IPv4-매핑(::ffff:), 6to4 접두어, 역방향 DNS 이름을 보여 줍니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"IP 주소 변환기","url":"https://wooadev.wooahouse.com/ip-converter.html","description":"IPv4/IPv6 주소를 10진 정수·16진수·2진수·8진수로 변환하고, 정수나 0xC0A80001 같은 값을 IP로 되돌립니다. IPv6 압축/전체 표기, IPv4-매핑(::ffff:), 6to4 접두어, 역방향 DNS 이름을 보여 줍니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["IPv4 ↔ 10진 정수(3232235521) ↔ 16진수(0xC0A80001) ↔ 2진수 ↔ 옥텟별 8진수","IPv6: 압축 표기(2001:db8::1)와 전체 표기(0000 채움), 10진/16진 정수","IPv4-매핑 IPv6(::ffff:192.0.2.1)에 담긴 IPv4 추출, 6to4 접두어(2002::/16)","역방향 DNS 이름(in-addr.arpa, ip6.arpa) 생성","정수 입력은 IPv4/IPv6 중 어느 쪽으로 읽을지 선택, 옥텟 8진/16진 표기(0300.0250.0.1)도 인식"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"IP를 정수로 바꾸면 어디에 좋은가요?","acceptedAnswer":{"@type":"Answer","text":"대역(범위) 검색을 BETWEEN 비교로 빠르게 할 수 있고 저장 공간도 문자열보다 작습니다(IPv4는 4바이트)."}},{"@type":"Question","name":"::ffff:192.0.2.1 은 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"IPv6 소켓에서 IPv4 연결을 표현하는 IPv4-매핑 주소입니다. 마지막 32비트가 IPv4 주소입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"IP 주소 변환기","item":"https://wooadev.wooahouse.com/ip-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="ip-converter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/ip-converter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>IP 주소 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔁</span>
+    <h1>IP 주소 변환기 — 정수 · 16진수 · 2진수 · IPv6 표기</h1>
+    <p>IPv4·IPv6 주소를 10진 정수, 16진수, 2진수로 바꾸고 IPv4-매핑 IPv6, 6to4, 역방향 DNS 이름까지 한 번에 계산합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 5개 변환</p>
+<h3>입력 — IP 주소 또는 정수 (한 줄에 하나)</h3><pre>192.168.0.1
+3232235521
+0xC0A80001
+2001:db8::1
+::ffff:192.0.2.128</pre>
+<h3>결과 — 변환 결과</h3><pre>입력 | 버전 | 표준 표기 | 10진 정수 | 16진수
+192.168.0.1 | IPv4 | 192.168.0.1 | 3232235521 | 0xC0A80001
+3232235521 | IPv4 | 192.168.0.1 | 3232235521 | 0xC0A80001
+0xC0A80001 | IPv4 | 192.168.0.1 | 3232235521 | 0xC0A80001
+2001:db8::1 | IPv6 | 2001:db8::1 | 42540766411282592856903984951653826561 | 0x20010DB8000000000000000000000001
+::ffff:192.0.2.128 | IPv6 | ::ffff:c000:280 | 281473902969472 | 0xFFFFC0000280</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>데이터베이스에 IP를 정수로 저장하거나, 로그에서 16진수 IP를 만났거나, IPv6 표기를 정리해야 할 때 쓰는 변환기입니다.</p>
+<ul><li>IPv4 ↔ 10진 정수(3232235521) ↔ 16진수(0xC0A80001) ↔ 2진수 ↔ 옥텟별 8진수</li><li>IPv6: 압축 표기(2001:db8::1)와 전체 표기(0000 채움), 10진/16진 정수</li><li>IPv4-매핑 IPv6(::ffff:192.0.2.1)에 담긴 IPv4 추출, 6to4 접두어(2002::/16)</li><li>역방향 DNS 이름(in-addr.arpa, ip6.arpa) 생성</li><li>정수 입력은 IPv4/IPv6 중 어느 쪽으로 읽을지 선택, 옥텟 8진/16진 표기(0300.0250.0.1)도 인식</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="subnet-calculator.html" class="related-card"><span class="related-icon">🌐</span><span>서브넷 계산기</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+    <a href="ip-lookup.html" class="related-card"><span class="related-icon">🌐</span><span>IP 주소 조회</span></a>
+    <a href="reverse-dns-generator.html" class="related-card"><span class="related-icon">↩️</span><span>역방향 DNS 이름 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>MySQL에서는 INET_ATON()/INET_NTOA() 함수가 같은 변환을 합니다. 값 검증에 이 도구를 쓰세요.</li><li>IPv6의 연속된 0 그룹은 가장 긴 구간 하나만 ::로 줄이는 것이 표준(RFC 5952) 표기입니다.</li><li>큰 정수(2^32 초과)는 IPv6 주소로 해석됩니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>IP를 정수로 바꾸면 어디에 좋은가요?</summary><p>대역(범위) 검색을 BETWEEN 비교로 빠르게 할 수 있고 저장 공간도 문자열보다 작습니다(IPv4는 4바이트).</p></details><details><summary>::ffff:192.0.2.1 은 무엇인가요?</summary><p>IPv6 소켓에서 IPv4 연결을 표현하는 IPv4-매핑 주소입니다. 마지막 32비트가 IPv4 주소입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-net.js"></script>
+<script src="js/tools/ip-converter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IP 범위 CIDR 변환기 — 시작~끝 IP를 최소 CIDR 블록으로 | WooaDev</title>
+  <meta name="description" content="시작 IP와 끝 IP 범위를 최소 개수의 CIDR 블록으로 분해하고 CIDR을 범위로 되돌립니다. IPv4·IPv6를 BigInt로 정확히 처리하고 블록 개수와 주소 수를 함께 보여 줍니다. 서버로 전송하지 않습니다.">
+  <meta name="keywords" content="IP 범위 CIDR 변환, IP range to CIDR, CIDR 분해, 시작 끝 IP CIDR, IP 대역 CIDR 변환, ip range to cidr converter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/ip-range-to-cidr.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/ip-range-to-cidr.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/ip-range-to-cidr.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/ip-range-to-cidr.html">
+  <meta property="og:title" content="IP 범위 CIDR 변환기 — 시작~끝 IP를 최소 CIDR 블록으로 | WooaDev">
+  <meta property="og:description" content="시작 IP와 끝 IP 범위를 최소 개수의 CIDR 블록으로 분해하고 CIDR을 범위로 되돌립니다. IPv4·IPv6를 BigInt로 정확히 처리하고 블록 개수와 주소 수를 함께 보여 줍니다. 서버로 전송하지 않습니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/ip-range-to-cidr.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="IP 범위 CIDR 변환기 — 시작~끝 IP를 최소 CIDR 블록으로 | WooaDev">
+  <meta name="twitter:description" content="시작 IP와 끝 IP 범위를 최소 개수의 CIDR 블록으로 분해하고 CIDR을 범위로 되돌립니다. IPv4·IPv6를 BigInt로 정확히 처리하고 블록 개수와 주소 수를 함께 보여 줍니다. 서버로 전송하지 않습니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"IP 범위 → CIDR 변환기","url":"https://wooadev.wooahouse.com/ip-range-to-cidr.html","description":"시작 IP와 끝 IP 범위를 최소 개수의 CIDR 블록으로 분해하고 CIDR을 범위로 되돌립니다. IPv4·IPv6를 BigInt로 정확히 처리하고 블록 개수와 주소 수를 함께 보여 줍니다. 서버로 전송하지 않습니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["범위를 정렬 규칙에 맞는 가장 큰 블록부터 잘라 최소 개수의 CIDR로 표현","딱 맞는 대역이면 하나(10.0.0.0 - 10.0.3.255 → 10.0.0.0/22), 어긋나면 여러 개로 분해","CIDR을 넣으면 시작·끝 주소와 주소 수를 확인, IPv6 범위도 가능","오류(시작>끝, IPv4/IPv6 혼합, 형식 오류)는 줄마다 이유를 표시"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"결과가 왜 하나가 아니라 여러 개인가요?","acceptedAnswer":{"@type":"Answer","text":"CIDR은 크기가 2의 거듭제곱이고 시작 주소가 그 크기의 배수여야 합니다. 범위가 이 규칙에 맞지 않으면 여러 블록으로 나눠야 같은 범위를 정확히 표현할 수 있습니다."}},{"@type":"Question","name":"0.0.0.0 - 255.255.255.255는요?","acceptedAnswer":{"@type":"Answer","text":"0.0.0.0/0 하나로 표현됩니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"IP 범위 → CIDR 변환기","item":"https://wooadev.wooahouse.com/ip-range-to-cidr.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="ip-range-to-cidr.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/ip-range-to-cidr.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>IP 범위 → CIDR 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">↔️</span>
+    <h1>IP 범위 → CIDR 변환기</h1>
+    <p>192.168.1.5 - 192.168.1.200 처럼 시작과 끝 IP로 주어진 범위를 가장 적은 수의 CIDR 블록으로 나눕니다. IPv6도 지원합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 4줄 처리 — CIDR 18개</p>
+<h3>입력 — IP 범위 (시작 - 끝) 또는 CIDR (한 줄에 하나)</h3><pre>192.168.1.5 - 192.168.1.200
+10.0.0.0 - 10.0.3.255
+203.0.113.0/28
+2001:db8::1 - 2001:db8::ff</pre>
+<h3>결과 — 변환 결과</h3><pre>입력 | CIDR 개수 | 결과 (최소 CIDR 블록) | 주소 수
+192.168.1.5 - 192.168.1.200 | 9개 | 192.168.1.5/32, 192.168.1.6/31, 192.168.1.8/29, 192.168.1.16/28, 192.168.1.32/27, 192.168.1.64/26, 192.168.1.128/26, 192.168.1.192/29, 192.168.1.200/32 | 196
+10.0.0.0 - 10.0.3.255 | 1개 | 10.0.0.0/22 | 1,024
+203.0.113.0/28 | 1 | 범위: 203.0.113.0 – 203.0.113.15 | 16
+2001:db8::1 - 2001:db8::ff | 8개 | 2001:db8::1/128, 2001:db8::2/127, 2001:db8::4/126, 2001:db8::8/125, 2001:db8::10/124, 2001:db8::20/123, 2001:db8::40/122, 2001:db8::80/121 | 255</pre>
+<h3>결과 — CIDR 모음</h3><pre>192.168.1.5/32
+192.168.1.6/31
+192.168.1.8/29
+192.168.1.16/28
+192.168.1.32/27
+192.168.1.64/26
+192.168.1.128/26
+192.168.1.192/29
+192.168.1.200/32
+10.0.0.0/22
+2001:db8::1/128
+2001:db8::2/127
+2001:db8::4/126
+2001:db8::8/125
+2001:db8::10/124
+2001:db8::20/123
+2001:db8::40/122
+2001:db8::80/121</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>WHOIS나 ISP가 알려 주는 IP 대역은 "1.2.3.0 - 1.2.3.255" 같은 범위인데, 방화벽·클라우드 설정은 CIDR만 받는 경우가 많습니다.</p>
+<ul><li>범위를 정렬 규칙에 맞는 가장 큰 블록부터 잘라 최소 개수의 CIDR로 표현</li><li>딱 맞는 대역이면 하나(10.0.0.0 - 10.0.3.255 → 10.0.0.0/22), 어긋나면 여러 개로 분해</li><li>CIDR을 넣으면 시작·끝 주소와 주소 수를 확인, IPv6 범위도 가능</li><li>오류(시작&gt;끝, IPv4/IPv6 혼합, 형식 오류)는 줄마다 이유를 표시</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="cidr-set-calculator.html" class="related-card"><span class="related-icon">🧱</span><span>CIDR 집합 계산기</span></a>
+    <a href="subnet-calculator.html" class="related-card"><span class="related-icon">🌐</span><span>서브넷 계산기</span></a>
+    <a href="ip-converter.html" class="related-card"><span class="related-icon">🔁</span><span>IP 주소 변환기</span></a>
+    <a href="reverse-dns-generator.html" class="related-card"><span class="related-icon">↩️</span><span>역방향 DNS 이름 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>결과 CIDR 모음을 복사해 방화벽 규칙에 한 줄씩 붙여 넣으세요.</li><li>범위를 여러 개 합쳐서 정리하려면 CIDR 집합 계산기의 병합 기능을 쓰세요.</li><li>시작 주소가 블록 경계에 맞지 않으면 작은 블록이 앞뒤로 생기는 것이 정상입니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>결과가 왜 하나가 아니라 여러 개인가요?</summary><p>CIDR은 크기가 2의 거듭제곱이고 시작 주소가 그 크기의 배수여야 합니다. 범위가 이 규칙에 맞지 않으면 여러 블록으로 나눠야 같은 범위를 정확히 표현할 수 있습니다.</p></details><details><summary>0.0.0.0 - 255.255.255.255는요?</summary><p>0.0.0.0/0 하나로 표현됩니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-net.js"></script>
+<script src="js/tools/ip-range-to-cidr.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

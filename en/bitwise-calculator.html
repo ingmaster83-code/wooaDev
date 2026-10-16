@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bitwise Calculator – AND, OR, XOR &amp; Shift Results in Binary | WooaDev</title>
+  <meta name="description" content="Compute AND, OR, XOR, NAND, NOR, NOT, shifts, add and subtract for two integers in decimal, hex and binary. 8–64 bit, signed mode, exact 64-bit via BigInt.">
+  <meta name="keywords" content="bitwise calculator, AND OR XOR calculator, bit shift calculator, binary operations, bitmask calculator, hex bitwise online">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/bitwise-calculator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/bitwise-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/bitwise-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/bitwise-calculator.html">
+  <meta property="og:title" content="Bitwise Calculator – AND, OR, XOR &amp; Shift Results in Binary | WooaDev">
+  <meta property="og:description" content="Compute AND, OR, XOR, NAND, NOR, NOT, shifts, add and subtract for two integers in decimal, hex and binary. 8–64 bit, signed mode, exact 64-bit via BigInt.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/bitwise-calculator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bitwise Calculator – AND, OR, XOR &amp; Shift Results in Binary | WooaDev">
+  <meta name="twitter:description" content="Compute AND, OR, XOR, NAND, NOR, NOT, shifts, add and subtract for two integers in decimal, hex and binary. 8–64 bit, signed mode, exact 64-bit via BigInt.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Bitwise Calculator","url":"https://wooadev.wooahouse.com/en/bitwise-calculator.html","description":"Compute AND, OR, XOR, NAND, NOR, NOT, shifts, add and subtract for two integers in decimal, hex and binary. 8–64 bit, signed mode, exact 64-bit via BigInt.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Input: decimal, 0x hex, 0b binary, 0o octal (underscores and spaces allowed)","Operations: AND, OR, XOR, NAND, NOR, XNOR, NOT, left shift, logical/arithmetic right shift, +, −","The chosen width (8/16/32/64) reproduces real hardware wrap-around","With signed interpretation, results can be negative and arithmetic shifts keep the sign","Binary is grouped in nibbles and the number of set bits is reported"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What's the difference between logical and arithmetic shifts?","acceptedAnswer":{"@type":"Answer","text":"A logical shift (>>>) fills with zeros; an arithmetic shift (>>) copies the sign bit to keep negatives negative. For unsigned values they're identical."}},{"@type":"Question","name":"Why is NOT a large positive number?","acceptedAnswer":{"@type":"Answer","text":"In unsigned interpretation, inverting all bits yields a big number within the width. Enable signed mode to see it as -1 and similar."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Bitwise Calculator","item":"https://wooadev.wooahouse.com/en/bitwise-calculator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../bitwise-calculator.html">KO</a>
+        <span>|</span>
+        <a href="bitwise-calculator.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Bitwise Calculator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧮</span>
+    <h1>Bitwise Calculator — AND · OR · XOR · NOT · Shifts</h1>
+    <p>Shows every bitwise result for two integers in decimal, hex and binary, for 8, 16, 32 and 64 bits, signed or unsigned.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ 16-bit unsigned — A has 8 set bits, B has 8</p>
+<h3>Input — Value A (decimal, 0x hex, 0b binary, 0o octal)</h3><pre>0xF0F0</pre>
+<h3>Input — Value B</h3><pre>0b1010101010101010</pre>
+<h3>Result — Results</h3><pre>Operation | Decimal | Hex | Binary
+A | 61680 | 0xF0F0 | 1111 0000 1111 0000
+B | 43690 | 0xAAAA | 1010 1010 1010 1010
+A &amp; B (AND) | 41120 | 0xA0A0 | 1010 0000 1010 0000
+A | B (OR) | 64250 | 0xFAFA | 1111 1010 1111 1010
+A ^ B (XOR) | 23130 | 0x5A5A | 0101 1010 0101 1010
+~(A &amp; B) (NAND) | 24415 | 0x5F5F | 0101 1111 0101 1111
+~(A | B) (NOR) | 1285 | 0x0505 | 0000 0101 0000 0101
+~(A ^ B) (XNOR) | 42405 | 0xA5A5 | 1010 0101 1010 0101
+~A (NOT) | 3855 | 0x0F0F | 0000 1111 0000 1111
+~B (NOT) | 21845 | 0x5555 | 0101 0101 0101 0101
+A &lt;&lt; 3 | 34688 | 0x8780 | 1000 0111 1000 0000
+A &gt;&gt; 3 (logical) | 7710 | 0x1E1E | 0001 1110 0001 1110
+A &gt;&gt; 3 (arithmetic) | 7710 | 0x1E1E | 0001 1110 0001 1110
+B &lt;&lt; 3 | 21840 | 0x5550 | 0101 0101 0101 0000
+B &gt;&gt; 3 (logical) | 5461 | 0x1555 | 0001 0101 0101 0101
+A + B | 39834 | 0x9B9A | 1001 1011 1001 1010
+A − B | 17990 | 0x4646 | 0100 0110 0100 0110</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Working with flag fields, bit masks, hashes or network protocols, you often want to verify bit operations in binary without doing it by hand.</p>
+<ul><li>Input: decimal, 0x hex, 0b binary, 0o octal (underscores and spaces allowed)</li><li>Operations: AND, OR, XOR, NAND, NOR, XNOR, NOT, left shift, logical/arithmetic right shift, +, −</li><li>The chosen width (8/16/32/64) reproduces real hardware wrap-around</li><li>With signed interpretation, results can be negative and arithmetic shifts keep the sign</li><li>Binary is grouped in nibbles and the number of set bits is reported</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>Number Base Converter</span></a>
+    <a href="integer-representation.html" class="related-card"><span class="related-icon">➖</span><span>Two's Complement Calculator</span></a>
+    <a href="ieee754-converter.html" class="related-card"><span class="related-icon">🔬</span><span>IEEE 754 Floating-Point Converter</span></a>
+    <a href="chmod.html" class="related-card"><span class="related-icon">🔐</span><span>Chmod Calculator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>To test a bit, compute value AND mask and check for non-zero.</li><li>To clear a bit use value AND (NOT mask); to flip it use XOR.</li><li>JavaScript's own bitwise operators are limited to 32 bits, but this tool is exact up to 64 via BigInt.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What's the difference between logical and arithmetic shifts?</summary><p>A logical shift (&gt;&gt;&gt;) fills with zeros; an arithmetic shift (&gt;&gt;) copies the sign bit to keep negatives negative. For unsigned values they're identical.</p></details><details><summary>Why is NOT a large positive number?</summary><p>In unsigned interpretation, inverting all bits yields a big number within the width. Enable signed mode to see it as -1 and similar.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/bitwise-calculator.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>
