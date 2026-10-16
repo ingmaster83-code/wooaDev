@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DynamoDB JSON 변환기 — 타입 표기와 일반 JSON | WooaDev</title>
+  <meta name="description" content="DynamoDB JSON(S, N, BOOL, NULL, L, M, SS, NS, B)과 일반 JSON을 양방향으로 변환합니다. get-item·scan 결과의 Item/Items 래퍼, 큰 숫자 정밀도, 집합 변환 옵션을 지원합니다.">
+  <meta name="keywords" content="DynamoDB JSON 변환, DynamoDB marshall unmarshall, AttributeValue 변환, dynamodb to json, aws dynamodb get-item, dynamodb json converter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/dynamodb-json-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/dynamodb-json-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/dynamodb-json-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/dynamodb-json-converter.html">
+  <meta property="og:title" content="DynamoDB JSON 변환기 — 타입 표기와 일반 JSON | WooaDev">
+  <meta property="og:description" content="DynamoDB JSON(S, N, BOOL, NULL, L, M, SS, NS, B)과 일반 JSON을 양방향으로 변환합니다. get-item·scan 결과의 Item/Items 래퍼, 큰 숫자 정밀도, 집합 변환 옵션을 지원합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/dynamodb-json-converter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DynamoDB JSON 변환기 — 타입 표기와 일반 JSON | WooaDev">
+  <meta name="twitter:description" content="DynamoDB JSON(S, N, BOOL, NULL, L, M, SS, NS, B)과 일반 JSON을 양방향으로 변환합니다. get-item·scan 결과의 Item/Items 래퍼, 큰 숫자 정밀도, 집합 변환 옵션을 지원합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"DynamoDB JSON 변환기","url":"https://wooadev.wooahouse.com/dynamodb-json-converter.html","description":"DynamoDB JSON(S, N, BOOL, NULL, L, M, SS, NS, B)과 일반 JSON을 양방향으로 변환합니다. get-item·scan 결과의 Item/Items 래퍼, 큰 숫자 정밀도, 집합 변환 옵션을 지원합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["지원 타입: S, N, BOOL, NULL, L, M, SS, NS, B, BS","DynamoDB → 일반: Item, Items 래퍼, 배열, 단일 속성 값을 알아서 처리","일반 → DynamoDB: 숫자는 문자열 N, 중첩 객체는 M, 배열은 L(옵션으로 중복 없는 문자열/숫자 배열을 SS/NS 집합으로)","정밀도를 잃는 큰 숫자는 문자열로 유지","알 수 없는 타입, 한 속성에 여러 타입 같은 오류를 경로와 함께 안내"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"BOOL 과 NULL 은 어떻게 표기되나요?","acceptedAnswer":{"@type":"Answer","text":"{\"BOOL\": true}, {\"NULL\": true} 형태입니다. NULL 은 값이 항상 true 입니다."}},{"@type":"Question","name":"바이너리(B)는 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"Base64 문자열을 {\"$binary\": …} 로 표시해 구분합니다. 다시 DynamoDB 로 되돌릴 때는 B 로 직접 지정하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"DynamoDB JSON 변환기","item":"https://wooadev.wooahouse.com/dynamodb-json-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="dynamodb-json-converter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/dynamodb-json-converter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>DynamoDB JSON 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">⚡</span>
+    <h1>DynamoDB JSON ↔ 일반 JSON 변환기</h1>
+    <p>DynamoDB 가 쓰는 타입 표기 JSON({"name":{"S":"Kim"},"age":{"N":"31"}})을 일반 JSON 으로, 또는 반대로 변환합니다. Item/Items 래퍼와 SS·NS·B·L·M 타입을 지원합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 변환했습니다</p>
+<h3>입력 — 입력 JSON</h3><pre>{
+  "Item": {
+    "pk": {"S": "USER#42"},
+    "age": {"N": "31"},
+    "active": {"BOOL": true},
+    "nick": {"NULL": true},
+    "tags": {"SS": ["a", "b"]},
+    "scores": {"NS": ["1.5", "2"]},
+    "addr": {"M": {"city": {"S": "Seoul"}, "zip": {"S": "04524"}}},
+    "history": {"L": [{"S": "x"}, {"N": "7"}]},
+    "avatar": {"B": "aGVsbG8="}
+  }
+}</pre>
+<h3>결과 — 변환 결과</h3><pre>{
+  "Item": {
+    "pk": "USER#42",
+    "age": 31,
+    "active": true,
+    "nick": null,
+    "tags": [
+      "a",
+      "b"
+    ],
+    "scores": [
+      1.5,
+      2
+    ],
+    "addr": {
+      "city": "Seoul",
+      "zip": "04524"
+    },
+    "history": [
+      "x",
+      7
+    ],
+    "avatar": {
+      "$binary": "aGVsbG8="
+    }
+  }
+}</pre>
+<h3>결과 — 참고</h3><pre>집합(SS/NS/BS)은 배열로 변환되어 집합이라는 정보가 사라집니다. 바이너리는 {"$binary": base64} 로 표시했습니다</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>AWS CLI 의 dynamodb get-item/scan 결과나 콘솔 내보내기를 읽기 쉬운 JSON 으로 바꾸거나, 일반 JSON 을 put-item 에 쓸 수 있는 형식으로 바꿉니다.</p>
+<ul><li>지원 타입: S, N, BOOL, NULL, L, M, SS, NS, B, BS</li><li>DynamoDB → 일반: Item, Items 래퍼, 배열, 단일 속성 값을 알아서 처리</li><li>일반 → DynamoDB: 숫자는 문자열 N, 중첩 객체는 M, 배열은 L(옵션으로 중복 없는 문자열/숫자 배열을 SS/NS 집합으로)</li><li>정밀도를 잃는 큰 숫자는 문자열로 유지</li><li>알 수 없는 타입, 한 속성에 여러 타입 같은 오류를 경로와 함께 안내</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+    <a href="json-validator.html" class="related-card"><span class="related-icon">✅</span><span>JSON 유효성 검사기</span></a>
+    <a href="mongodb-ejson-converter.html" class="related-card"><span class="related-icon">🧬</span><span>MongoDB 확장 JSON 변환기</span></a>
+    <a href="json-flatten.html" class="related-card"><span class="related-icon">📐</span><span>JSON 평탄화 도구</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>집합(SS/NS)은 일반 JSON 으로 바꾸면 배열이 되어 집합 정보가 사라집니다.</li><li>숫자는 항상 문자열로 전송됩니다. 38자리까지 정밀도를 가지므로 JavaScript 숫자로 변환하면 손실될 수 있습니다.</li><li>SDK 에서는 marshall / unmarshall 함수를 쓰면 같은 변환을 코드로 할 수 있습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>BOOL 과 NULL 은 어떻게 표기되나요?</summary><p>{"BOOL": true}, {"NULL": true} 형태입니다. NULL 은 값이 항상 true 입니다.</p></details><details><summary>바이너리(B)는 어떻게 되나요?</summary><p>Base64 문자열을 {"$binary": …} 로 표시해 구분합니다. 다시 DynamoDB 로 되돌릴 때는 B 로 직접 지정하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/dynamodb-json-converter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>syslog 파서 — facility·severity·RFC 5424 분석 | WooaDev</title>
+  <meta name="description" content="RFC 3164와 RFC 5424 syslog 메시지를 파싱합니다. PRI에서 facility·severity를 계산하고 시각, 호스트, 앱[PID], MSGID, 구조화 데이터, 본문을 분리하며 JSON으로 출력합니다. 긴급·경보 수준을 강조합니다.">
+  <meta name="keywords" content="syslog 파서, syslog PRI 계산, RFC 5424, RFC 3164, facility severity, syslog parser">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/syslog-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/syslog-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/syslog-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/syslog-parser.html">
+  <meta property="og:title" content="syslog 파서 — facility·severity·RFC 5424 분석 | WooaDev">
+  <meta property="og:description" content="RFC 3164와 RFC 5424 syslog 메시지를 파싱합니다. PRI에서 facility·severity를 계산하고 시각, 호스트, 앱[PID], MSGID, 구조화 데이터, 본문을 분리하며 JSON으로 출력합니다. 긴급·경보 수준을 강조합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/syslog-parser.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="syslog 파서 — facility·severity·RFC 5424 분석 | WooaDev">
+  <meta name="twitter:description" content="RFC 3164와 RFC 5424 syslog 메시지를 파싱합니다. PRI에서 facility·severity를 계산하고 시각, 호스트, 앱[PID], MSGID, 구조화 데이터, 본문을 분리하며 JSON으로 출력합니다. 긴급·경보 수준을 강조합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"syslog 파서","url":"https://wooadev.wooahouse.com/syslog-parser.html","description":"RFC 3164와 RFC 5424 syslog 메시지를 파싱합니다. PRI에서 facility·severity를 계산하고 시각, 호스트, 앱[PID], MSGID, 구조화 데이터, 본문을 분리하며 JSON으로 출력합니다. 긴급·경보 수준을 강조합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["PRI: <숫자> = facility × 8 + severity 를 facility 이름(auth, local4 …)과 severity(emerg~debug)로 변환","RFC 3164: 월 일 시:분:초 호스트 태그[PID]: 메시지 (연도·시간대 없음 → 입력한 연도, UTC 가정, ? 표시)","RFC 5424: 버전, ISO 8601 시각(오프셋 → UTC), 호스트, 앱, PROCID, MSGID, 구조화 데이터, 메시지","emerg·alert·crit·err 는 🚨 로 강조, 심각도별 건수 요약","해석 결과 JSON 출력"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"PRI 숫자는 어떻게 읽나요?","acceptedAnswer":{"@type":"Answer","text":"8로 나눈 몫이 facility, 나머지가 severity 입니다. 34 → 4(auth), 2(crit)."}},{"@type":"Question","name":"journald 로그도 되나요?","acceptedAnswer":{"@type":"Answer","text":"journalctl -o short-iso 같은 출력은 형식이 달라 지원하지 않습니다. syslog 전송 형식(3164/5424)이 대상입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"syslog 파서","item":"https://wooadev.wooahouse.com/syslog-parser.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="syslog-parser.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/syslog-parser.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>syslog 파서</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🗒️</span>
+    <h1>syslog 메시지 파서 (RFC 3164 · RFC 5424)</h1>
+    <p>&lt;34&gt;Oct 16 09:12:03 web01 sshd[2412]: … 같은 전통 형식과 &lt;165&gt;1 2026-10-16T… 같은 RFC 5424 메시지를 PRI(facility·severity), 시각, 호스트, 앱, 프로세스 ID, 구조화 데이터, 본문으로 나눕니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 4건 파싱 (crit 1, notice 2, info 1)</p>
+<h3>입력 — syslog 메시지 (한 줄에 하나, RFC 3164 / RFC 5424)</h3><pre>&lt;34&gt;Oct 16 09:12:03 web01 sshd[2412]: Failed password for root from 203.0.113.5 port 51234 ssh2
+&lt;165&gt;1 2026-10-16T09:12:05.003Z web01.example.com myapp 2518 ID47 [exampleSDID@32473 iut="3" eventSource="Application"] Request handled in 35ms
+&lt;13&gt;Oct  6 23:59:59 db01 kernel: Out of memory: Killed process 8123 (mysqld)
+&lt;190&gt;1 2026-10-16T09:13:00+09:00 gw01 nginx - - - upstream timed out</pre>
+<h3>결과 — 파싱 결과</h3><pre>형식 | 상태 | facility.severity | 시각 | 호스트 / 앱 | 메시지 | 비고
+RFC 3164 | ✅ | auth.crit (34) | 2026-10-16T09:12:03Z? | web01 / sshd[2412] | Failed password for root from 203.0.113.5 port 51234 ssh2 | 🚨 치명
+RFC 5424 | ✅ | local4.notice (165) | 2026-10-16T09:12:05.003Z | web01.example.com / myapp[2518] | Request handled in 35ms | 
+RFC 3164 | ✅ | user.notice (13) | 2026-10-06T23:59:59Z? | db01 / kernel | Out of memory: Killed process 8123 (mysqld) | 
+RFC 5424 | ✅ | local7.info (190) | 2026-10-16T00:13:00.000Z | gw01 / nginx | upstream timed out | </pre>
+<h3>결과 — JSON</h3><pre>[
+  {
+    "pri": 34,
+    "timestamp": "Oct 16 09:12:03",
+    "host": "web01",
+    "app": "sshd",
+    "procid": "2412",
+    "message": "Failed password for root from 203.0.113.5 port 51234 ssh2",
+    "iso": "2026-10-16T09:12:03Z?",
+    "facility": "auth",
+    "severity": "crit"
+  },
+  {
+    "pri": 165,
+    "version": 1,
+    "timestamp": "2026-10-16T09:12:05.003Z",
+    "host": "web01.example.com",
+    "app": "myapp",
+    "procid": "2518",
+    "msgid": "ID47",
+    "sd": "[exampleSDID@32473 iut=\"3\" eventSource=\"Application\"]",
+    "message": "Request handled in 35ms",
+    "iso": "2026-10-16T09:12:05.003Z",
+    "facility": "local4",
+    "severity": "notice"
+  },
+  {
+    "pri": 13,
+    "timestamp": "Oct 6 23:59:59",
+    "host": "db01",
+    "app": "kernel",
+    "procid": "-",
+    "message": "Out of memory: Killed process 8123 (mysqld)",
+    "iso": "2026-10-06T23:59:59Z?",
+    "facility": "user",
+    "severity": "notice"
+  },
+  {
+    "pri": 190,
+    "version": 1,
+    "timestamp": "2026-10-16T09:13:00+09:00",
+    "host": "gw01",
+    "app": "nginx",
+    "procid": "-",
+    "msgid": "-",
+    "sd": "-",
+    "message": "upstream timed out",
+    "iso": "2026-10-16T00:13:00.000Z",
+    "facility": "local7",
+    "severity": "info"
+  }
+]</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>장비·리눅스 로그를 사람이 읽을 수 있게 풀고 JSON 으로 옮깁니다.</p>
+<ul><li>PRI: &lt;숫자&gt; = facility × 8 + severity 를 facility 이름(auth, local4 …)과 severity(emerg~debug)로 변환</li><li>RFC 3164: 월 일 시:분:초 호스트 태그[PID]: 메시지 (연도·시간대 없음 → 입력한 연도, UTC 가정, ? 표시)</li><li>RFC 5424: 버전, ISO 8601 시각(오프셋 → UTC), 호스트, 앱, PROCID, MSGID, 구조화 데이터, 메시지</li><li>emerg·alert·crit·err 는 🚨 로 강조, 심각도별 건수 요약</li><li>해석 결과 JSON 출력</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="access-log-parser.html" class="related-card"><span class="related-icon">📜</span><span>액세스 로그 분석기</span></a>
+    <a href="timezone-converter.html" class="related-card"><span class="related-icon">🌏</span><span>시간대 변환기</span></a>
+    <a href="iso8601-converter.html" class="related-card"><span class="related-icon">📅</span><span>ISO 8601 / RFC 날짜 변환기</span></a>
+    <a href="stack-trace-formatter.html" class="related-card"><span class="related-icon">🐞</span><span>스택 트레이스 정리기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>RFC 3164 로그는 연말·연초에 연도가 어긋날 수 있으니 날짜 근처 로그는 주의하세요.</li><li>여러 서버의 로그를 합칠 때는 5424 형식과 UTC 사용을 권장합니다.</li><li>rsyslog 에서 RFC 5424 출력은 템플릿 RSYSLOG_SyslogProtocol23Format 으로 설정합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>PRI 숫자는 어떻게 읽나요?</summary><p>8로 나눈 몫이 facility, 나머지가 severity 입니다. 34 → 4(auth), 2(crit).</p></details><details><summary>journald 로그도 되나요?</summary><p>journalctl -o short-iso 같은 출력은 형식이 달라 지원하지 않습니다. syslog 전송 형식(3164/5424)이 대상입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/syslog-parser.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

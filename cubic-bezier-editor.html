@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cubic-bezier 편집기 — 이징 곡선과 CSS 코드 | WooaDev</title>
+  <meta name="description" content="cubic-bezier(x1,y1,x2,y2)와 steps() 이징 곡선을 SVG로 시각화하고 시간별 진행도 표, 오버슈트·예비 동작 감지, transition·@keyframes·Web Animations API 코드를 생성합니다. 프리셋 이름 인식.">
+  <meta name="keywords" content="cubic-bezier, 이징 곡선, ease-out-back, CSS 애니메이션 곡선, steps 함수, easing 생성기, cubic bezier editor">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/cubic-bezier-editor.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/cubic-bezier-editor.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/cubic-bezier-editor.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/cubic-bezier-editor.html">
+  <meta property="og:title" content="cubic-bezier 편집기 — 이징 곡선과 CSS 코드 | WooaDev">
+  <meta property="og:description" content="cubic-bezier(x1,y1,x2,y2)와 steps() 이징 곡선을 SVG로 시각화하고 시간별 진행도 표, 오버슈트·예비 동작 감지, transition·@keyframes·Web Animations API 코드를 생성합니다. 프리셋 이름 인식.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/cubic-bezier-editor.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="cubic-bezier 편집기 — 이징 곡선과 CSS 코드 | WooaDev">
+  <meta name="twitter:description" content="cubic-bezier(x1,y1,x2,y2)와 steps() 이징 곡선을 SVG로 시각화하고 시간별 진행도 표, 오버슈트·예비 동작 감지, transition·@keyframes·Web Animations API 코드를 생성합니다. 프리셋 이름 인식.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"cubic-bezier 이징 편집기","url":"https://wooadev.wooahouse.com/cubic-bezier-editor.html","description":"cubic-bezier(x1,y1,x2,y2)와 steps() 이징 곡선을 SVG로 시각화하고 시간별 진행도 표, 오버슈트·예비 동작 감지, transition·@keyframes·Web Animations API 코드를 생성합니다. 프리셋 이름 인식.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: cubic-bezier(…), 숫자 네 개, 키워드(ease, ease-in-out), 이징 이름(ease-out-back, ease-in-expo 등 18종), steps(n, jump)","곡선 그래프와 제어점, 지정한 지점 수의 시간별 진행도 표","y 가 0~1 밖으로 나가는 오버슈트(탄성)와 예비 동작 감지","transition, @keyframes, Web Animations API 코드 생성","x1·x2 가 0~1 을 벗어나면 CSS 규격 위반으로 오류"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"x 값은 왜 0~1 이어야 하나요?","acceptedAnswer":{"@type":"Answer","text":"x 는 시간 축이라 뒤로 돌아가면 한 시각에 값이 여러 개가 되기 때문에 CSS 규격이 0~1 로 제한합니다. y 는 제한이 없습니다."}},{"@type":"Question","name":"keyframes 안에서는 어떻게 적용되나요?","acceptedAnswer":{"@type":"Answer","text":"animation-timing-function 은 키프레임 구간마다 다시 적용됩니다. 전체 애니메이션에 한 곡선을 쓰려면 구간이 하나여야 합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"cubic-bezier 이징 편집기","item":"https://wooadev.wooahouse.com/cubic-bezier-editor.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="cubic-bezier-editor.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/cubic-bezier-editor.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>cubic-bezier 이징 편집기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📈</span>
+    <h1>cubic-bezier 이징 편집기 · steps()</h1>
+    <p>cubic-bezier(x1, y1, x2, y2) 값이나 ease-out-back 같은 이름을 넣으면 곡선을 그려 보여 주고, 시간별 진행도 표와 transition·@keyframes·Web Animations 코드를 만들어 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ cubic-bezier(0.34, 1.56, 0.64, 1) (= ease-out-back)</p>
+<h3>입력 — cubic-bezier(x1, y1, x2, y2) 또는 키워드</h3><pre>cubic-bezier(0.34, 1.56, 0.64, 1)</pre>
+<h3>결과 — CSS</h3><pre>/* ease-out-back */
+transition: transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+@keyframes move {
+  from { transform: translateX(0); }
+  to   { transform: translateX(200px); }
+}
+.box { animation: move 600ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+
+/* JS (Web Animations API) */
+el.animate([{ transform: "translateX(0)" }, { transform: "translateX(200px)" }], { duration: 600, easing: "cubic-bezier(0.34, 1.56, 0.64, 1)", fill: "forwards" });</pre>
+<h3>결과 — 진행도 표</h3><pre>시간 | 경과 | 진행도
+0% | 0 ms | 0.0%
+10% | 60 ms | 40.4%
+20% | 120 ms | 70.3%
+30% | 180 ms | 90.7%
+40% | 240 ms | 103.0% ↑(넘침)
+50% | 300 ms | 108.7% ↑(넘침)
+60% | 360 ms | 109.7% ↑(넘침)
+70% | 420 ms | 107.6% ↑(넘침)
+80% | 480 ms | 104.2% ↑(넘침)
+90% | 540 ms | 101.3% ↑(넘침)
+100% | 600 ms | 100.0%</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>애니메이션의 느낌은 이징 곡선이 결정합니다. 숫자 네 개가 어떤 움직임이 되는지 곡선과 표로 확인하세요.</p>
+<ul><li>입력: cubic-bezier(…), 숫자 네 개, 키워드(ease, ease-in-out), 이징 이름(ease-out-back, ease-in-expo 등 18종), steps(n, jump)</li><li>곡선 그래프와 제어점, 지정한 지점 수의 시간별 진행도 표</li><li>y 가 0~1 밖으로 나가는 오버슈트(탄성)와 예비 동작 감지</li><li>transition, @keyframes, Web Animations API 코드 생성</li><li>x1·x2 가 0~1 을 벗어나면 CSS 규격 위반으로 오류</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="css-transition.html" class="related-card"><span class="related-icon">🎬</span><span>CSS Transition 생성기</span></a>
+    <a href="css-gradient.html" class="related-card"><span class="related-icon">🌈</span><span>CSS 그라디언트 생성기</span></a>
+    <a href="duration-parser.html" class="related-card"><span class="related-icon">⏱️</span><span>시간 단위·기간 변환기</span></a>
+    <a href="css-units.html" class="related-card"><span class="related-icon">📐</span><span>CSS 단위 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>오버슈트(y &gt; 1)가 있는 곡선은 요소가 목표를 살짝 지나쳤다가 돌아와 탄력 있는 느낌을 줍니다.</li><li>UI 전환은 150~300ms, 큰 이동은 300~500ms 정도가 자연스럽습니다.</li><li>스프라이트 애니메이션이나 타자기 효과에는 steps() 를 쓰세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>x 값은 왜 0~1 이어야 하나요?</summary><p>x 는 시간 축이라 뒤로 돌아가면 한 시각에 값이 여러 개가 되기 때문에 CSS 규격이 0~1 로 제한합니다. y 는 제한이 없습니다.</p></details><details><summary>keyframes 안에서는 어떻게 적용되나요?</summary><p>animation-timing-function 은 키프레임 구간마다 다시 적용됩니다. 전체 애니메이션에 한 곡선을 쓰려면 구간이 하나여야 합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/cubic-bezier-editor.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

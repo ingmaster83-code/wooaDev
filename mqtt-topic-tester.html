@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MQTT 토픽 테스터 — + · # 와일드카드 일치 확인 | WooaDev</title>
+  <meta name="description" content="MQTT 구독 필터의 단일 레벨 + 와 다중 레벨 # 와일드카드가 발행 토픽과 일치하는지 행렬로 판정합니다. $로 시작하는 토픽 제외 규칙, 빈 레벨, # 위치 오류, 와일드카드가 든 발행 토픽, 65535바이트 한도를 점검합니다.">
+  <meta name="keywords" content="MQTT 토픽, MQTT 와일드카드, 토픽 필터, + # 차이, $SYS 토픽, mqtt topic tester">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/mqtt-topic-tester.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/mqtt-topic-tester.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/mqtt-topic-tester.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/mqtt-topic-tester.html">
+  <meta property="og:title" content="MQTT 토픽 테스터 — + · # 와일드카드 일치 확인 | WooaDev">
+  <meta property="og:description" content="MQTT 구독 필터의 단일 레벨 + 와 다중 레벨 # 와일드카드가 발행 토픽과 일치하는지 행렬로 판정합니다. $로 시작하는 토픽 제외 규칙, 빈 레벨, # 위치 오류, 와일드카드가 든 발행 토픽, 65535바이트 한도를 점검합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/mqtt-topic-tester.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MQTT 토픽 테스터 — + · # 와일드카드 일치 확인 | WooaDev">
+  <meta name="twitter:description" content="MQTT 구독 필터의 단일 레벨 + 와 다중 레벨 # 와일드카드가 발행 토픽과 일치하는지 행렬로 판정합니다. $로 시작하는 토픽 제외 규칙, 빈 레벨, # 위치 오류, 와일드카드가 든 발행 토픽, 65535바이트 한도를 점검합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"MQTT 토픽 필터 테스터","url":"https://wooadev.wooahouse.com/mqtt-topic-tester.html","description":"MQTT 구독 필터의 단일 레벨 + 와 다중 레벨 # 와일드카드가 발행 토픽과 일치하는지 행렬로 판정합니다. $로 시작하는 토픽 제외 규칙, 빈 레벨, # 위치 오류, 와일드카드가 든 발행 토픽, 65535바이트 한도를 점검합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["일치 규칙: + 는 정확히 한 레벨, # 는 마지막에서 0개 이상의 레벨 (sensors/# 는 sensors 자체도 일치)","$ 로 시작하는 토픽은 # 나 +/… 필터로 받지 않음 ($SYS/# 처럼 명시해야 함)","필터 오류: # 가 마지막이 아님, + 나 # 가 레벨 일부, 빈 필터","토픽 오류: 발행 토픽에 + # 사용, 빈 토픽, NUL 문자, 길이 한도","필터 × 토픽 일치 행렬과 점검 목록"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"sensors/+ 와 sensors/# 의 차이는요?","acceptedAnswer":{"@type":"Answer","text":"+ 는 sensors/room1 처럼 한 레벨만, # 는 sensors/room1/temperature 처럼 모든 하위 레벨까지 받습니다."}},{"@type":"Question","name":"와일드카드로 발행할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. + 와 # 는 구독 필터에서만 쓸 수 있고 발행 토픽에 넣으면 규격 위반입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"MQTT 토픽 필터 테스터","item":"https://wooadev.wooahouse.com/mqtt-topic-tester.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="mqtt-topic-tester.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/mqtt-topic-tester.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>MQTT 토픽 필터 테스터</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📡</span>
+    <h1>MQTT 토픽 필터 테스터</h1>
+    <p>sensors/+/temperature, sensors/# 같은 구독 필터가 sensors/room1/temperature 같은 토픽에 일치하는지 행렬로 확인합니다. $SYS 토픽 규칙, 빈 레벨, 잘못 쓴 와일드카드도 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 필터 6개 × 토픽 7개 판정</p>
+<h3>입력 — 구독 필터 (한 줄에 하나)</h3><pre>sensors/+/temperature
+sensors/#
++/+/temperature
+#
+$SYS/#
+home/livingroom/+</pre>
+<h3>입력 — 발행 토픽 (한 줄에 하나)</h3><pre>sensors/room1/temperature
+sensors/room1/humidity
+sensors/room1/floor2/temperature
+home/livingroom/light
+home/livingroom
+$SYS/broker/uptime
+/sensors/room1/temperature</pre>
+<h3>결과 — 일치 행렬</h3><pre>토픽 | sensors/+/temperature | sensors/# | +/+/temperature | # | $SYS/# | home/livingroom/+
+sensors/room1/temperature | ✅ | ✅ | ✅ | ✅ | · | ·
+sensors/room1/humidity | · | ✅ | · | ✅ | · | ·
+sensors/room1/floor2/temperature | · | ✅ | · | ✅ | · | ·
+home/livingroom/light | · | · | · | ✅ | · | ✅
+home/livingroom | · | · | · | ✅ | · | ·
+$SYS/broker/uptime | · | · | · | · | ✅ | ·
+/sensors/room1/temperature | · | · | · | ✅ | · | ·</pre>
+<h3>결과 — 점검 사항</h3><pre>앞에 /가 붙은 토픽("/a")은 첫 레벨이 빈 문자열이라 "a" 와 다른 토픽입니다
+# 나 +/… 로 시작하는 필터는 $ 로 시작하는 토픽($SYS 등)과 일치하지 않습니다 — $SYS/# 처럼 명시해야 합니다
+# 구독은 모든 메시지를 받아 부하가 크고 보안상 위험합니다 (ACL 로 제한 권장)
+토픽은 대소문자를 구분합니다. sensors/# 는 부모 토픽 "sensors" 자체도 일치시킵니다</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>브로커 ACL 이나 구독 설정을 배포하기 전에 어떤 토픽이 받아지는지 미리 확인합니다. 입력은 브라우저에서만 처리됩니다.</p>
+<ul><li>일치 규칙: + 는 정확히 한 레벨, # 는 마지막에서 0개 이상의 레벨 (sensors/# 는 sensors 자체도 일치)</li><li>$ 로 시작하는 토픽은 # 나 +/… 필터로 받지 않음 ($SYS/# 처럼 명시해야 함)</li><li>필터 오류: # 가 마지막이 아님, + 나 # 가 레벨 일부, 빈 필터</li><li>토픽 오류: 발행 토픽에 + # 사용, 빈 토픽, NUL 문자, 길이 한도</li><li>필터 × 토픽 일치 행렬과 점검 목록</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="json-rpc-viewer.html" class="related-card"><span class="related-icon">🔁</span><span>JSON-RPC 2.0 뷰어</span></a>
+    <a href="sse-parser.html" class="related-card"><span class="related-icon">📶</span><span>SSE 스트림 파서</span></a>
+    <a href="protocol-uri-parser.html" class="related-card"><span class="related-icon">🔌</span><span>프로토콜 URI 파서</span></a>
+    <a href="regex-tester.html" class="related-card"><span class="related-icon">🔍</span><span>Regex 테스터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>선행/후행 슬래시는 빈 레벨을 만들어 /a 와 a 는 서로 다른 토픽입니다.</li><li>'#' 하나만으로 구독해도 $SYS 토픽은 받지 못합니다.</li><li>토픽은 대소문자를 구분하며 공백을 포함할 수 있지만 피하는 것이 좋습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>sensors/+ 와 sensors/# 의 차이는요?</summary><p>+ 는 sensors/room1 처럼 한 레벨만, # 는 sensors/room1/temperature 처럼 모든 하위 레벨까지 받습니다.</p></details><details><summary>와일드카드로 발행할 수 있나요?</summary><p>아니요. + 와 # 는 구독 필터에서만 쓸 수 있고 발행 토픽에 넣으면 규격 위반입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/mqtt-topic-tester.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

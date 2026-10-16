@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GCP 리소스 분석기 — GCS URL·서비스 계정 키 점검 | WooaDev</title>
+  <meta name="description" content="GCP 리소스 이름(projects/…/locations/…), gs://·storage.googleapis.com 주소 변환, 서비스 계정 이메일과 키 JSON을 분석합니다. private_key는 마스킹하고 기본 Compute 서비스 계정·키 파일 사용을 경고합니다.">
+  <meta name="keywords" content="GCP 리소스 이름, GCS URL 변환, gs:// https 변환, 서비스 계정 JSON, service account key, gcp resource parser">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/gcp-resource-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/gcp-resource-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/gcp-resource-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/gcp-resource-parser.html">
+  <meta property="og:title" content="GCP 리소스 분석기 — GCS URL·서비스 계정 키 점검 | WooaDev">
+  <meta property="og:description" content="GCP 리소스 이름(projects/…/locations/…), gs://·storage.googleapis.com 주소 변환, 서비스 계정 이메일과 키 JSON을 분석합니다. private_key는 마스킹하고 기본 Compute 서비스 계정·키 파일 사용을 경고합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/gcp-resource-parser.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GCP 리소스 분석기 — GCS URL·서비스 계정 키 점검 | WooaDev">
+  <meta name="twitter:description" content="GCP 리소스 이름(projects/…/locations/…), gs://·storage.googleapis.com 주소 변환, 서비스 계정 이메일과 키 JSON을 분석합니다. private_key는 마스킹하고 기본 Compute 서비스 계정·키 파일 사용을 경고합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"GCP 리소스·GCS URL 분석기","url":"https://wooadev.wooahouse.com/gcp-resource-parser.html","description":"GCP 리소스 이름(projects/…/locations/…), gs://·storage.googleapis.com 주소 변환, 서비스 계정 이메일과 키 JSON을 분석합니다. private_key는 마스킹하고 기본 Compute 서비스 계정·키 파일 사용을 경고합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["리소스 이름: 컬렉션/ID 쌍으로 분해하고 짝이 맞지 않으면 알림","GCS: gs://, storage.googleapis.com/버킷/객체, 버킷.storage.googleapis.com 입력을 받아 모든 형식과 gsutil 명령으로 변환","서비스 계정 이메일: 계정 ID와 프로젝트 ID 분리, 기본 Compute Engine 계정 경고","키 JSON: type·project_id·client_email 확인, private_key 마스킹, 필수 필드 누락 점검","버킷 이름 규칙(goog/google 포함 불가 등) 점검"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"키 JSON이 노출되면 어떻게 하나요?","acceptedAnswer":{"@type":"Answer","text":"즉시 해당 키를 삭제하고 새로 발급하세요(IAM → 서비스 계정 → 키). 저장소에 올렸다면 기록에서도 제거해야 합니다."}},{"@type":"Question","name":"gs:// 주소를 HTTP로 접근하려면요?","acceptedAnswer":{"@type":"Answer","text":"https://storage.googleapis.com/버킷/객체 형태이며 객체가 공개이거나 서명된 URL/인증 헤더가 있어야 합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"GCP 리소스·GCS URL 분석기","item":"https://wooadev.wooahouse.com/gcp-resource-parser.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="gcp-resource-parser.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/gcp-resource-parser.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>GCP 리소스·GCS URL 분석기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🟦</span>
+    <h1>GCP 리소스 · GCS URL · 서비스 계정 분석기</h1>
+    <p>projects/…/locations/… 형식의 리소스 이름, gs:// 와 storage.googleapis.com 주소, 서비스 계정 이메일과 키 JSON을 분석합니다. 비공개 키는 마스킹하고 노출 위험을 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>🔍 위험 항목 1개</p>
+<h3>입력 — GCP 리소스 이름, GCS 주소, 서비스 계정 이메일 또는 키 JSON</h3><pre>projects/my-project/locations/asia-northeast3/services/api
+gs://my-bucket/exports/2026/data.csv
+https://storage.googleapis.com/my-bucket/exports/data.csv
+build-bot@my-project.iam.gserviceaccount.com
+{"type":"service_account","project_id":"my-project","private_key_id":"abc123","private_key":"-----BEGIN PRIVATE KEY-----\nMIIE...\n-----END PRIVATE KEY-----\n","client_email":"build-bot@my-project.iam.gserviceaccount.com","client_id":"1234567890"}</pre>
+<h3>결과 — 분석</h3><pre>항목 | 값
+리소스 이름 | projects/my-project/locations/asia-northeast3/services/api
+projects | my-project
+locations | asia-northeast3
+services | api
+gs:// gs://my-bucket/exports/2026/da | GCS
+bucket | my-bucket
+객체 | exports/2026/data.csv
+https | GCS
+bucket | my-bucket
+객체 | exports/data.csv
+서비스 계정 | build-bot@my-project.iam.gserviceaccount.com
+계정 ID | build-bot
+projectId | my-project
+서비스 계정 키 | service_account
+project_id | my-project
+client_email | build-bot@my-project.iam.gserviceaccount.com
+client_id | 1234567890
+private_key_id | abc123…
+private_key | •••• (마스킹, 62자)</pre>
+<h3>결과 — GCS 주소 변환</h3><pre>gs://my-bucket/exports/2026/data.csv
+https://storage.googleapis.com/my-bucket/exports/2026/data.csv
+https://my-bucket.storage.googleapis.com/exports/2026/data.csv
+https://storage.cloud.google.com/my-bucket/exports/2026/data.csv   # 로그인 필요(브라우저)
+gsutil ls gs://my-bucket/exports/2026/
+
+gs://my-bucket/exports/data.csv
+https://storage.googleapis.com/my-bucket/exports/data.csv
+https://my-bucket.storage.googleapis.com/exports/data.csv
+https://storage.cloud.google.com/my-bucket/exports/data.csv   # 로그인 필요(브라우저)
+gsutil ls gs://my-bucket/exports/</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>Google Cloud는 API마다 projects/{id}/locations/{loc}/… 형태의 리소스 이름을 쓰고, 스토리지는 gs:// 와 HTTPS 주소를 번갈아 씁니다.</p>
+<ul><li>리소스 이름: 컬렉션/ID 쌍으로 분해하고 짝이 맞지 않으면 알림</li><li>GCS: gs://, storage.googleapis.com/버킷/객체, 버킷.storage.googleapis.com 입력을 받아 모든 형식과 gsutil 명령으로 변환</li><li>서비스 계정 이메일: 계정 ID와 프로젝트 ID 분리, 기본 Compute Engine 계정 경고</li><li>키 JSON: type·project_id·client_email 확인, private_key 마스킹, 필수 필드 누락 점검</li><li>버킷 이름 규칙(goog/google 포함 불가 등) 점검</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="aws-arn-parser.html" class="related-card"><span class="related-icon">☁️</span><span>AWS ARN 분석·생성기</span></a>
+    <a href="azure-resource-parser.html" class="related-card"><span class="related-icon">🔷</span><span>Azure 리소스 ID 분석기</span></a>
+    <a href="s3-url-converter.html" class="related-card"><span class="related-icon">🪣</span><span>S3 URL 변환기</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>서비스 계정 키(JSON)는 유출되면 영구 자격 증명입니다. 가능하면 Workload Identity나 연결된 서비스 계정으로 대체하세요.</li><li>기본 Compute Engine 서비스 계정은 편집자 권한이 있는 경우가 많으므로 전용 계정을 만드세요.</li><li>storage.cloud.google.com 은 로그인 후 브라우저로 보는 주소이고, storage.googleapis.com 은 API/공개 접근 주소입니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>키 JSON이 노출되면 어떻게 하나요?</summary><p>즉시 해당 키를 삭제하고 새로 발급하세요(IAM → 서비스 계정 → 키). 저장소에 올렸다면 기록에서도 제거해야 합니다.</p></details><details><summary>gs:// 주소를 HTTP로 접근하려면요?</summary><p>https://storage.googleapis.com/버킷/객체 형태이며 객체가 공개이거나 서명된 URL/인증 헤더가 있어야 합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/gcp-resource-parser.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

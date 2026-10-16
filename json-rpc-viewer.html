@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON-RPC 뷰어 — 요청·응답 짝 맞추기와 규격 검증 | WooaDev</title>
+  <meta name="description" content="JSON-RPC 2.0 요청, 알림, 응답, 오류, 배치 메시지를 분류하고 id로 요청·응답을 짝지어 표시합니다. jsonrpc 필드, params 형식, result·error 동시 존재, 응답 누락 등을 검증하고 -32700~-32603 표준 오류 코드를 설명합니다.">
+  <meta name="keywords" content="JSON-RPC 2.0, JSON-RPC 오류 코드, -32601, 배치 요청, 요청 응답 짝, json rpc viewer">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/json-rpc-viewer.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/json-rpc-viewer.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/json-rpc-viewer.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/json-rpc-viewer.html">
+  <meta property="og:title" content="JSON-RPC 뷰어 — 요청·응답 짝 맞추기와 규격 검증 | WooaDev">
+  <meta property="og:description" content="JSON-RPC 2.0 요청, 알림, 응답, 오류, 배치 메시지를 분류하고 id로 요청·응답을 짝지어 표시합니다. jsonrpc 필드, params 형식, result·error 동시 존재, 응답 누락 등을 검증하고 -32700~-32603 표준 오류 코드를 설명합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/json-rpc-viewer.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON-RPC 뷰어 — 요청·응답 짝 맞추기와 규격 검증 | WooaDev">
+  <meta name="twitter:description" content="JSON-RPC 2.0 요청, 알림, 응답, 오류, 배치 메시지를 분류하고 id로 요청·응답을 짝지어 표시합니다. jsonrpc 필드, params 형식, result·error 동시 존재, 응답 누락 등을 검증하고 -32700~-32603 표준 오류 코드를 설명합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON-RPC 2.0 뷰어","url":"https://wooadev.wooahouse.com/json-rpc-viewer.html","description":"JSON-RPC 2.0 요청, 알림, 응답, 오류, 배치 메시지를 분류하고 id로 요청·응답을 짝지어 표시합니다. jsonrpc 필드, params 형식, result·error 동시 존재, 응답 누락 등을 검증하고 -32700~-32603 표준 오류 코드를 설명합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: 단일 객체, 배치 배열, 또는 한 줄에 하나씩(로그 형식)","분류: request(id 있음), notification(id 없음), result 응답, error 응답","짝 맞추기: id 로 요청 ↔ 응답 연결, 응답 없는 요청과 요청 없는 응답 표시, 중복 id","검증: jsonrpc \"2.0\", method 문자열, params 는 배열 또는 객체, result 와 error 는 정확히 하나","표준 오류 코드 설명: -32700 파싱 오류, -32600 잘못된 요청, -32601 메서드 없음, -32602 잘못된 파라미터, -32603 내부 오류, -32000~-32099 서버 오류"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"id 가 0 이어도 요청인가요?","acceptedAnswer":{"@type":"Answer","text":"네. 0 도 유효한 id 입니다. id 키가 아예 없을 때만 알림입니다."}},{"@type":"Question","name":"HTTP 상태 코드와는 어떻게 다른가요?","acceptedAnswer":{"@type":"Answer","text":"JSON-RPC 는 전송 방식과 무관한 프로토콜이라 오류도 본문의 error 로 전달합니다. HTTP 로 쓸 때도 보통 상태는 200 입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"JSON-RPC 2.0 뷰어","item":"https://wooadev.wooahouse.com/json-rpc-viewer.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="json-rpc-viewer.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/json-rpc-viewer.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON-RPC 2.0 뷰어</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔁</span>
+    <h1>JSON-RPC 2.0 메시지 뷰어 · 검증기</h1>
+    <p>요청, 알림, 성공 응답, 오류 응답, 배치를 종류별로 분류하고 id 로 요청과 응답을 짝지어 줍니다. jsonrpc 버전 누락, 응답이 없는 요청, result 와 error 동시 존재 같은 규격 위반과 -32700 · -32601 같은 표준 오류 코드를 설명합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>🔍 메시지 7개 중 확인할 항목 1개</p>
+<h3>입력 — JSON-RPC 메시지 (객체, 배열(배치), 또는 줄마다 하나)</h3><pre>[
+  {"jsonrpc":"2.0","method":"subtract","params":{"minuend":42,"subtrahend":23},"id":1},
+  {"jsonrpc":"2.0","method":"notify_hello","params":[7]},
+  {"jsonrpc":"2.0","result":19,"id":1},
+  {"jsonrpc":"2.0","method":"foo.get","params":{"name":"x"},"id":"abc"},
+  {"jsonrpc":"2.0","error":{"code":-32601,"message":"Method not found"},"id":"abc"},
+  {"method":"legacy","id":3},
+  {"jsonrpc":"2.0","method":"ping","id":4}
+]</pre>
+<h3>결과 — 메시지</h3><pre>위치 | 상태 | 종류 | 내용 | 문제
+배치 1 | ✅ | 요청 | subtract({"minuend":42,"subtrahend":23}) | 
+배치 2 | ✅ | 알림(Notification) | notify_hello(7) | 
+배치 3 | ✅ | 성공 응답 | 19 | 
+배치 4 | ✅ | 요청 | foo.get({"name":"x"}) | 
+배치 5 | ✅ | 오류 응답 | -32601 Method not found — Method not found | 
+배치 6 | ⚠️ | 요청 | legacy() | jsonrpc: "2.0" 이 없습니다 (JSON-RPC 1.0 이거나 오류)
+배치 7 | ✅ | 요청 | ping() | </pre>
+<h3>결과 — 요청 ↔ 응답 짝</h3><pre>id | 메서드 | 요청 | 응답 | 상태
+1 | subtract | 배치 1 | 배치 3 | ✅
+"abc" | foo.get | 배치 4 | 배치 5 | ❌ 오류
+3 | legacy | 배치 6 | — | ⏳ 응답 없음
+4 | ping | 배치 7 | — | ⏳ 응답 없음</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>이더리움 노드, LSP, MCP, 각종 RPC API 의 통신 로그를 읽기 쉽게 정리합니다. 입력은 브라우저에서만 처리됩니다.</p>
+<ul><li>입력: 단일 객체, 배치 배열, 또는 한 줄에 하나씩(로그 형식)</li><li>분류: request(id 있음), notification(id 없음), result 응답, error 응답</li><li>짝 맞추기: id 로 요청 ↔ 응답 연결, 응답 없는 요청과 요청 없는 응답 표시, 중복 id</li><li>검증: jsonrpc "2.0", method 문자열, params 는 배열 또는 객체, result 와 error 는 정확히 하나</li><li>표준 오류 코드 설명: -32700 파싱 오류, -32600 잘못된 요청, -32601 메서드 없음, -32602 잘못된 파라미터, -32603 내부 오류, -32000~-32099 서버 오류</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="jsonl-viewer.html" class="related-card"><span class="related-icon">📃</span><span>JSON Lines 뷰어</span></a>
+    <a href="mqtt-topic-tester.html" class="related-card"><span class="related-icon">📡</span><span>MQTT 토픽 필터 테스터</span></a>
+    <a href="sse-parser.html" class="related-card"><span class="related-icon">📶</span><span>SSE 스트림 파서</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>알림(notification)은 id 가 없어 서버가 응답하지 않습니다. 응답을 기대하면 id 를 넣으세요.</li><li>배치 응답은 요청과 순서가 같지 않을 수 있으므로 id 로 짝지어야 합니다.</li><li>id 는 문자열, 숫자, null 이 가능하지만 null 은 권장되지 않습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>id 가 0 이어도 요청인가요?</summary><p>네. 0 도 유효한 id 입니다. id 키가 아예 없을 때만 알림입니다.</p></details><details><summary>HTTP 상태 코드와는 어떻게 다른가요?</summary><p>JSON-RPC 는 전송 방식과 무관한 프로토콜이라 오류도 본문의 error 로 전달합니다. HTTP 로 쓸 때도 보통 상태는 200 입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/json-rpc-viewer.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PEP 440 버전 테스터 — 파이썬 버전 정렬·지정자 일치 | WooaDev</title>
+  <meta name="description" content="PEP 440 파이썬 버전을 정규화하고 dev &lt; a &lt; b &lt; rc &lt; 정식 &lt; post 순서로 정렬합니다. &gt;=, ~=, ==1.*, !=, 콤마 조합 지정자와 후보 버전의 일치를 판정하고 프리릴리스 포함 여부와 로컬 버전을 설명합니다.">
+  <meta name="keywords" content="PEP 440, 파이썬 버전 비교, pip 버전 지정자, ~= 호환 릴리스, rc post dev 순서, pep440 version tester">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/pep440-version-tester.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/pep440-version-tester.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/pep440-version-tester.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/pep440-version-tester.html">
+  <meta property="og:title" content="PEP 440 버전 테스터 — 파이썬 버전 정렬·지정자 일치 | WooaDev">
+  <meta property="og:description" content="PEP 440 파이썬 버전을 정규화하고 dev &lt; a &lt; b &lt; rc &lt; 정식 &lt; post 순서로 정렬합니다. &gt;=, ~=, ==1.*, !=, 콤마 조합 지정자와 후보 버전의 일치를 판정하고 프리릴리스 포함 여부와 로컬 버전을 설명합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/pep440-version-tester.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PEP 440 버전 테스터 — 파이썬 버전 정렬·지정자 일치 | WooaDev">
+  <meta name="twitter:description" content="PEP 440 파이썬 버전을 정규화하고 dev &lt; a &lt; b &lt; rc &lt; 정식 &lt; post 순서로 정렬합니다. &gt;=, ~=, ==1.*, !=, 콤마 조합 지정자와 후보 버전의 일치를 판정하고 프리릴리스 포함 여부와 로컬 버전을 설명합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"PEP 440 버전 테스터","url":"https://wooadev.wooahouse.com/pep440-version-tester.html","description":"PEP 440 파이썬 버전을 정규화하고 dev < a < b < rc < 정식 < post 순서로 정렬합니다. >=, ~=, ==1.*, !=, 콤마 조합 지정자와 후보 버전의 일치를 판정하고 프리릴리스 포함 여부와 로컬 버전을 설명합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["정규화: 1.0-rc1 → 1.0rc1, 1.0.POST1 → 1.0.post1, 1.0.0 은 1.0 과 동일 비교","정렬: dev < a < b < rc < 정식 < post, epoch(1!) 우선, 로컬 버전(+ubuntu.1) 처리","지정자: ==, !=, <=, >=, <, >, ~=, ==1.*, ===, 콤마로 AND 결합","프리릴리스는 지정자에 명시되지 않으면 기본 제외 (옵션으로 포함)","형식이 잘못된 줄은 표에서 구분하고 일치하는 가장 높은 버전 출력"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"SemVer 와 PEP 440 은 같은가요?","acceptedAnswer":{"@type":"Answer","text":"비슷하지만 다릅니다. PEP 440 은 a, b, rc, dev, post 와 epoch, 로컬 버전을 지원하고 -beta.1 같은 표기는 정규화됩니다."}},{"@type":"Question","name":"== 1.* 와 ~= 1.0 의 차이는요?","acceptedAnswer":{"@type":"Answer","text":"==1.* 는 1.x 전체, ~=1.0 은 >=1.0,==1.* 로 같지만 ~=1.0.0 은 1.0.x 로 더 좁아집니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"PEP 440 버전 테스터","item":"https://wooadev.wooahouse.com/pep440-version-tester.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="pep440-version-tester.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/pep440-version-tester.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>PEP 440 버전 테스터</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🐍</span>
+    <h1>PEP 440 파이썬 버전 비교 · 지정자 테스터</h1>
+    <p>1.0rc1, 1.0.post1, 1!2.0 같은 파이썬 버전 문자열을 PEP 440 규칙으로 정규화·정렬하고, &gt;=1.0,&lt;2.0 · ~=1.4.2 · ==1.* 같은 지정자와 일치하는지, 일치하는 가장 높은 버전은 무엇인지 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>🔍 11개 중 1개가 PEP 440 형식이 아닙니다</p>
+<h3>입력 — 버전 목록 (한 줄에 하나)</h3><pre>1.0
+1.0.post1
+1.0rc1
+1.0.dev3
+1.1
+1!0.5
+2.0a1
+2.0
+2.0.1+ubuntu.1
+1.0.0
+not.a.version</pre>
+<h3>입력 — 버전 지정자 (선택, 예: &gt;=1.0,&lt;2.0 · ~=1.0 · ==1.*)</h3><pre>&gt;=1.0,&lt;2.0</pre>
+<h3>결과 — 정규화·정렬 결과</h3><pre>입력 | 정규화 | 종류 | 일치
+1.0.dev3 | 1.0.dev3 | dev | —
+1.0rc1 | 1.0rc1 | pre | —
+1.0 | 1.0 | 정식 | ✅
+1.0.0 | 1.0.0 | 정식 | ✅
+1.0.post1 | 1.0.post1 | post | ✅
+1.1 | 1.1 | 정식 | ✅
+2.0a1 | 2.0a1 | pre | —
+2.0 | 2.0 | 정식 | —
+2.0.1+ubuntu.1 | 2.0.1+ubuntu.1 | local | —
+1!0.5 | 1!0.5 | 정식 | —
+not.a.version | ❌ | PEP 440 형식이 아닙니다 | </pre>
+<h3>결과 — 일치하는 가장 높은 버전</h3><pre>1.1</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>pip 가 어떤 버전을 설치할지, 버전 문자열 순서가 어떻게 되는지 확인할 때 씁니다. 처리는 모두 브라우저 안에서 이루어집니다.</p>
+<ul><li>정규화: 1.0-rc1 → 1.0rc1, 1.0.POST1 → 1.0.post1, 1.0.0 은 1.0 과 동일 비교</li><li>정렬: dev &lt; a &lt; b &lt; rc &lt; 정식 &lt; post, epoch(1!) 우선, 로컬 버전(+ubuntu.1) 처리</li><li>지정자: ==, !=, &lt;=, &gt;=, &lt;, &gt;, ~=, ==1.*, ===, 콤마로 AND 결합</li><li>프리릴리스는 지정자에 명시되지 않으면 기본 제외 (옵션으로 포함)</li><li>형식이 잘못된 줄은 표에서 구분하고 일치하는 가장 높은 버전 출력</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="python-dependency-tools.html" class="related-card"><span class="related-icon">🐍</span><span>파이썬 의존성 변환기</span></a>
+    <a href="package-version-tools.html" class="related-card"><span class="related-icon">📦</span><span>패키지 버전 제약 해석기</span></a>
+    <a href="semver-calculator.html" class="related-card"><span class="related-icon">🔢</span><span>SemVer 계산기</span></a>
+    <a href="package-json-editor.html" class="related-card"><span class="related-icon">🧰</span><span>package.json 검사·정리기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>~=1.4.2 는 &gt;=1.4.2,==1.4.* 와 같아서 1.5.0 은 허용하지 않습니다.</li><li>1.0 과 1.0.0 은 같은 버전입니다. 문자열 정렬로 비교하면 1.10 이 1.9 보다 앞에 오는 실수가 생깁니다.</li><li>프리릴리스를 받고 싶으면 pip install --pre 또는 지정자에 rc 를 명시하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>SemVer 와 PEP 440 은 같은가요?</summary><p>비슷하지만 다릅니다. PEP 440 은 a, b, rc, dev, post 와 epoch, 로컬 버전을 지원하고 -beta.1 같은 표기는 정규화됩니다.</p></details><details><summary>== 1.* 와 ~= 1.0 의 차이는요?</summary><p>==1.* 는 1.x 전체, ~=1.0 은 &gt;=1.0,==1.* 로 같지만 ~=1.0.0 은 1.0.x 로 더 좁아집니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/pep440-version-tester.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MongoDB EJSON 변환기 — Canonical·Relaxed 변환 | WooaDev</title>
+  <meta name="description" content="MongoDB Extended JSON의 $oid, $date, $numberInt/Long/Double/Decimal, $binary, $uuid, $regularExpression을 Canonical, Relaxed, 단순 JSON으로 변환합니다. 64비트 정수 정밀도와 날짜 형식을 안내합니다.">
+  <meta name="keywords" content="MongoDB EJSON 변환, Extended JSON, $oid $date, numberLong 변환, canonical relaxed, mongodb ejson converter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/mongodb-ejson-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/mongodb-ejson-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/mongodb-ejson-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/mongodb-ejson-converter.html">
+  <meta property="og:title" content="MongoDB EJSON 변환기 — Canonical·Relaxed 변환 | WooaDev">
+  <meta property="og:description" content="MongoDB Extended JSON의 $oid, $date, $numberInt/Long/Double/Decimal, $binary, $uuid, $regularExpression을 Canonical, Relaxed, 단순 JSON으로 변환합니다. 64비트 정수 정밀도와 날짜 형식을 안내합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/mongodb-ejson-converter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MongoDB EJSON 변환기 — Canonical·Relaxed 변환 | WooaDev">
+  <meta name="twitter:description" content="MongoDB Extended JSON의 $oid, $date, $numberInt/Long/Double/Decimal, $binary, $uuid, $regularExpression을 Canonical, Relaxed, 단순 JSON으로 변환합니다. 64비트 정수 정밀도와 날짜 형식을 안내합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"MongoDB 확장 JSON 변환기","url":"https://wooadev.wooahouse.com/mongodb-ejson-converter.html","description":"MongoDB Extended JSON의 $oid, $date, $numberInt/Long/Double/Decimal, $binary, $uuid, $regularExpression을 Canonical, Relaxed, 단순 JSON으로 변환합니다. 64비트 정수 정밀도와 날짜 형식을 안내합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["Relaxed: 정수·실수는 JSON 숫자로, 날짜는 ISO 문자열로 표시(읽기 쉬움)","Canonical: 모든 숫자 타입을 $numberInt/$numberLong/$numberDouble 로 명시해 타입을 보존","단순 JSON: $oid 를 문자열로, 날짜를 ISO 로 바꿔 타입 정보를 제거","지원: $oid, $date, $numberInt/Long/Double/Decimal, $uuid, $binary, $regularExpression, $timestamp, $minKey/$maxKey","JavaScript 안전 정수를 넘는 64비트 정수는 정밀도를 지키기 위해 $numberLong 유지"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Relaxed 와 Canonical 중 무엇을 써야 하나요?","acceptedAnswer":{"@type":"Answer","text":"다른 시스템과 정확한 타입을 주고받아야 하면 Canonical, 사람이 읽거나 API 응답이면 Relaxed 가 좋습니다."}},{"@type":"Question","name":"왜 $numberLong 이 문자열인가요?","acceptedAnswer":{"@type":"Answer","text":"64비트 정수는 JSON 숫자(IEEE 754 double)로 표현하면 9,007,199,254,740,992 이상에서 정밀도를 잃기 때문입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"MongoDB 확장 JSON 변환기","item":"https://wooadev.wooahouse.com/mongodb-ejson-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="mongodb-ejson-converter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/mongodb-ejson-converter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>MongoDB 확장 JSON 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧬</span>
+    <h1>MongoDB Extended JSON (EJSON) 변환기</h1>
+    <p>mongoexport·Compass 가 내보내는 확장 JSON 의 $oid, $date, $numberLong 같은 타입 표기를 Canonical(타입 보존), Relaxed(읽기 쉬움), 단순 JSON 으로 서로 바꿉니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ Relaxed 로 변환했습니다</p>
+<h3>입력 — MongoDB 확장 JSON (EJSON)</h3><pre>{
+  "_id": {"$oid": "507f1f77bcf86cd799439011"},
+  "createdAt": {"$date": {"$numberLong": "1760000000000"}},
+  "count": {"$numberInt": "42"},
+  "big": {"$numberLong": "9007199254740993"},
+  "price": {"$numberDouble": "19.99"},
+  "amount": {"$numberDecimal": "12345.6789"},
+  "uid": {"$uuid": "123e4567-e89b-12d3-a456-426614174000"},
+  "file": {"$binary": {"base64": "aGVsbG8=", "subType": "00"}},
+  "re": {"$regularExpression": {"pattern": "^a", "options": "i"}},
+  "name": "Kim"
+}</pre>
+<h3>결과 — 변환 결과</h3><pre>{
+  "_id": {
+    "$oid": "507f1f77bcf86cd799439011"
+  },
+  "createdAt": {
+    "$date": "2025-10-09T08:53:20Z"
+  },
+  "count": 42,
+  "big": {
+    "$numberLong": "9007199254740993"
+  },
+  "price": 19.99,
+  "amount": {
+    "$numberDecimal": "12345.6789"
+  },
+  "uid": {
+    "$uuid": "123e4567-e89b-12d3-a456-426614174000"
+  },
+  "file": {
+    "$binary": {
+      "base64": "aGVsbG8=",
+      "subType": "00"
+    }
+  },
+  "re": {
+    "$regularExpression": {
+      "pattern": "^a",
+      "options": "i"
+    }
+  },
+  "name": "Kim"
+}</pre>
+<h3>결과 — 참고</h3><pre>64비트 정수 9007199254740993 는 JSON 숫자로 정밀도를 잃을 수 있어 $numberLong 으로 유지했습니다
+Relaxed 에서는 int32/int64/double 이 보통 JSON 숫자로 표시되어 원래 타입을 구분할 수 없습니다. 타입 보존이 필요하면 Canonical 을 쓰세요</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>MongoDB 데이터를 JSON 으로 주고받을 때 ObjectId·날짜·64비트 정수가 어떻게 표현되는지 헷갈리는 일을 줄여 줍니다.</p>
+<ul><li>Relaxed: 정수·실수는 JSON 숫자로, 날짜는 ISO 문자열로 표시(읽기 쉬움)</li><li>Canonical: 모든 숫자 타입을 $numberInt/$numberLong/$numberDouble 로 명시해 타입을 보존</li><li>단순 JSON: $oid 를 문자열로, 날짜를 ISO 로 바꿔 타입 정보를 제거</li><li>지원: $oid, $date, $numberInt/Long/Double/Decimal, $uuid, $binary, $regularExpression, $timestamp, $minKey/$maxKey</li><li>JavaScript 안전 정수를 넘는 64비트 정수는 정밀도를 지키기 위해 $numberLong 유지</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="objectid-tool.html" class="related-card"><span class="related-icon">🍃</span><span>MongoDB ObjectId 도구</span></a>
+    <a href="dynamodb-json-converter.html" class="related-card"><span class="related-icon">⚡</span><span>DynamoDB JSON 변환기</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+    <a href="uuid-decoder.html" class="related-card"><span class="related-icon">🆔</span><span>UUID 디코더</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>타입이 중요한 이관·백업에는 Canonical, 사람이 읽는 로그에는 Relaxed 를 쓰세요.</li><li>단순 JSON 으로 바꿔 다시 넣으면 ObjectId·날짜가 문자열이 되니 가져오기에는 쓰지 마세요.</li><li>mongoimport 는 Canonical 과 Relaxed 를 모두 읽을 수 있습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>Relaxed 와 Canonical 중 무엇을 써야 하나요?</summary><p>다른 시스템과 정확한 타입을 주고받아야 하면 Canonical, 사람이 읽거나 API 응답이면 Relaxed 가 좋습니다.</p></details><details><summary>왜 $numberLong 이 문자열인가요?</summary><p>64비트 정수는 JSON 숫자(IEEE 754 double)로 표현하면 9,007,199,254,740,992 이상에서 정밀도를 잃기 때문입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/mongodb-ejson-converter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

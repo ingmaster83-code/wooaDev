@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>스택 트레이스 정리기 — 프레임 표·내 코드 강조 | WooaDev</title>
+  <meta name="description" content="Java, Python, JavaScript(Node·브라우저), .NET, Go, Ruby, PHP 스택 트레이스를 자동 판별해 프레임 표로 정리합니다. Caused by 체인과 생략 프레임을 처리하고 내 코드 접두사 프레임을 강조합니다.">
+  <meta name="keywords" content="스택 트레이스 분석, 스택 트레이스 정리, 예외 로그 읽기, Caused by, Java stack trace, stack trace formatter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/stack-trace-formatter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/stack-trace-formatter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/stack-trace-formatter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/stack-trace-formatter.html">
+  <meta property="og:title" content="스택 트레이스 정리기 — 프레임 표·내 코드 강조 | WooaDev">
+  <meta property="og:description" content="Java, Python, JavaScript(Node·브라우저), .NET, Go, Ruby, PHP 스택 트레이스를 자동 판별해 프레임 표로 정리합니다. Caused by 체인과 생략 프레임을 처리하고 내 코드 접두사 프레임을 강조합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/stack-trace-formatter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="스택 트레이스 정리기 — 프레임 표·내 코드 강조 | WooaDev">
+  <meta name="twitter:description" content="Java, Python, JavaScript(Node·브라우저), .NET, Go, Ruby, PHP 스택 트레이스를 자동 판별해 프레임 표로 정리합니다. Caused by 체인과 생략 프레임을 처리하고 내 코드 접두사 프레임을 강조합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"스택 트레이스 정리기","url":"https://wooadev.wooahouse.com/stack-trace-formatter.html","description":"Java, Python, JavaScript(Node·브라우저), .NET, Go, Ruby, PHP 스택 트레이스를 자동 판별해 프레임 표로 정리합니다. Caused by 체인과 생략 프레임을 처리하고 내 코드 접두사 프레임을 강조합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["언어 자동 판별: Java/Kotlin, Python, JavaScript(V8·Firefox 형식), .NET, Go, Ruby, PHP","표: 프레임 번호, 원인 단계(최상위/Caused by), 함수, 파일:줄(:열), 분류(내 코드/라이브러리/기타)","내 코드 접두사(com.shop, /app/src 등)를 지정하면 해당 프레임을 ⭐ 로 강조하고 첫 위치를 안내","Caused by 체인(근본 원인은 보통 마지막)과 \"... 12 more\" 생략 프레임 처리","압축된 번들(.min.js)이면 소스맵이 필요하다고 안내"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"왜 언어를 판별하지 못하나요?","acceptedAnswer":{"@type":"Answer","text":"각 줄이 'at … (파일:줄)', 'File \"…\", line N' 같은 프레임 형식인지 확인하세요. 로그 접두사(타임스탬프)가 붙어 있으면 제거하면 더 잘 인식합니다."}},{"@type":"Question","name":"비동기 프레임은 어떻게 보이나요?","acceptedAnswer":{"@type":"Answer","text":"파일과 줄이 없는 async 프레임은 표에서 제외되고 파일 정보가 있는 프레임만 나옵니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"스택 트레이스 정리기","item":"https://wooadev.wooahouse.com/stack-trace-formatter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="stack-trace-formatter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/stack-trace-formatter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>스택 트레이스 정리기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🐞</span>
+    <h1>스택 트레이스 정리기 — 언어 자동 판별</h1>
+    <p>오류 로그의 긴 스택 트레이스를 언어를 자동으로 알아내 프레임(함수·파일·줄)으로 나누고, 내 코드 패키지에 해당하는 프레임을 강조해 가장 먼저 볼 위치를 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ Java 프레임 8개 · 내 코드 3개</p>
+<h3>입력 — 스택 트레이스 (Java · Python · Node.js/브라우저 · .NET · Go · Ruby · PHP)</h3><pre>java.lang.IllegalStateException: Order 42 is already shipped
+	at com.shop.order.OrderService.ship(OrderService.java:88)
+	at com.shop.order.OrderController.ship(OrderController.java:41)
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapper.invoke(StandardWrapper.java:200)
+Caused by: java.sql.SQLException: Deadlock found when trying to get lock
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
+	at com.shop.order.OrderRepository.update(OrderRepository.java:57)
+	... 12 more</pre>
+<h3>결과 — 프레임</h3><pre># | 구분 | 함수/메서드 | 위치 | 분류
+1 | 원인(최상위) | com.shop.order.OrderService.ship | OrderService.java:88 | ⭐ 내 코드
+2 | 원인(최상위) | com.shop.order.OrderController.ship | OrderController.java:41 | ⭐ 내 코드
+3 | 원인(최상위) | jdk.internal.reflect.NativeMethodAccessorImpl.invoke0 | Native Method | 라이브러리
+4 | 원인(최상위) | org.springframework.web.servlet.FrameworkServlet.service | FrameworkServlet.java:883 | 라이브러리
+5 | 원인(최상위) | org.apache.catalina.core.StandardWrapper.invoke | StandardWrapper.java:200 | 라이브러리
+6 | 근본 원인 1 | com.mysql.cj.jdbc.exceptions.SQLError.createSQLException | SQLError.java:129 | 기타
+7 | 근본 원인 1 | com.shop.order.OrderRepository.update | OrderRepository.java:57 | ⭐ 내 코드
+8 | 근본 원인 1 | … 12 프레임 생략 |  | …</pre>
+<h3>결과 — 정리된 트레이스</h3><pre>Java 스택 트레이스
+java.lang.IllegalStateException: Order 42 is already shipped
+↳ Caused by: java.sql.SQLException: Deadlock found when trying to get lock
+
+▶ com.shop.order.OrderService.ship  (OrderService.java:88)
+▶ com.shop.order.OrderController.ship  (OrderController.java:41)
+  jdk.internal.reflect.NativeMethodAccessorImpl.invoke0  (Native Method)
+  org.springframework.web.servlet.FrameworkServlet.service  (FrameworkServlet.java:883)
+  org.apache.catalina.core.StandardWrapper.invoke  (StandardWrapper.java:200)
+  com.mysql.cj.jdbc.exceptions.SQLError.createSQLException  (SQLError.java:129)
+▶ com.shop.order.OrderRepository.update  (OrderRepository.java:57)
+  … 12 프레임 생략</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>수십 줄의 스택에서 라이브러리 프레임을 걷어내고 내 코드가 어디인지 바로 찾습니다. 로그는 브라우저에서만 처리됩니다.</p>
+<ul><li>언어 자동 판별: Java/Kotlin, Python, JavaScript(V8·Firefox 형식), .NET, Go, Ruby, PHP</li><li>표: 프레임 번호, 원인 단계(최상위/Caused by), 함수, 파일:줄(:열), 분류(내 코드/라이브러리/기타)</li><li>내 코드 접두사(com.shop, /app/src 등)를 지정하면 해당 프레임을 ⭐ 로 강조하고 첫 위치를 안내</li><li>Caused by 체인(근본 원인은 보통 마지막)과 "... 12 more" 생략 프레임 처리</li><li>압축된 번들(.min.js)이면 소스맵이 필요하다고 안내</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="syslog-parser.html" class="related-card"><span class="related-icon">🗒️</span><span>syslog 파서</span></a>
+    <a href="access-log-parser.html" class="related-card"><span class="related-icon">📜</span><span>액세스 로그 분석기</span></a>
+    <a href="regex-tester.html" class="related-card"><span class="related-icon">🔍</span><span>Regex 테스터</span></a>
+    <a href="string-escape.html" class="related-card"><span class="related-icon">🔣</span><span>문자열 이스케이프 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>가장 아래의 Caused by 가 보통 근본 원인이므로 그 위쪽의 내 코드 프레임을 먼저 보세요.</li><li>스택에는 파일 경로·내부 클래스명·값이 들어 있을 수 있으니 공유 전에 확인하세요.</li><li>프로덕션 JS 는 소스맵으로 원본 위치를 복원해야 합니다 (이 도구는 소스맵을 읽지 않습니다).</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>왜 언어를 판별하지 못하나요?</summary><p>각 줄이 'at … (파일:줄)', 'File "…", line N' 같은 프레임 형식인지 확인하세요. 로그 접두사(타임스탬프)가 붙어 있으면 제거하면 더 잘 인식합니다.</p></details><details><summary>비동기 프레임은 어떻게 보이나요?</summary><p>파일과 줄이 없는 async 프레임은 표에서 제외되고 파일 정보가 있는 프레임만 나옵니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/stack-trace-formatter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

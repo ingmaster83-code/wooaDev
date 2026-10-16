@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 포맷터 — 정리·최소화·중복 속성 검사 | WooaDev</title>
+  <meta name="description" content="CSS를 들여쓰기로 정리하거나 최소화하고 선언을 알파벳순으로 정렬합니다. @media·중첩 규칙을 처리하고 중복 속성, 빈 규칙, !important 과다, 벤더 접두사, 닫히지 않은 중괄호·문자열을 검사합니다.">
+  <meta name="keywords" content="CSS 포맷터, CSS 정리, CSS 최소화, CSS 검사, 중복 속성, CSS 정렬, css formatter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/css-formatter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/css-formatter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/css-formatter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/css-formatter.html">
+  <meta property="og:title" content="CSS 포맷터 — 정리·최소화·중복 속성 검사 | WooaDev">
+  <meta property="og:description" content="CSS를 들여쓰기로 정리하거나 최소화하고 선언을 알파벳순으로 정렬합니다. @media·중첩 규칙을 처리하고 중복 속성, 빈 규칙, !important 과다, 벤더 접두사, 닫히지 않은 중괄호·문자열을 검사합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/css-formatter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS 포맷터 — 정리·최소화·중복 속성 검사 | WooaDev">
+  <meta name="twitter:description" content="CSS를 들여쓰기로 정리하거나 최소화하고 선언을 알파벳순으로 정렬합니다. @media·중첩 규칙을 처리하고 중복 속성, 빈 규칙, !important 과다, 벤더 접두사, 닫히지 않은 중괄호·문자열을 검사합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSS 정리·검사기","url":"https://wooadev.wooahouse.com/css-formatter.html","description":"CSS를 들여쓰기로 정리하거나 최소화하고 선언을 알파벳순으로 정렬합니다. @media·중첩 규칙을 처리하고 중복 속성, 빈 규칙, !important 과다, 벤더 접두사, 닫히지 않은 중괄호·문자열을 검사합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["정리: 선택자 쉼표 줄바꿈, 속성 정리, 값의 쉼표·공백 정규화, !important 표기, @media 조건 공백","문자열·url() 안의 ; { } 는 건드리지 않음, 중첩 규칙(&:hover)과 @규칙 지원","선택: 선언 알파벳순 정렬, 주석 유지/삭제, 2칸·4칸·탭","검사: 중복 속성, 빈 규칙, !important 4번 이상, 불필요한 -webkit- 접두사, 속성:값 형식 오류, 괄호·주석·문자열 미종료","최소화: 공백·주석 제거, 마지막 세미콜론 제거, 0.5 → .5"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"중복 속성이 항상 잘못인가요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 오래된 브라우저용 폴백을 위해 의도적으로 반복하기도 합니다. 의도하지 않은 중복인지 확인하라는 알림입니다."}},{"@type":"Question","name":"SCSS/Less 도 되나요?","acceptedAnswer":{"@type":"Answer","text":"일반 CSS 와 CSS 중첩 문법을 대상으로 합니다. 변수·믹스인 같은 전처리기 기능은 지원하지 않습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"CSS 정리·검사기","item":"https://wooadev.wooahouse.com/css-formatter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="css-formatter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/css-formatter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CSS 정리·검사기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🎨</span>
+    <h1>CSS 포맷터 · 검사기</h1>
+    <p>한 줄로 압축된 CSS 를 읽기 쉽게 정리하거나 최소화하고, 같은 규칙 안의 중복 속성, 빈 규칙, !important 남용, 불필요한 벤더 접두사, 닫히지 않은 괄호를 찾아 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 정리 완료</p>
+<h3>입력 — CSS</h3><pre>/* 카드 */
+.card{color:#FFF;background:url("a.png") no-repeat;margin:0 auto;color:red!important}
+.card:hover,.card:focus{transform:translateY(-2px)}
+@media (max-width:600px){.card{margin:0;-webkit-transition:all .3s;transition:all .3s}.empty{}}
+.btn{padding:4px 8px;&amp;:hover{opacity:.8}}</pre>
+<h3>결과 — 결과</h3><pre>/* 카드 */
+
+.card {
+  color: #FFF;
+  background: url("a.png") no-repeat;
+  margin: 0 auto;
+  color: red !important;
+}
+
+.card:hover,
+.card:focus {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .card {
+    margin: 0;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+  }
+
+  .empty {}
+}
+
+.btn {
+  padding: 4px 8px;
+  &amp;:hover {
+    opacity: .8;
+  }
+}</pre>
+<h3>결과 — 검사 결과</h3><pre>같은 규칙에서 속성이 중복되었습니다: color (.card) — 뒤의 값이 이깁니다 (폴백 의도가 아니면 제거)
+빈 규칙: .empty
+벤더 접두사 -webkit-transition — 현대 브라우저는 접두사 없이도 지원합니다 (Autoprefixer 사용 권장)</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>압축된 스타일시트를 분석하거나 직접 짠 CSS 를 정리할 때 씁니다. 모든 처리는 브라우저 안에서만 이루어집니다.</p>
+<ul><li>정리: 선택자 쉼표 줄바꿈, 속성 정리, 값의 쉼표·공백 정규화, !important 표기, @media 조건 공백</li><li>문자열·url() 안의 ; { } 는 건드리지 않음, 중첩 규칙(&amp;:hover)과 @규칙 지원</li><li>선택: 선언 알파벳순 정렬, 주석 유지/삭제, 2칸·4칸·탭</li><li>검사: 중복 속성, 빈 규칙, !important 4번 이상, 불필요한 -webkit- 접두사, 속성:값 형식 오류, 괄호·주석·문자열 미종료</li><li>최소화: 공백·주석 제거, 마지막 세미콜론 제거, 0.5 → .5</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="html-formatter.html" class="related-card"><span class="related-icon">🧱</span><span>HTML 포맷터·검사기</span></a>
+    <a href="minifier.html" class="related-card"><span class="related-icon">🗜️</span><span>CSS·JS·HTML 압축</span></a>
+    <a href="css-units.html" class="related-card"><span class="related-icon">📐</span><span>CSS 단위 변환기</span></a>
+    <a href="css-specificity.html" class="related-card"><span class="related-icon">🎯</span><span>CSS 명시도 계산기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>정렬은 의도적인 폴백(color 를 두 번 쓰는 경우)의 순서를 바꿀 수 있어 주의하세요.</li><li>!important 가 많다면 선택자 명시도를 정리하는 편이 장기적으로 낫습니다.</li><li>벤더 접두사는 Autoprefixer 같은 빌드 도구에 맡기는 것이 안전합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>중복 속성이 항상 잘못인가요?</summary><p>아닙니다. 오래된 브라우저용 폴백을 위해 의도적으로 반복하기도 합니다. 의도하지 않은 중복인지 확인하라는 알림입니다.</p></details><details><summary>SCSS/Less 도 되나요?</summary><p>일반 CSS 와 CSS 중첩 문법을 대상으로 합니다. 변수·믹스인 같은 전처리기 기능은 지원하지 않습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/css-formatter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

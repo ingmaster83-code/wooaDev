@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PEP 440 Version Tester – Python Sorting &amp; Specifier Matching | WooaDev</title>
+  <meta name="description" content="Normalise PEP 440 Python versions and sort them dev &lt; a &lt; b &lt; rc &lt; final &lt; post. Judge &gt;=, ~=, ==1.*, != and comma-combined specifiers against candidate versions.">
+  <meta name="keywords" content="PEP 440, Python version compare, pip version specifier, compatible release, rc post dev order, pep440 version tester">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/pep440-version-tester.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/pep440-version-tester.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/pep440-version-tester.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/pep440-version-tester.html">
+  <meta property="og:title" content="PEP 440 Version Tester – Python Sorting &amp; Specifier Matching | WooaDev">
+  <meta property="og:description" content="Normalise PEP 440 Python versions and sort them dev &lt; a &lt; b &lt; rc &lt; final &lt; post. Judge &gt;=, ~=, ==1.*, != and comma-combined specifiers against candidate versions.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/pep440-version-tester.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PEP 440 Version Tester – Python Sorting &amp; Specifier Matching | WooaDev">
+  <meta name="twitter:description" content="Normalise PEP 440 Python versions and sort them dev &lt; a &lt; b &lt; rc &lt; final &lt; post. Judge &gt;=, ~=, ==1.*, != and comma-combined specifiers against candidate versions.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"PEP 440 Version Tester","url":"https://wooadev.wooahouse.com/en/pep440-version-tester.html","description":"Normalise PEP 440 Python versions and sort them dev < a < b < rc < final < post. Judge >=, ~=, ==1.*, != and comma-combined specifiers against candidate versions.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Normalise: 1.0-rc1 → 1.0rc1, 1.0.POST1 → 1.0.post1, 1.0.0 compares equal to 1.0","Sort: dev < a < b < rc < final < post, epoch (1!) first, local versions (+ubuntu.1)","Specifiers: ==, !=, <=, >=, <, >, ~=, ==1.*, === and comma AND","Pre-releases are excluded unless the specifier names one (option to include)","Invalid lines are marked in the table and the highest matching version is printed"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is SemVer the same as PEP 440?","acceptedAnswer":{"@type":"Answer","text":"Similar but not identical. PEP 440 has a, b, rc, dev, post, epochs and local versions, and notations like -beta.1 are normalised."}},{"@type":"Question","name":"==1.* versus ~=1.0?","acceptedAnswer":{"@type":"Answer","text":"==1.* is all of 1.x; ~=1.0 is the same range, while ~=1.0.0 narrows to 1.0.x."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"PEP 440 Version Tester","item":"https://wooadev.wooahouse.com/en/pep440-version-tester.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../pep440-version-tester.html">KO</a>
+        <span>|</span>
+        <a href="pep440-version-tester.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>PEP 440 Version Tester</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🐍</span>
+    <h1>PEP 440 Python Version &amp; Specifier Tester</h1>
+    <p>Normalises and sorts Python version strings such as 1.0rc1, 1.0.post1 and 1!2.0 by PEP 440 and tells you whether they satisfy a specifier like &gt;=1.0,&lt;2.0, ~=1.4.2 or ==1.*, and which matching version is highest.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>🔍 1 of 11 are not PEP 440</p>
+<h3>Input — Versions (one per line)</h3><pre>1.0
+1.0.post1
+1.0rc1
+1.0.dev3
+1.1
+1!0.5
+2.0a1
+2.0
+2.0.1+ubuntu.1
+1.0.0
+not.a.version</pre>
+<h3>Input — Specifier (optional, e.g. &gt;=1.0,&lt;2.0 · ~=1.0 · ==1.*)</h3><pre>&gt;=1.0,&lt;2.0</pre>
+<h3>Result — Normalised &amp; sorted</h3><pre>Input | Normalised | Kind | Match
+1.0.dev3 | 1.0.dev3 | dev | —
+1.0rc1 | 1.0rc1 | pre | —
+1.0 | 1.0 | final | ✅
+1.0.0 | 1.0.0 | final | ✅
+1.0.post1 | 1.0.post1 | post | ✅
+1.1 | 1.1 | final | ✅
+2.0a1 | 2.0a1 | pre | —
+2.0 | 2.0 | final | —
+2.0.1+ubuntu.1 | 2.0.1+ubuntu.1 | local | —
+1!0.5 | 1!0.5 | final | —
+not.a.version | ❌ | Not PEP 440 | </pre>
+<h3>Result — Highest matching version</h3><pre>1.1</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Use it to see which version pip will pick and how version strings order. Everything runs in your browser.</p>
+<ul><li>Normalise: 1.0-rc1 → 1.0rc1, 1.0.POST1 → 1.0.post1, 1.0.0 compares equal to 1.0</li><li>Sort: dev &lt; a &lt; b &lt; rc &lt; final &lt; post, epoch (1!) first, local versions (+ubuntu.1)</li><li>Specifiers: ==, !=, &lt;=, &gt;=, &lt;, &gt;, ~=, ==1.*, === and comma AND</li><li>Pre-releases are excluded unless the specifier names one (option to include)</li><li>Invalid lines are marked in the table and the highest matching version is printed</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="python-dependency-tools.html" class="related-card"><span class="related-icon">🐍</span><span>Python Dependency Converter</span></a>
+    <a href="package-version-tools.html" class="related-card"><span class="related-icon">📦</span><span>Package Version Constraint Explainer</span></a>
+    <a href="semver-calculator.html" class="related-card"><span class="related-icon">🔢</span><span>SemVer Calculator</span></a>
+    <a href="package-json-editor.html" class="related-card"><span class="related-icon">🧰</span><span>package.json Checker &amp; Tidier</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>~=1.4.2 equals &gt;=1.4.2,==1.4.* so 1.5.0 is not allowed.</li><li>1.0 and 1.0.0 are the same version; sorting as strings puts 1.10 before 1.9.</li><li>To receive pre-releases use pip install --pre or name one in the specifier.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Is SemVer the same as PEP 440?</summary><p>Similar but not identical. PEP 440 has a, b, rc, dev, post, epochs and local versions, and notations like -beta.1 are normalised.</p></details><details><summary>==1.* versus ~=1.0?</summary><p>==1.* is all of 1.x; ~=1.0 is the same range, while ~=1.0.0 narrows to 1.0.x.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/pep440-version-tester.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

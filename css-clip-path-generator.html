@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS clip-path 생성기 — polygon 도형 만들기 | WooaDev</title>
+  <meta name="description" content="clip-path polygon·circle·ellipse·inset 값을 만들고 미리보기합니다. 삼각형·사다리꼴·육각형·별·화살표 프리셋, x% y% 꼭짓점 직접 입력, -webkit- 접두사, drop-shadow 주의사항을 제공합니다.">
+  <meta name="keywords" content="clip-path 생성기, CSS polygon, clip-path 도형, 육각형 CSS, 별 모양 CSS, css clip-path generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/css-clip-path-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/css-clip-path-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/css-clip-path-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/css-clip-path-generator.html">
+  <meta property="og:title" content="CSS clip-path 생성기 — polygon 도형 만들기 | WooaDev">
+  <meta property="og:description" content="clip-path polygon·circle·ellipse·inset 값을 만들고 미리보기합니다. 삼각형·사다리꼴·육각형·별·화살표 프리셋, x% y% 꼭짓점 직접 입력, -webkit- 접두사, drop-shadow 주의사항을 제공합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/css-clip-path-generator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS clip-path 생성기 — polygon 도형 만들기 | WooaDev">
+  <meta name="twitter:description" content="clip-path polygon·circle·ellipse·inset 값을 만들고 미리보기합니다. 삼각형·사다리꼴·육각형·별·화살표 프리셋, x% y% 꼭짓점 직접 입력, -webkit- 접두사, drop-shadow 주의사항을 제공합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSS clip-path 생성기","url":"https://wooadev.wooahouse.com/css-clip-path-generator.html","description":"clip-path polygon·circle·ellipse·inset 값을 만들고 미리보기합니다. 삼각형·사다리꼴·육각형·별·화살표 프리셋, x% y% 꼭짓점 직접 입력, -webkit- 접두사, drop-shadow 주의사항을 제공합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["프리셋: 삼각형, 사다리꼴, 마름모, 오각형, 육각형, 별, 화살표","직접 입력: 한 줄에 x% y% (px 도 가능), 3개 이상, 일직선 점·영역 밖 점 경고","circle(반지름 at 중심), ellipse, inset(안쪽 여백 round 반경)","점 목록 표와 -webkit-clip-path 포함 CSS","그라디언트 또는 단색 배경으로 미리보기"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"점을 마우스로 끌어 조절할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"이 도구는 좌표 입력 방식입니다. 퍼센트 좌표를 수정하면서 미리보기로 확인하세요."}},{"@type":"Question","name":"%와 px 를 섞어도 되나요?","acceptedAnswer":{"@type":"Answer","text":"가능하지만 반응형이려면 % 를 권장합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"CSS clip-path 생성기","item":"https://wooadev.wooahouse.com/css-clip-path-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="css-clip-path-generator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/css-clip-path-generator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CSS clip-path 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">✂️</span>
+    <h1>CSS clip-path 생성기 — 다각형 · 원 · 도형</h1>
+    <p>삼각형·육각형·별 같은 프리셋이나 직접 입력한 꼭짓점으로 clip-path: polygon() 을 만들고, circle(), ellipse(), inset() 도 생성해 바로 미리보기로 확인합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ clip-path 를 만들었습니다</p>
+<h3>입력 — 다각형 꼭짓점 (한 줄에 x% y% 또는 x y)</h3><pre>50% 0%
+100% 38%
+82% 100%
+18% 100%
+0% 38%</pre>
+<h3>결과 — CSS</h3><pre>.element {
+  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  /* Safari 구버전 */
+  -webkit-clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+}</pre>
+<h3>결과 — 꼭짓점</h3><pre># | x | y
+1 | 50% | 0%
+2 | 100% | 38%
+3 | 82% | 100%
+4 | 18% | 100%
+5 | 0% | 38%</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>이미지나 박스를 사각형이 아닌 모양으로 자르는 clip-path 값을 좌표로 쉽게 만듭니다.</p>
+<ul><li>프리셋: 삼각형, 사다리꼴, 마름모, 오각형, 육각형, 별, 화살표</li><li>직접 입력: 한 줄에 x% y% (px 도 가능), 3개 이상, 일직선 점·영역 밖 점 경고</li><li>circle(반지름 at 중심), ellipse, inset(안쪽 여백 round 반경)</li><li>점 목록 표와 -webkit-clip-path 포함 CSS</li><li>그라디언트 또는 단색 배경으로 미리보기</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="css-effects-generator.html" class="related-card"><span class="related-icon">✨</span><span>CSS 효과 생성기</span></a>
+    <a href="border-radius.html" class="related-card"><span class="related-icon">⬜</span><span>Border Radius 생성기</span></a>
+    <a href="css-gradient.html" class="related-card"><span class="related-icon">🌈</span><span>CSS 그라디언트 생성기</span></a>
+    <a href="flexbox-generator.html" class="related-card"><span class="related-icon">📐</span><span>Flexbox 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>clip-path 는 그림자도 같이 잘라 버립니다. 그림자가 필요하면 부모에 filter: drop-shadow() 를 쓰세요.</li><li>점 개수가 같은 두 polygon 사이에서는 transition 으로 모양이 부드럽게 변합니다.</li><li>클릭 영역도 잘린 모양을 따릅니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>점을 마우스로 끌어 조절할 수 있나요?</summary><p>이 도구는 좌표 입력 방식입니다. 퍼센트 좌표를 수정하면서 미리보기로 확인하세요.</p></details><details><summary>%와 px 를 섞어도 되나요?</summary><p>가능하지만 반응형이려면 % 를 권장합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/css-clip-path-generator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

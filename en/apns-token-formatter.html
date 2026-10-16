@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APNs Token Formatter – Unify Hex &amp; Base64 Token Formats | WooaDev</title>
+  <meta name="description" content="Unify APNs device tokens from the &lt;…&gt; data description, spaced hex, mixed case and Base64 into lowercase hex. Validates the 32-byte length and gives Swift, Node and Python samples.">
+  <meta name="keywords" content="APNs token converter, device token hex, iOS push token, token base64, deviceToken hex, apns token formatter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/apns-token-formatter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/apns-token-formatter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/apns-token-formatter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/apns-token-formatter.html">
+  <meta property="og:title" content="APNs Token Formatter – Unify Hex &amp; Base64 Token Formats | WooaDev">
+  <meta property="og:description" content="Unify APNs device tokens from the &lt;…&gt; data description, spaced hex, mixed case and Base64 into lowercase hex. Validates the 32-byte length and gives Swift, Node and Python samples.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/apns-token-formatter.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="APNs Token Formatter – Unify Hex &amp; Base64 Token Formats | WooaDev">
+  <meta name="twitter:description" content="Unify APNs device tokens from the &lt;…&gt; data description, spaced hex, mixed case and Base64 into lowercase hex. Validates the 32-byte length and gives Swift, Node and Python samples.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"APNs Token Formatter","url":"https://wooadev.wooahouse.com/en/apns-token-formatter.html","description":"Unify APNs device tokens from the <…> data description, spaced hex, mixed case and Base64 into lowercase hex. Validates the 32-byte length and gives Swift, Node and Python samples.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Input: <spaced hex>, contiguous hex (any case), Base64 / Base64URL, one per line","Output: lowercase hex for your server, an 8-char grouped readable form and Base64","Validation: normally 32 bytes (64 digits); warns when shorter than 32 or longer than 100","App code samples: Swift Data → hex, Node Base64 → hex and Python","Reminds you to size the storage column generously because length can change"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"May I store the token in uppercase?","acceptedAnswer":{"@type":"Answer","text":"APNs ignores case, but storing lowercase consistently makes duplicate comparison easy."}},{"@type":"Question","name":"My token is not 64 characters; is that fine?","acceptedAnswer":{"@type":"Answer","text":"Apple says token length may grow, with up to 100 bytes allowed, so do not hard-code 64."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"APNs Token Formatter","item":"https://wooadev.wooahouse.com/en/apns-token-formatter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../apns-token-formatter.html">KO</a>
+        <span>|</span>
+        <a href="apns-token-formatter.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>APNs Token Formatter</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🍎</span>
+    <h1>APNs Device Token Formatter</h1>
+    <p>Normalises APNs device tokens written as Xcode's &lt;740f4707 bebcf74f …&gt;, plain hex or Base64 into the lowercase hex your server uses and validates their length, with Swift, Node and Python snippets.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Converted 3 token(s)</p>
+<h3>Input — APNs device tokens (hex, &lt;…&gt; form or Base64 — one per line)</h3><pre>&lt;740f4707 bebcf74f 9b7c25d4 8e335894 5f6aa01d a5ddb387 462c7eaf 61bb78ad&gt;
+740F4707BEBCF74F9B7C25D48E3358945F6AA01DA5DDB387462C7EAF61BB78AD
+c9o41ze/NiA=</pre>
+<h3>Result — Conversions</h3><pre>Input | Status | Format · length | Hex (groups of 8) | Base64
+&lt;740f4707 bebcf74f 9b7c25d4 8e335894 … | ✅ | Data description &lt;…&gt; · 32 bytes | 740f4707 bebcf74f 9b7c25d4 8e335894 5f6aa01d a5ddb387 462c7eaf 61bb78ad | dA9HB76890+bfCXUjjNYlF9qoB2l3bOHRix+r2G7eK0=
+740F4707BEBCF74F9B7C25D48E3358945F6AA… | ✅ | hex · 32 bytes | 740f4707 bebcf74f 9b7c25d4 8e335894 5f6aa01d a5ddb387 462c7eaf 61bb78ad | dA9HB76890+bfCXUjjNYlF9qoB2l3bOHRix+r2G7eK0=
+c9o41ze/NiA= | ⚠️ | Base64 · 8 bytes | 73da38d7 37bf3620 | c9o41ze/NiA=  ⚠ 8 bytes — too short (normally 32)</pre>
+<h3>Result — Value for your server (lowercase hex)</h3><pre>740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad
+740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad
+73da38d737bf3620</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>For when the device token you register with your iOS push server differs in format between logs, databases and libraries.</p>
+<ul><li>Input: &lt;spaced hex&gt;, contiguous hex (any case), Base64 / Base64URL, one per line</li><li>Output: lowercase hex for your server, an 8-char grouped readable form and Base64</li><li>Validation: normally 32 bytes (64 digits); warns when shorter than 32 or longer than 100</li><li>App code samples: Swift Data → hex, Node Base64 → hex and Python</li><li>Reminds you to size the storage column generously because length can change</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="base64.html" class="related-card"><span class="related-icon">🔐</span><span>Base64</span></a>
+    <a href="base-encoding-converter.html" class="related-card"><span class="related-icon">🔢</span><span>Base Encoding Converter</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>Number Base Converter</span></a>
+    <a href="hash-generator.html" class="related-card"><span class="related-icon">🔑</span><span>Hash Generator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Sandbox and production tokens are not interchangeable; match the APNs endpoint.</li><li>Reinstalling or restoring an app can change the token, so register it at every launch.</li><li>An Android FCM registration token is a different value from an APNs token.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>May I store the token in uppercase?</summary><p>APNs ignores case, but storing lowercase consistently makes duplicate comparison easy.</p></details><details><summary>My token is not 64 characters; is that fine?</summary><p>Apple says token length may grow, with up to 100 bytes allowed, so do not hard-code 64.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-hash.js"></script>
+<script src="../js/tools/apns-token-formatter.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

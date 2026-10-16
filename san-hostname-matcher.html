@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAN 호스트 이름 검증기 — 인증서 이름 일치 확인 | WooaDev</title>
+  <meta name="description" content="인증서 SAN 목록과 호스트 이름이 일치하는지 RFC 6125/9525 규칙으로 판정합니다. *.example.com 은 한 레이블만, 루트 도메인 불포함, IDN→punycode, IP SAN, 너무 넓은 와일드카드를 점검합니다.">
+  <meta name="keywords" content="SAN 호스트 이름 일치, 인증서 와일드카드, 인증서 이름 불일치, ERR_CERT_COMMON_NAME_INVALID, SAN CN, san hostname matcher">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/san-hostname-matcher.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/san-hostname-matcher.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/san-hostname-matcher.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/san-hostname-matcher.html">
+  <meta property="og:title" content="SAN 호스트 이름 검증기 — 인증서 이름 일치 확인 | WooaDev">
+  <meta property="og:description" content="인증서 SAN 목록과 호스트 이름이 일치하는지 RFC 6125/9525 규칙으로 판정합니다. *.example.com 은 한 레이블만, 루트 도메인 불포함, IDN→punycode, IP SAN, 너무 넓은 와일드카드를 점검합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/san-hostname-matcher.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SAN 호스트 이름 검증기 — 인증서 이름 일치 확인 | WooaDev">
+  <meta name="twitter:description" content="인증서 SAN 목록과 호스트 이름이 일치하는지 RFC 6125/9525 규칙으로 판정합니다. *.example.com 은 한 레이블만, 루트 도메인 불포함, IDN→punycode, IP SAN, 너무 넓은 와일드카드를 점검합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"인증서 SAN 호스트 이름 검증기","url":"https://wooadev.wooahouse.com/san-hostname-matcher.html","description":"인증서 SAN 목록과 호스트 이름이 일치하는지 RFC 6125/9525 규칙으로 판정합니다. *.example.com 은 한 레이블만, 루트 도메인 불포함, IDN→punycode, IP SAN, 너무 넓은 와일드카드를 점검합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["와일드카드 *.example.com 은 www.example.com 만 일치하고 a.b.example.com 과 example.com(루트)은 일치하지 않음","대소문자·끝의 점 무시, 한글·유니코드 도메인은 xn-- 형태로 변환해 비교","IP 주소는 DNS SAN 이 아니라 IP SAN 과만 비교 (IPv6 표기 정규화 포함)","SAN 점검: 부분 와일드카드(w*.example.com), 너무 넓은 와일드카드(*.com), 공개 접미사 아래 와일드카드","일부 오래된 클라이언트용 느슨한 규칙(* 가 여러 레이블)도 선택 가능"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"*.example.com 인증서로 example.com 에 접속하면요?","acceptedAnswer":{"@type":"Answer","text":"일치하지 않습니다. 와일드카드는 루트 도메인을 포함하지 않으므로 SAN 에 example.com 을 따로 넣어야 합니다."}},{"@type":"Question","name":"openssl 로 SAN 은 어떻게 보나요?","acceptedAnswer":{"@type":"Answer","text":"openssl x509 -in cert.pem -noout -ext subjectAltName 으로 확인할 수 있습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"인증서 SAN 호스트 이름 검증기","item":"https://wooadev.wooahouse.com/san-hostname-matcher.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="san-hostname-matcher.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/san-hostname-matcher.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>인증서 SAN 호스트 이름 검증기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📜</span>
+    <h1>인증서 SAN · 호스트 이름 일치 검사기</h1>
+    <p>인증서의 SAN(Subject Alternative Name) 목록과 접속하려는 호스트 이름을 넣으면 브라우저처럼 일치 여부를 판정합니다. 와일드카드는 한 레이블만, IDN은 punycode로, IP는 IP SAN으로만 비교합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 9개 중 6개 일치</p>
+<h3>입력 — 인증서의 SAN / CN 목록 (한 줄에 하나, IP는 IP: 접두사 또는 그대로)</h3><pre>*.example.com
+example.com
+IP:203.0.113.10
+api.internal.example.org
+xn--bcher-kva.example</pre>
+<h3>입력 — 확인할 호스트 이름 (한 줄에 하나)</h3><pre>www.example.com
+example.com
+a.b.example.com
+*.example.com
+EXAMPLE.COM.
+203.0.113.10
+api.internal.example.org
+bücher.example
+foo.com</pre>
+<h3>결과 — 일치 결과</h3><pre>호스트 | 결과 | 근거
+www.example.com | ✅ | 일치: *.example.com
+example.com | ✅ | 일치: example.com
+a.b.example.com | ❌ | * 는 레이블 하나만 대신합니다 (*.example.com 는 a.b.example.com 와 일치하지 않음)
+*.example.com | ❌ | 와일드카드는 호스트 이름으로 쓸 수 없습니다 (인증서 쪽에만 사용)
+EXAMPLE.COM. | ✅ | 일치: example.com
+203.0.113.10 | ✅ | 일치: IP:203.0.113.10
+api.internal.example.org | ✅ | 일치: api.internal.example.org
+bücher.example | ✅ | 일치: xn--bcher-kva.example
+foo.com | ❌ | 일치하는 SAN 이 없습니다</pre>
+<h3>결과 — 참고</h3><pre>최신 브라우저와 RFC 9110/9525 는 CN 을 무시하고 SAN 만 봅니다. CN 에만 있는 이름은 오류가 납니다
+한글·유니코드 호스트는 punycode(xn--)로 바꿔 비교합니다. 호스트 이름 끝의 점(.)은 무시합니다</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>'인증서의 이름이 호스트와 일치하지 않습니다' 오류가 날 때 어떤 이름이 빠졌는지 바로 확인할 수 있습니다.</p>
+<ul><li>와일드카드 *.example.com 은 www.example.com 만 일치하고 a.b.example.com 과 example.com(루트)은 일치하지 않음</li><li>대소문자·끝의 점 무시, 한글·유니코드 도메인은 xn-- 형태로 변환해 비교</li><li>IP 주소는 DNS SAN 이 아니라 IP SAN 과만 비교 (IPv6 표기 정규화 포함)</li><li>SAN 점검: 부분 와일드카드(w*.example.com), 너무 넓은 와일드카드(*.com), 공개 접미사 아래 와일드카드</li><li>일부 오래된 클라이언트용 느슨한 규칙(* 가 여러 레이블)도 선택 가능</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="domain-validator.html" class="related-card"><span class="related-icon">✔️</span><span>도메인·호스트 이름 검증기</span></a>
+    <a href="punycode-converter.html" class="related-card"><span class="related-icon">🈳</span><span>퓨니코드 변환기</span></a>
+    <a href="email-address-tool.html" class="related-card"><span class="related-icon">✉️</span><span>이메일 주소 검사·mailto 생성기</span></a>
+    <a href="ip-converter.html" class="related-card"><span class="related-icon">🔁</span><span>IP 주소 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>루트 도메인과 www 를 모두 쓰려면 SAN 에 example.com 과 *.example.com 을 둘 다 넣으세요.</li><li>최신 브라우저는 CN 을 보지 않고 SAN 만 봅니다. CN 에만 이름이 있으면 오류가 납니다.</li><li>와일드카드 인증서는 개인 키 유출 시 피해 범위가 넓으니 필요한 이름만 나열하는 것도 방법입니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>*.example.com 인증서로 example.com 에 접속하면요?</summary><p>일치하지 않습니다. 와일드카드는 루트 도메인을 포함하지 않으므로 SAN 에 example.com 을 따로 넣어야 합니다.</p></details><details><summary>openssl 로 SAN 은 어떻게 보나요?</summary><p>openssl x509 -in cert.pem -noout -ext subjectAltName 으로 확인할 수 있습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-net.js"></script>
+<script src="js/tk-dns.js"></script>
+<script src="js/tools/san-hostname-matcher.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

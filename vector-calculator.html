@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>벡터 유사도 계산기 — 코사인·내적·유클리드 거리 | WooaDev</title>
+  <meta name="description" content="두 벡터의 코사인 유사도, 코사인 거리, 내적, 사잇각, 유클리드(L2)·맨해튼(L1)·체비쇼프(L∞) 거리와 크기를 계산하고 여러 벡터를 A와의 유사도 순으로 순위를 매깁니다. 차원 불일치와 영벡터를 검사합니다.">
+  <meta name="keywords" content="코사인 유사도, 벡터 내적, 임베딩 비교, 유클리드 거리, 벡터 거리 계산, vector calculator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/vector-calculator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/vector-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/vector-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/vector-calculator.html">
+  <meta property="og:title" content="벡터 유사도 계산기 — 코사인·내적·유클리드 거리 | WooaDev">
+  <meta property="og:description" content="두 벡터의 코사인 유사도, 코사인 거리, 내적, 사잇각, 유클리드(L2)·맨해튼(L1)·체비쇼프(L∞) 거리와 크기를 계산하고 여러 벡터를 A와의 유사도 순으로 순위를 매깁니다. 차원 불일치와 영벡터를 검사합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/vector-calculator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="벡터 유사도 계산기 — 코사인·내적·유클리드 거리 | WooaDev">
+  <meta name="twitter:description" content="두 벡터의 코사인 유사도, 코사인 거리, 내적, 사잇각, 유클리드(L2)·맨해튼(L1)·체비쇼프(L∞) 거리와 크기를 계산하고 여러 벡터를 A와의 유사도 순으로 순위를 매깁니다. 차원 불일치와 영벡터를 검사합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"벡터 유사도 계산기","url":"https://wooadev.wooahouse.com/vector-calculator.html","description":"두 벡터의 코사인 유사도, 코사인 거리, 내적, 사잇각, 유클리드(L2)·맨해튼(L1)·체비쇼프(L∞) 거리와 크기를 계산하고 여러 벡터를 A와의 유사도 순으로 순위를 매깁니다. 차원 불일치와 영벡터를 검사합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: 쉼표·공백으로 구분한 숫자나 [0.1, -0.2] 같은 JSON 배열, 소수 자릿수 선택","지표: 코사인 유사도·거리(1 − cos), 내적, 사잇각(도), L2·L1·L∞ 거리, 각 벡터의 크기","순위: 비교할 벡터를 한 줄에 하나씩 넣으면 A 와의 코사인 유사도 순서로 정렬 (차원이 다르면 제외 표시)","단위 벡터면 내적이 코사인 유사도와 같다는 안내, 영벡터는 코사인이 정의되지 않음","차원이 다르거나 숫자가 아닌 값은 오류"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"코사인 유사도와 유클리드 거리 중 무엇을 써야 하나요?","acceptedAnswer":{"@type":"Answer","text":"텍스트 임베딩은 방향이 의미를 나타내므로 코사인 유사도가 일반적입니다. 크기가 중요하면 L2 도 함께 보세요."}},{"@type":"Question","name":"1536차원 벡터도 되나요?","acceptedAnswer":{"@type":"Answer","text":"붙여 넣을 수 있는 한 계산됩니다. 숫자 수천 개는 브라우저에서 즉시 처리됩니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"벡터 유사도 계산기","item":"https://wooadev.wooahouse.com/vector-calculator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="vector-calculator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/vector-calculator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>벡터 유사도 계산기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧮</span>
+    <h1>벡터 유사도 · 거리 계산기 (임베딩 비교)</h1>
+    <p>임베딩 벡터 A 와 B 를 붙여 넣으면 코사인 유사도, 코사인 거리, 내적, 사잇각, L1·L2·L∞ 거리와 크기를 계산합니다. 비교할 벡터를 더 넣으면 A 와 가까운 순서로 순위를 매겨 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ cosine = 0.991798 · L2 = 0.160935</p>
+<h3>입력 — 벡터 A (쉼표·공백·JSON 배열)</h3><pre>[0.12, -0.53, 0.91, 0.07, 0.44]</pre>
+<h3>입력 — 벡터 B</h3><pre>0.10, -0.48, 0.85, 0.20, 0.39</pre>
+<h3>입력 — 비교할 다른 벡터들 (한 줄에 하나, 선택)</h3><pre>0.9 0.1 -0.2 0.5 0.0
+-0.12, 0.53, -0.91, -0.07, -0.44</pre>
+<h3>결과 — 유사도 · 거리</h3><pre>지표 | 값
+차원 | 5
+|A| (L2) | 1.149739
+|B| (L2) | 1.074709
+내적 A·B | 1.2255
+코사인 유사도 | 0.991798
+코사인 거리 (1 − cos) | 0.008202
+사잇각 | 7.343571°
+유클리드 거리 (L2) | 0.160935
+맨해튼 거리 (L1) | 0.31
+체비쇼프 거리 (L∞) | 0.13
+정규화된 A·B 의 유클리드 거리 | 0.128082</pre>
+<h3>결과 — A 와 비교한 순위</h3><pre>순위 | 벡터 | 코사인 | 유클리드 | 값
+1 | B | 0.991798 | 0.160935 | 벡터 B
+2 | #1 | -0.07595 | 1.617374 | 0.9 0.1 -0.2 0.5 0.0
+3 | #2 | -1 | 2.299478 | -0.12, 0.53, -0.91, -0.07, -0.44</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>임베딩 값 두 개가 얼마나 비슷한지 눈으로 확인하고 싶을 때 씁니다. 벡터는 브라우저에서만 처리됩니다.</p>
+<ul><li>입력: 쉼표·공백으로 구분한 숫자나 [0.1, -0.2] 같은 JSON 배열, 소수 자릿수 선택</li><li>지표: 코사인 유사도·거리(1 − cos), 내적, 사잇각(도), L2·L1·L∞ 거리, 각 벡터의 크기</li><li>순위: 비교할 벡터를 한 줄에 하나씩 넣으면 A 와의 코사인 유사도 순서로 정렬 (차원이 다르면 제외 표시)</li><li>단위 벡터면 내적이 코사인 유사도와 같다는 안내, 영벡터는 코사인이 정의되지 않음</li><li>차원이 다르거나 숫자가 아닌 값은 오류</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="text-chunker.html" class="related-card"><span class="related-icon">✂️</span><span>텍스트 청킹 도구 (RAG)</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+    <a href="bitwise-calculator.html" class="related-card"><span class="related-icon">🧮</span><span>비트 연산 계산기</span></a>
+    <a href="jsonl-viewer.html" class="related-card"><span class="related-icon">📃</span><span>JSON Lines 뷰어</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>임베딩 API 는 보통 정규화된 벡터를 줍니다. 이때는 내적과 코사인 유사도가 같습니다.</li><li>거리 지표는 작을수록, 유사도는 클수록 비슷합니다.</li><li>서로 다른 모델의 임베딩은 비교할 수 없습니다. 같은 모델의 같은 차원만 비교하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>코사인 유사도와 유클리드 거리 중 무엇을 써야 하나요?</summary><p>텍스트 임베딩은 방향이 의미를 나타내므로 코사인 유사도가 일반적입니다. 크기가 중요하면 L2 도 함께 보세요.</p></details><details><summary>1536차원 벡터도 되나요?</summary><p>붙여 넣을 수 있는 한 계산됩니다. 숫자 수천 개는 브라우저에서 즉시 처리됩니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/vector-calculator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

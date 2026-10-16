@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Chunker – Split RAG Documents with Overlap &amp; JSON | WooaDev</title>
+  <meta name="description" content="Split documents for RAG by characters, estimated tokens, paragraphs, Markdown headings or sentences with overlap and boundary cutting. Gives a chunk table, JSON output and short-chunk warnings.">
+  <meta name="keywords" content="text chunker, RAG chunks, document splitting, chunk overlap, embedding preprocessing, token estimate, text chunker">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/text-chunker.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/text-chunker.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/text-chunker.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/text-chunker.html">
+  <meta property="og:title" content="Text Chunker – Split RAG Documents with Overlap &amp; JSON | WooaDev">
+  <meta property="og:description" content="Split documents for RAG by characters, estimated tokens, paragraphs, Markdown headings or sentences with overlap and boundary cutting. Gives a chunk table, JSON output and short-chunk warnings.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/text-chunker.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Text Chunker – Split RAG Documents with Overlap &amp; JSON | WooaDev">
+  <meta name="twitter:description" content="Split documents for RAG by characters, estimated tokens, paragraphs, Markdown headings or sentences with overlap and boundary cutting. Gives a chunk table, JSON output and short-chunk warnings.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Text Chunker (RAG)","url":"https://wooadev.wooahouse.com/en/text-chunker.html","description":"Split documents for RAG by characters, estimated tokens, paragraphs, Markdown headings or sentences with overlap and boundary cutting. Gives a chunk table, JSON output and short-chunk warnings.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Split by: characters, tokens (estimated), paragraphs (blank lines), Markdown headings (#) and sentences","Character and token modes support overlap and cutting on word or sentence boundaries","Paragraph and sentence modes merge small units up to the size limit; heading mode starts a new chunk at every heading (no overlap applied)","Token estimate: about 4 chars / token for English, 1.5 for Korean and auto for mixed (use your model's tokenizer for exact values)","A chunk table (range, length, tokens, overlap, preview), JSON (id, start, end, text) and short-chunk warnings"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What happens if chunks are too small or too large?","acceptedAnswer":{"@type":"Answer","text":"Too small lacks context; too large mixes unrelated content, lowers retrieval precision and raises prompt cost."}},{"@type":"Question","name":"Why does the token count differ from my model?","acceptedAnswer":{"@type":"Answer","text":"It is estimated from characters; compute exact values with the model's tokenizer such as tiktoken."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Text Chunker (RAG)","item":"https://wooadev.wooahouse.com/en/text-chunker.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../text-chunker.html">KO</a>
+        <span>|</span>
+        <a href="text-chunker.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Text Chunker (RAG)</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">✂️</span>
+    <h1>Text Chunker — RAG &amp; Embedding Preprocessing</h1>
+    <p>Splits long documents into chunks suited for embeddings and retrieval. Supports character, estimated-token, paragraph, Markdown-heading and sentence splitting with overlap, word / sentence boundary cutting, a chunk table, JSON output and warnings for tiny chunks.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ 2 chunk(s) · avg 210 chars · total ≈165 tokens</p>
+<h3>Input — Document to split</h3><pre># RAG 소개
+
+RAG(Retrieval-Augmented Generation)는 외부 문서를 검색해 LLM 의 답변을 보강하는 방식입니다. 문서를 적당한 크기로 나누는 청킹이 검색 품질을 좌우합니다.
+
+## 청킹 전략
+
+고정 길이 청킹은 단순하지만 문장이 중간에서 잘릴 수 있습니다. 문단·제목 기준 청킹은 의미 단위를 유지합니다. 겹침(overlap)을 두면 경계에서 문맥이 끊기는 문제를 줄일 수 있습니다.
+
+## 주의사항
+
+청크가 너무 작으면 문맥이 부족하고, 너무 크면 관련 없는 내용이 섞여 검색 정밀도가 떨어집니다. Chunks that are too large also cost more tokens when they are placed in the prompt.</pre>
+<h3>Result — Chunks</h3><pre># | Range | Length | Tokens (est.) | Overlap | Preview
+1 | 0–296 | 296 ch | ≈144 tok | — | # RAG 소개 RAG(Retrieval-Augmented Generation)는 외부 문서를 검색해 LLM…
+2 | 256–380 | 124 ch | ≈43 tok | 40 ch overlap | 부족하고, 너무 크면 관련 없는 내용이 섞여 검색 정밀도가 떨어집니다. Chunks that are too …</pre>
+<h3>Result — JSON</h3><pre>[
+  {
+    "id": 0,
+    "start": 0,
+    "end": 296,
+    "chars": 296,
+    "tokens_est": 144,
+    "text": "# RAG 소개\n\nRAG(Retrieval-Augmented Generation)는 외부 문서를 검색해 LLM 의 답변을 보강하는 방식입니다. 문서를 적당한 크기로 나누는 청킹이 검색 품질을 좌우합니다.\n\n## 청킹 전략\n\n고정 길이 청킹은 단순하지만 문장이 중간에서 잘릴 수 있습니다. 문단·제목 기준 청킹은 의미 단위를 유지합니다. 겹침(overlap)을 두면 경계에서 문맥이 끊기는 문제를 줄일 수 있습니다.\n\n## 주의사항\n\n청크가 너무 작으면 문맥이 부족하고, 너무 크면 관련 없는 내용이 섞여 검색 정밀도가 떨어집니다."
+  },
+  {
+    "id": 1,
+    "start": 256,
+    "end": 380,
+    "chars": 124,
+    "tokens_est": 43,
+    "text": " 부족하고, 너무 크면 관련 없는 내용이 섞여 검색 정밀도가 떨어집니다. Chunks that are too large also cost more tokens when they are placed in the prompt."
+  }
+]</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Vary chunk size and overlap and see the result immediately when preparing documents for vector search. Documents never leave your browser.</p>
+<ul><li>Split by: characters, tokens (estimated), paragraphs (blank lines), Markdown headings (#) and sentences</li><li>Character and token modes support overlap and cutting on word or sentence boundaries</li><li>Paragraph and sentence modes merge small units up to the size limit; heading mode starts a new chunk at every heading (no overlap applied)</li><li>Token estimate: about 4 chars / token for English, 1.5 for Korean and auto for mixed (use your model's tokenizer for exact values)</li><li>A chunk table (range, length, tokens, overlap, preview), JSON (id, start, end, text) and short-chunk warnings</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="vector-calculator.html" class="related-card"><span class="related-icon">🧮</span><span>Vector Similarity Calculator</span></a>
+    <a href="markdown-preview.html" class="related-card"><span class="related-icon">📝</span><span>Markdown Preview</span></a>
+    <a href="markdown-table.html" class="related-card"><span class="related-icon">📋</span><span>Markdown Table Generator</span></a>
+    <a href="jsonl-viewer.html" class="related-card"><span class="related-icon">📃</span><span>JSON Lines Viewer</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Start with 200–500 tokens and 10–20% overlap and tune by looking at retrieval results.</li><li>Use paragraph or heading splitting so tables and code blocks are not cut in half.</li><li>Korean uses far more tokens than English for the same number of characters.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What happens if chunks are too small or too large?</summary><p>Too small lacks context; too large mixes unrelated content, lowers retrieval precision and raises prompt cost.</p></details><details><summary>Why does the token count differ from my model?</summary><p>It is estimated from characters; compute exact values with the model's tokenizer such as tiktoken.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/text-chunker.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

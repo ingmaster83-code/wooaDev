@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>파일 형식 판별기 — 매직 바이트로 확장자 위장 탐지 | WooaDev</title>
+  <meta name="description" content="파일 앞부분의 매직 바이트로 PNG, JPEG, PDF, ZIP(docx·xlsx), GZIP, ELF, EXE, MP4, SQLite 등 60여 형식을 판별하고 확장자와 비교해 위장 파일을 경고합니다. 파일은 서버로 전송되지 않습니다.">
+  <meta name="keywords" content="파일 형식 확인, 매직 바이트, 파일 시그니처, 확장자 위장, magic number, file type detector">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/file-type-detector.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/file-type-detector.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/file-type-detector.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/file-type-detector.html">
+  <meta property="og:title" content="파일 형식 판별기 — 매직 바이트로 확장자 위장 탐지 | WooaDev">
+  <meta property="og:description" content="파일 앞부분의 매직 바이트로 PNG, JPEG, PDF, ZIP(docx·xlsx), GZIP, ELF, EXE, MP4, SQLite 등 60여 형식을 판별하고 확장자와 비교해 위장 파일을 경고합니다. 파일은 서버로 전송되지 않습니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/file-type-detector.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="파일 형식 판별기 — 매직 바이트로 확장자 위장 탐지 | WooaDev">
+  <meta name="twitter:description" content="파일 앞부분의 매직 바이트로 PNG, JPEG, PDF, ZIP(docx·xlsx), GZIP, ELF, EXE, MP4, SQLite 등 60여 형식을 판별하고 확장자와 비교해 위장 파일을 경고합니다. 파일은 서버로 전송되지 않습니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"파일 형식 판별기","url":"https://wooadev.wooahouse.com/file-type-detector.html","description":"파일 앞부분의 매직 바이트로 PNG, JPEG, PDF, ZIP(docx·xlsx), GZIP, ELF, EXE, MP4, SQLite 등 60여 형식을 판별하고 확장자와 비교해 위장 파일을 경고합니다. 파일은 서버로 전송되지 않습니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: 파일 선택(앞 4KB만 읽음) 또는 16진수 바이트 붙여 넣기","판별: 이미지(PNG·JPEG·GIF·WebP·BMP·TIFF·ICO·AVIF), 문서(PDF·RTF·OLE2), 압축(ZIP·GZIP·7z·RAR·TAR·XZ), 오디오·비디오, 실행 파일(ELF·PE·Mach-O·class·wasm), DB·폰트·인증서 등","파일 이름의 확장자와 대조해 불일치, 실행 파일인데 문서 확장자 같은 위장 경고","텍스트(UTF-8, BOM), JSON·XML·HTML·SVG 휴리스틱 판별","앞 64바이트 16진수 덤프 제공"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"파일이 서버로 올라가나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 브라우저에서 파일 앞부분만 읽어 판별하며 어디에도 전송하지 않습니다."}},{"@type":"Question","name":"왜 'MZ'로 시작하면 exe 인가요?","acceptedAnswer":{"@type":"Answer","text":"DOS 실행 파일 헤더의 시그니처(Mark Zbikowski의 머리글자)로 Windows PE 실행 파일(exe, dll)이 이 헤더로 시작합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"파일 형식 판별기","item":"https://wooadev.wooahouse.com/file-type-detector.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="file-type-detector.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/file-type-detector.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>파일 형식 판별기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔎</span>
+    <h1>파일 형식 판별기 — 매직 바이트로 진짜 형식 확인</h1>
+    <p>파일 이름이 아니라 파일 앞부분의 시그니처(매직 바이트)로 실제 형식을 알아냅니다. 파일을 선택하거나 16진수 바이트를 붙여 넣으면 PNG·PDF·ZIP·EXE 등 60여 형식을 판별하고 확장자와 대조합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>🚨 확장자와 실제 형식이 다릅니다</p>
+<h3>입력 — 파일 앞부분의 16진수 바이트</h3><pre>89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 00 00 01 00 00 00 01 00 08 06 00 00 00</pre>
+<h3>입력 — 파일 이름 (확장자 대조용, 선택)</h3><pre>photo.jpg</pre>
+<h3>결과 — 판별 결과</h3><pre>형식 | 대표 확장자 | MIME | 이름 대조 | 분류
+PNG | png | image/png | ⚠️ .jpg | image</pre>
+<h3>결과 — 앞부분 16진수 덤프</h3><pre>0000  89 50 4e 47 0d 0a 1a 0a 00 00 00 0d 49 48 44 52  .PNG........IHDR
+0010  00 00 01 00 00 00 01 00 08 06 00 00 00           .............</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>확장자는 이름일 뿐이라 바꾸면 그만입니다. 업로드 검증이나 출처를 알 수 없는 파일 점검에는 내용을 직접 보는 것이 확실합니다.</p>
+<ul><li>입력: 파일 선택(앞 4KB만 읽음) 또는 16진수 바이트 붙여 넣기</li><li>판별: 이미지(PNG·JPEG·GIF·WebP·BMP·TIFF·ICO·AVIF), 문서(PDF·RTF·OLE2), 압축(ZIP·GZIP·7z·RAR·TAR·XZ), 오디오·비디오, 실행 파일(ELF·PE·Mach-O·class·wasm), DB·폰트·인증서 등</li><li>파일 이름의 확장자와 대조해 불일치, 실행 파일인데 문서 확장자 같은 위장 경고</li><li>텍스트(UTF-8, BOM), JSON·XML·HTML·SVG 휴리스틱 판별</li><li>앞 64바이트 16진수 덤프 제공</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="file-checksum.html" class="related-card"><span class="related-icon">🧾</span><span>파일 체크섬 계산기</span></a>
+    <a href="data-uri-converter.html" class="related-card"><span class="related-icon">🧩</span><span>Data URI 변환기</span></a>
+    <a href="base64.html" class="related-card"><span class="related-icon">🔐</span><span>Base64</span></a>
+    <a href="hash-generator.html" class="related-card"><span class="related-icon">🔑</span><span>Hash 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>docx·xlsx·pptx·jar·apk·epub 는 모두 ZIP 으로 시작합니다. 정확한 종류는 내부 파일 이름으로 구분합니다.</li><li>업로드 검증은 확장자, Content-Type, 매직 바이트를 모두 확인하고 파일을 웹 루트 밖에 저장하세요.</li><li>매직 바이트가 맞아도 악성 내용이 없다는 뜻은 아닙니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>파일이 서버로 올라가나요?</summary><p>아니요. 브라우저에서 파일 앞부분만 읽어 판별하며 어디에도 전송하지 않습니다.</p></details><details><summary>왜 'MZ'로 시작하면 exe 인가요?</summary><p>DOS 실행 파일 헤더의 시그니처(Mark Zbikowski의 머리글자)로 Windows PE 실행 파일(exe, dll)이 이 헤더로 시작합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-bytes.js"></script>
+<script src="js/tools/file-type-detector.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

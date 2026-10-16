@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConfigMap &amp; Secret Converter – .env to Kubernetes YAML | WooaDev</title>
+  <meta name="description" content="Convert .env into Kubernetes ConfigMap and Secret YAML. Secret-looking keys are classified automatically, with Base64 or stringData, name checks, an envFrom snippet and Secret decoding.">
+  <meta name="keywords" content="ConfigMap converter, Secret base64, dotenv kubernetes, env to configmap, kubectl create secret, kubernetes config converter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/kubernetes-config-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/kubernetes-config-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/kubernetes-config-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/kubernetes-config-converter.html">
+  <meta property="og:title" content="ConfigMap &amp; Secret Converter – .env to Kubernetes YAML | WooaDev">
+  <meta property="og:description" content="Convert .env into Kubernetes ConfigMap and Secret YAML. Secret-looking keys are classified automatically, with Base64 or stringData, name checks, an envFrom snippet and Secret decoding.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/kubernetes-config-converter.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ConfigMap &amp; Secret Converter – .env to Kubernetes YAML | WooaDev">
+  <meta name="twitter:description" content="Convert .env into Kubernetes ConfigMap and Secret YAML. Secret-looking keys are classified automatically, with Base64 or stringData, name checks, an envFrom snippet and Secret decoding.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"ConfigMap & Secret Converter","url":"https://wooadev.wooahouse.com/en/kubernetes-config-converter.html","description":"Convert .env into Kubernetes ConfigMap and Secret YAML. Secret-looking keys are classified automatically, with Base64 or stringData, name checks, an envFrom snippet and Secret decoding.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":[".env → YAML: keys containing PASSWORD, SECRET, TOKEN, KEY … go to a Secret, the rest to a ConfigMap (override manually if you like)","Secrets as data (Base64) or stringData (plain), with an optional namespace","Checks the name (DNS subdomain), key characters and duplicates, and quotes numbers and booleans as strings","Generates envFrom / valueFrom snippets for the Deployment","Reverse direction: decode data / stringData of ConfigMap and Secret YAML into .env"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"data versus stringData?","acceptedAnswer":{"@type":"Answer","text":"data holds Base64 values; with stringData you write plain text and the API server encodes it on save. stringData reads better in manifests."}},{"@type":"Question","name":"Does changing a Secret update running Pods?","acceptedAnswer":{"@type":"Answer","text":"Environment variables only change after a restart. Values mounted as volumes refresh after a short delay."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"ConfigMap & Secret Converter","item":"https://wooadev.wooahouse.com/en/kubernetes-config-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../kubernetes-config-converter.html">KO</a>
+        <span>|</span>
+        <a href="kubernetes-config-converter.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>ConfigMap &amp; Secret Converter</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📦</span>
+    <h1>Kubernetes ConfigMap &amp; Secret ↔ .env Converter</h1>
+    <p>Splits the KEY=VALUE pairs of a .env file into ConfigMap and Secret YAML (with Base64 encoding) and turns Secret / ConfigMap YAML back into .env. It also writes the envFrom snippet for your Deployment.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ ConfigMap 3 key(s) · Secret 2 key(s)</p>
+<h3>Input — .env content (KEY=VALUE)</h3><pre># 앱 설정
+LOG_LEVEL=info
+API_URL=https://api.example.com
+DB_HOST=db.internal
+DB_PASSWORD=s3cr3t!
+JWT_SECRET="a long secret value"</pre>
+<h3>Input — ConfigMap / Secret YAML</h3><pre>apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secret
+data:
+  DB_PASSWORD: czNjcjN0IQ==
+  JWT_SECRET: YSBsb25nIHNlY3JldCB2YWx1ZQ==
+stringData:
+  EXTRA: plain value</pre>
+<h3>Result — Result</h3><pre>apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  LOG_LEVEL: info
+  API_URL: "https://api.example.com"
+  DB_HOST: db.internal
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-config-secret
+type: Opaque
+data:
+  DB_PASSWORD: czNjcjN0IQ==
+  JWT_SECRET: YSBsb25nIHNlY3JldCB2YWx1ZQ==</pre>
+<h3>Result — Using it in a Deployment</h3><pre># Deployment &gt; spec.template.spec.containers[]
+        envFrom:
+          - configMapRef:
+              name: app-config
+          - secretRef:
+              name: app-config-secret
+
+# or one key at a time
+        env:
+          - name: LOG_LEVEL
+            valueFrom:
+              configMapKeyRef:
+                name: app-config
+                key: LOG_LEVEL</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Moving settings from .env to Kubernetes means computing Base64 per value and splitting ConfigMap from Secret; this automates it. Everything runs in your browser.</p>
+<ul><li>.env → YAML: keys containing PASSWORD, SECRET, TOKEN, KEY … go to a Secret, the rest to a ConfigMap (override manually if you like)</li><li>Secrets as data (Base64) or stringData (plain), with an optional namespace</li><li>Checks the name (DNS subdomain), key characters and duplicates, and quotes numbers and booleans as strings</li><li>Generates envFrom / valueFrom snippets for the Deployment</li><li>Reverse direction: decode data / stringData of ConfigMap and Secret YAML into .env</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="env-editor.html" class="related-card"><span class="related-icon">✏️</span><span>.env Editor</span></a>
+    <a href="env-json-converter.html" class="related-card"><span class="related-icon">🔄</span><span>ENV ↔ JSON Converter</span></a>
+    <a href="yaml-formatter.html" class="related-card"><span class="related-icon">🧹</span><span>YAML Formatter</span></a>
+    <a href="kubernetes-label-selector.html" class="related-card"><span class="related-icon">🏷️</span><span>Kubernetes Label Selector Tester</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Base64 is not encryption. Do not commit Secret YAML to Git; use Sealed Secrets, External Secrets or SOPS.</li><li>ConfigMap values must be strings, so numbers such as ports are emitted as "8080".</li><li>A single ConfigMap or Secret is limited to 1 MiB; consider volumes or another store for big files.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>data versus stringData?</summary><p>data holds Base64 values; with stringData you write plain text and the API server encodes it on save. stringData reads better in manifests.</p></details><details><summary>Does changing a Secret update running Pods?</summary><p>Environment variables only change after a restart. Values mounted as volumes refresh after a short delay.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-hash.js"></script>
+<script src="../js/lib/yaml.min.js"></script>
+<script src="../js/tools/kubernetes-config-converter.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

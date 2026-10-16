@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Package Version Constraint Explainer – Composer, Cargo, NuGet, Go | WooaDev</title>
+  <meta name="description" content="Explain Composer ^ ~ || wildcards, Cargo ^ ~ = comparators, NuGet intervals [1.0,2.0) and Go module versions as ranges, and judge candidate versions and the highest match.">
+  <meta name="keywords" content="composer version constraint, cargo version requirement, nuget version range, go module version, caret tilde range, package version tools">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/package-version-tools.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/package-version-tools.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/package-version-tools.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/package-version-tools.html">
+  <meta property="og:title" content="Package Version Constraint Explainer – Composer, Cargo, NuGet, Go | WooaDev">
+  <meta property="og:description" content="Explain Composer ^ ~ || wildcards, Cargo ^ ~ = comparators, NuGet intervals [1.0,2.0) and Go module versions as ranges, and judge candidate versions and the highest match.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/package-version-tools.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Package Version Constraint Explainer – Composer, Cargo, NuGet, Go | WooaDev">
+  <meta name="twitter:description" content="Explain Composer ^ ~ || wildcards, Cargo ^ ~ = comparators, NuGet intervals [1.0,2.0) and Go module versions as ranges, and judge candidate versions and the highest match.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Package Version Constraint Explainer","url":"https://wooadev.wooahouse.com/en/package-version-tools.html","description":"Explain Composer ^ ~ || wildcards, Cargo ^ ~ = comparators, NuGet intervals [1.0,2.0) and Go module versions as ranges, and judge candidate versions and the highest match.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Composer: ^, ~, *, hyphen ranges, >=1.0 <2.0, ||, comma / space AND, stability (-dev, @beta)","Cargo: ^ (default), ~, *, =, comparators, comma AND and the special caret behaviour of 0.x","NuGet: 1.0 (minimum), [1.0], [1.0,2.0), (,1.0] and pre-release labels","Go: /v2 module path suffix, unstable v0, pseudo-versions and +incompatible","A range explanation table and a verdict for each candidate"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Composer ~1.2 versus ^1.2?","acceptedAnswer":{"@type":"Answer","text":"~1.2 is >=1.2,<2.0 and ~1.2.3 is >=1.2.3,<1.3.0, while ^1.2.3 is >=1.2.3,<2.0.0."}},{"@type":"Question","name":"Do pre-releases match?","acceptedAnswer":{"@type":"Answer","text":"Each ecosystem's rules apply: unnamed pre-releases are usually excluded and the table shows why."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Package Version Constraint Explainer","item":"https://wooadev.wooahouse.com/en/package-version-tools.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../package-version-tools.html">KO</a>
+        <span>|</span>
+        <a href="package-version-tools.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Package Version Constraint Explainer</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📦</span>
+    <h1>Package Version Constraint Explainer — Composer, Cargo, NuGet &amp; Go</h1>
+    <p>Turns constraints such as ^1.2.3 || ~2.0 (Composer), ^0.2.3 (Cargo), [1.0,2.0) (NuGet) and Go module versions into readable ranges and tells you which candidate versions match.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Composer constraint parsed</p>
+<h3>Input — Version constraint / module version</h3><pre>^1.2.3 || ~2.0</pre>
+<h3>Input — Candidate versions (one per line)</h3><pre>1.2.2
+1.2.3
+1.9.0
+2.0.0
+2.0.7
+2.1.0
+3.0.0
+1.5.0-beta.1</pre>
+<h3>Result — Constraint explained</h3><pre>Item | Meaning
+group 1 | &gt;=1.2.3 &lt;2.0.0
+group 2 | &gt;=2.0.0 &lt;3.0.0</pre>
+<h3>Result — Candidate verdicts</h3><pre>Version | Verdict | Note
+1.2.2 | — | no match
+1.2.3 | ✅ | matches
+1.9.0 | ✅ | matches
+2.0.0 | ✅ | matches
+2.0.7 | ✅ | matches
+2.1.0 | ✅ | matches
+3.0.0 | — | no match
+1.5.0-beta.1 | ⛔ | Pre-releases are skipped unless the constraint names one</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Interpret each ecosystem's version syntax in one place. Input is processed only in your browser.</p>
+<ul><li>Composer: ^, ~, *, hyphen ranges, &gt;=1.0 &lt;2.0, ||, comma / space AND, stability (-dev, @beta)</li><li>Cargo: ^ (default), ~, *, =, comparators, comma AND and the special caret behaviour of 0.x</li><li>NuGet: 1.0 (minimum), [1.0], [1.0,2.0), (,1.0] and pre-release labels</li><li>Go: /v2 module path suffix, unstable v0, pseudo-versions and +incompatible</li><li>A range explanation table and a verdict for each candidate</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="pep440-version-tester.html" class="related-card"><span class="related-icon">🐍</span><span>PEP 440 Version Tester</span></a>
+    <a href="package-json-editor.html" class="related-card"><span class="related-icon">🧰</span><span>package.json Checker &amp; Tidier</span></a>
+    <a href="semver-calculator.html" class="related-card"><span class="related-icon">🔢</span><span>SemVer Calculator</span></a>
+    <a href="maven-gradle-converter.html" class="related-card"><span class="related-icon">☕</span><span>Maven ↔ Gradle Dependency Converter</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>In Cargo ^0.2.3 allows only up to &lt;0.3.0; for 0.x the minor is the compatibility boundary.</li><li>NuGet's 1.0 means 1.0 or higher, not exactly 1.0.</li><li>In Go, v2 and above require the module path to end in /v2.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Composer ~1.2 versus ^1.2?</summary><p>~1.2 is &gt;=1.2,&lt;2.0 and ~1.2.3 is &gt;=1.2.3,&lt;1.3.0, while ^1.2.3 is &gt;=1.2.3,&lt;2.0.0.</p></details><details><summary>Do pre-releases match?</summary><p>Each ecosystem's rules apply: unnamed pre-releases are usually excluded and the table shows why.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/package-version-tools.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

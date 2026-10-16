@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S3 URL Converter – s3 URI, HTTPS &amp; ARN Conversion | WooaDev</title>
+  <meta name="description" content="Convert s3://bucket/key, virtual-hosted and path-style https URLs and S3 ARNs into each other. Checks bucket names, flags dotted-bucket certificate trouble and adds dual-stack endpoints.">
+  <meta name="keywords" content="S3 URL converter, s3 uri to https, virtual-hosted path-style, S3 ARN, S3 bucket address, s3 url converter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/s3-url-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/s3-url-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/s3-url-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/s3-url-converter.html">
+  <meta property="og:title" content="S3 URL Converter – s3 URI, HTTPS &amp; ARN Conversion | WooaDev">
+  <meta property="og:description" content="Convert s3://bucket/key, virtual-hosted and path-style https URLs and S3 ARNs into each other. Checks bucket names, flags dotted-bucket certificate trouble and adds dual-stack endpoints.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/s3-url-converter.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="S3 URL Converter – s3 URI, HTTPS &amp; ARN Conversion | WooaDev">
+  <meta name="twitter:description" content="Convert s3://bucket/key, virtual-hosted and path-style https URLs and S3 ARNs into each other. Checks bucket names, flags dotted-bucket certificate trouble and adds dual-stack endpoints.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"S3 URL Converter","url":"https://wooadev.wooahouse.com/en/s3-url-converter.html","description":"Convert s3://bucket/key, virtual-hosted and path-style https URLs and S3 ARNs into each other. Checks bucket names, flags dotted-bucket certificate trouble and adds dual-stack endpoints.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Input: s3:// URI, virtual-hosted (bucket.s3.region.amazonaws.com), path-style (s3.region.amazonaws.com/bucket), legacy s3-region, website and accelerate endpoints, ARN","Output: s3 URI, ARN, virtual-hosted, path-style, global legacy, dual-stack (IPv6) and an aws s3 ls command","Special and non-ASCII characters in keys are percent-encoded or decoded","Bucket name checks: 3–63 characters, lowercase letters, digits, . and -, no consecutive dots, IP-like names or reserved affixes","Inputs without a region assume the default region and tell you so"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can I open an s3:// address in a browser?","acceptedAnswer":{"@type":"Answer","text":"No. s3:// is a URI for the CLI and SDKs. A browser needs the HTTPS form plus public access or a presigned URL."}},{"@type":"Question","name":"Are presigned URLs converted?","acceptedAnswer":{"@type":"Answer","text":"The signature query is not converted. Use the tool to read the bucket and key, and create the signature separately."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"S3 URL Converter","item":"https://wooadev.wooahouse.com/en/s3-url-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../s3-url-converter.html">KO</a>
+        <span>|</span>
+        <a href="s3-url-converter.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>S3 URL Converter</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🪣</span>
+    <h1>S3 URL Converter — s3://, https:// &amp; ARN</h1>
+    <p>Converts an S3 object address between the s3:// URI, virtual-hosted HTTPS, path-style HTTPS, legacy endpoints and ARN, and points out bucket-name rule violations.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Converted 5 address(es)</p>
+<h3>Input — S3 addresses (s3://, https://, ARN — one per line)</h3><pre>s3://my-bucket/photos/2026/cat.jpg
+https://my-bucket.s3.ap-northeast-2.amazonaws.com/photos/cat.jpg
+https://s3.us-west-2.amazonaws.com/data-lake/raw/2026/part-0001.parquet
+https://legacy-bucket.s3-eu-west-1.amazonaws.com/a/b.txt
+arn:aws:s3:::my-bucket/docs/readme.md</pre>
+<h3>Result — Conversions</h3><pre># s3://my-bucket/photos/2026/cat.jpg
+s3 URI:          s3://my-bucket/photos/2026/cat.jpg
+ARN:            arn:aws:s3:::my-bucket/photos/2026/cat.jpg
+Virtual-hosted: https://my-bucket.s3.ap-northeast-2.amazonaws.com/photos/2026/cat.jpg
+Path-style:     https://s3.ap-northeast-2.amazonaws.com/my-bucket/photos/2026/cat.jpg
+Legacy global:  https://my-bucket.s3.amazonaws.com/photos/2026/cat.jpg
+AWS CLI:        aws s3 ls s3://my-bucket/photos/2026/
+
+# https://my-bucket.s3.ap-northeast-2.amazonaws.com/photos/cat.jpg
+s3 URI:          s3://my-bucket/photos/cat.jpg
+ARN:            arn:aws:s3:::my-bucket/photos/cat.jpg
+Virtual-hosted: https://my-bucket.s3.ap-northeast-2.amazonaws.com/photos/cat.jpg
+Path-style:     https://s3.ap-northeast-2.amazonaws.com/my-bucket/photos/cat.jpg
+Legacy global:  https://my-bucket.s3.amazonaws.com/photos/cat.jpg
+AWS CLI:        aws s3 ls s3://my-bucket/photos/
+
+# https://s3.us-west-2.amazonaws.com/data-lake/raw/2026/part-0001.parquet
+s3 URI:          s3://data-lake/raw/2026/part-0001.parquet
+ARN:            arn:aws:s3:::data-lake/raw/2026/part-0001.parquet
+Virtual-hosted: https://data-lake.s3.us-west-2.amazonaws.com/raw/2026/part-0001.parquet
+Path-style:     https://s3.us-west-2.amazonaws.com/data-lake/raw/2026/part-0001.parquet
+Legacy global:  https://data-lake.s3.amazonaws.com/raw/2026/part-0001.parquet
+AWS CLI:        aws s3 ls s3://data-lake/raw/2026/
+
+…</pre>
+<h3>Result — Breakdown</h3><pre>Input | Status | Style | Bucket | Key
+s3://my-bucket/photos/2026/cat.jpg | ✅ | s3:// URI | my-bucket | photos/2026/cat.jpg
+https://my-bucket.s3.ap-northeast-2.amazonaws.c… | ✅ | virtual-hosted | my-bucket @ ap-northeast-2 | photos/cat.jpg
+https://s3.us-west-2.amazonaws.com/data-lake/ra… | ✅ | path-style | data-lake @ us-west-2 | raw/2026/part-0001.parquet
+https://legacy-bucket.s3-eu-west-1.amazonaws.co… | ✅ | virtual-hosted | legacy-bucket @ eu-west-1 | a/b.txt
+arn:aws:s3:::my-bucket/docs/readme.md | ✅ | ARN | my-bucket | docs/readme.md</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>S3 has several address forms for the same object, and CLI, SDKs, browsers and IAM policies each want a different one.</p>
+<ul><li>Input: s3:// URI, virtual-hosted (bucket.s3.region.amazonaws.com), path-style (s3.region.amazonaws.com/bucket), legacy s3-region, website and accelerate endpoints, ARN</li><li>Output: s3 URI, ARN, virtual-hosted, path-style, global legacy, dual-stack (IPv6) and an aws s3 ls command</li><li>Special and non-ASCII characters in keys are percent-encoded or decoded</li><li>Bucket name checks: 3–63 characters, lowercase letters, digits, . and -, no consecutive dots, IP-like names or reserved affixes</li><li>Inputs without a region assume the default region and tell you so</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="aws-arn-parser.html" class="related-card"><span class="related-icon">☁️</span><span>AWS ARN Parser &amp; Builder</span></a>
+    <a href="gcp-resource-parser.html" class="related-card"><span class="related-icon">🟦</span><span>GCP Resource &amp; GCS URL Parser</span></a>
+    <a href="url-parser.html" class="related-card"><span class="related-icon">🔗</span><span>URL Parser</span></a>
+    <a href="url-encoder.html" class="related-card"><span class="related-icon">🔗</span><span>URL Encoder</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>A dot in the bucket name breaks the wildcard certificate of virtual-hosted HTTPS and triggers browser warnings.</li><li>Use virtual-hosted style in new code; path-style is being phased out.</li><li>A wrong region gives a 301 redirect; check the real one with aws s3api get-bucket-location.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Can I open an s3:// address in a browser?</summary><p>No. s3:// is a URI for the CLI and SDKs. A browser needs the HTTPS form plus public access or a presigned URL.</p></details><details><summary>Are presigned URLs converted?</summary><p>The signature query is not converted. Use the tool to read the bucket and key, and create the signature separately.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/s3-url-converter.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

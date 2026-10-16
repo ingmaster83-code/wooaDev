@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URLPattern 테스터 — 라우팅 패턴 일치·캡처 확인 | WooaDev</title>
+  <meta name="description" content="웹 표준 URLPattern의 명명 그룹 :id, 와일드카드 *, 정규식 그룹, 선택 ? 반복 +/* 수식어, 중괄호 그룹을 여러 URL에 테스트하고 캡처 값과 구성요소별 패턴을 확인합니다. 라우터 설계와 서비스 워커 라우팅에 유용합니다.">
+  <meta name="keywords" content="URLPattern, URL 패턴 테스트, 라우팅 패턴, path-to-regexp, 명명 그룹, 서비스 워커 라우팅, url pattern tester">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/url-pattern-tester.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/url-pattern-tester.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/url-pattern-tester.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/url-pattern-tester.html">
+  <meta property="og:title" content="URLPattern 테스터 — 라우팅 패턴 일치·캡처 확인 | WooaDev">
+  <meta property="og:description" content="웹 표준 URLPattern의 명명 그룹 :id, 와일드카드 *, 정규식 그룹, 선택 ? 반복 +/* 수식어, 중괄호 그룹을 여러 URL에 테스트하고 캡처 값과 구성요소별 패턴을 확인합니다. 라우터 설계와 서비스 워커 라우팅에 유용합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/url-pattern-tester.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="URLPattern 테스터 — 라우팅 패턴 일치·캡처 확인 | WooaDev">
+  <meta name="twitter:description" content="웹 표준 URLPattern의 명명 그룹 :id, 와일드카드 *, 정규식 그룹, 선택 ? 반복 +/* 수식어, 중괄호 그룹을 여러 URL에 테스트하고 캡처 값과 구성요소별 패턴을 확인합니다. 라우터 설계와 서비스 워커 라우팅에 유용합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"URLPattern 테스터","url":"https://wooadev.wooahouse.com/url-pattern-tester.html","description":"웹 표준 URLPattern의 명명 그룹 :id, 와일드카드 *, 정규식 그룹, 선택 ? 반복 +/* 수식어, 중괄호 그룹을 여러 URL에 테스트하고 캡처 값과 구성요소별 패턴을 확인합니다. 라우터 설계와 서비스 워커 라우팅에 유용합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["문법: /users/:id, :id(\\d+), 와일드카드 *, 선택 :section?, 반복 :path+ / :path*, {…}? 그룹, 이스케이프","전체 URL 패턴과 pathname 만 있는 패턴 모두 지원, 구성요소별(protocol, hostname, port, pathname, search, hash) 패턴","일치 결과: 캡처 이름과 값, 일치하지 않는 이유","점검: 미지원/잘못된 문법, 이름 중복, 선택 세그먼트의 슬래시 처리","한 줄에 URL 하나씩 여러 개"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"정규식과 무엇이 다른가요?","acceptedAnswer":{"@type":"Answer","text":"URLPattern 은 URL 구성요소 단위로 일치시키고 이름 있는 캡처를 제공하며 인코딩 규칙을 적용합니다. 문법은 path-to-regexp 를 기반으로 합니다."}},{"@type":"Question","name":"쿼리 문자열도 일치시킬 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"search 구성요소에 패턴을 지정할 수 있지만 쿼리 파라미터 순서에 의존하니 파라미터 검사는 코드에서 하는 것이 안전합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"URLPattern 테스터","item":"https://wooadev.wooahouse.com/url-pattern-tester.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="url-pattern-tester.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/url-pattern-tester.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>URLPattern 테스터</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧭</span>
+    <h1>URLPattern 테스터 — 라우팅 패턴 일치 확인</h1>
+    <p>https://shop.example.com/products/:id(\d+)/:section? 같은 URLPattern 을 입력하고 여러 URL 에 대해 일치 여부와 캡처된 :id, :section 값을 확인합니다. 패턴이 어떤 구성요소(protocol, hostname, pathname 등)로 나뉘는지도 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 6개 중 2개 일치</p>
+<h3>입력 — URLPattern 패턴 (전체 URL 또는 pathname)</h3><pre>https://shop.example.com/products/:id(\d+)/:section?</pre>
+<h3>입력 — 테스트할 URL (한 줄에 하나)</h3><pre>https://shop.example.com/products/42
+https://shop.example.com/products/42/reviews
+https://shop.example.com/products/abc
+https://shop.example.com/products/42/reviews/extra
+http://shop.example.com/products/7
+https://other.example.com/products/7</pre>
+<h3>결과 — 일치 결과</h3><pre>URL | 결과 | 캡처 / 사유
+https://shop.example.com/products/42 | ✅ | id=42
+https://shop.example.com/products/42/reviews | ✅ | id=42, section=reviews
+https://shop.example.com/products/abc | ❌ | pathname: "/products/abc" ≠ /products/:id(\d+)/:section?
+https://shop.example.com/products/42/reviews/extra | ❌ | pathname: "/products/42/reviews/extra" ≠ /products/:id(\d+)/:section?
+http://shop.example.com/products/7 | ❌ | protocol: "http" ≠ https
+https://other.example.com/products/7 | ❌ | hostname: "other.example.com" ≠ shop.example.com</pre>
+<h3>결과 — 패턴 구성</h3><pre>구성 | 패턴 | 캡처 이름
+protocol | https | —
+hostname | shop.example.com | —
+port | * (모두) | —
+pathname | /products/:id(\d+)/:section? | id, section
+search | * (모두) | —
+hash | * (모두) | —</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>브라우저 URLPattern API 를 쓰기 전에 패턴이 의도한 URL 만 잡는지 테스트합니다. 이 도구는 자체 구현이라 브라우저 지원과 무관하게 동작합니다.</p>
+<ul><li>문법: /users/:id, :id(\d+), 와일드카드 *, 선택 :section?, 반복 :path+ / :path*, {…}? 그룹, 이스케이프</li><li>전체 URL 패턴과 pathname 만 있는 패턴 모두 지원, 구성요소별(protocol, hostname, port, pathname, search, hash) 패턴</li><li>일치 결과: 캡처 이름과 값, 일치하지 않는 이유</li><li>점검: 미지원/잘못된 문법, 이름 중복, 선택 세그먼트의 슬래시 처리</li><li>한 줄에 URL 하나씩 여러 개</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="protocol-uri-parser.html" class="related-card"><span class="related-icon">🔌</span><span>프로토콜 URI 파서</span></a>
+    <a href="regex-tester.html" class="related-card"><span class="related-icon">🔍</span><span>Regex 테스터</span></a>
+    <a href="url-parser.html" class="related-card"><span class="related-icon">🔗</span><span>URL 파서</span></a>
+    <a href="query-string-builder.html" class="related-card"><span class="related-icon">❓</span><span>쿼리 문자열 파서·빌더</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>pathname 만 지정하면 호스트 등은 모두 와일드카드로 처리됩니다.</li><li>:id 는 기본적으로 슬래시를 제외한 한 세그먼트에 일치합니다. 숫자만 받으려면 :id(\d+) 를 쓰세요.</li><li>서비스 워커나 Navigation API 에서 같은 패턴 문법을 그대로 쓸 수 있습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>정규식과 무엇이 다른가요?</summary><p>URLPattern 은 URL 구성요소 단위로 일치시키고 이름 있는 캡처를 제공하며 인코딩 규칙을 적용합니다. 문법은 path-to-regexp 를 기반으로 합니다.</p></details><details><summary>쿼리 문자열도 일치시킬 수 있나요?</summary><p>search 구성요소에 패턴을 지정할 수 있지만 쿼리 파라미터 순서에 의존하니 파라미터 검사는 코드에서 하는 것이 안전합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/url-pattern-tester.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

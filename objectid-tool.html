@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ObjectId 도구 — 생성 시각 분석·날짜 범위 쿼리 | WooaDev</title>
+  <meta name="description" content="MongoDB ObjectId에서 생성 시각(UTC·시간대), 5바이트 난수, 3바이트 카운터를 추출하고, 새 ObjectId를 생성하며, 날짜 범위로 _id $gte/$lt 경계 쿼리를 만듭니다. ObjectId(&quot;…&quot;) 형식도 인식합니다.">
+  <meta name="keywords" content="ObjectId 분석, ObjectId 생성 시각, ObjectId 날짜 쿼리, MongoDB _id 범위, ObjectId 생성기, objectid tool">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/objectid-tool.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/objectid-tool.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/objectid-tool.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/objectid-tool.html">
+  <meta property="og:title" content="ObjectId 도구 — 생성 시각 분석·날짜 범위 쿼리 | WooaDev">
+  <meta property="og:description" content="MongoDB ObjectId에서 생성 시각(UTC·시간대), 5바이트 난수, 3바이트 카운터를 추출하고, 새 ObjectId를 생성하며, 날짜 범위로 _id $gte/$lt 경계 쿼리를 만듭니다. ObjectId(&quot;…&quot;) 형식도 인식합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/objectid-tool.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ObjectId 도구 — 생성 시각 분석·날짜 범위 쿼리 | WooaDev">
+  <meta name="twitter:description" content="MongoDB ObjectId에서 생성 시각(UTC·시간대), 5바이트 난수, 3바이트 카운터를 추출하고, 새 ObjectId를 생성하며, 날짜 범위로 _id $gte/$lt 경계 쿼리를 만듭니다. ObjectId(&quot;…&quot;) 형식도 인식합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"MongoDB ObjectId 도구","url":"https://wooadev.wooahouse.com/objectid-tool.html","description":"MongoDB ObjectId에서 생성 시각(UTC·시간대), 5바이트 난수, 3바이트 카운터를 추출하고, 새 ObjectId를 생성하며, 날짜 범위로 _id $gte/$lt 경계 쿼리를 만듭니다. ObjectId(\"…\") 형식도 인식합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["분석: 12바이트를 [타임스탬프 4][난수 5][카운터 3]으로 나눠 표시, UTC 와 선택한 시간대의 시각","ObjectId(\"…\"), {\"$oid\": \"…\"} 형태 입력도 인식, 여러 줄을 정렬해 생성 순서 확인","생성: 실제 드라이버처럼 프로세스별 난수와 증가하는 카운터로 N개 생성","날짜 범위 → 경계 ObjectId: 시작·끝 시각을 넣으면 find({_id:{$gte,$lt}}) 쿼리와 JSON 쿼리 생성","비정상 시각(2009년 이전·2040년 이후)은 ObjectId 가 아닌 임의 값일 수 있다고 경고"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"ObjectId 는 UUID 와 어떻게 다른가요?","acceptedAnswer":{"@type":"Answer","text":"12바이트(24자리 16진수)로 더 짧고, 앞부분이 시각이라 대략 생성 순서대로 정렬됩니다. UUID v4 는 완전 무작위라 정렬 순서가 없습니다."}},{"@type":"Question","name":"ObjectId 가 중복될 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"같은 프로세스는 카운터로, 다른 프로세스는 난수로 구분되어 현실적으로 충돌하지 않습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"MongoDB ObjectId 도구","item":"https://wooadev.wooahouse.com/objectid-tool.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="objectid-tool.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/objectid-tool.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>MongoDB ObjectId 도구</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🍃</span>
+    <h1>MongoDB ObjectId 분석 · 생성 · 날짜 범위 쿼리</h1>
+    <p>ObjectId 24자리를 생성 시각, 프로세스 난수, 카운터로 풀어 보고, 새 ObjectId 를 만들고, 날짜 범위에 해당하는 _id 경계값으로 바로 쓸 수 있는 쿼리를 만듭니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 3개 분석</p>
+<h3>입력 — ObjectId (한 줄에 하나)</h3><pre>507f1f77bcf86cd799439011
+65f1a2b3c4d5e6f708192a3b
+ObjectId("6512bd43d9caa6e02c990b0a")</pre>
+<h3>입력 — 시작 일시 (ISO 8601)</h3><pre>2026-10-01T00:00:00Z</pre>
+<h3>입력 — 끝 일시 (ISO 8601)</h3><pre>2026-10-02T00:00:00Z</pre>
+<h3>결과 — 결과</h3><pre>ObjectId | 상태 | 생성 시각 | 난수(5바이트) | 카운터(3바이트)
+507f1f77bcf86cd799439011 | ✅ | 2012-10-17T21:13:27Z  (2012-10-18 06:13:27 Asia/Seoul) | bcf86cd799 (random) | 4427793 (0x439011)
+65f1a2b3c4d5e6f708192a3b | ✅ | 2024-03-13T12:57:23Z  (2024-03-13 21:57:23 Asia/Seoul) | c4d5e6f708 (random) | 1649211 (0x192a3b)
+6512bd43d9caa6e02c990b0a | ✅ | 2023-09-26T11:15:15Z  (2023-09-26 20:15:15 Asia/Seoul) | d9caa6e02c (random) | 10029834 (0x990b0a)</pre>
+<h3>결과 — 쿼리 / 목록</h3><pre>507f1f77bcf86cd799439011
+6512bd43d9caa6e02c990b0a
+65f1a2b3c4d5e6f708192a3b</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>MongoDB 의 기본 키 ObjectId 는 앞 4바이트가 생성 시각이라 별도 createdAt 필드 없이 시간 범위 조회가 가능합니다.</p>
+<ul><li>분석: 12바이트를 [타임스탬프 4][난수 5][카운터 3]으로 나눠 표시, UTC 와 선택한 시간대의 시각</li><li>ObjectId("…"), {"$oid": "…"} 형태 입력도 인식, 여러 줄을 정렬해 생성 순서 확인</li><li>생성: 실제 드라이버처럼 프로세스별 난수와 증가하는 카운터로 N개 생성</li><li>날짜 범위 → 경계 ObjectId: 시작·끝 시각을 넣으면 find({_id:{$gte,$lt}}) 쿼리와 JSON 쿼리 생성</li><li>비정상 시각(2009년 이전·2040년 이후)은 ObjectId 가 아닌 임의 값일 수 있다고 경고</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="uuid-decoder.html" class="related-card"><span class="related-icon">🆔</span><span>UUID 디코더</span></a>
+    <a href="ulid-tool.html" class="related-card"><span class="related-icon">🔢</span><span>ULID 생성기·분석기</span></a>
+    <a href="snowflake-id-decoder.html" class="related-card"><span class="related-icon">❄️</span><span>Snowflake ID 디코더</span></a>
+    <a href="timezone-converter.html" class="related-card"><span class="related-icon">🌏</span><span>시간대 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>_id 범위 쿼리는 기본 _id 인덱스를 쓰므로 createdAt 인덱스 없이도 빠릅니다.</li><li>ObjectId 의 시각은 초 단위입니다. 같은 초 안의 순서는 카운터가 결정합니다.</li><li>ObjectId 로 생성 시각이 공개되므로 외부에 노출되는 ID 로 쓸 때는 정보 노출을 고려하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>ObjectId 는 UUID 와 어떻게 다른가요?</summary><p>12바이트(24자리 16진수)로 더 짧고, 앞부분이 시각이라 대략 생성 순서대로 정렬됩니다. UUID v4 는 완전 무작위라 정렬 순서가 없습니다.</p></details><details><summary>ObjectId 가 중복될 수 있나요?</summary><p>같은 프로세스는 카운터로, 다른 프로세스는 난수로 구분되어 현실적으로 충돌하지 않습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-bytes.js"></script>
+<script src="js/tools/objectid-tool.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

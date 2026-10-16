@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APNs 토큰 변환기 — 16진수·Base64 형식 통일 | WooaDev</title>
+  <meta name="description" content="APNs 디바이스 토큰의 &lt;…&gt; 데이터 설명, 공백 있는 16진수, 대소문자, Base64를 소문자 16진수로 통일하고 8자 그룹·Base64 형식을 보여 줍니다. 32바이트 길이 검증과 Swift·Node·Python 코드 예시를 제공합니다.">
+  <meta name="keywords" content="APNs 토큰 변환, 디바이스 토큰 16진수, iOS push token, 토큰 base64, deviceToken hex, apns token formatter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/apns-token-formatter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/apns-token-formatter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/apns-token-formatter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/apns-token-formatter.html">
+  <meta property="og:title" content="APNs 토큰 변환기 — 16진수·Base64 형식 통일 | WooaDev">
+  <meta property="og:description" content="APNs 디바이스 토큰의 &lt;…&gt; 데이터 설명, 공백 있는 16진수, 대소문자, Base64를 소문자 16진수로 통일하고 8자 그룹·Base64 형식을 보여 줍니다. 32바이트 길이 검증과 Swift·Node·Python 코드 예시를 제공합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/apns-token-formatter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="APNs 토큰 변환기 — 16진수·Base64 형식 통일 | WooaDev">
+  <meta name="twitter:description" content="APNs 디바이스 토큰의 &lt;…&gt; 데이터 설명, 공백 있는 16진수, 대소문자, Base64를 소문자 16진수로 통일하고 8자 그룹·Base64 형식을 보여 줍니다. 32바이트 길이 검증과 Swift·Node·Python 코드 예시를 제공합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"APNs 토큰 변환기","url":"https://wooadev.wooahouse.com/apns-token-formatter.html","description":"APNs 디바이스 토큰의 <…> 데이터 설명, 공백 있는 16진수, 대소문자, Base64를 소문자 16진수로 통일하고 8자 그룹·Base64 형식을 보여 줍니다. 32바이트 길이 검증과 Swift·Node·Python 코드 예시를 제공합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: <공백이 있는 16진수>, 연속 16진수(대소문자 무관), Base64/Base64URL, 한 줄에 하나","출력: 서버로 보낼 소문자 16진수, 8자 단위로 읽기 쉬운 표기, Base64","검증: 보통 32바이트(64자리), 너무 짧거나(32 미만) 긴 경우(100 초과) 경고","앱 코드 예시: Swift 의 Data → 16진수, Node 의 Base64 → 16진수, Python","길이가 바뀔 수 있으니 저장 컬럼을 넉넉히 잡도록 안내"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"토큰을 서버에서 대문자로 저장해도 되나요?","acceptedAnswer":{"@type":"Answer","text":"APNs 는 16진수 대소문자를 구분하지 않지만 일관되게 소문자로 저장하면 중복 비교가 쉽습니다."}},{"@type":"Question","name":"토큰이 64자가 아닌데 정상인가요?","acceptedAnswer":{"@type":"Answer","text":"과거에는 32바이트였지만 길이가 늘어날 수 있다고 Apple 이 안내합니다. 최대 100바이트까지 허용되니 64자로 고정하지 마세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"APNs 토큰 변환기","item":"https://wooadev.wooahouse.com/apns-token-formatter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="apns-token-formatter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/apns-token-formatter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>APNs 토큰 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🍎</span>
+    <h1>APNs 디바이스 토큰 변환기</h1>
+    <p>Xcode 로그의 &lt;740f4707 bebcf74f …&gt; 형식, 공백 없는 16진수, Base64 로 된 APNs 디바이스 토큰을 서버가 쓰는 소문자 16진수로 통일하고 길이를 검증합니다. Swift·Node·Python 변환 코드도 제공합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 토큰 3개 변환</p>
+<h3>입력 — APNs 디바이스 토큰 (16진수, &lt;…&gt; 형식, Base64 모두 가능 — 한 줄에 하나)</h3><pre>&lt;740f4707 bebcf74f 9b7c25d4 8e335894 5f6aa01d a5ddb387 462c7eaf 61bb78ad&gt;
+740F4707BEBCF74F9B7C25D48E3358945F6AA01DA5DDB387462C7EAF61BB78AD
+c9o41ze/NiA=</pre>
+<h3>결과 — 변환 결과</h3><pre>입력 | 상태 | 형식 · 길이 | 16진수 (8자씩) | Base64
+&lt;740f4707 bebcf74f 9b7c25d4 8e335894 … | ✅ | Data description &lt;…&gt; · 32바이트 | 740f4707 bebcf74f 9b7c25d4 8e335894 5f6aa01d a5ddb387 462c7eaf 61bb78ad | dA9HB76890+bfCXUjjNYlF9qoB2l3bOHRix+r2G7eK0=
+740F4707BEBCF74F9B7C25D48E3358945F6AA… | ✅ | hex · 32바이트 | 740f4707 bebcf74f 9b7c25d4 8e335894 5f6aa01d a5ddb387 462c7eaf 61bb78ad | dA9HB76890+bfCXUjjNYlF9qoB2l3bOHRix+r2G7eK0=
+c9o41ze/NiA= | ⚠️ | Base64 · 8바이트 | 73da38d7 37bf3620 | c9o41ze/NiA=  ⚠ 8바이트 — 너무 짧습니다 (보통 32바이트)</pre>
+<h3>결과 — 서버에 보낼 값 (소문자 16진수)</h3><pre>740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad
+740f4707bebcf74f9b7c25d48e3358945f6aa01da5ddb387462c7eaf61bb78ad
+73da38d737bf3620</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>iOS 푸시 알림 서버에 등록하는 디바이스 토큰이 로그·데이터베이스·라이브러리마다 다른 형식이라 맞지 않을 때 사용합니다.</p>
+<ul><li>입력: &lt;공백이 있는 16진수&gt;, 연속 16진수(대소문자 무관), Base64/Base64URL, 한 줄에 하나</li><li>출력: 서버로 보낼 소문자 16진수, 8자 단위로 읽기 쉬운 표기, Base64</li><li>검증: 보통 32바이트(64자리), 너무 짧거나(32 미만) 긴 경우(100 초과) 경고</li><li>앱 코드 예시: Swift 의 Data → 16진수, Node 의 Base64 → 16진수, Python</li><li>길이가 바뀔 수 있으니 저장 컬럼을 넉넉히 잡도록 안내</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="base64.html" class="related-card"><span class="related-icon">🔐</span><span>Base64</span></a>
+    <a href="base-encoding-converter.html" class="related-card"><span class="related-icon">🔢</span><span>Base 인코딩 변환기</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+    <a href="hash-generator.html" class="related-card"><span class="related-icon">🔑</span><span>Hash 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>개발(sandbox)과 운영 토큰은 서로 호환되지 않습니다. 환경별 APNs 엔드포인트를 맞추세요.</li><li>앱을 재설치하거나 복원하면 토큰이 바뀔 수 있으니 실행할 때마다 서버에 등록하세요.</li><li>Android 의 FCM 등록 토큰은 APNs 토큰과 다른 값입니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>토큰을 서버에서 대문자로 저장해도 되나요?</summary><p>APNs 는 16진수 대소문자를 구분하지 않지만 일관되게 소문자로 저장하면 중복 비교가 쉽습니다.</p></details><details><summary>토큰이 64자가 아닌데 정상인가요?</summary><p>과거에는 32바이트였지만 길이가 늘어날 수 있다고 Apple 이 안내합니다. 최대 100바이트까지 허용되니 64자로 고정하지 마세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-hash.js"></script>
+<script src="js/tools/apns-token-formatter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

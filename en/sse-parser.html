@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSE Parser – Decode text/event-stream Events | WooaDev</title>
+  <meta name="description" content="Parse a raw Server-Sent Events stream per the WHATWG spec into an event table with event, id, retry, multi-line data and comments. Decodes JSON data, concatenates deltas and detects [DONE].">
+  <meta name="keywords" content="SSE parser, text/event-stream, Server-Sent Events, EventSource debug, LLM streaming response, sse parser">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/sse-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/sse-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/sse-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/sse-parser.html">
+  <meta property="og:title" content="SSE Parser – Decode text/event-stream Events | WooaDev">
+  <meta property="og:description" content="Parse a raw Server-Sent Events stream per the WHATWG spec into an event table with event, id, retry, multi-line data and comments. Decodes JSON data, concatenates deltas and detects [DONE].">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/sse-parser.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SSE Parser – Decode text/event-stream Events | WooaDev">
+  <meta name="twitter:description" content="Parse a raw Server-Sent Events stream per the WHATWG spec into an event table with event, id, retry, multi-line data and comments. Decodes JSON data, concatenates deltas and detects [DONE].">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SSE Stream Parser","url":"https://wooadev.wooahouse.com/en/sse-parser.html","description":"Parse a raw Server-Sent Events stream per the WHATWG spec into an event table with event, id, retry, multi-line data and comments. Decodes JSON data, concatenates deltas and detects [DONE].","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Spec parsing: a blank line ends an event, one space after the first colon is stripped, lines starting with a colon are comments","Fields: event (default message), data (multiple lines joined with \\n), id and retry (digits only)","JSON data is parsed and delta / content fields are concatenated","Flags terminators like [DONE], unknown fields and an incomplete last event without its blank line","Handles CRLF and CR line endings"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"SSE versus WebSocket?","acceptedAnswer":{"@type":"Answer","text":"SSE is a one-way server-to-client HTTP stream with built-in reconnection; WebSocket is bidirectional."}},{"@type":"Question","name":"How are multi-line data fields merged?","acceptedAnswer":{"@type":"Answer","text":"The data lines of one event are joined with newlines into a single string."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"SSE Stream Parser","item":"https://wooadev.wooahouse.com/en/sse-parser.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../sse-parser.html">KO</a>
+        <span>|</span>
+        <a href="sse-parser.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>SSE Stream Parser</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📶</span>
+    <h1>Server-Sent Events (SSE) Stream Parser</h1>
+    <p>Splits raw text/event-stream copied from curl or browser dev tools into events, showing event, id, retry, data and comment lines, parsing JSON data and building the concatenated streaming result.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>🔍 4 events · last block incomplete</p>
+<h3>Input — Raw SSE stream (text/event-stream)</h3><pre>: keep-alive comment
+retry: 3000
+
+event: message
+id: 101
+data: {"delta":"Hel"}
+
+event: message
+id: 102
+data: {"delta":"lo"}
+
+data: first line
+data: second line
+
+event: done
+data: [DONE]
+
+data: truncated, no blank line at the end</pre>
+<h3>Result — Events</h3><pre># | event | id | Kind | data
+1 | message | 101 | JSON | {"delta":"Hel"}
+2 | message | 102 | JSON | {"delta":"lo"}
+3 | message | 102 | text | first line ⏎ second line
+4 | done | 102 | end marker | [DONE]
+ |  |  |  | 
+Summary | message ×3, done ×1 | Last-Event-ID=102 | retry=3000ms | 1 comment line(s) (:)</pre>
+<h3>Result — Concatenated data</h3><pre>Hello</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Unpack raw streams when debugging LLM streaming responses or notification feeds. Data never leaves your browser.</p>
+<ul><li>Spec parsing: a blank line ends an event, one space after the first colon is stripped, lines starting with a colon are comments</li><li>Fields: event (default message), data (multiple lines joined with \n), id and retry (digits only)</li><li>JSON data is parsed and delta / content fields are concatenated</li><li>Flags terminators like [DONE], unknown fields and an incomplete last event without its blank line</li><li>Handles CRLF and CR line endings</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="json-rpc-viewer.html" class="related-card"><span class="related-icon">🔁</span><span>JSON-RPC 2.0 Viewer</span></a>
+    <a href="jsonl-viewer.html" class="related-card"><span class="related-icon">📃</span><span>JSON Lines Viewer</span></a>
+    <a href="http-headers-parser.html" class="related-card"><span class="related-icon">📨</span><span>HTTP Headers Parser</span></a>
+    <a href="mqtt-topic-tester.html" class="related-card"><span class="related-icon">📡</span><span>MQTT Topic Filter Tester</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>An event is dispatched only after its terminating blank line; without it browsers discard the event.</li><li>On reconnect EventSource sends the last id in the Last-Event-ID header.</li><li>Comment lines (: keep-alive) are sent periodically so proxies do not drop the connection.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>SSE versus WebSocket?</summary><p>SSE is a one-way server-to-client HTTP stream with built-in reconnection; WebSocket is bidirectional.</p></details><details><summary>How are multi-line data fields merged?</summary><p>The data lines of one event are joined with newlines into a single string.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/sse-parser.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

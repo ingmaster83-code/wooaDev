@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DynamoDB JSON Converter – Typed JSON to Plain JSON | WooaDev</title>
+  <meta name="description" content="Convert DynamoDB JSON (S, N, BOOL, NULL, L, M, SS, NS, B) to plain JSON and back. Handles Item / Items wrappers of get-item and scan, big-number precision and an option for sets.">
+  <meta name="keywords" content="DynamoDB JSON converter, DynamoDB marshall unmarshall, AttributeValue converter, dynamodb to json, aws dynamodb get-item, dynamodb json converter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/dynamodb-json-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/dynamodb-json-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/dynamodb-json-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/dynamodb-json-converter.html">
+  <meta property="og:title" content="DynamoDB JSON Converter – Typed JSON to Plain JSON | WooaDev">
+  <meta property="og:description" content="Convert DynamoDB JSON (S, N, BOOL, NULL, L, M, SS, NS, B) to plain JSON and back. Handles Item / Items wrappers of get-item and scan, big-number precision and an option for sets.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/dynamodb-json-converter.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DynamoDB JSON Converter – Typed JSON to Plain JSON | WooaDev">
+  <meta name="twitter:description" content="Convert DynamoDB JSON (S, N, BOOL, NULL, L, M, SS, NS, B) to plain JSON and back. Handles Item / Items wrappers of get-item and scan, big-number precision and an option for sets.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"DynamoDB JSON Converter","url":"https://wooadev.wooahouse.com/en/dynamodb-json-converter.html","description":"Convert DynamoDB JSON (S, N, BOOL, NULL, L, M, SS, NS, B) to plain JSON and back. Handles Item / Items wrappers of get-item and scan, big-number precision and an option for sets.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Types: S, N, BOOL, NULL, L, M, SS, NS, B, BS","DynamoDB → plain: handles Item, Items wrappers, arrays and single attribute values","Plain → DynamoDB: numbers become string N, nested objects M, arrays L (optionally unique string / number arrays as SS / NS sets)","Big numbers that would lose precision stay as strings","Unknown types or several types in one attribute are reported with the path"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How are BOOL and NULL written?","acceptedAnswer":{"@type":"Answer","text":"As {\"BOOL\": true} and {\"NULL\": true}; NULL's value is always true."}},{"@type":"Question","name":"What happens to binary (B)?","acceptedAnswer":{"@type":"Answer","text":"Base64 strings are shown as {\"$binary\": …}. When converting back, specify B explicitly."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"DynamoDB JSON Converter","item":"https://wooadev.wooahouse.com/en/dynamodb-json-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../dynamodb-json-converter.html">KO</a>
+        <span>|</span>
+        <a href="dynamodb-json-converter.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>DynamoDB JSON Converter</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">⚡</span>
+    <h1>DynamoDB JSON ↔ Plain JSON Converter</h1>
+    <p>Converts DynamoDB's typed JSON ({"name":{"S":"Kim"},"age":{"N":"31"}}) to plain JSON and back. Supports Item / Items wrappers and the SS, NS, B, L and M types.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Converted</p>
+<h3>Input — Input JSON</h3><pre>{
+  "Item": {
+    "pk": {"S": "USER#42"},
+    "age": {"N": "31"},
+    "active": {"BOOL": true},
+    "nick": {"NULL": true},
+    "tags": {"SS": ["a", "b"]},
+    "scores": {"NS": ["1.5", "2"]},
+    "addr": {"M": {"city": {"S": "Seoul"}, "zip": {"S": "04524"}}},
+    "history": {"L": [{"S": "x"}, {"N": "7"}]},
+    "avatar": {"B": "aGVsbG8="}
+  }
+}</pre>
+<h3>Result — Converted</h3><pre>{
+  "Item": {
+    "pk": "USER#42",
+    "age": 31,
+    "active": true,
+    "nick": null,
+    "tags": [
+      "a",
+      "b"
+    ],
+    "scores": [
+      1.5,
+      2
+    ],
+    "addr": {
+      "city": "Seoul",
+      "zip": "04524"
+    },
+    "history": [
+      "x",
+      7
+    ],
+    "avatar": {
+      "$binary": "aGVsbG8="
+    }
+  }
+}</pre>
+<h3>Result — Notes</h3><pre>Sets (SS / NS / BS) become arrays and lose the set property. Binary values are shown as {"$binary": base64}</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Turn the output of aws dynamodb get-item / scan or console exports into readable JSON, or turn plain JSON into the format put-item expects.</p>
+<ul><li>Types: S, N, BOOL, NULL, L, M, SS, NS, B, BS</li><li>DynamoDB → plain: handles Item, Items wrappers, arrays and single attribute values</li><li>Plain → DynamoDB: numbers become string N, nested objects M, arrays L (optionally unique string / number arrays as SS / NS sets)</li><li>Big numbers that would lose precision stay as strings</li><li>Unknown types or several types in one attribute are reported with the path</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON Formatter</span></a>
+    <a href="json-validator.html" class="related-card"><span class="related-icon">✅</span><span>JSON Validator</span></a>
+    <a href="mongodb-ejson-converter.html" class="related-card"><span class="related-icon">🧬</span><span>MongoDB Extended JSON Converter</span></a>
+    <a href="json-flatten.html" class="related-card"><span class="related-icon">📐</span><span>JSON Flatten Tool</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Sets (SS / NS) become arrays in plain JSON and the set property is lost.</li><li>Numbers travel as strings with up to 38 digits, which JavaScript numbers can lose.</li><li>In SDKs the marshall / unmarshall helpers do the same conversion in code.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>How are BOOL and NULL written?</summary><p>As {"BOOL": true} and {"NULL": true}; NULL's value is always true.</p></details><details><summary>What happens to binary (B)?</summary><p>Base64 strings are shown as {"$binary": …}. When converting back, specify B explicitly.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/dynamodb-json-converter.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

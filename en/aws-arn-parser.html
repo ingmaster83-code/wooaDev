@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AWS ARN Parser – Split, Validate &amp; Build ARNs | WooaDev</title>
+  <meta name="description" content="Parse AWS ARNs (arn:partition:service:region:account:resource) field by field and validate partition, region and the 12-digit account ID. Covers empty-region services, wildcards and an ARN builder.">
+  <meta name="keywords" content="AWS ARN parser, ARN format, arn:aws:s3, IAM ARN, parse ARN, ARN builder, aws arn parser">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/aws-arn-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/aws-arn-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/aws-arn-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/aws-arn-parser.html">
+  <meta property="og:title" content="AWS ARN Parser – Split, Validate &amp; Build ARNs | WooaDev">
+  <meta property="og:description" content="Parse AWS ARNs (arn:partition:service:region:account:resource) field by field and validate partition, region and the 12-digit account ID. Covers empty-region services, wildcards and an ARN builder.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/aws-arn-parser.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AWS ARN Parser – Split, Validate &amp; Build ARNs | WooaDev">
+  <meta name="twitter:description" content="Parse AWS ARNs (arn:partition:service:region:account:resource) field by field and validate partition, region and the 12-digit account ID. Covers empty-region services, wildcards and an ARN builder.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"AWS ARN Parser & Builder","url":"https://wooadev.wooahouse.com/en/aws-arn-parser.html","description":"Parse AWS ARNs (arn:partition:service:region:account:resource) field by field and validate partition, region and the 12-digit account ID. Covers empty-region services, wildcards and an ARN builder.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Split: partition (aws, aws-cn, aws-us-gov), service, region, account-id and resource (type / name / version-or-alias guessed)","Paste several ARNs, one per line, to compare them in a table","Validate: 12-digit account ID, region format, partition, empty resource, and services such as S3 and IAM that leave region / account empty","Flags wildcards (*) used in policy resources","Build mode assembles an ARN from partition, service, region, account and resource"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why does the resource part differ per service?","acceptedAnswer":{"@type":"Answer","text":"Each service defines its own layout, mixing slash and colon separators. The tool guesses the first token as the type."}},{"@type":"Question","name":"Where do I find my account ID?","acceptedAnswer":{"@type":"Answer","text":"In the console's top-right menu, or with aws sts get-caller-identity."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"AWS ARN Parser & Builder","item":"https://wooadev.wooahouse.com/en/aws-arn-parser.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../aws-arn-parser.html">KO</a>
+        <span>|</span>
+        <a href="aws-arn-parser.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>AWS ARN Parser &amp; Builder</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">☁️</span>
+    <h1>AWS ARN Parser &amp; Builder</h1>
+    <p>Breaks an ARN such as arn:aws:iam::123456789012:role/MyRole into partition, service, region, account and resource and finds format mistakes. You can also assemble a new ARN from its fields.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Parsed 5 ARN(s)</p>
+<h3>Input — ARNs (one per line)</h3><pre>arn:aws:s3:::my-bucket/logs/2026/app.log
+arn:aws:iam::123456789012:role/service-role/MyLambdaRole
+arn:aws:lambda:ap-northeast-2:123456789012:function:order-handler:prod
+arn:aws:dynamodb:ap-northeast-2:123456789012:table/Orders/stream/2026-10-01T00:00:00.000
+arn:aws-cn:ec2:cn-north-1:123456789012:instance/i-0abc123def456789a</pre>
+<h3>Input — partition</h3><pre>aws</pre>
+<h3>Input — service</h3><pre>sqs</pre>
+<h3>Input — region</h3><pre>ap-northeast-2</pre>
+<h3>Input — account-id</h3><pre>123456789012</pre>
+<h3>Input — resource</h3><pre>my-queue</pre>
+<h3>Result — Fields</h3><pre>ARN | Status | Service / partition | Region / account | Resource | Problems
+arn:aws:s3:::my-bucket/logs/2026/app.log | ✅ | s3 · Amazon S3 / aws | — / — | my-bucket → logs/2026/app.log | 
+arn:aws:iam::123456789012:role/service-role/MyLambdaRole | ✅ | iam · IAM / aws | — / 123456789012 | role → service-role/MyLambdaRole | 
+arn:aws:lambda:ap-northeast-2:123456789012:function:order… | ✅ | lambda · AWS Lambda / aws | ap-northeast-2 / 123456789012 | function → order-handler:prod | 
+arn:aws:dynamodb:ap-northeast-2:123456789012:table/Orders… | ✅ | dynamodb · DynamoDB / aws | ap-northeast-2 / 123456789012 | table → Orders/stream/2026-10-01T00:00:00.000 | 
+arn:aws-cn:ec2:cn-north-1:123456789012:instance/i-0abc123… | ✅ | ec2 · Amazon EC2 / aws-cn | cn-north-1 / 123456789012 | instance → i-0abc123def456789a | </pre>
+<h3>Result — Result</h3><pre>arn:aws:s3:::my-bucket/logs/2026/app.log
+  partition=aws service=s3 region= account= resource=my-bucket/logs/2026/app.log
+arn:aws:iam::123456789012:role/service-role/MyLambdaRole
+  partition=aws service=iam region= account=123456789012 resource=role/service-role/MyLambdaRole
+arn:aws:lambda:ap-northeast-2:123456789012:function:order-handler:prod
+  partition=aws service=lambda region=ap-northeast-2 account=123456789012 resource=function:order-handler:prod
+arn:aws:dynamodb:ap-northeast-2:123456789012:table/Orders/stream/2026-10-01T00:00:00.000
+  partition=aws service=dynamodb region=ap-northeast-2 account=123456789012 resource=table/Orders/stream/2026-10-01T00:00:00.000
+arn:aws-cn:ec2:cn-north-1:123456789012:instance/i-0abc123def456789a
+  partition=aws-cn service=ec2 region=cn-north-1 account=123456789012 resource=instance/i-0abc123def456789a</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>ARNs appear constantly in IAM policies, resource policies and CLI commands, yet the resource part is structured differently per service.</p>
+<ul><li>Split: partition (aws, aws-cn, aws-us-gov), service, region, account-id and resource (type / name / version-or-alias guessed)</li><li>Paste several ARNs, one per line, to compare them in a table</li><li>Validate: 12-digit account ID, region format, partition, empty resource, and services such as S3 and IAM that leave region / account empty</li><li>Flags wildcards (*) used in policy resources</li><li>Build mode assembles an ARN from partition, service, region, account and resource</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="s3-url-converter.html" class="related-card"><span class="related-icon">🪣</span><span>S3 URL Converter</span></a>
+    <a href="gcp-resource-parser.html" class="related-card"><span class="related-icon">🟦</span><span>GCP Resource &amp; GCS URL Parser</span></a>
+    <a href="azure-resource-parser.html" class="related-card"><span class="related-icon">🔷</span><span>Azure Resource ID Parser</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON Formatter</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>An S3 bucket ARN is arn:aws:s3:::bucket and an object is arn:aws:s3:::bucket/key; policies often need both.</li><li>IAM, Route 53 and CloudFront are global, so the region field is empty.</li><li>Lambda aliases and versions put a colon inside the resource: function:name:alias.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Why does the resource part differ per service?</summary><p>Each service defines its own layout, mixing slash and colon separators. The tool guesses the first token as the type.</p></details><details><summary>Where do I find my account ID?</summary><p>In the console's top-right menu, or with aws sts get-caller-identity.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/aws-arn-parser.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

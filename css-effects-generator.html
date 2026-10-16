@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 효과 생성기 — 그림자·transform·filter 코드 | WooaDev</title>
+  <meta name="description" content="box-shadow(겹친 그림자·inset), text-shadow, border·radius, transform, filter, 글래스모피즘 CSS를 슬라이더 값으로 생성하고 미리보기합니다. 성능·접근성 주의사항과 복사해 쓸 코드를 제공합니다.">
+  <meta name="keywords" content="CSS 효과, box-shadow 생성기, text-shadow, CSS filter, transform 생성기, 글래스모피즘, css effects generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/css-effects-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/css-effects-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/css-effects-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/css-effects-generator.html">
+  <meta property="og:title" content="CSS 효과 생성기 — 그림자·transform·filter 코드 | WooaDev">
+  <meta property="og:description" content="box-shadow(겹친 그림자·inset), text-shadow, border·radius, transform, filter, 글래스모피즘 CSS를 슬라이더 값으로 생성하고 미리보기합니다. 성능·접근성 주의사항과 복사해 쓸 코드를 제공합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/css-effects-generator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS 효과 생성기 — 그림자·transform·filter 코드 | WooaDev">
+  <meta name="twitter:description" content="box-shadow(겹친 그림자·inset), text-shadow, border·radius, transform, filter, 글래스모피즘 CSS를 슬라이더 값으로 생성하고 미리보기합니다. 성능·접근성 주의사항과 복사해 쓸 코드를 제공합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSS 효과 생성기","url":"https://wooadev.wooahouse.com/css-effects-generator.html","description":"box-shadow(겹친 그림자·inset), text-shadow, border·radius, transform, filter, 글래스모피즘 CSS를 슬라이더 값으로 생성하고 미리보기합니다. 성능·접근성 주의사항과 복사해 쓸 코드를 제공합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["box-shadow: x, y, blur, spread, 색과 투명도, inset, 자연스러운 겹친 두 번째 그림자","text-shadow, border(두께·선 모양·색)·border-radius","transform: translate, rotate, scale, skewX 를 올바른 순서로 합성하고 transition 포함","filter: blur, brightness, contrast, grayscale, hue-rotate, saturate, sepia (기본값은 생략)","글래스모피즘: 반투명 배경 + backdrop-filter(blur, saturate) + 접두사"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"transform 함수의 순서가 왜 중요한가요?","acceptedAnswer":{"@type":"Answer","text":"여러 함수는 오른쪽부터 차례로 적용되어 회전한 뒤 이동하는 것과 이동한 뒤 회전하는 것의 결과가 다르기 때문입니다."}},{"@type":"Question","name":"filter 와 backdrop-filter 의 차이는요?","acceptedAnswer":{"@type":"Answer","text":"filter 는 요소 자체(자식 포함)에, backdrop-filter 는 요소 뒤의 배경에 효과를 적용합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"CSS 효과 생성기","item":"https://wooadev.wooahouse.com/css-effects-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="css-effects-generator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/css-effects-generator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CSS 효과 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">✨</span>
+    <h1>CSS 효과 생성기 — 그림자 · 테두리 · 변형 · 필터</h1>
+    <p>값을 조절하면 box-shadow(겹친 그림자), text-shadow, border, transform, filter, 글래스모피즘(backdrop-filter) CSS 가 만들어지고 바로 미리보기로 확인됩니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ CSS 를 만들었습니다</p>
+<h3>결과 — CSS</h3><pre>.element {
+  box-shadow:
+    0px 8px 24px 0px rgba(0, 0, 0, 0.25),
+    0px 4px 8px rgba(0, 0, 0, 0.15);
+}</pre>
+<h3>결과 — 참고</h3><pre>겹친 그림자(레이어)를 쓰면 한 겹보다 훨씬 자연스러운 깊이감이 납니다</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>그림자의 offset·blur·spread 를 숫자로 조절하며 결과를 보고 CSS 를 복사합니다.</p>
+<ul><li>box-shadow: x, y, blur, spread, 색과 투명도, inset, 자연스러운 겹친 두 번째 그림자</li><li>text-shadow, border(두께·선 모양·색)·border-radius</li><li>transform: translate, rotate, scale, skewX 를 올바른 순서로 합성하고 transition 포함</li><li>filter: blur, brightness, contrast, grayscale, hue-rotate, saturate, sepia (기본값은 생략)</li><li>글래스모피즘: 반투명 배경 + backdrop-filter(blur, saturate) + 접두사</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="box-shadow.html" class="related-card"><span class="related-icon">🫧</span><span>Box Shadow 생성기</span></a>
+    <a href="border-radius.html" class="related-card"><span class="related-icon">⬜</span><span>Border Radius 생성기</span></a>
+    <a href="css-gradient.html" class="related-card"><span class="related-icon">🌈</span><span>CSS 그라디언트 생성기</span></a>
+    <a href="css-transition.html" class="related-card"><span class="related-icon">🎬</span><span>CSS Transition 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>부드러운 그림자는 한 겹보다 서로 다른 blur 두 겹을 겹쳐 쓰면 훨씬 자연스럽습니다.</li><li>transform 은 레이아웃을 바꾸지 않아 애니메이션에 유리합니다.</li><li>backdrop-filter 는 뒤에 이미지·그라디언트가 있어야 효과가 보입니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>transform 함수의 순서가 왜 중요한가요?</summary><p>여러 함수는 오른쪽부터 차례로 적용되어 회전한 뒤 이동하는 것과 이동한 뒤 회전하는 것의 결과가 다르기 때문입니다.</p></details><details><summary>filter 와 backdrop-filter 의 차이는요?</summary><p>filter 는 요소 자체(자식 포함)에, backdrop-filter 는 요소 뒤의 배경에 효과를 적용합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/css-effects-generator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stack Trace Formatter – Frame Table &amp; Your-Code Highlight | WooaDev</title>
+  <meta name="description" content="Auto-detect and tidy Java, Python, JavaScript, .NET, Go, Ruby and PHP stack traces into a frame table. Handles Caused by chains and omitted frames and highlights your own code prefix.">
+  <meta name="keywords" content="stack trace analyzer, format stack trace, read exception log, Caused by, Java stack trace, stack trace formatter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/stack-trace-formatter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/stack-trace-formatter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/stack-trace-formatter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/stack-trace-formatter.html">
+  <meta property="og:title" content="Stack Trace Formatter – Frame Table &amp; Your-Code Highlight | WooaDev">
+  <meta property="og:description" content="Auto-detect and tidy Java, Python, JavaScript, .NET, Go, Ruby and PHP stack traces into a frame table. Handles Caused by chains and omitted frames and highlights your own code prefix.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/stack-trace-formatter.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Stack Trace Formatter – Frame Table &amp; Your-Code Highlight | WooaDev">
+  <meta name="twitter:description" content="Auto-detect and tidy Java, Python, JavaScript, .NET, Go, Ruby and PHP stack traces into a frame table. Handles Caused by chains and omitted frames and highlights your own code prefix.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Stack Trace Formatter","url":"https://wooadev.wooahouse.com/en/stack-trace-formatter.html","description":"Auto-detect and tidy Java, Python, JavaScript, .NET, Go, Ruby and PHP stack traces into a frame table. Handles Caused by chains and omitted frames and highlights your own code prefix.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Language detection: Java / Kotlin, Python, JavaScript (V8 and Firefox styles), .NET, Go, Ruby, PHP","Table: frame number, cause level (top / Caused by), function, file:line(:column) and kind (your code / library / other)","Give your code prefixes (com.shop, /app/src …) to mark those frames with ⭐ and name the first one to inspect","Handles Caused by chains (the root cause is usually the last) and \"... 12 more\" omitted frames","Notes that minified bundles (.min.js) need a source map"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why is the language not detected?","acceptedAnswer":{"@type":"Answer","text":"Check that lines look like frames such as 'at … (file:line)' or 'File \"…\", line N'. Removing log prefixes such as timestamps helps."}},{"@type":"Question","name":"How are async frames shown?","acceptedAnswer":{"@type":"Answer","text":"Async frames without a file and line are left out; only frames with file information appear."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Stack Trace Formatter","item":"https://wooadev.wooahouse.com/en/stack-trace-formatter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../stack-trace-formatter.html">KO</a>
+        <span>|</span>
+        <a href="stack-trace-formatter.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Stack Trace Formatter</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🐞</span>
+    <h1>Stack Trace Formatter — Auto-Detects the Language</h1>
+    <p>Detects the language of a long error stack trace, splits it into frames (function, file, line) and highlights frames belonging to your own packages so you know where to look first.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Java: 8 frames · 3 in your code</p>
+<h3>Input — Stack trace (Java, Python, Node.js / browser, .NET, Go, Ruby, PHP)</h3><pre>java.lang.IllegalStateException: Order 42 is already shipped
+	at com.shop.order.OrderService.ship(OrderService.java:88)
+	at com.shop.order.OrderController.ship(OrderController.java:41)
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at org.apache.catalina.core.StandardWrapper.invoke(StandardWrapper.java:200)
+Caused by: java.sql.SQLException: Deadlock found when trying to get lock
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
+	at com.shop.order.OrderRepository.update(OrderRepository.java:57)
+	... 12 more</pre>
+<h3>Result — Frames</h3><pre># | Group | Function / method | Location | Kind
+1 | top | com.shop.order.OrderService.ship | OrderService.java:88 | ⭐ your code
+2 | top | com.shop.order.OrderController.ship | OrderController.java:41 | ⭐ your code
+3 | top | jdk.internal.reflect.NativeMethodAccessorImpl.invoke0 | Native Method | library
+4 | top | org.springframework.web.servlet.FrameworkServlet.service | FrameworkServlet.java:883 | library
+5 | top | org.apache.catalina.core.StandardWrapper.invoke | StandardWrapper.java:200 | library
+6 | cause 1 | com.mysql.cj.jdbc.exceptions.SQLError.createSQLException | SQLError.java:129 | other
+7 | cause 1 | com.shop.order.OrderRepository.update | OrderRepository.java:57 | ⭐ your code
+8 | cause 1 | … 12 frames omitted |  | …</pre>
+<h3>Result — Cleaned trace</h3><pre>Java stack trace
+java.lang.IllegalStateException: Order 42 is already shipped
+↳ Caused by: java.sql.SQLException: Deadlock found when trying to get lock
+
+▶ com.shop.order.OrderService.ship  (OrderService.java:88)
+▶ com.shop.order.OrderController.ship  (OrderController.java:41)
+  jdk.internal.reflect.NativeMethodAccessorImpl.invoke0  (Native Method)
+  org.springframework.web.servlet.FrameworkServlet.service  (FrameworkServlet.java:883)
+  org.apache.catalina.core.StandardWrapper.invoke  (StandardWrapper.java:200)
+  com.mysql.cj.jdbc.exceptions.SQLError.createSQLException  (SQLError.java:129)
+▶ com.shop.order.OrderRepository.update  (OrderRepository.java:57)
+  … 12 frames omitted</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Strip library frames out of dozens of lines and find your own code. Logs are processed only in your browser.</p>
+<ul><li>Language detection: Java / Kotlin, Python, JavaScript (V8 and Firefox styles), .NET, Go, Ruby, PHP</li><li>Table: frame number, cause level (top / Caused by), function, file:line(:column) and kind (your code / library / other)</li><li>Give your code prefixes (com.shop, /app/src …) to mark those frames with ⭐ and name the first one to inspect</li><li>Handles Caused by chains (the root cause is usually the last) and "... 12 more" omitted frames</li><li>Notes that minified bundles (.min.js) need a source map</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="syslog-parser.html" class="related-card"><span class="related-icon">🗒️</span><span>Syslog Parser</span></a>
+    <a href="access-log-parser.html" class="related-card"><span class="related-icon">📜</span><span>Access Log Parser</span></a>
+    <a href="regex-tester.html" class="related-card"><span class="related-icon">🔍</span><span>Regex Tester</span></a>
+    <a href="string-escape.html" class="related-card"><span class="related-icon">🔣</span><span>String Escape / Unescape</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>The last Caused by is usually the root cause; read your frames above it first.</li><li>Stack traces can contain file paths, internal class names and values; review before sharing.</li><li>Production JS needs a source map to recover original positions (this tool does not read source maps).</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Why is the language not detected?</summary><p>Check that lines look like frames such as 'at … (file:line)' or 'File "…", line N'. Removing log prefixes such as timestamps helps.</p></details><details><summary>How are async frames shown?</summary><p>Async frames without a file and line are left out; only frames with file information appear.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/stack-trace-formatter.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

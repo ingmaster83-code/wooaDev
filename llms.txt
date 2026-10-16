@@ -45,19 +45,30 @@ WooaDev은 설치나 로그인 없이 브라우저에서 바로 사용하는 무
 - [타임스탬프 변환기](https://wooadev.wooahouse.com/timestamp.html): Unix timestamp(epoch)를 날짜·시간으로, 날짜·시간을 Unix timestam...
 - [텍스트 ↔ 바이너리 변환기](https://wooadev.wooahouse.com/text-binary.html): 텍스트를 바이너리(2진수) 코드로 변환하거나 바이너리를 텍스트로 디코딩하세요. 8비트 ASCI...
 - [화면비 계산기](https://wooadev.wooahouse.com/aspect-ratio.html): 화면비(Aspect Ratio) 계산기로 너비/높이를 입력하면 비율을 계산합니다. 16:9, ...
+- [액세스 로그 분석기](https://wooadev.wooahouse.com/access-log-parser.html): Nginx/Apache 의 combined·common 형식 로그를 붙여 넣으면 IP, 시각, 메서드, 경로, 상태, 바이트, UA 로 나눠 표와 CSV 로 만들고, 상태 코드 분포·상위 IP·경로·봇 비율·스캐닝 요청을 요약합니다.
+- [ADB 명령어 생성기](https://wooadev.wooahouse.com/adb-command-builder.html): 앱 설치·삭제·실행, logcat 필터, 스크린샷·녹화, 파일 복사, 탭·스와이프 입력, 포트 연결, 무선 연결, 권한, 인텐트, dumpsys 까지 자주 쓰는 adb 명령을 선택지로 만들고 각 부분의 뜻과 주의사항을 알려 줍니다.
+- [APNs 토큰 변환기](https://wooadev.wooahouse.com/apns-token-formatter.html): Xcode 로그의 <740f4707 bebcf74f …> 형식, 공백 없는 16진수, Base64 로 된 APNs 디바이스 토큰을 서버가 쓰는 소문자 16진수로 통일하고 길이를 검증합니다. Swift·Node·Python 변환 코드도 제공합니다.
 - [Authorization 헤더 도구](https://wooadev.wooahouse.com/auth-header-tool.html): Authorization 헤더나 토큰을 붙여 넣으면 방식(Basic/Bearer/JWT)을 알아내 해독하고 만료 여부를 점검합니다. 사용자·비밀번호로 Basic 헤더도 만들 수 있습니다.
+- [AWS ARN 분석·생성기](https://wooadev.wooahouse.com/aws-arn-parser.html): arn:aws:iam::123456789012:role/MyRole 같은 ARN을 파티션, 서비스, 리전, 계정, 리소스로 나눠 보여 주고 형식 오류를 찾습니다. 필드를 입력해 새 ARN을 만들 수도 있습니다.
 - [AWS EventBridge cron 생성기](https://wooadev.wooahouse.com/aws-eventbridge-cron.html): EventBridge(CloudWatch Events)와 EventBridge Scheduler의 cron(...) 및 rate(...) 식을 검증하고, 실제 UTC 실행 시각과 한국 시간 등 다른 시간대의 시각을 보여 줍니다.
+- [Azure 리소스 ID 분석기](https://wooadev.wooahouse.com/azure-resource-parser.html): /subscriptions/…/providers/Microsoft.Compute/virtualMachines/vm1 같은 리소스 ID와 Blob URL(SAS 토큰), 스토리지 연결 문자열을 구성 요소로 나누고, 만료·과도한 권한·키 노출을 점검합니다.
 - [Base 인코딩 변환기](https://wooadev.wooahouse.com/base-encoding-converter.html): 텍스트나 16진수 바이트를 Base16, Base32, Base58, Base85(Ascii85·Z85)로 인코딩하고 다시 디코딩합니다.
 - [비트 연산 계산기](https://wooadev.wooahouse.com/bitwise-calculator.html): 두 정수의 모든 비트 연산 결과를 10진수·16진수·2진수로 한 번에 보여 줍니다. 8·16·32·64비트와 부호 있는/없는 정수를 지원합니다.
 - [Cache-Control 생성·분석기](https://wooadev.wooahouse.com/cache-control-builder.html): 정적 파일·HTML·API 상황별 프리셋으로 Cache-Control 헤더를 만들고, 이미 있는 헤더를 지시어별로 풀어 설명하며 모순을 찾아 줍니다.
 - [CRC·체크섬 계산기](https://wooadev.wooahouse.com/checksum-calculator.html): 통신 프로토콜과 파일 포맷에서 쓰는 CRC-8, CRC-16(Modbus, XMODEM, CCITT), CRC-32, CRC-32C, CRC-64, Adler-32, Fletcher를 계산하고 표준 검증값과 비교합니다.
 - [CIDR 집합 계산기](https://wooadev.wooahouse.com/cidr-set-calculator.html): 여러 CIDR 블록을 하나로 합치고, 두 목록의 교집합·합집합·제외를 구하거나 IP가 대역 안에 있는지 확인합니다. IPv4와 IPv6 모두 지원합니다.
+- [AWS 로그 분석기](https://wooadev.wooahouse.com/cloud-log-parser.html): ALB/NLB 액세스 로그, CloudFront 표준 로그(#Fields), S3 서버 액세스 로그를 붙여 넣으면 형식을 자동으로 알아내 필드 이름이 붙은 CSV 와 요약 표로 바꿉니다.
 - [명령줄·PATH·환경 변수 분석기](https://wooadev.wooahouse.com/command-line-parser.html): 복잡한 셸 명령줄을 프로그램, 인수, 앞에 붙은 환경 변수, 파이프, 리디렉션으로 나눠 보여 주고, PATH 변수의 중복·위험 항목과 환경 변수 목록의 오류를 점검합니다.
 - [설정 파일 변환기](https://wooadev.wooahouse.com/config-converter.html): INI, Java .properties, Apple plist(XML) 설정을 JSON으로, JSON을 다시 해당 형식으로 변환합니다.
 - [설정 파일 비교 도구](https://wooadev.wooahouse.com/config-diff.html): TOML, INI, .properties, YAML, JSON, .env 두 파일을 데이터로 읽어 비교하므로 키 순서·공백·주석이 달라도 실제 변경만 보여 줍니다.
 - [Conventional Commits 작성기](https://wooadev.wooahouse.com/conventional-commit-builder.html): 타입, 범위, 설명, 본문, 호환성 파괴(BREAKING CHANGE), 이슈 참조를 입력해 Conventional Commits 형식의 커밋 메시지를 만들고, 이미 쓴 메시지가 규칙에 맞는지 검사합니다.
 - [CSP 생성기·분석기](https://wooadev.wooahouse.com/csp-builder.html): Content-Security-Policy 헤더를 프리셋으로 만들고, 이미 가진 정책의 약점(unsafe-inline, 와일드카드)을 찾아내며, 특정 스크립트·이미지 요청이 허용되는지 직접 테스트합니다.
+- [CSS clip-path 생성기](https://wooadev.wooahouse.com/css-clip-path-generator.html): 삼각형·육각형·별 같은 프리셋이나 직접 입력한 꼭짓점으로 clip-path: polygon() 을 만들고, circle(), ellipse(), inset() 도 생성해 바로 미리보기로 확인합니다.
+- [CSS 효과 생성기](https://wooadev.wooahouse.com/css-effects-generator.html): 값을 조절하면 box-shadow(겹친 그림자), text-shadow, border, transform, filter, 글래스모피즘(backdrop-filter) CSS 가 만들어지고 바로 미리보기로 확인됩니다.
+- [CSS 정리·검사기](https://wooadev.wooahouse.com/css-formatter.html): 한 줄로 압축된 CSS 를 읽기 쉽게 정리하거나 최소화하고, 같은 규칙 안의 중복 속성, 빈 규칙, !important 남용, 불필요한 벤더 접두사, 닫히지 않은 괄호를 찾아 줍니다.
+- [cubic-bezier 이징 편집기](https://wooadev.wooahouse.com/cubic-bezier-editor.html): cubic-bezier(x1, y1, x2, y2) 값이나 ease-out-back 같은 이름을 넣으면 곡선을 그려 보여 주고, 시간별 진행도 표와 transition·@keyframes·Web Animations 코드를 만들어 줍니다.
 - [Data URI 변환기](https://wooadev.wooahouse.com/data-uri-converter.html): 텍스트나 파일을 data:URL(Base64 또는 퍼센트 인코딩)로 만들고, 기존 Data URI를 해석해 내용과 MIME 타입을 확인합니다.
+- [딥 링크·Intent URI 생성기](https://wooadev.wooahouse.com/deep-link-builder.html): myapp://product/42 같은 커스텀 스킴, https 유니버설 링크/앱 링크, 앱이 없을 때 대체 URL 이 있는 Android intent:// URI 를 한 번에 만들고, AndroidManifest·assetlinks.json·AASA 설정 예시와 테스트 명령을 제공합니다.
 - [DKIM·BIMI 레코드 분석기](https://wooadev.wooahouse.com/dkim-record-parser.html): DKIM TXT 레코드의 태그를 풀고 공개키(RSA/Ed25519)의 종류와 비트 길이, 폐기·테스트 상태를 확인합니다. BIMI 레코드를 검사하고 새로 만드는 기능도 있습니다.
 - [DMARC 레코드 생성기·분석기](https://wooadev.wooahouse.com/dmarc-builder.html): p, sp, pct, rua, adkim, aspf 를 골라 _dmarc TXT 레코드를 만들고, 이미 있는 레코드의 오류와 약점을 분석합니다. 하위 도메인에 어떤 정책이 적용되는지도 한눈에 보여 줍니다.
 - [DNS 존 파일 편집기](https://wooadev.wooahouse.com/dns-zone-editor.html): BIND 형식 존 파일을 읽어 정렬된 형태로 다시 쓰고, 레코드를 추가하고, SOA serial을 올리고, 흔한 설정 실수를 찾아 줍니다.
@@ -66,6 +77,7 @@ WooaDev은 설치나 로그인 없이 브라우저에서 바로 사용하는 무
 - [도메인·호스트 이름 검증기](https://wooadev.wooahouse.com/domain-validator.html): 도메인 이름이 규칙에 맞는지 줄마다 검사하고, 어떤 규칙을 어겼는지 이유를 알려 줍니다. IDN은 Punycode로 정규화합니다.
 - [.NET Ticks 변환기](https://wooadev.wooahouse.com/dotnet-ticks-converter.html): .NET의 DateTime.Ticks(0001-01-01 이후 100나노초 수)를 날짜로, 날짜를 Ticks로 정밀하게 바꿉니다. 소수 7자리까지 잘리지 않습니다.
 - [시간 단위·기간 변환기](https://wooadev.wooahouse.com/duration-parser.html): PT1H30M, 1h 30m, 01:30:00, 90 minutes 같은 기간 표기를 읽어 밀리초·초·분·시간·ISO 8601로 서로 바꿉니다.
+- [DynamoDB JSON 변환기](https://wooadev.wooahouse.com/dynamodb-json-converter.html): DynamoDB 가 쓰는 타입 표기 JSON({"name":{"S":"Kim"},"age":{"N":"31"}})을 일반 JSON 으로, 또는 반대로 변환합니다. Item/Items 래퍼와 SS·NS·B·L·M 타입을 지원합니다.
 - [이메일 주소 검사·mailto 생성기](https://wooadev.wooahouse.com/email-address-tool.html): 여러 이메일 주소를 한꺼번에 붙여 넣어 형식을 검사하고 중복을 제거하며 오타 도메인을 찾습니다. 받는 사람·참조·제목·본문이 들어간 mailto 링크와 HTML 태그도 만들어 줍니다.
 - [ENV 비교·누락 확인](https://wooadev.wooahouse.com/env-diff.html): 두 .env 파일을 비교해 한쪽에만 있는 변수와 값이 달라진 변수를 표로 보여 주고, 빠진 키를 붙여 넣기 좋은 형태로 뽑아 줍니다.
 - [.env 편집기](https://wooadev.wooahouse.com/env-editor.html): .env 파일을 변수·값 표로 바꿔 보여 주고, 셀을 직접 고치거나 변수를 추가·삭제하면 완성된 .env를 바로 만들어 줍니다.
@@ -73,7 +85,9 @@ WooaDev은 설치나 로그인 없이 브라우저에서 바로 사용하는 무
 - [ENV ↔ JSON 변환기](https://wooadev.wooahouse.com/env-json-converter.html): dotenv(.env) 형식을 JSON으로, JSON을 .env로 변환합니다. 숫자·불리언 자동 변환과 __ 중첩 규칙을 지원합니다.
 - [엑셀 날짜 일련번호 변환기](https://wooadev.wooahouse.com/excel-date-converter.html): Excel이 날짜를 저장하는 일련번호(예: 45292)를 실제 날짜로, 날짜를 일련번호로 바꿉니다. 1900년 윤년 버그와 1904 체계도 정확히 반영합니다.
 - [파일 체크섬 계산기](https://wooadev.wooahouse.com/file-checksum.html): 내려받은 파일이 손상되거나 바뀌지 않았는지 확인하세요. 파일을 선택하면 MD5, SHA-1, SHA-256, SHA-384, SHA-512, CRC-32를 한꺼번에 계산하고 공식 해시값과 비교합니다.
+- [파일 형식 판별기](https://wooadev.wooahouse.com/file-type-detector.html): 파일 이름이 아니라 파일 앞부분의 시그니처(매직 바이트)로 실제 형식을 알아냅니다. 파일을 선택하거나 16진수 바이트를 붙여 넣으면 PNG·PDF·ZIP·EXE 등 60여 형식을 판별하고 확장자와 대조합니다.
 - [FILETIME 변환기](https://wooadev.wooahouse.com/filetime-converter.html): Windows FILETIME(1601-01-01 이후 100ns 수)을 날짜로, 날짜를 FILETIME으로 바꿉니다. 10진수·16진수·상위/하위 DWORD 입력을 모두 받습니다.
+- [GCP 리소스·GCS URL 분석기](https://wooadev.wooahouse.com/gcp-resource-parser.html): projects/…/locations/… 형식의 리소스 이름, gs:// 와 storage.googleapis.com 주소, 서비스 계정 이메일과 키 JSON을 분석합니다. 비공개 키는 마스킹하고 노출 위험을 알려 줍니다.
 - [Git 명령어 생성기](https://wooadev.wooahouse.com/git-command-builder.html): 작업을 고르고 옵션을 체크하면 git 명령어를 만들어 주고, 각 부분이 무슨 뜻인지, 어떤 위험이 있는지, 실수했을 때 되돌리는 방법을 함께 알려 줍니다.
 - [Git diff 뷰어](https://wooadev.wooahouse.com/git-diff-viewer.html): git diff, git show, .patch/.diff 파일 내용을 붙여 넣으면 파일별 추가·삭제 줄 수, 이름 변경·신규·삭제 여부를 요약하고 줄 번호가 붙은 색상 diff로 보여 줍니다.
 - [Git 병합·리베이스 시뮬레이터](https://wooadev.wooahouse.com/git-history-planner.html): 공통 커밋과 두 브랜치의 커밋 수를 정하고 작업을 고르면 실행 전후의 커밋 그래프를 ASCII로 그려 보여 줍니다. 어떤 커밋의 해시가 바뀌는지, 어떤 명령을 쓰는지도 알려 줍니다.
@@ -81,6 +95,7 @@ WooaDev은 설치나 로그인 없이 브라우저에서 바로 사용하는 무
 - [GitHub URL 변환기](https://wooadev.wooahouse.com/github-url-converter.html): GitHub 파일·폴더·저장소 주소를 붙여 넣으면 Blob, Raw, jsDelivr CDN, API, github.dev, Blame, History, ZIP, HTTPS/SSH clone 주소를 한꺼번에 만들어 줍니다.
 - [.gitignore 테스터](https://wooadev.wooahouse.com/gitignore-tester.html): .gitignore 내용과 확인할 경로를 넣으면 각 경로가 무시되는지, 어떤 줄의 규칙 때문인지, 부정(!) 규칙이 왜 먹히지 않는지를 Git과 같은 규칙으로 판정해 보여 줍니다.
 - [HMAC 생성기](https://wooadev.wooahouse.com/hmac-generator.html): 비밀 키와 메시지로 HMAC을 계산하고 받은 서명과 비교합니다. GitHub·Stripe·Slack 같은 웹훅 서명을 확인하거나 API 요청 서명을 만들 때 쓰세요.
+- [HTML 포맷터·검사기](https://wooadev.wooahouse.com/html-formatter.html): 한 줄로 뭉쳐 있거나 들여쓰기가 엉킨 HTML을 읽기 쉽게 정리하고, 닫히지 않은 태그, 중복 id, alt 없는 이미지, lang·viewport 누락 같은 구조 문제를 찾아 줍니다. 최소화도 지원합니다.
 - [HTTP 헤더 파서](https://wooadev.wooahouse.com/http-headers-parser.html): 브라우저 개발자 도구나 curl -I에서 복사한 HTTP 헤더를 붙여 넣으면 헤더마다 의미를 설명하고 쿠키·캐시·보안 설정의 빠진 부분을 알려 줍니다.
 - [부동소수점(IEEE 754) 변환기](https://wooadev.wooahouse.com/ieee754-converter.html): 숫자를 float16·32·64 비트 패턴(16진수)으로, 비트 패턴을 숫자로 바꾸고 부호·지수·가수와 반올림 오차를 보여 줍니다.
 - [2의 보수 계산기](https://wooadev.wooahouse.com/integer-representation.html): 정수나 비트열을 넣으면 2의 보수, 1의 보수, 부호-크기 표현과 16진수, 부호 있는/없는 해석을 4~64비트에서 보여 줍니다.
@@ -95,6 +110,7 @@ WooaDev은 설치나 로그인 없이 브라우저에서 바로 사용하는 무
 - [JSON 병합 도구](https://wooadev.wooahouse.com/json-merge.html): 기본 설정 JSON 위에 덮어쓸 JSON을 깊이 병합합니다. 충돌 시 우선할 쪽과 배열 처리 방식을 고를 수 있고 충돌 내역도 보여 줍니다.
 - [JSON 포인터 도구](https://wooadev.wooahouse.com/json-pointer.html): /users/0/name 같은 JSON Pointer로 정확한 값을 찾고, 모든 값의 포인터와 URI 조각 표기를 만들어 줍니다.
 - [JSON 복구 도구](https://wooadev.wooahouse.com/json-repair.html): 따옴표·쉼표·괄호가 틀렸거나 중간에 잘린 JSON을 올바른 JSON으로 고치고, 무엇을 고쳤는지 알려 줍니다.
+- [JSON-RPC 2.0 뷰어](https://wooadev.wooahouse.com/json-rpc-viewer.html): 요청, 알림, 성공 응답, 오류 응답, 배치를 종류별로 분류하고 id 로 요청과 응답을 짝지어 줍니다. jsonrpc 버전 누락, 응답이 없는 요청, result 와 error 동시 존재 같은 규격 위반과 -32700 · -32601 같은 표준 오류 코드를 설명합니다.
 - [JSON 스키마 비교 도구](https://wooadev.wooahouse.com/json-schema-diff.html): 두 JSON Schema를 비교해 속성 추가·삭제, 필수 여부, 타입, enum, 제약 변경을 찾고 요청/응답 관점에서 호환성이 깨지는지 알려 줍니다.
 - [JSON 스키마 생성기](https://wooadev.wooahouse.com/json-schema-generator.html): JSON 샘플(여러 개 가능)에서 타입, required, format을 추론해 JSON Schema 초안을 만들어 줍니다.
 - [JSON 스키마 검증기](https://wooadev.wooahouse.com/json-schema-validator.html): JSON 데이터가 JSON Schema를 만족하는지 검증하고, 어떤 경로의 어떤 규칙이 깨졌는지 모든 오류를 표로 보여 줍니다.
@@ -106,15 +122,30 @@ WooaDev은 설치나 로그인 없이 브라우저에서 바로 사용하는 무
 - [JSON → TOML 변환기](https://wooadev.wooahouse.com/json-to-toml.html): JSON을 사람이 읽기 쉬운 TOML 설정으로 바꿉니다. 테이블([table])과 테이블 배열([[array]]) 구조를 자동으로 만듭니다.
 - [JSON → XML 변환기](https://wooadev.wooahouse.com/json-to-xml.html): JSON 객체를 XML 요소로 바꿉니다. 속성(@), 텍스트(#text), 배열 반복, 특수문자 이스케이프를 지원합니다.
 - [JSON 유효성 검사기](https://wooadev.wooahouse.com/json-validator.html): JSON 문법 오류가 몇 번째 줄 몇 번째 칸에 있는지 알려주고, 조용히 덮어써지는 중복 키까지 찾아냅니다.
+- [JSON Lines 뷰어](https://wooadev.wooahouse.com/jsonl-viewer.html): 한 줄에 JSON 하나씩인 JSONL/NDJSON 로그를 붙여 넣으면 표로 펼쳐 보여 주고, 필터링하고, JSON 배열·CSV·들여쓰기한 형식으로 변환합니다. 깨진 줄은 줄 번호와 이유를 알려 줍니다.
 - [JSONPath 테스터](https://wooadev.wooahouse.com/jsonpath-tester.html): $.store.book[?(@.price < 10)].title 같은 JSONPath 식을 실행해 일치한 값과 그 경로를 바로 확인합니다.
+- [ConfigMap·Secret 변환기](https://wooadev.wooahouse.com/kubernetes-config-converter.html): .env 파일의 KEY=VALUE를 ConfigMap과 Secret YAML로 자동 분리하고(Base64 인코딩 포함), 반대로 Secret/ConfigMap YAML을 .env 로 되돌립니다. Deployment 에 연결하는 envFrom 예시도 만들어 줍니다.
 - [Kubernetes 레이블 셀렉터 테스터](https://wooadev.wooahouse.com/kubernetes-label-selector.html): env=prod,tier in (frontend,backend),!deprecated 같은 레이블 셀렉터를 해석하고, 오브젝트 레이블 목록과 일치하는지 시험하며, Deployment/Service 용 matchLabels·matchExpressions YAML로 바꿔 줍니다.
 - [Kubernetes 리소스 계산기](https://wooadev.wooahouse.com/kubernetes-resource-calculator.html): 컨테이너별 CPU/메모리 requests와 limits를 입력하면 파드 합계, QoS 클래스(Guaranteed/Burstable/BestEffort), 레플리카·HPA 최대치에서 필요한 노드 수와 resources YAML을 계산합니다.
 - [Linux capability 디코더](https://wooadev.wooahouse.com/linux-capability-decoder.html): /proc/PID/status 의 CapEff 같은 16진수 값을 CAP_ 이름과 설명, 위험도로 풀고, 반대로 capability 이름 목록을 마스크와 docker --cap-add, Kubernetes securityContext 로 바꿉니다.
 - [MAC 주소 검증·변환기](https://wooadev.wooahouse.com/mac-address-tool.html): MAC 주소를 콜론·하이픈·Cisco 점 표기로 바꾸고, 유효성·유니캐스트/멀티캐스트·로컬 관리 여부와 EUI-64 링크 로컬 IPv6 주소를 알려 줍니다.
+- [Maven ↔ Gradle 의존성 변환기](https://wooadev.wooahouse.com/maven-gradle-converter.html): pom.xml 의 <dependency> 블록을 Gradle Groovy·Kotlin DSL 로, Gradle 의 implementation "그룹:아티팩트:버전" 선언을 Maven XML 로 바꿉니다. scope 를 구성(configuration)으로 매핑하고 변환이 불가능한 부분은 알려 줍니다.
+- [모바일 단위·색상 변환기](https://wooadev.wooahouse.com/mobile-unit-converter.html): 화면 밀도(mdpi~xxxhdpi)에 따라 dp·sp·px·pt 를 변환하고 밀도별 에셋 크기를 계산합니다. 색상은 #AARRGGBB, CSS rgba, Flutter Color, iOS UIColor, SwiftUI, Android XML 표기를 한 번에 보여 줍니다.
+- [Modbus RTU CRC-16 계산기](https://wooadev.wooahouse.com/modbus-crc-calculator.html): 01 03 00 00 00 0A 같은 Modbus RTU 프레임 바이트를 넣으면 CRC-16/MODBUS 를 계산해 붙이거나, CRC 가 포함된 프레임이 올바른지 검증합니다. 슬레이브 주소·기능 코드·레지스터 주소를 풀어서 보여 줍니다.
 - [Nano ID·KSUID·UUID v7 생성기](https://wooadev.wooahouse.com/modern-id-generator.html): 짧고 URL에 안전한 Nano ID, 시간순 정렬되는 KSUID·UUID v7·TypeID를 만들고, KSUID에서 생성 시각을 읽어 냅니다.
+- [MongoDB 확장 JSON 변환기](https://wooadev.wooahouse.com/mongodb-ejson-converter.html): mongoexport·Compass 가 내보내는 확장 JSON 의 $oid, $date, $numberLong 같은 타입 표기를 Canonical(타입 보존), Relaxed(읽기 쉬움), 단순 JSON 으로 서로 바꿉니다.
+- [MQTT 토픽 필터 테스터](https://wooadev.wooahouse.com/mqtt-topic-tester.html): sensors/+/temperature, sensors/# 같은 구독 필터가 sensors/room1/temperature 같은 토픽에 일치하는지 행렬로 확인합니다. $SYS 토픽 규칙, 빈 레벨, 잘못 쓴 와일드카드도 알려 줍니다.
+- [NMEA 0183 파서](https://wooadev.wooahouse.com/nmea-parser.html): $GPGGA, $GPRMC 같은 NMEA 0183 문장을 위도·경도(십진 도), 시각, 속도, 방위, 위성 수, HDOP, 고도로 풀고 XOR 체크섬이 맞는지 확인합니다. 지도 링크도 만들어 줍니다.
 - [OAuth 인가 URL 생성기](https://wooadev.wooahouse.com/oauth-url-builder.html): response_type, scope, state, nonce, PKCE 파라미터가 들어간 OAuth 2.0 / OpenID Connect 인가 요청 URL을 만들고, 이미 가진 URL의 보안 문제를 점검합니다.
+- [MongoDB ObjectId 도구](https://wooadev.wooahouse.com/objectid-tool.html): ObjectId 24자리를 생성 시각, 프로세스 난수, 카운터로 풀어 보고, 새 ObjectId 를 만들고, 날짜 범위에 해당하는 _id 경계값으로 바로 쓸 수 있는 쿼리를 만듭니다.
+- [package.json 검사·정리기](https://wooadev.wooahouse.com/package-json-editor.html): package.json 을 붙여 넣으면 name 규칙, version 형식, main/exports, 위험한 install 스크립트, 버전 범위(*·latest·git URL), 중복 의존성 같은 문제를 찾고, 키 순서와 의존성을 정렬한 깔끔한 JSON 을 만들어 줍니다.
+- [패키지 버전 제약 해석기](https://wooadev.wooahouse.com/package-version-tools.html): ^1.2.3 || ~2.0 (Composer), ^0.2.3 (Cargo), [1.0,2.0) (NuGet), v1.2.3 모듈 버전 같은 제약을 사람이 읽는 범위로 풀어 주고, 후보 버전 목록 중 어떤 것이 일치하는지 판정합니다.
+- [PEP 440 버전 테스터](https://wooadev.wooahouse.com/pep440-version-tester.html): 1.0rc1, 1.0.post1, 1!2.0 같은 파이썬 버전 문자열을 PEP 440 규칙으로 정규화·정렬하고, >=1.0,<2.0 · ~=1.4.2 · ==1.* 같은 지정자와 일치하는지, 일치하는 가장 높은 버전은 무엇인지 알려 줍니다.
 - [PKCE 생성기](https://wooadev.wooahouse.com/pkce-generator.html): OAuth 2.0 인가 코드 흐름을 보호하는 PKCE 값을 만듭니다. 안전한 난수 code_verifier와 S256 code_challenge, 인가 요청·토큰 교환 예시까지 한 번에 보여 줍니다.
+- [PostgreSQL 배열·interval 파서](https://wooadev.wooahouse.com/postgresql-data-parser.html): {1,2,3}, {"a b",NULL}, {{1,2},{3,4}} 같은 PostgreSQL 배열 리터럴을 JSON 으로 바꾸고, '1 year 2 mons 3 days 04:05:06' 같은 interval 값을 필드별로 분석해 ISO 8601 로 변환합니다.
+- [프로토콜 URI 파서](https://wooadev.wooahouse.com/protocol-uri-parser.html): mqtt://user:pass@broker:1883/topic, amqps://…, redis://…, postgres://… 같은 연결 URI 를 스킴, 인증 정보, 호스트, 포트, 경로, 쿼리로 나누고 암호화 여부, 기본 포트, 비밀번호 노출 같은 문제를 점검합니다.
 - [퓨니코드 변환기](https://wooadev.wooahouse.com/punycode-converter.html): 한글도메인.한국 같은 국제화 도메인 이름을 xn-- 로 시작하는 ASCII Punycode로, 반대로 Punycode를 원래 글자로 바꿉니다.
+- [파이썬 의존성 변환기](https://wooadev.wooahouse.com/python-dependency-tools.html): requirements.txt 줄을 패키지, extras, 지정자, 환경 마커, 옵션(-r, -e, --hash)으로 나누고 고정되지 않은 의존성을 점검한 뒤 pyproject.toml, Pipfile, Poetry, 정리된 requirements.txt 로 변환합니다.
 - [Quartz cron 생성기](https://wooadev.wooahouse.com/quartz-cron-generator.html): 초 필드가 있는 Quartz/Spring cron 식을 문장으로 풀고 다음 실행 시각을 계산합니다. L(마지막), W(평일), #(몇 번째 요일), ? 기호를 모두 처리합니다.
 - [쿼리 문자열 파서·빌더](https://wooadev.wooahouse.com/query-string-builder.html): URL의 쿼리 문자열을 키-값 표와 JSON으로 풀어 보고(배열·중첩 포함), 반대로 JSON 객체를 올바르게 인코딩된 쿼리 문자열로 만듭니다.
 - [랜덤 문자열·난수 생성기](https://wooadev.wooahouse.com/random-generator.html): 토큰·코드용 랜덤 문자열, 범위 안의 정수·실수, 목록에서 무작위 추첨과 섞기를 브라우저의 암호학적 난수로 만듭니다.
@@ -122,27 +153,39 @@ WooaDev은 설치나 로그인 없이 브라우저에서 바로 사용하는 무
 - [역방향 DNS 이름 생성기](https://wooadev.wooahouse.com/reverse-dns-generator.html): IPv4·IPv6 주소의 PTR 레코드 이름과 CIDR 대역의 역방향 존 이름(in-addr.arpa, ip6.arpa)을 만들고 클래스리스(RFC 2317) 위임 이름도 알려 줍니다.
 - [ROT13·시저 암호·모스 부호 변환기](https://wooadev.wooahouse.com/rot-encoder.html): ROT13, ROT47, ROT5, ROT18, 시저 암호(이동값 지정·전체 시도), 아트배시, 모스 부호를 한 곳에서 변환합니다.
 - [RRULE 반복 일정 생성기](https://wooadev.wooahouse.com/rrule-generator.html): 캘린더(Google, Outlook, iCal)의 반복 일정 규칙 RRULE을 해석하거나 폼으로 만들고, 실제로 일정이 생기는 날짜를 미리 확인합니다. BYDAY·BYSETPOS·COUNT·UNTIL을 지원합니다.
+- [S3 URL 변환기](https://wooadev.wooahouse.com/s3-url-converter.html): S3 객체를 가리키는 s3:// URI, virtual-hosted 방식 HTTPS, path-style HTTPS, 레거시 엔드포인트, ARN을 서로 변환하고 버킷 이름 규칙 위반을 알려 줍니다.
+- [인증서 SAN 호스트 이름 검증기](https://wooadev.wooahouse.com/san-hostname-matcher.html): 인증서의 SAN(Subject Alternative Name) 목록과 접속하려는 호스트 이름을 넣으면 브라우저처럼 일치 여부를 판정합니다. 와일드카드는 한 레이블만, IDN은 punycode로, IP는 IP SAN으로만 비교합니다.
 - [JSON 모의 데이터 생성기](https://wooadev.wooahouse.com/schema-mock-data.html): JSON Schema를 붙여 넣으면 타입, 범위, enum, format, pattern, 배열 길이 같은 제약을 지키는 가짜 JSON 데이터를 만들어 줍니다.
 - [보안 헤더 생성기](https://wooadev.wooahouse.com/security-header-builder.html): HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy, CORS, COOP/COEP를 골라 서버 종류에 맞는 설정 코드를 바로 만들어 줍니다.
 - [쉘 이스케이프 변환기](https://wooadev.wooahouse.com/shell-escape.html): 공백, 따옴표, $, 백틱, 세미콜론이 든 문자열을 셸에서 하나의 인수로 안전하게 전달하도록 POSIX sh/bash, Bash $'…', fish, PowerShell, cmd.exe 방식으로 한 번에 이스케이프합니다.
 - [Snowflake ID 디코더](https://wooadev.wooahouse.com/snowflake-id-decoder.html): Twitter(X), Discord, Instagram, Sonyflake 또는 직접 정의한 Snowflake ID에서 생성 시각, 워커, 시퀀스를 뽑아냅니다.
 - [SPF 레코드 생성기·검사기](https://wooadev.wooahouse.com/spf-builder.html): 메일을 보내는 서버를 나열해 SPF TXT 레코드를 만들고, 이미 쓰고 있는 레코드의 문법 오류, ptr·+all 같은 위험 설정, DNS 조회 10회 한도 초과 여부를 검사합니다.
+- [SQL INSERT 변환기](https://wooadev.wooahouse.com/sql-insert-converter.html): mysqldump 나 SQL 파일의 INSERT INTO … VALUES (…),(…) 문을 읽어 열 이름이 붙은 JSON, CSV, JSON Lines 로 바꿉니다. 문자열 이스케이프, NULL, 숫자, 여러 문장을 처리합니다.
 - [SRI 해시 생성기](https://wooadev.wooahouse.com/sri-generator.html): CDN에서 불러오는 JS·CSS 파일에 붙이는 integrity(Subresource Integrity) 값을 sha256/384/512 로 만들고, 완성된 script·link 태그까지 만들어 줍니다.
+- [SSE 스트림 파서](https://wooadev.wooahouse.com/sse-parser.html): curl 이나 브라우저 개발자도구에서 복사한 text/event-stream 원문을 이벤트 단위로 나눠 event, id, retry, data 필드와 주석 줄을 보여 주고, data 가 JSON 이면 파싱하며 이어붙인 스트리밍 결과도 만들어 줍니다.
+- [스택 트레이스 정리기](https://wooadev.wooahouse.com/stack-trace-formatter.html): 오류 로그의 긴 스택 트레이스를 언어를 자동으로 알아내 프레임(함수·파일·줄)으로 나누고, 내 코드 패키지에 해당하는 프레임을 강조해 가장 먼저 볼 위치를 알려 줍니다.
 - [문자열 이스케이프 변환기](https://wooadev.wooahouse.com/string-escape.html): 줄바꿈과 따옴표가 섞인 문자열을 JSON, JavaScript, Python, Java, C, SQL, 정규식 규칙에 맞게 이스케이프하거나 되돌립니다.
 - [서브넷 계산기](https://wooadev.wooahouse.com/subnet-calculator.html): IP 주소와 CIDR(또는 서브넷 마스크)로 네트워크 주소, 브로드캐스트, 사용 가능한 호스트 범위와 개수를 계산합니다. /31·/32 예외와 IPv6도 처리합니다.
+- [syslog 파서](https://wooadev.wooahouse.com/syslog-parser.html): <34>Oct 16 09:12:03 web01 sshd[2412]: … 같은 전통 형식과 <165>1 2026-10-16T… 같은 RFC 5424 메시지를 PRI(facility·severity), 시각, 호스트, 앱, 프로세스 ID, 구조화 데이터, 본문으로 나눕니다.
 - [systemd 타이머 생성기](https://wooadev.wooahouse.com/systemd-timer-generator.html): systemd.timer의 OnCalendar 표현식(Mon..Fri *-*-* 09:00:00 등)을 해석하고 다음 실행 시각을 계산한 뒤, 바로 복사할 수 있는 .service/.timer 유닛 파일을 만들어 줍니다.
 - [TCP 플래그 분석기](https://wooadev.wooahouse.com/tcp-flags-decoder.html): 0x12, 18, S. 같은 TCP 플래그 값이나 SYN+ACK 같은 이름 조합을 해석하고 3-way 핸드셰이크·스캔 패턴의 의미를 알려 줍니다.
+- [텍스트 청킹 도구 (RAG)](https://wooadev.wooahouse.com/text-chunker.html): 긴 문서를 임베딩과 검색에 쓰기 좋은 청크로 나눕니다. 글자 수·토큰(추정)·문단·마크다운 제목·문장 기준과 겹침(overlap)을 지원하고, 단어·문장 경계에서 자르기, 청크 표와 JSON 출력, 너무 짧은 청크 경고를 제공합니다.
 - [시간대 변환기](https://wooadev.wooahouse.com/timezone-converter.html): 한 시각을 서울, 뉴욕, 런던, 도쿄 등 원하는 IANA 시간대의 현지 시각으로 한꺼번에 바꿔 날짜 차이와 UTC 오프셋까지 보여 줍니다.
 - [TOML 포맷터](https://wooadev.wooahouse.com/toml-formatter.html): TOML 파일의 문법을 검증하고 들여쓰기·공백·테이블 구성을 일정한 형식으로 정리합니다.
 - [TOML → JSON 변환기](https://wooadev.wooahouse.com/toml-to-json.html): TOML 설정 파일을 JSON으로 바꿉니다. 날짜·시간은 ISO 문자열로, 큰 정수는 정밀도 손실 없이 변환합니다.
+- [traceparent 도구](https://wooadev.wooahouse.com/trace-context-tool.html): 분산 추적 헤더 traceparent(00-trace-id-span-id-flags)와 tracestate 를 분석해 유효성을 확인하고, 새 trace 를 시작하거나 부모에서 자식 span 을 만들어 curl·B3·Datadog 헤더 예시까지 보여 줍니다.
 - [다운로드·전송 시간 계산기](https://wooadev.wooahouse.com/transfer-time-calculator.html): 파일 크기와 네트워크 속도를 넣으면 걸리는 시간을 계산합니다. Mbps와 MB/s의 차이, 프로토콜 오버헤드까지 반영합니다.
 - [ULID 생성기·분석기](https://wooadev.wooahouse.com/ulid-tool.html): 시간순으로 정렬되는 26자 식별자 ULID를 만들고, 이미 있는 ULID에서 생성 시각과 난수 부분을 읽어 냅니다.
 - [umask 계산기](https://wooadev.wooahouse.com/umask-calculator.html): umask 022 이면 새 파일은 644, 디렉터리는 755 가 됩니다. umask 에서 권한을 계산하거나, 원하는 권한(예: 640/750)에서 필요한 umask 를 거꾸로 구하고 자주 쓰는 값 표를 보여 줍니다.
 - [URI 템플릿 테스터](https://wooadev.wooahouse.com/uri-template-tester.html): /users/{id}{?page,limit} 같은 URI 템플릿에 변수를 넣어 실제 URL로 확장하고 표현식별 결과를 확인합니다.
 - [URL 정규화 도구](https://wooadev.wooahouse.com/url-normalizer.html): URL을 표준 형태로 정리합니다. 스킴·호스트 소문자, 기본 포트 제거, ../ 해석, 쿼리 정렬, utm 같은 추적 파라미터 제거, 상대 경로 해석을 한 번에 합니다.
+- [URLPattern 테스터](https://wooadev.wooahouse.com/url-pattern-tester.html): https://shop.example.com/products/:id(\d+)/:section? 같은 URLPattern 을 입력하고 여러 URL 에 대해 일치 여부와 캡처된 :id, :section 값을 확인합니다. 패턴이 어떤 구성요소(protocol, hostname, pathname 등)로 나뉘는지도 보여 줍니다.
 - [User-Agent 파서](https://wooadev.wooahouse.com/user-agent-parser.html): User-Agent 문자열에서 브라우저와 버전, 렌더링 엔진, 운영체제, 기기 종류, 카카오톡·네이버 같은 인앱 브라우저, 검색·AI 봇을 알아냅니다.
 - [UUID 디코더](https://wooadev.wooahouse.com/uuid-decoder.html): UUID가 몇 번 버전인지, 어떤 변형인지, v1·v6·v7이라면 언제 만들어졌는지까지 한 번에 읽어 냅니다.
+- [벡터 유사도 계산기](https://wooadev.wooahouse.com/vector-calculator.html): 임베딩 벡터 A 와 B 를 붙여 넣으면 코사인 유사도, 코사인 거리, 내적, 사잇각, L1·L2·L∞ 거리와 크기를 계산합니다. 비교할 벡터를 더 넣으면 A 와 가까운 순서로 순위를 매겨 줍니다.
 - [WebKit·Chrome 타임스탬프 변환기](https://wooadev.wooahouse.com/webkit-timestamp-converter.html): Chrome 쿠키·방문기록 DB의 1601년 기준 마이크로초 값, Firefox PRTime, Apple Core Data 초 값을 날짜로 바꾸고 서로 환산합니다.
+- [XML 이스케이프 변환기](https://wooadev.wooahouse.com/xml-escape.html): & < > " ' 를 XML 엔티티로 바꾸거나 되돌립니다. 요소 텍스트, 큰따옴표/작은따옴표 속성, CDATA 중 사용 위치에 맞는 규칙으로 처리하고 XML 1.0 에서 허용되지 않는 제어 문자를 찾아 줍니다.
+- [XML → 표·CSV 변환기](https://wooadev.wooahouse.com/xml-table-converter.html): <catalog><book>…</book><book>…</book></catalog> 처럼 반복되는 요소를 레코드로 인식해 한 행씩의 표와 CSV·TSV 로 바꿉니다. 속성은 @속성 열로, 중첩 요소는 a.b 열로, 같은 이름의 반복 요소는 구분자로 합쳐 줍니다.
 - [XML → JSON 변환기](https://wooadev.wooahouse.com/xml-to-json.html): XML을 JSON으로 바꿉니다. 속성은 @키로, 반복 요소는 배열로, 숫자와 불리언은 값 타입으로 변환합니다.
 - [YAML 비교 도구](https://wooadev.wooahouse.com/yaml-diff.html): 두 YAML을 데이터로 읽어 비교하므로 들여쓰기, 주석, 키 순서가 달라도 실제로 바뀐 값만 경로와 함께 보여 줍니다.
 - [YAML 포맷터](https://wooadev.wooahouse.com/yaml-formatter.html): 들여쓰기가 제각각인 YAML을 2칸·4칸으로 통일합니다. 주석과 키 순서를 그대로 두고, 결과가 원본과 같은 의미인지 검증합니다.

@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ObjectId Tool – Creation Time Decoder &amp; Date-Range Query | WooaDev</title>
+  <meta name="description" content="Extract the creation time, 5-byte random value and 3-byte counter from a MongoDB ObjectId, generate new ones and build _id $gte / $lt bounds for a date range.">
+  <meta name="keywords" content="ObjectId decoder, ObjectId creation time, ObjectId date query, MongoDB _id range, ObjectId generator, objectid tool">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/objectid-tool.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/objectid-tool.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/objectid-tool.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/objectid-tool.html">
+  <meta property="og:title" content="ObjectId Tool – Creation Time Decoder &amp; Date-Range Query | WooaDev">
+  <meta property="og:description" content="Extract the creation time, 5-byte random value and 3-byte counter from a MongoDB ObjectId, generate new ones and build _id $gte / $lt bounds for a date range.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/objectid-tool.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ObjectId Tool – Creation Time Decoder &amp; Date-Range Query | WooaDev">
+  <meta name="twitter:description" content="Extract the creation time, 5-byte random value and 3-byte counter from a MongoDB ObjectId, generate new ones and build _id $gte / $lt bounds for a date range.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"MongoDB ObjectId Tool","url":"https://wooadev.wooahouse.com/en/objectid-tool.html","description":"Extract the creation time, 5-byte random value and 3-byte counter from a MongoDB ObjectId, generate new ones and build _id $gte / $lt bounds for a date range.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Decode: splits 12 bytes into [timestamp 4][random 5][counter 3] and shows the time in UTC and your zone","Accepts ObjectId(\"…\") and {\"$oid\": \"…\"}; several lines are sorted to show creation order","Generate: N ObjectIds with a per-process random value and an incrementing counter, like real drivers","Date range → bounds: enter a start and end to get a find({_id:{$gte,$lt}}) query and a JSON query","Implausible times (before 2009 or after 2040) are flagged as probably not ObjectIds"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How is an ObjectId different from a UUID?","acceptedAnswer":{"@type":"Answer","text":"It is 12 bytes (24 hex digits), shorter, and sorts roughly by creation time. UUID v4 is fully random with no order."}},{"@type":"Question","name":"Can ObjectIds collide?","acceptedAnswer":{"@type":"Answer","text":"The counter separates IDs within one process and the random part separates processes, so collisions are practically impossible."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"MongoDB ObjectId Tool","item":"https://wooadev.wooahouse.com/en/objectid-tool.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../objectid-tool.html">KO</a>
+        <span>|</span>
+        <a href="objectid-tool.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>MongoDB ObjectId Tool</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🍃</span>
+    <h1>MongoDB ObjectId Decoder, Generator &amp; Date-Range Query</h1>
+    <p>Breaks a 24-hex ObjectId into creation time, per-process random value and counter, generates new ObjectIds and builds ready-to-use _id bounds for a date range.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Parsed 3</p>
+<h3>Input — ObjectIds (one per line)</h3><pre>507f1f77bcf86cd799439011
+65f1a2b3c4d5e6f708192a3b
+ObjectId("6512bd43d9caa6e02c990b0a")</pre>
+<h3>Input — Start (ISO 8601)</h3><pre>2026-10-01T00:00:00Z</pre>
+<h3>Input — End (ISO 8601)</h3><pre>2026-10-02T00:00:00Z</pre>
+<h3>Result — Results</h3><pre>ObjectId | Status | Created | Random (5 bytes) | Counter (3 bytes)
+507f1f77bcf86cd799439011 | ✅ | 2012-10-17T21:13:27Z  (2012-10-18 06:13:27 Asia/Seoul) | bcf86cd799 (random) | 4427793 (0x439011)
+65f1a2b3c4d5e6f708192a3b | ✅ | 2024-03-13T12:57:23Z  (2024-03-13 21:57:23 Asia/Seoul) | c4d5e6f708 (random) | 1649211 (0x192a3b)
+6512bd43d9caa6e02c990b0a | ✅ | 2023-09-26T11:15:15Z  (2023-09-26 20:15:15 Asia/Seoul) | d9caa6e02c (random) | 10029834 (0x990b0a)</pre>
+<h3>Result — Query / list</h3><pre>507f1f77bcf86cd799439011
+6512bd43d9caa6e02c990b0a
+65f1a2b3c4d5e6f708192a3b</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>The first four bytes of a MongoDB ObjectId are a timestamp, so time-range queries work without a separate createdAt field.</p>
+<ul><li>Decode: splits 12 bytes into [timestamp 4][random 5][counter 3] and shows the time in UTC and your zone</li><li>Accepts ObjectId("…") and {"$oid": "…"}; several lines are sorted to show creation order</li><li>Generate: N ObjectIds with a per-process random value and an incrementing counter, like real drivers</li><li>Date range → bounds: enter a start and end to get a find({_id:{$gte,$lt}}) query and a JSON query</li><li>Implausible times (before 2009 or after 2040) are flagged as probably not ObjectIds</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="uuid-decoder.html" class="related-card"><span class="related-icon">🆔</span><span>UUID Decoder</span></a>
+    <a href="ulid-tool.html" class="related-card"><span class="related-icon">🔢</span><span>ULID Generator &amp; Decoder</span></a>
+    <a href="snowflake-id-decoder.html" class="related-card"><span class="related-icon">❄️</span><span>Snowflake ID Decoder</span></a>
+    <a href="timezone-converter.html" class="related-card"><span class="related-icon">🌏</span><span>Time Zone Converter</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>An _id range query uses the default _id index, so it is fast without a createdAt index.</li><li>The time has one-second resolution; the counter orders ObjectIds within the same second.</li><li>An ObjectId reveals when it was created; consider that before exposing it as a public ID.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>How is an ObjectId different from a UUID?</summary><p>It is 12 bytes (24 hex digits), shorter, and sorts roughly by creation time. UUID v4 is fully random with no order.</p></details><details><summary>Can ObjectIds collide?</summary><p>The counter separates IDs within one process and the random part separates processes, so collisions are practically impossible.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-bytes.js"></script>
+<script src="../js/tools/objectid-tool.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modbus RTU CRC 계산기 — CRC-16/MODBUS 계산·검증 | WooaDev</title>
+  <meta name="description" content="Modbus RTU 프레임의 CRC-16/MODBUS(다항식 0xA001, 초기값 0xFFFF)를 계산해 낮은 바이트 먼저 붙이거나 검증합니다. 슬레이브 주소, 기능 코드, 시작 주소, 수량, 예외 응답을 해석합니다.">
+  <meta name="keywords" content="Modbus CRC, CRC-16 MODBUS, Modbus RTU 프레임, 모드버스 CRC 계산, 기능 코드 03, modbus crc calculator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/modbus-crc-calculator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/modbus-crc-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/modbus-crc-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/modbus-crc-calculator.html">
+  <meta property="og:title" content="Modbus RTU CRC 계산기 — CRC-16/MODBUS 계산·검증 | WooaDev">
+  <meta property="og:description" content="Modbus RTU 프레임의 CRC-16/MODBUS(다항식 0xA001, 초기값 0xFFFF)를 계산해 낮은 바이트 먼저 붙이거나 검증합니다. 슬레이브 주소, 기능 코드, 시작 주소, 수량, 예외 응답을 해석합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/modbus-crc-calculator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Modbus RTU CRC 계산기 — CRC-16/MODBUS 계산·검증 | WooaDev">
+  <meta name="twitter:description" content="Modbus RTU 프레임의 CRC-16/MODBUS(다항식 0xA001, 초기값 0xFFFF)를 계산해 낮은 바이트 먼저 붙이거나 검증합니다. 슬레이브 주소, 기능 코드, 시작 주소, 수량, 예외 응답을 해석합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Modbus RTU CRC-16 계산기","url":"https://wooadev.wooahouse.com/modbus-crc-calculator.html","description":"Modbus RTU 프레임의 CRC-16/MODBUS(다항식 0xA001, 초기값 0xFFFF)를 계산해 낮은 바이트 먼저 붙이거나 검증합니다. 슬레이브 주소, 기능 코드, 시작 주소, 수량, 예외 응답을 해석합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["계산: 초기값 0xFFFF, 반사 다항식 0xA001, 결과를 낮은 바이트 → 높은 바이트 순으로 붙임","검증: 마지막 두 바이트를 CRC 로 보고 재계산해 일치 여부 표시 (전체 프레임의 CRC 는 0x0000)","해석: 슬레이브 주소(0은 브로드캐스트), 기능 코드 01·02·03·04·05·06·0F·10, 시작 주소와 수량, 바이트 수","예외 응답(기능 코드 + 0x80)과 예외 코드 설명","16진수 입력은 공백·0x·콤마가 섞여도 허용"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"CRC 결과가 장비와 다르면요?","acceptedAnswer":{"@type":"Answer","text":"CRC 계산 대상에는 슬레이브 주소부터 데이터 끝까지가 포함되고 CRC 자신은 제외됩니다. 입력에 CRC 가 이미 들어 있지 않은지 확인하세요."}},{"@type":"Question","name":"0xA001 은 무슨 값인가요?","acceptedAnswer":{"@type":"Answer","text":"다항식 0x8005 를 비트 반전한 값으로, 오른쪽 시프트 방식 구현에서 쓰이는 표현입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"Modbus RTU CRC-16 계산기","item":"https://wooadev.wooahouse.com/modbus-crc-calculator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="modbus-crc-calculator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/modbus-crc-calculator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Modbus RTU CRC-16 계산기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🏭</span>
+    <h1>Modbus RTU CRC-16 계산기</h1>
+    <p>01 03 00 00 00 0A 같은 Modbus RTU 프레임 바이트를 넣으면 CRC-16/MODBUS 를 계산해 붙이거나, CRC 가 포함된 프레임이 올바른지 검증합니다. 슬레이브 주소·기능 코드·레지스터 주소를 풀어서 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ CRC-16/MODBUS 처리 완료</p>
+<h3>입력 — Modbus RTU 프레임 (16진수 바이트)</h3><pre>01 03 00 00 00 0A</pre>
+<h3>결과 — 결과</h3><pre>항목 | 값
+CRC-16/MODBUS 값 | 0xCDC5
+전송 순서 (낮은 바이트 먼저) | C5 CD
+전체 프레임 | 01 03 00 00 00 0A C5 CD
+슬레이브 주소 | 1
+기능 코드 | 3 (0x03) — Read Holding Registers
+요청 해석 | 시작 주소 0, 개수 10 (프로토콜 주소, 레지스터 번호 40001)</pre>
+<h3>결과 — 완성된 프레임</h3><pre>01 03 00 00 00 0A C5 CD</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>PLC·인버터·센서와 시리얼 통신 중 프레임을 직접 만들거나 로그의 CRC 가 맞는지 확인할 때 씁니다. 모든 계산은 브라우저에서 이루어집니다.</p>
+<ul><li>계산: 초기값 0xFFFF, 반사 다항식 0xA001, 결과를 낮은 바이트 → 높은 바이트 순으로 붙임</li><li>검증: 마지막 두 바이트를 CRC 로 보고 재계산해 일치 여부 표시 (전체 프레임의 CRC 는 0x0000)</li><li>해석: 슬레이브 주소(0은 브로드캐스트), 기능 코드 01·02·03·04·05·06·0F·10, 시작 주소와 수량, 바이트 수</li><li>예외 응답(기능 코드 + 0x80)과 예외 코드 설명</li><li>16진수 입력은 공백·0x·콤마가 섞여도 허용</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="checksum-calculator.html" class="related-card"><span class="related-icon">🔢</span><span>CRC·체크섬 계산기</span></a>
+    <a href="nmea-parser.html" class="related-card"><span class="related-icon">🛰️</span><span>NMEA 0183 파서</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+    <a href="bitwise-calculator.html" class="related-card"><span class="related-icon">🧮</span><span>비트 연산 계산기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>CRC 는 낮은 바이트(CRC Lo)가 먼저 전송됩니다. 순서를 바꾸면 장치가 응답하지 않습니다.</li><li>Modbus TCP 는 CRC 를 사용하지 않습니다. RTU 시리얼 전용입니다.</li><li>레지스터 주소는 문서에 따라 0부터 또는 1부터(40001) 표기하니 장치 매뉴얼을 확인하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>CRC 결과가 장비와 다르면요?</summary><p>CRC 계산 대상에는 슬레이브 주소부터 데이터 끝까지가 포함되고 CRC 자신은 제외됩니다. 입력에 CRC 가 이미 들어 있지 않은지 확인하세요.</p></details><details><summary>0xA001 은 무슨 값인가요?</summary><p>다항식 0x8005 를 비트 반전한 값으로, 오른쪽 시프트 방식 구현에서 쓰이는 표현입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-hash.js"></script>
+<script src="js/tools/modbus-crc-calculator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

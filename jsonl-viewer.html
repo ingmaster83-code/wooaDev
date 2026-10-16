@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSONL 뷰어 — NDJSON 표·변환·줄별 오류 | WooaDev</title>
+  <meta name="description" content="JSON Lines와 NDJSON을 표로 보고 필터링하며 JSON 배열, CSV, 들여쓰기 JSONL, 유효한 줄만 JSONL로 변환합니다. 중첩 키를 a.b 열로 펼치고 잘린 줄·빈 줄·중복 키 같은 오류를 줄 번호와 함께 표시합니다.">
+  <meta name="keywords" content="JSONL 뷰어, NDJSON, JSON Lines 변환, JSONL CSV, 로그 JSON 표, jsonl viewer">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/jsonl-viewer.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/jsonl-viewer.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/jsonl-viewer.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/jsonl-viewer.html">
+  <meta property="og:title" content="JSONL 뷰어 — NDJSON 표·변환·줄별 오류 | WooaDev">
+  <meta property="og:description" content="JSON Lines와 NDJSON을 표로 보고 필터링하며 JSON 배열, CSV, 들여쓰기 JSONL, 유효한 줄만 JSONL로 변환합니다. 중첩 키를 a.b 열로 펼치고 잘린 줄·빈 줄·중복 키 같은 오류를 줄 번호와 함께 표시합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/jsonl-viewer.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSONL 뷰어 — NDJSON 표·변환·줄별 오류 | WooaDev">
+  <meta name="twitter:description" content="JSON Lines와 NDJSON을 표로 보고 필터링하며 JSON 배열, CSV, 들여쓰기 JSONL, 유효한 줄만 JSONL로 변환합니다. 중첩 키를 a.b 열로 펼치고 잘린 줄·빈 줄·중복 키 같은 오류를 줄 번호와 함께 표시합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON Lines 뷰어","url":"https://wooadev.wooahouse.com/jsonl-viewer.html","description":"JSON Lines와 NDJSON을 표로 보고 필터링하며 JSON 배열, CSV, 들여쓰기 JSONL, 유효한 줄만 JSONL로 변환합니다. 중첩 키를 a.b 열로 펼치고 잘린 줄·빈 줄·중복 키 같은 오류를 줄 번호와 함께 표시합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["표: 모든 줄의 키 합집합을 열로, 중첩 객체는 a.b 열로 펼치기(선택)","필터: 줄에 포함된 텍스트로 걸러 보기","변환: JSON 배열, CSV, 들여쓰기 JSON Lines, 유효한 줄만 다시 JSONL","오류: 줄 번호별 파싱 오류, 빈 줄, 최상위가 객체가 아닌 값, 열 불일치","줄 수·열 수 등 통계"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"NDJSON 과 JSON Lines 는 같은가요?","acceptedAnswer":{"@type":"Answer","text":"사실상 같은 형식입니다. 한 줄에 JSON 값 하나, 줄 구분은 \\n 입니다."}},{"@type":"Question","name":"JSON 배열 하나를 넣으면요?","acceptedAnswer":{"@type":"Answer","text":"배열 전체를 한 줄로 보지 않고, JSONL 이 아니라는 안내와 함께 배열 요소를 줄로 처리하는지 확인하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"JSON Lines 뷰어","item":"https://wooadev.wooahouse.com/jsonl-viewer.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="jsonl-viewer.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/jsonl-viewer.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON Lines 뷰어</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📃</span>
+    <h1>JSON Lines (NDJSON) 뷰어 · 변환기</h1>
+    <p>한 줄에 JSON 하나씩인 JSONL/NDJSON 로그를 붙여 넣으면 표로 펼쳐 보여 주고, 필터링하고, JSON 배열·CSV·들여쓰기한 형식으로 변환합니다. 깨진 줄은 줄 번호와 이유를 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>🔍 유효 4줄 · 오류 1줄</p>
+<h3>입력 — JSON Lines / NDJSON (한 줄에 JSON 하나)</h3><pre>{"ts":"2026-10-16T09:00:01Z","level":"info","msg":"server started","port":8080}
+{"ts":"2026-10-16T09:00:05Z","level":"warn","msg":"slow query","ms":1450,"tags":["db","orders"]}
+{"ts":"2026-10-16T09:00:09Z","level":"error","msg":"payment failed","order":{"id":42,"amount":19.9}}
+{"ts":"2026-10-16T09:00:10Z","level":"info","msg":"retry" 
+
+{"ts":"2026-10-16T09:00:12Z","level":"info","msg":"done"}</pre>
+<h3>결과 — 표</h3><pre>줄 | ts | level | msg | port | ms | tags | order.id | order.amount
+1 | 2026-10-16T09:00:01Z | info | server started | 8080 |  |  |  | 
+2 | 2026-10-16T09:00:05Z | warn | slow query |  | 1450 | ["db","orders"] |  | 
+3 | 2026-10-16T09:00:09Z | error | payment failed |  |  |  | 42 | 19.9
+6 | 2026-10-16T09:00:12Z | info | done |  |  |  |  | </pre>
+<h3>결과 — 변환 결과</h3><pre>[
+  {
+    "ts": "2026-10-16T09:00:01Z",
+    "level": "info",
+    "msg": "server started",
+    "port": 8080
+  },
+  {
+    "ts": "2026-10-16T09:00:05Z",
+    "level": "warn",
+    "msg": "slow query",
+    "ms": 1450,
+    "tags": [
+      "db",
+      "orders"
+    ]
+  },
+  {
+    "ts": "2026-10-16T09:00:09Z",
+    "level": "error",
+    "msg": "payment failed",
+    "order": {
+      "id": 42,
+      "amount": 19.9
+    }
+  },
+  {
+    "ts": "2026-10-16T09:00:12Z",
+    "level": "info",
+    "msg": "done"
+  }
+]</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>구조화 로그나 AI 학습 데이터(JSONL)를 편집기 없이 바로 훑어볼 때 씁니다. 데이터는 브라우저 안에서만 처리됩니다.</p>
+<ul><li>표: 모든 줄의 키 합집합을 열로, 중첩 객체는 a.b 열로 펼치기(선택)</li><li>필터: 줄에 포함된 텍스트로 걸러 보기</li><li>변환: JSON 배열, CSV, 들여쓰기 JSON Lines, 유효한 줄만 다시 JSONL</li><li>오류: 줄 번호별 파싱 오류, 빈 줄, 최상위가 객체가 아닌 값, 열 불일치</li><li>줄 수·열 수 등 통계</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="json-rpc-viewer.html" class="related-card"><span class="related-icon">🔁</span><span>JSON-RPC 2.0 뷰어</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+    <a href="access-log-parser.html" class="related-card"><span class="related-icon">📜</span><span>액세스 로그 분석기</span></a>
+    <a href="xml-table-converter.html" class="related-card"><span class="related-icon">🗂️</span><span>XML → 표·CSV 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>한 줄이 두 줄로 나뉘면 JSON 이 깨집니다. JSONL 은 각 줄이 독립된 완전한 JSON 이어야 합니다.</li><li>AI 파인튜닝용 JSONL 은 각 줄의 구조가 같은지 열 불일치를 확인하세요.</li><li>대용량 로그는 jq 나 DuckDB 가 더 효율적입니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>NDJSON 과 JSON Lines 는 같은가요?</summary><p>사실상 같은 형식입니다. 한 줄에 JSON 값 하나, 줄 구분은 \n 입니다.</p></details><details><summary>JSON 배열 하나를 넣으면요?</summary><p>배열 전체를 한 줄로 보지 않고, JSONL 이 아니라는 안내와 함께 배열 요소를 줄로 처리하는지 확인하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/jsonl-viewer.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

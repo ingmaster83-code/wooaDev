@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AWS ARN 분석기 — ARN 필드 분해·검증·생성 | WooaDev</title>
+  <meta name="description" content="AWS ARN(arn:partition:service:region:account:resource)을 필드별로 분석하고 파티션·리전·12자리 계정 ID를 검증합니다. S3·IAM처럼 리전이 비는 서비스, 와일드카드를 안내하고 ARN을 생성합니다.">
+  <meta name="keywords" content="AWS ARN 분석, ARN 형식, arn:aws:s3, IAM ARN, ARN 파싱, ARN 생성기, aws arn parser">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/aws-arn-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/aws-arn-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/aws-arn-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/aws-arn-parser.html">
+  <meta property="og:title" content="AWS ARN 분석기 — ARN 필드 분해·검증·생성 | WooaDev">
+  <meta property="og:description" content="AWS ARN(arn:partition:service:region:account:resource)을 필드별로 분석하고 파티션·리전·12자리 계정 ID를 검증합니다. S3·IAM처럼 리전이 비는 서비스, 와일드카드를 안내하고 ARN을 생성합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/aws-arn-parser.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AWS ARN 분석기 — ARN 필드 분해·검증·생성 | WooaDev">
+  <meta name="twitter:description" content="AWS ARN(arn:partition:service:region:account:resource)을 필드별로 분석하고 파티션·리전·12자리 계정 ID를 검증합니다. S3·IAM처럼 리전이 비는 서비스, 와일드카드를 안내하고 ARN을 생성합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"AWS ARN 분석·생성기","url":"https://wooadev.wooahouse.com/aws-arn-parser.html","description":"AWS ARN(arn:partition:service:region:account:resource)을 필드별로 분석하고 파티션·리전·12자리 계정 ID를 검증합니다. S3·IAM처럼 리전이 비는 서비스, 와일드카드를 안내하고 ARN을 생성합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["분해: partition(aws, aws-cn, aws-us-gov), service, region, account-id, resource(타입/이름/버전·별칭 추정)","한 줄에 하나씩 여러 ARN을 붙여 넣어 표로 비교","검증: 계정 ID 12자리, 리전 형식, 파티션, 빈 resource, 리전/계정이 비어야 하는 S3·IAM 서비스","정책용 와일드카드(*)가 들어 있으면 알려 줌","생성 모드: partition·service·region·account·resource를 입력해 ARN 조립"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"ARN의 resource 부분은 왜 서비스마다 다른가요?","acceptedAnswer":{"@type":"Answer","text":"형식이 서비스별로 정해져 있기 때문입니다. 슬래시(/)로 나누는 것, 콜론(:)으로 나누는 것이 섞여 있어 이 도구는 첫 토큰을 타입으로 추정해 보여 줍니다."}},{"@type":"Question","name":"계정 ID는 어디서 확인하나요?","acceptedAnswer":{"@type":"Answer","text":"콘솔 우측 상단 메뉴나 aws sts get-caller-identity 명령으로 12자리 숫자를 확인할 수 있습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"AWS ARN 분석·생성기","item":"https://wooadev.wooahouse.com/aws-arn-parser.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="aws-arn-parser.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/aws-arn-parser.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>AWS ARN 분석·생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">☁️</span>
+    <h1>AWS ARN 분석기 · 생성기</h1>
+    <p>arn:aws:iam::123456789012:role/MyRole 같은 ARN을 파티션, 서비스, 리전, 계정, 리소스로 나눠 보여 주고 형식 오류를 찾습니다. 필드를 입력해 새 ARN을 만들 수도 있습니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ ARN 5개를 분석했습니다</p>
+<h3>입력 — ARN (한 줄에 하나)</h3><pre>arn:aws:s3:::my-bucket/logs/2026/app.log
+arn:aws:iam::123456789012:role/service-role/MyLambdaRole
+arn:aws:lambda:ap-northeast-2:123456789012:function:order-handler:prod
+arn:aws:dynamodb:ap-northeast-2:123456789012:table/Orders/stream/2026-10-01T00:00:00.000
+arn:aws-cn:ec2:cn-north-1:123456789012:instance/i-0abc123def456789a</pre>
+<h3>입력 — partition</h3><pre>aws</pre>
+<h3>입력 — service</h3><pre>sqs</pre>
+<h3>입력 — region</h3><pre>ap-northeast-2</pre>
+<h3>입력 — account-id</h3><pre>123456789012</pre>
+<h3>입력 — resource</h3><pre>my-queue</pre>
+<h3>결과 — 필드별 분석</h3><pre>ARN | 상태 | 서비스 / 파티션 | 리전 / 계정 | 리소스 | 문제
+arn:aws:s3:::my-bucket/logs/2026/app.log | ✅ | s3 · Amazon S3 / aws | — / — | my-bucket → logs/2026/app.log | 
+arn:aws:iam::123456789012:role/service-role/MyLambdaRole | ✅ | iam · IAM / aws | — / 123456789012 | role → service-role/MyLambdaRole | 
+arn:aws:lambda:ap-northeast-2:123456789012:function:order… | ✅ | lambda · AWS Lambda / aws | ap-northeast-2 / 123456789012 | function → order-handler:prod | 
+arn:aws:dynamodb:ap-northeast-2:123456789012:table/Orders… | ✅ | dynamodb · DynamoDB / aws | ap-northeast-2 / 123456789012 | table → Orders/stream/2026-10-01T00:00:00.000 | 
+arn:aws-cn:ec2:cn-north-1:123456789012:instance/i-0abc123… | ✅ | ec2 · Amazon EC2 / aws-cn | cn-north-1 / 123456789012 | instance → i-0abc123def456789a | </pre>
+<h3>결과 — 결과</h3><pre>arn:aws:s3:::my-bucket/logs/2026/app.log
+  partition=aws service=s3 region= account= resource=my-bucket/logs/2026/app.log
+arn:aws:iam::123456789012:role/service-role/MyLambdaRole
+  partition=aws service=iam region= account=123456789012 resource=role/service-role/MyLambdaRole
+arn:aws:lambda:ap-northeast-2:123456789012:function:order-handler:prod
+  partition=aws service=lambda region=ap-northeast-2 account=123456789012 resource=function:order-handler:prod
+arn:aws:dynamodb:ap-northeast-2:123456789012:table/Orders/stream/2026-10-01T00:00:00.000
+  partition=aws service=dynamodb region=ap-northeast-2 account=123456789012 resource=table/Orders/stream/2026-10-01T00:00:00.000
+arn:aws-cn:ec2:cn-north-1:123456789012:instance/i-0abc123def456789a
+  partition=aws-cn service=ec2 region=cn-north-1 account=123456789012 resource=instance/i-0abc123def456789a</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>IAM 정책, 리소스 기반 정책, CLI 명령에서 ARN은 끊임없이 등장하지만 서비스마다 resource 부분의 구조가 달라 읽기 어렵습니다.</p>
+<ul><li>분해: partition(aws, aws-cn, aws-us-gov), service, region, account-id, resource(타입/이름/버전·별칭 추정)</li><li>한 줄에 하나씩 여러 ARN을 붙여 넣어 표로 비교</li><li>검증: 계정 ID 12자리, 리전 형식, 파티션, 빈 resource, 리전/계정이 비어야 하는 S3·IAM 서비스</li><li>정책용 와일드카드(*)가 들어 있으면 알려 줌</li><li>생성 모드: partition·service·region·account·resource를 입력해 ARN 조립</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="s3-url-converter.html" class="related-card"><span class="related-icon">🪣</span><span>S3 URL 변환기</span></a>
+    <a href="gcp-resource-parser.html" class="related-card"><span class="related-icon">🟦</span><span>GCP 리소스·GCS URL 분석기</span></a>
+    <a href="azure-resource-parser.html" class="related-card"><span class="related-icon">🔷</span><span>Azure 리소스 ID 분석기</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>S3 버킷 ARN은 arn:aws:s3:::버킷 이고, 객체는 arn:aws:s3:::버킷/키 입니다. 정책에서 둘을 모두 써야 하는 경우가 많습니다.</li><li>IAM과 Route 53, CloudFront는 전역 서비스라 region 칸이 비어 있습니다.</li><li>Lambda 별칭·버전은 function:이름:별칭 형식으로 resource 안에 콜론이 들어갑니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>ARN의 resource 부분은 왜 서비스마다 다른가요?</summary><p>형식이 서비스별로 정해져 있기 때문입니다. 슬래시(/)로 나누는 것, 콜론(:)으로 나누는 것이 섞여 있어 이 도구는 첫 토큰을 타입으로 추정해 보여 줍니다.</p></details><details><summary>계정 ID는 어디서 확인하나요?</summary><p>콘솔 우측 상단 메뉴나 aws sts get-caller-identity 명령으로 12자리 숫자를 확인할 수 있습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/aws-arn-parser.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

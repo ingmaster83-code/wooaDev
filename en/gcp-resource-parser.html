@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GCP Resource Parser – GCS URLs &amp; Service Account Keys | WooaDev</title>
+  <meta name="description" content="Parse GCP resource names (projects/…/locations/…), convert gs:// and storage.googleapis.com addresses, and analyse service-account emails and key JSON. Masks private_key and flags risky defaults.">
+  <meta name="keywords" content="GCP resource name, GCS URL converter, gs:// to https, service account JSON, service account key, gcp resource parser">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/gcp-resource-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/gcp-resource-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/gcp-resource-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/gcp-resource-parser.html">
+  <meta property="og:title" content="GCP Resource Parser – GCS URLs &amp; Service Account Keys | WooaDev">
+  <meta property="og:description" content="Parse GCP resource names (projects/…/locations/…), convert gs:// and storage.googleapis.com addresses, and analyse service-account emails and key JSON. Masks private_key and flags risky defaults.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/gcp-resource-parser.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GCP Resource Parser – GCS URLs &amp; Service Account Keys | WooaDev">
+  <meta name="twitter:description" content="Parse GCP resource names (projects/…/locations/…), convert gs:// and storage.googleapis.com addresses, and analyse service-account emails and key JSON. Masks private_key and flags risky defaults.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"GCP Resource & GCS URL Parser","url":"https://wooadev.wooahouse.com/en/gcp-resource-parser.html","description":"Parse GCP resource names (projects/…/locations/…), convert gs:// and storage.googleapis.com addresses, and analyse service-account emails and key JSON. Masks private_key and flags risky defaults.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Resource names: split into collection / ID pairs and warn when the pairs do not line up","GCS: accepts gs://, storage.googleapis.com/bucket/object and bucket.storage.googleapis.com and converts to every form plus gsutil","Service-account email: separates account ID and project ID, warns about the default Compute Engine account","Key JSON: checks type, project_id and client_email, masks private_key and flags missing required fields","Checks bucket-name rules (no goog / google and so on)"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What if the key JSON is exposed?","acceptedAnswer":{"@type":"Answer","text":"Delete that key at once and issue a new one (IAM → Service accounts → Keys). If it reached a repository, remove it from history too."}},{"@type":"Question","name":"How do I reach a gs:// object over HTTP?","acceptedAnswer":{"@type":"Answer","text":"Use https://storage.googleapis.com/bucket/object; the object must be public or you need a signed URL or auth header."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"GCP Resource & GCS URL Parser","item":"https://wooadev.wooahouse.com/en/gcp-resource-parser.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../gcp-resource-parser.html">KO</a>
+        <span>|</span>
+        <a href="gcp-resource-parser.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>GCP Resource &amp; GCS URL Parser</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🟦</span>
+    <h1>GCP Resource, GCS URL &amp; Service Account Parser</h1>
+    <p>Analyses resource names like projects/…/locations/…, gs:// and storage.googleapis.com addresses, service-account emails and key JSON. The private key is masked and exposure risks are flagged.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>🔍 1 risky item(s)</p>
+<h3>Input — GCP resource name, GCS address, service-account email or key JSON</h3><pre>projects/my-project/locations/asia-northeast3/services/api
+gs://my-bucket/exports/2026/data.csv
+https://storage.googleapis.com/my-bucket/exports/data.csv
+build-bot@my-project.iam.gserviceaccount.com
+{"type":"service_account","project_id":"my-project","private_key_id":"abc123","private_key":"-----BEGIN PRIVATE KEY-----\nMIIE...\n-----END PRIVATE KEY-----\n","client_email":"build-bot@my-project.iam.gserviceaccount.com","client_id":"1234567890"}</pre>
+<h3>Result — Analysis</h3><pre>Item | Value
+resource name | projects/my-project/locations/asia-northeast3/services/api
+projects | my-project
+locations | asia-northeast3
+services | api
+gs:// gs://my-bucket/exports/2026/da | GCS
+bucket | my-bucket
+object | exports/2026/data.csv
+https | GCS
+bucket | my-bucket
+object | exports/data.csv
+service account | build-bot@my-project.iam.gserviceaccount.com
+account id | build-bot
+projectId | my-project
+service-account key | service_account
+project_id | my-project
+client_email | build-bot@my-project.iam.gserviceaccount.com
+client_id | 1234567890
+private_key_id | abc123…
+private_key | •••• (masked, 62 chars)</pre>
+<h3>Result — GCS conversions</h3><pre>gs://my-bucket/exports/2026/data.csv
+https://storage.googleapis.com/my-bucket/exports/2026/data.csv
+https://my-bucket.storage.googleapis.com/exports/2026/data.csv
+https://storage.cloud.google.com/my-bucket/exports/2026/data.csv   # requires sign-in (browser)
+gsutil ls gs://my-bucket/exports/2026/
+
+gs://my-bucket/exports/data.csv
+https://storage.googleapis.com/my-bucket/exports/data.csv
+https://my-bucket.storage.googleapis.com/exports/data.csv
+https://storage.cloud.google.com/my-bucket/exports/data.csv   # requires sign-in (browser)
+gsutil ls gs://my-bucket/exports/</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Google Cloud APIs use resource names like projects/{id}/locations/{loc}/…, and Cloud Storage alternates between gs:// and HTTPS addresses.</p>
+<ul><li>Resource names: split into collection / ID pairs and warn when the pairs do not line up</li><li>GCS: accepts gs://, storage.googleapis.com/bucket/object and bucket.storage.googleapis.com and converts to every form plus gsutil</li><li>Service-account email: separates account ID and project ID, warns about the default Compute Engine account</li><li>Key JSON: checks type, project_id and client_email, masks private_key and flags missing required fields</li><li>Checks bucket-name rules (no goog / google and so on)</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="aws-arn-parser.html" class="related-card"><span class="related-icon">☁️</span><span>AWS ARN Parser &amp; Builder</span></a>
+    <a href="azure-resource-parser.html" class="related-card"><span class="related-icon">🔷</span><span>Azure Resource ID Parser</span></a>
+    <a href="s3-url-converter.html" class="related-card"><span class="related-icon">🪣</span><span>S3 URL Converter</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON Formatter</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>A service-account key (JSON) is a permanent credential when leaked. Prefer Workload Identity or an attached service account.</li><li>The default Compute Engine service account often has Editor rights; create a dedicated one.</li><li>storage.cloud.google.com is the signed-in browser view; storage.googleapis.com is the API / public-access address.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What if the key JSON is exposed?</summary><p>Delete that key at once and issue a new one (IAM → Service accounts → Keys). If it reached a repository, remove it from history too.</p></details><details><summary>How do I reach a gs:// object over HTTP?</summary><p>Use https://storage.googleapis.com/bucket/object; the object must be public or you need a signed URL or auth header.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/gcp-resource-parser.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

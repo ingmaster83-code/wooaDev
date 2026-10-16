@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Access Log Parser – Nginx &amp; Apache Log Analysis | WooaDev</title>
+  <meta name="description" content="Parse Nginx and Apache combined / common access logs into a table and CSV and summarise status codes, top IPs and paths, 5xx and bot share. Detects wp-login and .env scanning.">
+  <meta name="keywords" content="access log parser, nginx log parser, apache log, combined log format, log to CSV, access log analyzer">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/access-log-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/access-log-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/access-log-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/access-log-parser.html">
+  <meta property="og:title" content="Access Log Parser – Nginx &amp; Apache Log Analysis | WooaDev">
+  <meta property="og:description" content="Parse Nginx and Apache combined / common access logs into a table and CSV and summarise status codes, top IPs and paths, 5xx and bot share. Detects wp-login and .env scanning.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/access-log-parser.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Access Log Parser – Nginx &amp; Apache Log Analysis | WooaDev">
+  <meta name="twitter:description" content="Parse Nginx and Apache combined / common access logs into a table and CSV and summarise status codes, top IPs and paths, 5xx and bot share. Detects wp-login and .env scanning.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Access Log Parser","url":"https://wooadev.wooahouse.com/en/access-log-parser.html","description":"Parse Nginx and Apache combined / common access logs into a table and CSV and summarise status codes, top IPs and paths, 5xx and bot share. Detects wp-login and .env scanning.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Formats: combined, common and variants with extra trailing fields such as response time","Table: line, IP, time, method, path, status, bytes, user agent; CSV with every field","Statistics: requests, bytes, 2xx–5xx share, top IPs and paths, methods, 5xx list and a bot / script estimate","Detection: scanning requests (wp-login, .env, ../) and repeated 401 / 403 on login paths","Reports the numbers of lines that failed to parse"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does it read JSON logs?","acceptedAnswer":{"@type":"Answer","text":"This tool is for text combined / common formats. Use the JSON Lines viewer for JSON logs."}},{"@type":"Question","name":"Combined versus common?","acceptedAnswer":{"@type":"Answer","text":"Combined is common plus the Referer and User-Agent fields."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Access Log Parser","item":"https://wooadev.wooahouse.com/en/access-log-parser.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../access-log-parser.html">KO</a>
+        <span>|</span>
+        <a href="access-log-parser.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Access Log Parser</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📜</span>
+    <h1>Web Server Access Log Parser (Nginx &amp; Apache)</h1>
+    <p>Paste Nginx or Apache combined / common logs to split them into IP, time, method, path, status, bytes and user agent as a table and CSV, with a summary of status codes, top IPs and paths, bot share and scanning requests.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>🔍 Parsed 5 · 1 line(s) failed</p>
+<h3>Input — Access log (one request per line)</h3><pre>203.0.113.5 - - [16/Oct/2026:09:12:03 +0900] "GET /index.html HTTP/1.1" 200 5120 "https://www.google.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130.0"
+198.51.100.7 - bob [16/Oct/2026:09:12:05 +0900] "POST /api/login HTTP/1.1" 401 87 "-" "curl/8.5.0"
+203.0.113.5 - - [16/Oct/2026:09:12:09 +0900] "GET /assets/app.js HTTP/1.1" 304 0 "https://example.com/index.html" "Mozilla/5.0 Chrome/130.0"
+192.0.2.44 - - [16/Oct/2026:09:13:11 +0900] "GET /wp-login.php HTTP/1.1" 404 153 "-" "Mozilla/5.0 (compatible; Googlebot/2.1)"
+192.0.2.44 - - [16/Oct/2026:09:13:12 +0900] "GET /api/items?id=3 HTTP/2.0" 500 1290 "-" "python-requests/2.32"
+broken line here</pre>
+<h3>Result — Parsed requests</h3><pre>Line | IP | Time | Method | Path | Status | Bytes | User-Agent
+1 | 203.0.113.5 | 16/Oct/2026:09:12:03 +0900 | GET | /index.html | 200 | 5120 | Mozilla/5.0 (Windows NT 10.0; Win64; …
+2 | 198.51.100.7 | 16/Oct/2026:09:12:05 +0900 | POST | /api/login | 401 | 87 | curl/8.5.0
+3 | 203.0.113.5 | 16/Oct/2026:09:12:09 +0900 | GET | /assets/app.js | 304 | 0 | Mozilla/5.0 Chrome/130.0
+4 | 192.0.2.44 | 16/Oct/2026:09:13:11 +0900 | GET | /wp-login.php | 404 | 153 | Mozilla/5.0 (compatible; Googlebot/2.1)
+5 | 192.0.2.44 | 16/Oct/2026:09:13:12 +0900 | GET | /api/items?id=3 | 500 | 1290 | python-requests/2.32</pre>
+<h3>Result — Statistics</h3><pre>Item | Value
+Requests | 5
+Bytes sent | 6,650 (0.01 MiB)
+Status classes | 2xx 1 (20%) · 3xx 1 (20%) · 4xx 2 (40%) · 5xx 1 (20%)
+Top IPs | 203.0.113.5 ×2, 192.0.2.44 ×2, 198.51.100.7 ×1
+Top paths | /index.html ×1, /api/login ×1, /assets/app.js ×1, /wp-login.php ×1, /api/items ×1
+Methods | GET 4, POST 1
+5xx requests | 500 /api/items?id=3
+Time span | 16/Oct/2026:09:12:03 +0900 ~ 16/Oct/2026:09:13:12 +0900
+Bots / scripts (guess) | 3 (60%)</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Structure a few lines of log quickly when investigating an outage or odd traffic. Logs never leave your browser.</p>
+<ul><li>Formats: combined, common and variants with extra trailing fields such as response time</li><li>Table: line, IP, time, method, path, status, bytes, user agent; CSV with every field</li><li>Statistics: requests, bytes, 2xx–5xx share, top IPs and paths, methods, 5xx list and a bot / script estimate</li><li>Detection: scanning requests (wp-login, .env, ../) and repeated 401 / 403 on login paths</li><li>Reports the numbers of lines that failed to parse</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="syslog-parser.html" class="related-card"><span class="related-icon">🗒️</span><span>Syslog Parser</span></a>
+    <a href="cloud-log-parser.html" class="related-card"><span class="related-icon">🌩️</span><span>AWS Log Parser</span></a>
+    <a href="user-agent-parser.html" class="related-card"><span class="related-icon">🕵️</span><span>User-Agent Parser</span></a>
+    <a href="http-status.html" class="related-card"><span class="related-icon">🌐</span><span>HTTP Status Codes</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Behind a proxy or CDN the logged IP may be the proxy; add X-Forwarded-For to the log format.</li><li>IP addresses can be personal data; mask them before sharing.</li><li>To see response times add nginx's $request_time to the log format.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Does it read JSON logs?</summary><p>This tool is for text combined / common formats. Use the JSON Lines viewer for JSON logs.</p></details><details><summary>Combined versus common?</summary><p>Combined is common plus the Referer and User-Agent fields.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/access-log-parser.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

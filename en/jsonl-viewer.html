@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSONL Viewer – NDJSON Table, Conversion &amp; Line Errors | WooaDev</title>
+  <meta name="description" content="View and filter JSON Lines and NDJSON as a table and convert to a JSON array, CSV or pretty JSONL. Nested keys flatten into a.b columns and broken lines are listed with line numbers.">
+  <meta name="keywords" content="JSONL viewer, NDJSON, JSON Lines converter, JSONL to CSV, log JSON table, jsonl viewer">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/jsonl-viewer.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/jsonl-viewer.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/jsonl-viewer.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/jsonl-viewer.html">
+  <meta property="og:title" content="JSONL Viewer – NDJSON Table, Conversion &amp; Line Errors | WooaDev">
+  <meta property="og:description" content="View and filter JSON Lines and NDJSON as a table and convert to a JSON array, CSV or pretty JSONL. Nested keys flatten into a.b columns and broken lines are listed with line numbers.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/jsonl-viewer.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSONL Viewer – NDJSON Table, Conversion &amp; Line Errors | WooaDev">
+  <meta name="twitter:description" content="View and filter JSON Lines and NDJSON as a table and convert to a JSON array, CSV or pretty JSONL. Nested keys flatten into a.b columns and broken lines are listed with line numbers.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON Lines Viewer","url":"https://wooadev.wooahouse.com/en/jsonl-viewer.html","description":"View and filter JSON Lines and NDJSON as a table and convert to a JSON array, CSV or pretty JSONL. Nested keys flatten into a.b columns and broken lines are listed with line numbers.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Table: the union of all keys as columns, with optional a.b flattening of nested objects","Filter: show only lines containing some text","Convert: JSON array, CSV, pretty JSON Lines, or valid lines only back to JSONL","Errors: parse errors per line number, blank lines, non-object top-level values and column mismatches","Statistics such as line and column counts"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Are NDJSON and JSON Lines the same?","acceptedAnswer":{"@type":"Answer","text":"Effectively yes: one JSON value per line separated by \\n."}},{"@type":"Question","name":"What if I paste one JSON array?","acceptedAnswer":{"@type":"Answer","text":"It is not JSONL; the tool reports the problem so you can convert the array to lines."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"JSON Lines Viewer","item":"https://wooadev.wooahouse.com/en/jsonl-viewer.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../jsonl-viewer.html">KO</a>
+        <span>|</span>
+        <a href="jsonl-viewer.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON Lines Viewer</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📃</span>
+    <h1>JSON Lines (NDJSON) Viewer &amp; Converter</h1>
+    <p>Paste JSONL / NDJSON with one JSON value per line to view it as a table, filter it and convert it to a JSON array, CSV or pretty-printed lines. Broken lines are reported with their number and reason.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>🔍 4 valid · 1 invalid line(s)</p>
+<h3>Input — JSON Lines / NDJSON (one JSON value per line)</h3><pre>{"ts":"2026-10-16T09:00:01Z","level":"info","msg":"server started","port":8080}
+{"ts":"2026-10-16T09:00:05Z","level":"warn","msg":"slow query","ms":1450,"tags":["db","orders"]}
+{"ts":"2026-10-16T09:00:09Z","level":"error","msg":"payment failed","order":{"id":42,"amount":19.9}}
+{"ts":"2026-10-16T09:00:10Z","level":"info","msg":"retry" 
+
+{"ts":"2026-10-16T09:00:12Z","level":"info","msg":"done"}</pre>
+<h3>Result — Table</h3><pre>Line | ts | level | msg | port | ms | tags | order.id | order.amount
+1 | 2026-10-16T09:00:01Z | info | server started | 8080 |  |  |  | 
+2 | 2026-10-16T09:00:05Z | warn | slow query |  | 1450 | ["db","orders"] |  | 
+3 | 2026-10-16T09:00:09Z | error | payment failed |  |  |  | 42 | 19.9
+6 | 2026-10-16T09:00:12Z | info | done |  |  |  |  | </pre>
+<h3>Result — Converted</h3><pre>[
+  {
+    "ts": "2026-10-16T09:00:01Z",
+    "level": "info",
+    "msg": "server started",
+    "port": 8080
+  },
+  {
+    "ts": "2026-10-16T09:00:05Z",
+    "level": "warn",
+    "msg": "slow query",
+    "ms": 1450,
+    "tags": [
+      "db",
+      "orders"
+    ]
+  },
+  {
+    "ts": "2026-10-16T09:00:09Z",
+    "level": "error",
+    "msg": "payment failed",
+    "order": {
+      "id": 42,
+      "amount": 19.9
+    }
+  },
+  {
+    "ts": "2026-10-16T09:00:12Z",
+    "level": "info",
+    "msg": "done"
+  }
+]</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Skim structured logs or AI training data (JSONL) without an editor. Data is processed only in your browser.</p>
+<ul><li>Table: the union of all keys as columns, with optional a.b flattening of nested objects</li><li>Filter: show only lines containing some text</li><li>Convert: JSON array, CSV, pretty JSON Lines, or valid lines only back to JSONL</li><li>Errors: parse errors per line number, blank lines, non-object top-level values and column mismatches</li><li>Statistics such as line and column counts</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="json-rpc-viewer.html" class="related-card"><span class="related-icon">🔁</span><span>JSON-RPC 2.0 Viewer</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON Formatter</span></a>
+    <a href="access-log-parser.html" class="related-card"><span class="related-icon">📜</span><span>Access Log Parser</span></a>
+    <a href="xml-table-converter.html" class="related-card"><span class="related-icon">🗂️</span><span>XML to Table / CSV Converter</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>If one record is split over two lines the JSON breaks; each JSONL line must be complete on its own.</li><li>For fine-tuning JSONL check column mismatches to confirm every line has the same structure.</li><li>For huge logs jq or DuckDB is more efficient.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Are NDJSON and JSON Lines the same?</summary><p>Effectively yes: one JSON value per line separated by \n.</p></details><details><summary>What if I paste one JSON array?</summary><p>It is not JSONL; the tool reports the problem so you can convert the array to lines.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/jsonl-viewer.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Azure Resource ID Parser – SAS &amp; Connection String Check | WooaDev</title>
+  <meta name="description" content="Analyse Azure resource IDs (subscription, resource group, provider, type, name), SAS tokens on blob URLs and storage connection strings. Masks account keys and warns about expired SAS.">
+  <meta name="keywords" content="Azure resource ID, SAS token analyzer, Azure connection string, storage account key, Azure ARM ID, azure resource id parser">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/azure-resource-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/azure-resource-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/azure-resource-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/azure-resource-parser.html">
+  <meta property="og:title" content="Azure Resource ID Parser – SAS &amp; Connection String Check | WooaDev">
+  <meta property="og:description" content="Analyse Azure resource IDs (subscription, resource group, provider, type, name), SAS tokens on blob URLs and storage connection strings. Masks account keys and warns about expired SAS.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/azure-resource-parser.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Azure Resource ID Parser – SAS &amp; Connection String Check | WooaDev">
+  <meta name="twitter:description" content="Analyse Azure resource IDs (subscription, resource group, provider, type, name), SAS tokens on blob URLs and storage connection strings. Masks account keys and warns about expired SAS.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Azure Resource ID Parser","url":"https://wooadev.wooahouse.com/en/azure-resource-parser.html","description":"Analyse Azure resource IDs (subscription, resource group, provider, type, name), SAS tokens on blob URLs and storage connection strings. Masks account keys and warns about expired SAS.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Resource ID: subscriptionId (GUID check), resourceGroup, provider, resource type and the name hierarchy (parent / child)","Blob URL: storage account, container, path and SAS fields (sv, sp, se, st, spr, sr)","SAS checks: expired, no expiry, write / delete permission, HTTP allowed","Connection string: shows AccountName and EndpointSuffix, masks AccountKey and SharedAccessSignature","Resource IDs are case-insensitive, so compare them in lowercase"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the sig in a SAS token?","acceptedAnswer":{"@type":"Answer","text":"An HMAC signature over the token contents. Anyone holding it has the same permissions until expiry, so share it carefully."}},{"@type":"Question","name":"Managed identity or SAS?","acceptedAnswer":{"@type":"Answer","text":"A managed identity is safer because no secret lives in code. SAS is handy for temporary access by outsiders."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Azure Resource ID Parser","item":"https://wooadev.wooahouse.com/en/azure-resource-parser.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../azure-resource-parser.html">KO</a>
+        <span>|</span>
+        <a href="azure-resource-parser.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Azure Resource ID Parser</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔷</span>
+    <h1>Azure Resource ID, SAS &amp; Connection String Parser</h1>
+    <p>Splits resource IDs such as /subscriptions/…/providers/Microsoft.Compute/virtualMachines/vm1, blob URLs with SAS tokens and storage connection strings into parts, and flags expiry, excessive permissions and exposed keys.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>🔍 Risky items found</p>
+<h3>Input — Azure resource ID, blob URL or connection string</h3><pre>/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-prod/providers/Microsoft.Compute/virtualMachines/web-01/extensions/AzureMonitorAgent
+https://mystorageacct.blob.core.windows.net/container/folder/file.txt?sv=2022-11-02&amp;sp=r&amp;sig=abc
+DefaultEndpointsProtocol=https;AccountName=mystorageacct;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;EndpointSuffix=core.windows.net</pre>
+<h3>Result — Analysis</h3><pre>Item | Value
+#1 Kind | Azure resource ID
+#1 subscriptionId | 00000000-1111-2222-3333-444444444444
+#1 resourceGroup | rg-prod
+#1 provider | Microsoft.Compute
+#1 resource type | Microsoft.Compute/virtualMachines/extensions
+#1 name path | web-01 › AzureMonitorAgent
+#1 leaf resource | extensions = AzureMonitorAgent
+#1 parent | virtualMachines = web-01
+#2 Kind | Azure Storage blob
+#2 storageAccount | mystorageacct
+#2 container / share | container
+#2 path | folder/file.txt
+#2 SAS token | sig=•••• (masked)
+#2 SAS sv | 2022-11-02
+#2 SAS sp | r
+#3 Kind | Azure connection string
+#3 DefaultEndpointsProtocol | https
+#3 AccountName | mystorageacct
+#3 AccountKey | Eby8… (masked, 88 chars)
+#3 EndpointSuffix | core.windows.net</pre>
+<h3>Result — Findings</h3><pre>Resource IDs are case-insensitive; compare them in lowercase
+The SAS has no expiry (se) — unusual unless a stored access policy is used
+🚨 AccountKey grants full account access — use Key Vault or managed identity instead of keeping it in code or logs</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Turns the long resource IDs, SAS URLs and connection strings from the Azure portal, ARM templates and CLI into something readable. Secret values are masked on screen.</p>
+<ul><li>Resource ID: subscriptionId (GUID check), resourceGroup, provider, resource type and the name hierarchy (parent / child)</li><li>Blob URL: storage account, container, path and SAS fields (sv, sp, se, st, spr, sr)</li><li>SAS checks: expired, no expiry, write / delete permission, HTTP allowed</li><li>Connection string: shows AccountName and EndpointSuffix, masks AccountKey and SharedAccessSignature</li><li>Resource IDs are case-insensitive, so compare them in lowercase</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="aws-arn-parser.html" class="related-card"><span class="related-icon">☁️</span><span>AWS ARN Parser &amp; Builder</span></a>
+    <a href="gcp-resource-parser.html" class="related-card"><span class="related-icon">🟦</span><span>GCP Resource &amp; GCS URL Parser</span></a>
+    <a href="url-parser.html" class="related-card"><span class="related-icon">🔗</span><span>URL Parser</span></a>
+    <a href="jwt-decoder.html" class="related-card"><span class="related-icon">🎫</span><span>JWT Decoder</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Create SAS tokens with short expiry and minimum permissions (read only); use managed identities for long-lived access.</li><li>Do not keep connection strings with AccountKey in code or logs; store them in Key Vault.</li><li>When comparing resources across ARM templates, lowercase the whole ID first.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What is the sig in a SAS token?</summary><p>An HMAC signature over the token contents. Anyone holding it has the same permissions until expiry, so share it carefully.</p></details><details><summary>Managed identity or SAS?</summary><p>A managed identity is safer because no secret lives in code. SAS is handy for temporary access by outsiders.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/azure-resource-parser.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

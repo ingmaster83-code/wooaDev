@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PostgreSQL Array &amp; Interval Parser – JSON &amp; ISO 8601 | WooaDev</title>
+  <meta name="description" content="Convert PostgreSQL array literals ({1,2,3}, quoted, NULL, multi-dimensional) to JSON and split intervals (1 year 2 mons, 04:05:06, P1Y2M) into units and ISO 8601. Shape errors are reported.">
+  <meta name="keywords" content="PostgreSQL array parser, array literal to JSON, interval converter, postgres interval ISO 8601, pg array parser, postgresql data parser">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/postgresql-data-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/postgresql-data-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/postgresql-data-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/postgresql-data-parser.html">
+  <meta property="og:title" content="PostgreSQL Array &amp; Interval Parser – JSON &amp; ISO 8601 | WooaDev">
+  <meta property="og:description" content="Convert PostgreSQL array literals ({1,2,3}, quoted, NULL, multi-dimensional) to JSON and split intervals (1 year 2 mons, 04:05:06, P1Y2M) into units and ISO 8601. Shape errors are reported.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/postgresql-data-parser.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PostgreSQL Array &amp; Interval Parser – JSON &amp; ISO 8601 | WooaDev">
+  <meta name="twitter:description" content="Convert PostgreSQL array literals ({1,2,3}, quoted, NULL, multi-dimensional) to JSON and split intervals (1 year 2 mons, 04:05:06, P1Y2M) into units and ISO 8601. Shape errors are reported.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"PostgreSQL Array & Interval Parser","url":"https://wooadev.wooahouse.com/en/postgresql-data-parser.html","description":"Convert PostgreSQL array literals ({1,2,3}, quoted, NULL, multi-dimensional) to JSON and split intervals (1 year 2 mons, 04:05:06, P1Y2M) into units and ISO 8601. Shape errors are reported.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Arrays: quoted elements and escapes, NULL versus \"NULL\", multi-dimensional, empty arrays and [0:2]= dimension prefixes","Element types are guessed: unquoted numbers and t / f become JSON numbers and booleans, the rest strings","Warns when sub-arrays of a multi-dimensional array differ in length, which PostgreSQL rejects","Intervals: postgres style, SQL standard (@ 2 hours), ISO 8601 (P1Y2M3DT4H5M6S), h:m:s normalisation, ago and fractional units","Outputs years, months, days, hours, minutes, seconds, ISO 8601 and an approximate seconds total"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is NULL different from \"NULL\"?","acceptedAnswer":{"@type":"Answer","text":"Unquoted NULL is a null value; quoted \"NULL\" is a string containing the letters NULL."}},{"@type":"Question","name":"What is mons in an interval?","acceptedAnswer":{"@type":"Answer","text":"Short for months. 12 mons displays as 1 year, and a year converts to 12 months."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"PostgreSQL Array & Interval Parser","item":"https://wooadev.wooahouse.com/en/postgresql-data-parser.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../postgresql-data-parser.html">KO</a>
+        <span>|</span>
+        <a href="postgresql-data-parser.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>PostgreSQL Array &amp; Interval Parser</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🐘</span>
+    <h1>PostgreSQL Array &amp; Interval Parser</h1>
+    <p>Converts PostgreSQL array literals such as {1,2,3}, {"a b",NULL} or {{1,2},{3,4}} to JSON and breaks intervals like '1 year 2 mons 3 days 04:05:06' into fields and ISO 8601.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Converted 4 array(s)</p>
+<h3>Input — PostgreSQL array literals (one per line)</h3><pre>{1,2,3}
+{"hello world",NULL,"with \"quote\"","a,b"}
+{{1,2},{3,4}}
+{apple,banana}</pre>
+<h3>Input — interval values (one per line)</h3><pre>1 year 2 mons 3 days 04:05:06.5
+-1 days +02:00:00
+P1Y2M3DT4H5M6S
+@ 2 hours 30 mins
+00:90:00</pre>
+<h3>Result — Results</h3><pre>Input | Status | Dims | Elements | Note
+{1,2,3} | ✅ | 1D | 3 | 
+{"hello world",NULL,"with \"quote\"",… | ✅ | 1D | 4 | 
+{{1,2},{3,4}} | ✅ | 2D | 4 | 
+{apple,banana} | ✅ | 1D | 2 | </pre>
+<h3>Result — JSON / normalised</h3><pre>[1,2,3]
+["hello world",null,"with \"quote\"","a,b"]
+[[1,2],[3,4]]
+["apple","banana"]</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Array and interval columns exported by psql or CSV arrive as text. Paste them to get structured values.</p>
+<ul><li>Arrays: quoted elements and escapes, NULL versus "NULL", multi-dimensional, empty arrays and [0:2]= dimension prefixes</li><li>Element types are guessed: unquoted numbers and t / f become JSON numbers and booleans, the rest strings</li><li>Warns when sub-arrays of a multi-dimensional array differ in length, which PostgreSQL rejects</li><li>Intervals: postgres style, SQL standard (@ 2 hours), ISO 8601 (P1Y2M3DT4H5M6S), h:m:s normalisation, ago and fractional units</li><li>Outputs years, months, days, hours, minutes, seconds, ISO 8601 and an approximate seconds total</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="iso8601-converter.html" class="related-card"><span class="related-icon">📅</span><span>ISO 8601 / RFC Date Converter</span></a>
+    <a href="duration-parser.html" class="related-card"><span class="related-icon">⏱️</span><span>Duration Converter</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON Formatter</span></a>
+    <a href="sql-insert-converter.html" class="related-card"><span class="related-icon">🗃️</span><span>SQL INSERT Converter</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>An interval stores months (approximated as 30 days), days and time separately, so a flat seconds figure is approximate.</li><li>Real applications get arrays converted by the driver (pg and others); use this for CSV and log analysis.</li><li>PostgreSQL quotes string elements that contain commas, spaces or quotes.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Is NULL different from "NULL"?</summary><p>Unquoted NULL is a null value; quoted "NULL" is a string containing the letters NULL.</p></details><details><summary>What is mons in an interval?</summary><p>Short for months. 12 mons displays as 1 year, and a year converts to 12 months.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/postgresql-data-parser.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

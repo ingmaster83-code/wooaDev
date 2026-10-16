@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XML 이스케이프 — 요소·속성·CDATA 엔티티 변환 | WooaDev</title>
+  <meta name="description" content="XML 요소 텍스트, 속성 값, CDATA에 맞춰 &amp; &lt; &gt; &quot; &#x27;를 이스케이프하거나 해제합니다. 비ASCII 문자를 숫자 참조로 바꾸는 옵션, 숫자 문자 참조 해제, ]]&gt; 처리, XML 1.0 금지 제어 문자 감지를 지원합니다.">
+  <meta name="keywords" content="XML 이스케이프, XML 엔티티, &amp;amp; &amp;lt;, CDATA 이스케이프, XML 특수문자, xml escape">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/xml-escape.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/xml-escape.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/xml-escape.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/xml-escape.html">
+  <meta property="og:title" content="XML 이스케이프 — 요소·속성·CDATA 엔티티 변환 | WooaDev">
+  <meta property="og:description" content="XML 요소 텍스트, 속성 값, CDATA에 맞춰 &amp; &lt; &gt; &quot; &#x27;를 이스케이프하거나 해제합니다. 비ASCII 문자를 숫자 참조로 바꾸는 옵션, 숫자 문자 참조 해제, ]]&gt; 처리, XML 1.0 금지 제어 문자 감지를 지원합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/xml-escape.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="XML 이스케이프 — 요소·속성·CDATA 엔티티 변환 | WooaDev">
+  <meta name="twitter:description" content="XML 요소 텍스트, 속성 값, CDATA에 맞춰 &amp; &lt; &gt; &quot; &#x27;를 이스케이프하거나 해제합니다. 비ASCII 문자를 숫자 참조로 바꾸는 옵션, 숫자 문자 참조 해제, ]]&gt; 처리, XML 1.0 금지 제어 문자 감지를 지원합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"XML 이스케이프 변환기","url":"https://wooadev.wooahouse.com/xml-escape.html","description":"XML 요소 텍스트, 속성 값, CDATA에 맞춰 & < > \" '를 이스케이프하거나 해제합니다. 비ASCII 문자를 숫자 참조로 바꾸는 옵션, 숫자 문자 참조 해제, ]]> 처리, XML 1.0 금지 제어 문자 감지를 지원합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["위치별 규칙: 요소 텍스트(& < >), 속성(& < \" 또는 '), CDATA(]]> 분할)","비ASCII 문자를 &#10진수; 또는 &#x16진수; 로 변환하는 옵션","해제: &amp; &lt; &gt; &quot; &apos; 와 숫자 문자 참조 &#65; &#x41;, 정의되지 않은 엔티티는 그대로 두고 알림","XML 1.0 에서 쓸 수 없는 제어 문자(0x00–0x08 등)를 감지","변환된 문자 표"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"HTML 이스케이프와 같은가요?","acceptedAnswer":{"@type":"Answer","text":"기본 5개 엔티티는 같지만 XML 은 &nbsp; 등 HTML 이름 엔티티를 정의하지 않습니다."}},{"@type":"Question","name":"CDATA 안에는 이스케이프가 필요 없나요?","acceptedAnswer":{"@type":"Answer","text":"내용은 그대로 두되 종료 표시 ]]> 만 ]]]]><![CDATA[> 로 분할해야 합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"XML 이스케이프 변환기","item":"https://wooadev.wooahouse.com/xml-escape.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="xml-escape.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/xml-escape.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>XML 이스케이프 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🏷️</span>
+    <h1>XML 이스케이프 · 이스케이프 해제</h1>
+    <p>&amp; &lt; &gt; " ' 를 XML 엔티티로 바꾸거나 되돌립니다. 요소 텍스트, 큰따옴표/작은따옴표 속성, CDATA 중 사용 위치에 맞는 규칙으로 처리하고 XML 1.0 에서 허용되지 않는 제어 문자를 찾아 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>🔍 이스케이프 완료 · 금지 문자 제거됨</p>
+<h3>입력 — 텍스트</h3><pre>Tom &amp; Jerry &lt;"Cartoon"&gt; it's 100% fun — 안녕 😀</pre>
+<h3>결과 — 결과</h3><pre>Tom &amp;amp; Jerry &amp;lt;"Cartoon"&amp;gt; it's 100% fun — 안녕 😀</pre>
+<h3>결과 — 변환된 문자</h3><pre>원본 | 변환 | 설명 | 횟수
+&amp; | &amp;amp; |  | 1
+&lt; | &amp;lt; |  | 1
+&gt; | &amp;gt; |  | 1</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>XML·RSS·SVG·설정 파일에 텍스트를 넣을 때 깨지지 않도록 올바르게 이스케이프합니다. 처리는 브라우저 안에서 이루어집니다.</p>
+<ul><li>위치별 규칙: 요소 텍스트(&amp; &lt; &gt;), 속성(&amp; &lt; " 또는 '), CDATA(]]&gt; 분할)</li><li>비ASCII 문자를 &amp;#10진수; 또는 &amp;#x16진수; 로 변환하는 옵션</li><li>해제: &amp;amp; &amp;lt; &amp;gt; &amp;quot; &amp;apos; 와 숫자 문자 참조 &amp;#65; &amp;#x41;, 정의되지 않은 엔티티는 그대로 두고 알림</li><li>XML 1.0 에서 쓸 수 없는 제어 문자(0x00–0x08 등)를 감지</li><li>변환된 문자 표</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="xml-table-converter.html" class="related-card"><span class="related-icon">🗂️</span><span>XML → 표·CSV 변환기</span></a>
+    <a href="html-entity.html" class="related-card"><span class="related-icon">🔤</span><span>HTML Entity 인코더</span></a>
+    <a href="html-formatter.html" class="related-card"><span class="related-icon">🧱</span><span>HTML 포맷터·검사기</span></a>
+    <a href="string-escape.html" class="related-card"><span class="related-icon">🔣</span><span>문자열 이스케이프 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>XML 에는 &amp;nbsp; 같은 HTML 엔티티가 없습니다. &amp;#160; 처럼 숫자 참조를 쓰세요.</li><li>속성 값은 쓰는 따옴표 종류에 맞춰 큰따옴표 또는 작은따옴표를 이스케이프합니다.</li><li>제어 문자는 이스케이프로도 표현할 수 없으니 제거해야 합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>HTML 이스케이프와 같은가요?</summary><p>기본 5개 엔티티는 같지만 XML 은 &amp;nbsp; 등 HTML 이름 엔티티를 정의하지 않습니다.</p></details><details><summary>CDATA 안에는 이스케이프가 필요 없나요?</summary><p>내용은 그대로 두되 종료 표시 ]]&gt; 만 ]]]]&gt;&lt;![CDATA[&gt; 로 분할해야 합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/xml-escape.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

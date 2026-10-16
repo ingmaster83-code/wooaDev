@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Syslog Parser – Facility, Severity &amp; RFC 5424 Analysis | WooaDev</title>
+  <meta name="description" content="Parse RFC 3164 and RFC 5424 syslog messages. Calculates facility and severity from PRI and separates time, host, app[PID], MSGID, structured data and message, with JSON output.">
+  <meta name="keywords" content="syslog parser, syslog PRI calculator, RFC 5424, RFC 3164, facility severity, syslog parser">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/syslog-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/syslog-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/syslog-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/syslog-parser.html">
+  <meta property="og:title" content="Syslog Parser – Facility, Severity &amp; RFC 5424 Analysis | WooaDev">
+  <meta property="og:description" content="Parse RFC 3164 and RFC 5424 syslog messages. Calculates facility and severity from PRI and separates time, host, app[PID], MSGID, structured data and message, with JSON output.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/syslog-parser.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Syslog Parser – Facility, Severity &amp; RFC 5424 Analysis | WooaDev">
+  <meta name="twitter:description" content="Parse RFC 3164 and RFC 5424 syslog messages. Calculates facility and severity from PRI and separates time, host, app[PID], MSGID, structured data and message, with JSON output.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Syslog Parser","url":"https://wooadev.wooahouse.com/en/syslog-parser.html","description":"Parse RFC 3164 and RFC 5424 syslog messages. Calculates facility and severity from PRI and separates time, host, app[PID], MSGID, structured data and message, with JSON output.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["PRI: <number> = facility × 8 + severity, shown as a facility name (auth, local4 …) and severity (emerg … debug)","RFC 3164: Mon day h:m:s host tag[PID]: message (no year or zone, so your year and UTC are assumed and marked with ?)","RFC 5424: version, ISO 8601 time (offsets to UTC), host, app, PROCID, MSGID, structured data and message","emerg, alert, crit and err are highlighted with 🚨 and a severity count is summarised","JSON output of the parsed result"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I read the PRI number?","acceptedAnswer":{"@type":"Answer","text":"Integer division by 8 gives the facility and the remainder the severity: 34 → 4 (auth), 2 (crit)."}},{"@type":"Question","name":"Does it read journald output?","acceptedAnswer":{"@type":"Answer","text":"Formats such as journalctl -o short-iso differ and are not supported; the target is syslog wire format (3164 / 5424)."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Syslog Parser","item":"https://wooadev.wooahouse.com/en/syslog-parser.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../syslog-parser.html">KO</a>
+        <span>|</span>
+        <a href="syslog-parser.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Syslog Parser</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🗒️</span>
+    <h1>Syslog Message Parser (RFC 3164 &amp; RFC 5424)</h1>
+    <p>Splits traditional messages like &lt;34&gt;Oct 16 09:12:03 web01 sshd[2412]: … and RFC 5424 messages like &lt;165&gt;1 2026-10-16T… into PRI (facility, severity), time, host, app, process ID, structured data and message.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Parsed 4 (crit 1, notice 2, info 1)</p>
+<h3>Input — Syslog messages (one per line, RFC 3164 / RFC 5424)</h3><pre>&lt;34&gt;Oct 16 09:12:03 web01 sshd[2412]: Failed password for root from 203.0.113.5 port 51234 ssh2
+&lt;165&gt;1 2026-10-16T09:12:05.003Z web01.example.com myapp 2518 ID47 [exampleSDID@32473 iut="3" eventSource="Application"] Request handled in 35ms
+&lt;13&gt;Oct  6 23:59:59 db01 kernel: Out of memory: Killed process 8123 (mysqld)
+&lt;190&gt;1 2026-10-16T09:13:00+09:00 gw01 nginx - - - upstream timed out</pre>
+<h3>Result — Parsed messages</h3><pre>Format | Status | facility.severity | Time | Host / app | Message | Note
+RFC 3164 | ✅ | auth.crit (34) | 2026-10-16T09:12:03Z? | web01 / sshd[2412] | Failed password for root from 203.0.113.5 port 51234 ssh2 | 🚨 치명
+RFC 5424 | ✅ | local4.notice (165) | 2026-10-16T09:12:05.003Z | web01.example.com / myapp[2518] | Request handled in 35ms | 
+RFC 3164 | ✅ | user.notice (13) | 2026-10-06T23:59:59Z? | db01 / kernel | Out of memory: Killed process 8123 (mysqld) | 
+RFC 5424 | ✅ | local7.info (190) | 2026-10-16T00:13:00.000Z | gw01 / nginx | upstream timed out | </pre>
+<h3>Result — JSON</h3><pre>[
+  {
+    "pri": 34,
+    "timestamp": "Oct 16 09:12:03",
+    "host": "web01",
+    "app": "sshd",
+    "procid": "2412",
+    "message": "Failed password for root from 203.0.113.5 port 51234 ssh2",
+    "iso": "2026-10-16T09:12:03Z?",
+    "facility": "auth",
+    "severity": "crit"
+  },
+  {
+    "pri": 165,
+    "version": 1,
+    "timestamp": "2026-10-16T09:12:05.003Z",
+    "host": "web01.example.com",
+    "app": "myapp",
+    "procid": "2518",
+    "msgid": "ID47",
+    "sd": "[exampleSDID@32473 iut=\"3\" eventSource=\"Application\"]",
+    "message": "Request handled in 35ms",
+    "iso": "2026-10-16T09:12:05.003Z",
+    "facility": "local4",
+    "severity": "notice"
+  },
+  {
+    "pri": 13,
+    "timestamp": "Oct 6 23:59:59",
+    "host": "db01",
+    "app": "kernel",
+    "procid": "-",
+    "message": "Out of memory: Killed process 8123 (mysqld)",
+    "iso": "2026-10-06T23:59:59Z?",
+    "facility": "user",
+    "severity": "notice"
+  },
+  {
+    "pri": 190,
+    "version": 1,
+    "timestamp": "2026-10-16T09:13:00+09:00",
+    "host": "gw01",
+    "app": "nginx",
+    "procid": "-",
+    "msgid": "-",
+    "sd": "-",
+    "message": "upstream timed out",
+    "iso": "2026-10-16T00:13:00.000Z",
+    "facility": "local7",
+    "severity": "info"
+  }
+]</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Decode device and Linux logs into something readable and move them to JSON.</p>
+<ul><li>PRI: &lt;number&gt; = facility × 8 + severity, shown as a facility name (auth, local4 …) and severity (emerg … debug)</li><li>RFC 3164: Mon day h:m:s host tag[PID]: message (no year or zone, so your year and UTC are assumed and marked with ?)</li><li>RFC 5424: version, ISO 8601 time (offsets to UTC), host, app, PROCID, MSGID, structured data and message</li><li>emerg, alert, crit and err are highlighted with 🚨 and a severity count is summarised</li><li>JSON output of the parsed result</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="access-log-parser.html" class="related-card"><span class="related-icon">📜</span><span>Access Log Parser</span></a>
+    <a href="timezone-converter.html" class="related-card"><span class="related-icon">🌏</span><span>Time Zone Converter</span></a>
+    <a href="iso8601-converter.html" class="related-card"><span class="related-icon">📅</span><span>ISO 8601 / RFC Date Converter</span></a>
+    <a href="stack-trace-formatter.html" class="related-card"><span class="related-icon">🐞</span><span>Stack Trace Formatter</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>RFC 3164 logs can get the wrong year around New Year, so take care near that date.</li><li>When merging logs from many servers prefer the 5424 format and UTC.</li><li>In rsyslog use the RSYSLOG_SyslogProtocol23Format template for RFC 5424 output.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>How do I read the PRI number?</summary><p>Integer division by 8 gives the facility and the remainder the severity: 34 → 4 (auth), 2 (crit).</p></details><details><summary>Does it read journald output?</summary><p>Formats such as journalctl -o short-iso differ and are not supported; the target is syslog wire format (3164 / 5424).</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/syslog-parser.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

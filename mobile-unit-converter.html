@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>모바일 단위 변환기 — dp·sp·px·pt와 Android·iOS 색상 | WooaDev</title>
+  <meta name="description" content="dp, sp, px, pt를 화면 밀도(mdpi~xxxhdpi)별로 변환하고 drawable 밀도별 픽셀 크기를 표로 제공합니다. #AARRGGBB·CSS rgba·Flutter·UIColor·SwiftUI·Compose 색상 표기를 상호 변환합니다.">
+  <meta name="keywords" content="dp px 변환, sp 변환, Android 밀도, iOS pt, ARGB 색상 변환, Flutter Color, mobile unit converter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/mobile-unit-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/mobile-unit-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/mobile-unit-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/mobile-unit-converter.html">
+  <meta property="og:title" content="모바일 단위 변환기 — dp·sp·px·pt와 Android·iOS 색상 | WooaDev">
+  <meta property="og:description" content="dp, sp, px, pt를 화면 밀도(mdpi~xxxhdpi)별로 변환하고 drawable 밀도별 픽셀 크기를 표로 제공합니다. #AARRGGBB·CSS rgba·Flutter·UIColor·SwiftUI·Compose 색상 표기를 상호 변환합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/mobile-unit-converter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="모바일 단위 변환기 — dp·sp·px·pt와 Android·iOS 색상 | WooaDev">
+  <meta name="twitter:description" content="dp, sp, px, pt를 화면 밀도(mdpi~xxxhdpi)별로 변환하고 drawable 밀도별 픽셀 크기를 표로 제공합니다. #AARRGGBB·CSS rgba·Flutter·UIColor·SwiftUI·Compose 색상 표기를 상호 변환합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"모바일 단위·색상 변환기","url":"https://wooadev.wooahouse.com/mobile-unit-converter.html","description":"dp, sp, px, pt를 화면 밀도(mdpi~xxxhdpi)별로 변환하고 drawable 밀도별 픽셀 크기를 표로 제공합니다. #AARRGGBB·CSS rgba·Flutter·UIColor·SwiftUI·Compose 색상 표기를 상호 변환합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["단위: px = dp × (dpi ÷ 160), sp 는 글꼴 배율 반영, pt 는 iOS 논리 단위(1pt = 1dp 로 취급)","밀도 표: ldpi~xxxhdpi 별 픽셀 크기와 drawable-밀도 폴더, iOS @1x~@3x","물리 크기(mm·inch)와 터치 대상 최소 크기(Android 48dp, iOS 44pt) 안내","색상: #RRGGBB, #RRGGBBAA(CSS), #AARRGGBB(Android), rgba(), 0xAARRGGBB 입력 → 모든 표기와 HSL","출력: Flutter Color, UIColor, SwiftUI Color, Color.argb, Android XML, Compose"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"dp 와 sp 의 차이는요?","acceptedAnswer":{"@type":"Answer","text":"dp 는 화면 밀도에 독립적인 길이이고, sp 는 거기에 사용자의 글꼴 크기 설정까지 곱한 값입니다."}},{"@type":"Question","name":"iOS 의 pt 는 px 인가요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. pt 는 논리 단위이고 기기 배율(@2x, @3x)에 따라 픽셀이 됩니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"모바일 단위·색상 변환기","item":"https://wooadev.wooahouse.com/mobile-unit-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="mobile-unit-converter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/mobile-unit-converter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>모바일 단위·색상 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📱</span>
+    <h1>모바일 단위 · 색상 변환기 (dp · sp · px · pt)</h1>
+    <p>화면 밀도(mdpi~xxxhdpi)에 따라 dp·sp·px·pt 를 변환하고 밀도별 에셋 크기를 계산합니다. 색상은 #AARRGGBB, CSS rgba, Flutter Color, iOS UIColor, SwiftUI, Android XML 표기를 한 번에 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 16 dp = 48 px (480 dpi)</p>
+<h3>입력 — 값</h3><pre>16</pre>
+<h3>입력 — 색상 (#RRGGBB, #AARRGGBB, rgba(), 0xAARRGGBB)</h3><pre>#80FF5722</pre>
+<h3>결과 — 변환 결과</h3><pre>단위 | 값
+px | 48 px
+dp (Android) | 16 dp
+sp (Android) | 16 sp
+pt (iOS) | 16 pt
+물리 크기 | 2.54 mm (0.1 in)
+밀도 배율 | 3× (480 dpi)
+ldpi (120) | 12 px  → drawable-ldpi
+mdpi (160) | 16 px  → drawable-mdpi
+hdpi (240) | 24 px  → drawable-hdpi
+xhdpi (320) | 32 px  → drawable-xhdpi
+xxhdpi (480) | 48 px  → drawable-xxhdpi
+xxxhdpi (640) | 64 px  → drawable-xxxhdpi</pre>
+<h3>결과 — 코드</h3><pre>Android XML : 16dp  /  16sp
+Compose     : 16.dp  /  16.sp
+Flutter     : 16  (logical pixels)
+SwiftUI/UIKit: 16 pt
+CSS (1x web): 16px</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>안드로이드·iOS·플러터 디자인 값을 옮길 때 단위와 색상 표기를 일일이 계산하지 않아도 됩니다.</p>
+<ul><li>단위: px = dp × (dpi ÷ 160), sp 는 글꼴 배율 반영, pt 는 iOS 논리 단위(1pt = 1dp 로 취급)</li><li>밀도 표: ldpi~xxxhdpi 별 픽셀 크기와 drawable-밀도 폴더, iOS @1x~@3x</li><li>물리 크기(mm·inch)와 터치 대상 최소 크기(Android 48dp, iOS 44pt) 안내</li><li>색상: #RRGGBB, #RRGGBBAA(CSS), #AARRGGBB(Android), rgba(), 0xAARRGGBB 입력 → 모든 표기와 HSL</li><li>출력: Flutter Color, UIColor, SwiftUI Color, Color.argb, Android XML, Compose</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="css-units.html" class="related-card"><span class="related-icon">📐</span><span>CSS 단위 변환기</span></a>
+    <a href="color-converter.html" class="related-card"><span class="related-icon">🎨</span><span>색상 코드 변환기</span></a>
+    <a href="aspect-ratio.html" class="related-card"><span class="related-icon">📐</span><span>화면비 계산기</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>8자리 색상은 CSS 는 #RRGGBBAA, Android/Flutter 는 #AARRGGBB 로 알파 위치가 반대입니다.</li><li>아이콘은 xxhdpi 기준으로 만들고 나머지 밀도는 자동 축소하는 방식이 흔합니다.</li><li>sp 는 사용자의 글꼴 크기 설정을 따르므로 텍스트에만 쓰고 레이아웃 크기에는 dp 를 쓰세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>dp 와 sp 의 차이는요?</summary><p>dp 는 화면 밀도에 독립적인 길이이고, sp 는 거기에 사용자의 글꼴 크기 설정까지 곱한 값입니다.</p></details><details><summary>iOS 의 pt 는 px 인가요?</summary><p>아닙니다. pt 는 논리 단위이고 기기 배율(@2x, @3x)에 따라 픽셀이 됩니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/mobile-unit-converter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>
