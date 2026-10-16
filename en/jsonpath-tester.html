@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSONPath Tester – Evaluate JSONPath Expressions Online | WooaDev</title>
+  <meta name="description" content="Test JSONPath expressions against JSON and see matches with normalized paths. Supports filters, recursive descent (..), slices, wildcards, regex (=~) and length() — no eval, runs in your browser.">
+  <meta name="keywords" content="JSONPath tester, JSONPath evaluator online, JSONPath expression, JSONPath filter, jsonpath syntax, RFC 9535, jsonpath regex">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/jsonpath-tester.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/jsonpath-tester.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/jsonpath-tester.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/jsonpath-tester.html">
+  <meta property="og:title" content="JSONPath Tester – Evaluate JSONPath Expressions Online | WooaDev">
+  <meta property="og:description" content="Test JSONPath expressions against JSON and see matches with normalized paths. Supports filters, recursive descent (..), slices, wildcards, regex (=~) and length() — no eval, runs in your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/jsonpath-tester.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSONPath Tester – Evaluate JSONPath Expressions Online | WooaDev">
+  <meta name="twitter:description" content="Test JSONPath expressions against JSON and see matches with normalized paths. Supports filters, recursive descent (..), slices, wildcards, regex (=~) and length() — no eval, runs in your browser.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSONPath Tester","url":"https://wooadev.wooahouse.com/en/jsonpath-tester.html","description":"Test JSONPath expressions against JSON and see matches with normalized paths. Supports filters, recursive descent (..), slices, wildcards, regex (=~) and length() — no eval, runs in your browser.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Basics: $.a.b, $['a'], $[0], $[-1], $.*, unions $['a','b']","Recursive descent $..price, slices $[1:5:2], reverse $[::-1]","Filters [?(@.price < 10 && @.category == 'fiction')], existence [?(@.isbn)], regex [?(@.name =~ /^a/)]","Functions length(), count(), match(), search()","Each match is shown with its normalized path, e.g. $['store']['book'][0]"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why do JSONPath implementations give different results?","acceptedAnswer":{"@type":"Answer","text":"Implementations predating the RFC differ in filter syntax and extras like .length. This tool supports RFC 9535 together with the widely used Goessner syntax."}},{"@type":"Question","name":"Is my expression sent to a server or evaluated as JavaScript?","acceptedAnswer":{"@type":"Answer","text":"No. The expression is parsed by the tool in your browser; it is neither uploaded nor run through eval."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"JSONPath Tester","item":"https://wooadev.wooahouse.com/en/jsonpath-tester.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../jsonpath-tester.html">KO</a>
+        <span>|</span>
+        <a href="jsonpath-tester.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSONPath Tester</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧭</span>
+    <h1>JSONPath Tester — Matches with Their Paths</h1>
+    <p>Run expressions like $.store.book[?(@.price &lt; 10)].title against your JSON and see every matched value with its path.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ 2 match(es)</p>
+<h3>Input — JSON data</h3><pre>{
+  "store": {
+    "book": [
+      { "category": "reference", "author": "Nigel Rees", "title": "Sayings of the Century", "price": 8.95 },
+      { "category": "fiction", "author": "Evelyn Waugh", "title": "Sword of Honour", "price": 12.99 },
+      { "category": "fiction", "author": "Herman Melville", "title": "Moby Dick", "isbn": "0-553-21311-3", "price": 8.99 },
+      { "category": "fiction", "author": "J. R. R. Tolkien", "title": "The Lord of the Rings", "isbn": "0-395-19395-8", "price": 22.99 }
+    ],
+    "bicycle": { "color": "red", "price": 399 }
+  }
+}</pre>
+<h3>Input — JSONPath expression</h3><pre>$.store.book[?(@.price &lt; 10)].title</pre>
+<h3>Result — Matches (path + value)</h3><pre># | Path | Value
+1 | $['store']['book'][0]['title'] | "Sayings of the Century"
+2 | $['store']['book'][2]['title'] | "Moby Dick"</pre>
+<h3>Result — Values as JSON</h3><pre>[
+  "Sayings of the Century",
+  "Moby Dick"
+]</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>JSONPath (RFC 9535) is a query language for JSON used by config tools, API gateways and test frameworks. Try your expression on real data before putting it in code.</p>
+<ul><li>Basics: $.a.b, $['a'], $[0], $[-1], $.*, unions $['a','b']</li><li>Recursive descent $..price, slices $[1:5:2], reverse $[::-1]</li><li>Filters [?(@.price &lt; 10 &amp;&amp; @.category == 'fiction')], existence [?(@.isbn)], regex [?(@.name =~ /^a/)]</li><li>Functions length(), count(), match(), search()</li><li>Each match is shown with its normalized path, e.g. $['store']['book'][0]</li></ul>
+<p>Expressions are parsed by the tool itself, never passed to eval, so nothing you type is executed as code.</p>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="jmespath-tester.html" class="related-card"><span class="related-icon">🧪</span><span>JMESPath Tester</span></a>
+    <a href="json-pointer.html" class="related-card"><span class="related-icon">📍</span><span>JSON Pointer Tool</span></a>
+    <a href="json-key-extractor.html" class="related-card"><span class="related-icon">🔑</span><span>JSON Key Extractor</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON Formatter</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>In filters, quote strings with single or double quotes; write numbers as-is.</li><li>Copy a result path for use with the JSON Pointer tool or in your code.</li><li>An expression without a leading $ such as a.b is treated as relative to the root.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Why do JSONPath implementations give different results?</summary><p>Implementations predating the RFC differ in filter syntax and extras like .length. This tool supports RFC 9535 together with the widely used Goessner syntax.</p></details><details><summary>Is my expression sent to a server or evaluated as JavaScript?</summary><p>No. The expression is parsed by the tool in your browser; it is neither uploaded nor run through eval.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-json.js"></script>
+<script src="../js/tk-jsonpath.js"></script>
+<script src="../js/tools/jsonpath-tester.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

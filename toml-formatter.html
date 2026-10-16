@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOML 포맷터 — 문법 검증과 정리, 키 정렬 | WooaDev</title>
+  <meta name="description" content="TOML 설정 파일을 검증하고 일정한 스타일로 다시 정리합니다. 문법 오류의 줄·열 안내, 키 정렬 옵션, 키·테이블·배열 개수 요약을 제공하며 브라우저에서만 처리됩니다.">
+  <meta name="keywords" content="TOML 포맷터, TOML formatter, TOML 검증, TOML validator, TOML 정리, TOML 키 정렬, pyproject.toml 정리">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/toml-formatter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/toml-formatter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/toml-formatter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/toml-formatter.html">
+  <meta property="og:title" content="TOML 포맷터 — 문법 검증과 정리, 키 정렬 | WooaDev">
+  <meta property="og:description" content="TOML 설정 파일을 검증하고 일정한 스타일로 다시 정리합니다. 문법 오류의 줄·열 안내, 키 정렬 옵션, 키·테이블·배열 개수 요약을 제공하며 브라우저에서만 처리됩니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/toml-formatter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TOML 포맷터 — 문법 검증과 정리, 키 정렬 | WooaDev">
+  <meta name="twitter:description" content="TOML 설정 파일을 검증하고 일정한 스타일로 다시 정리합니다. 문법 오류의 줄·열 안내, 키 정렬 옵션, 키·테이블·배열 개수 요약을 제공하며 브라우저에서만 처리됩니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"TOML 포맷터","url":"https://wooadev.wooahouse.com/toml-formatter.html","description":"TOML 설정 파일을 검증하고 일정한 스타일로 다시 정리합니다. 문법 오류의 줄·열 안내, 키 정렬 옵션, 키·테이블·배열 개수 요약을 제공하며 브라우저에서만 처리됩니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["TOML 1.0 문법 검증과 오류 위치(줄·열) 안내","`key=value`, `key   =   value` 같은 공백 차이와 배열·인라인 테이블 표기를 통일","키 정렬 옵션으로 diff를 줄이고 병합 충돌을 방지","키 개수, 테이블 수, 배열 수, 최대 깊이 요약"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"정리하면 값이 바뀌나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 문서를 읽어 같은 값을 다시 쓰는 방식이라 값은 그대로이고 표기만 통일됩니다. 다만 주석과 원래의 줄바꿈 스타일은 사라집니다."}},{"@type":"Question","name":"TOML 1.1이나 확장 문법도 지원하나요?","acceptedAnswer":{"@type":"Answer","text":"TOML 1.0 규격을 기준으로 합니다. 1.0에 없는 문법은 오류로 표시될 수 있습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"TOML 포맷터","item":"https://wooadev.wooahouse.com/toml-formatter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="toml-formatter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/toml-formatter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>TOML 포맷터</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧹</span>
+    <h1>TOML 포맷터·검증기</h1>
+    <p>TOML 파일의 문법을 검증하고 들여쓰기·공백·테이블 구성을 일정한 형식으로 정리합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 올바른 TOML입니다</p>
+<h3>입력 — TOML 입력</h3><pre>title="TOML Example"
+[owner]
+name =   "Kim"
+[database]
+ports=[8000,8001,8002]
+enabled=true
+[servers.alpha]
+ip="10.0.0.1"
+[servers.beta]
+ip="10.0.0.2"</pre>
+<h3>결과 — 정리된 TOML</h3><pre>title = "TOML Example"
+
+[owner]
+name = "Kim"
+
+[database]
+ports = [ 8000, 8001, 8002 ]
+enabled = true
+
+[servers.alpha]
+ip = "10.0.0.1"
+
+[servers.beta]
+ip = "10.0.0.2"
+</pre>
+<h3>결과 — 검증 정보</h3><pre>문법: 유효함 ✅
+키: 11
+테이블(객체): 6
+배열: 1
+최대 깊이: 4</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>손으로 편집하다 보면 TOML의 공백과 표기 방식이 제각각이 되기 쉽습니다. 이 도구는 문서를 읽어 문법을 검증한 뒤 같은 내용을 일관된 모양으로 다시 씁니다.</p>
+<ul><li>TOML 1.0 문법 검증과 오류 위치(줄·열) 안내</li><li><code>key=value</code>, <code>key   =   value</code> 같은 공백 차이와 배열·인라인 테이블 표기를 통일</li><li>키 정렬 옵션으로 diff를 줄이고 병합 충돌을 방지</li><li>키 개수, 테이블 수, 배열 수, 최대 깊이 요약</li></ul>
+<p>주의: 다시 쓰는 과정에서 주석은 유지되지 않습니다. 주석이 중요한 파일은 검증 용도로만 쓰세요.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="toml-to-json.html" class="related-card"><span class="related-icon">🧾</span><span>TOML → JSON 변환기</span></a>
+    <a href="json-to-toml.html" class="related-card"><span class="related-icon">🧾</span><span>JSON → TOML 변환기</span></a>
+    <a href="yaml-formatter.html" class="related-card"><span class="related-icon">🧹</span><span>YAML 포맷터</span></a>
+    <a href="config-diff.html" class="related-card"><span class="related-icon">🔍</span><span>설정 파일 비교 도구</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>pyproject.toml처럼 여러 사람이 편집하는 파일은 키 정렬 후 커밋하면 diff가 깔끔해집니다.</li><li>주석을 보존해야 한다면 이 도구로 검증만 하고 직접 수정하세요.</li><li>결과를 JSON으로 확인하고 싶으면 TOML → JSON 변환기를 이용하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>정리하면 값이 바뀌나요?</summary><p>아니요. 문서를 읽어 같은 값을 다시 쓰는 방식이라 값은 그대로이고 표기만 통일됩니다. 다만 주석과 원래의 줄바꿈 스타일은 사라집니다.</p></details><details><summary>TOML 1.1이나 확장 문법도 지원하나요?</summary><p>TOML 1.0 규격을 기준으로 합니다. 1.0에 없는 문법은 오류로 표시될 수 있습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tk-xml.js"></script>
+<script src="js/tk-env.js"></script>
+<script src="js/tk-config.js"></script>
+<script src="js/lib/toml.min.js"></script>
+<script src="js/tools/toml-formatter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

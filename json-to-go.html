@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON → Go 구조체 변환기 — json 태그·omitempty·포인터 자동 생성 | WooaDev</title>
+  <meta name="description" content="JSON 샘플로 Go struct를 자동 생성합니다. 여러 샘플/배열 전체를 분석해 누락 필드는 omitempty+포인터로, 정수/실수 혼합은 float64로 처리하며 InitialISMs(ID, URL), int64, time.Time 옵션을 지원합니다.">
+  <meta name="keywords" content="JSON Go 변환, JSON to Go struct, JSON을 Go 구조체로, go struct 생성, json-to-go, Go json 태그, Golang struct generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/json-to-go.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/json-to-go.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/json-to-go.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/json-to-go.html">
+  <meta property="og:title" content="JSON → Go 구조체 변환기 — json 태그·omitempty·포인터 자동 생성 | WooaDev">
+  <meta property="og:description" content="JSON 샘플로 Go struct를 자동 생성합니다. 여러 샘플/배열 전체를 분석해 누락 필드는 omitempty+포인터로, 정수/실수 혼합은 float64로 처리하며 InitialISMs(ID, URL), int64, time.Time 옵션을 지원합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/json-to-go.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON → Go 구조체 변환기 — json 태그·omitempty·포인터 자동 생성 | WooaDev">
+  <meta name="twitter:description" content="JSON 샘플로 Go struct를 자동 생성합니다. 여러 샘플/배열 전체를 분석해 누락 필드는 omitempty+포인터로, 정수/실수 혼합은 float64로 처리하며 InitialISMs(ID, URL), int64, time.Time 옵션을 지원합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON → Go 구조체 변환기","url":"https://wooadev.wooahouse.com/json-to-go.html","description":"JSON 샘플로 Go struct를 자동 생성합니다. 여러 샘플/배열 전체를 분석해 누락 필드는 omitempty+포인터로, 정수/실수 혼합은 float64로 처리하며 InitialISMs(ID, URL), int64, time.Time 옵션을 지원합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["배열의 모든 요소(또는 이어 붙인 여러 JSON)를 합쳐 분석: 일부에만 있는 필드는 `omitempty`와 포인터로","null이 섞인 필드는 포인터(*string 등), 정수와 실수가 섞이면 float64, 타입이 제각각이면 interface{}/any","user_id → UserID, api_url → APIURL처럼 Go의 약어 관례(ID, URL, HTTP…)를 적용","중첩 객체는 별도 struct로 분리하고, 구조가 같은 객체는 하나로 재사용","int/int64, time.Time, any 사용 여부를 옵션으로 선택"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"왜 일부 필드에 포인터가 붙나요?","acceptedAnswer":{"@type":"Answer","text":"Go에서는 값이 없는 것(null)과 0/빈 문자열을 구분하려면 포인터가 필요합니다. 포인터 옵션을 끄면 일반 타입으로 생성됩니다."}},{"@type":"Question","name":"최상위가 배열이면 어떻게 하나요?","acceptedAnswer":{"@type":"Answer","text":"배열 요소의 구조로 struct를 만들고, 주석으로 \"JSON 최상위가 배열이므로 []타입으로 디코딩\"하라고 안내합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"JSON → Go 구조체 변환기","item":"https://wooadev.wooahouse.com/json-to-go.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="json-to-go.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/json-to-go.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON → Go 구조체 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🐹</span>
+    <h1>JSON → Go 구조체 변환기</h1>
+    <p>API 응답 JSON을 붙여 넣으면 json 태그가 달린 Go struct를 만들어 줍니다. 배열의 모든 요소를 분석해 누락 필드까지 반영합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 구조체 2개를 만들었습니다 (샘플 2개 분석)</p>
+<h3>입력 — JSON 샘플 (API 응답 등)</h3><pre>[
+  {
+    "id": 1,
+    "name": "Kim",
+    "email": "kim@example.com",
+    "is_active": true,
+    "score": 4.5,
+    "tags": ["admin", "dev"],
+    "address": { "city": "Seoul", "zip": "04524" },
+    "created_at": "2026-01-02T03:04:05Z"
+  },
+  {
+    "id": 2,
+    "name": "Lee",
+    "is_active": false,
+    "score": 3,
+    "tags": [],
+    "address": { "city": "Busan", "zip": null },
+    "created_at": "2026-02-03T04:05:06Z",
+    "nickname": null
+  }
+]</pre>
+<h3>결과 — Go 구조체</h3><pre>package model
+
+type Root struct {
+	ID        int64       `json:"id"`
+	Name      string      `json:"name"`
+	Email     *string     `json:"email,omitempty"`
+	IsActive  bool        `json:"is_active"`
+	Score     float64     `json:"score"`
+	Tags      []string    `json:"tags"`
+	Address   Address     `json:"address"`
+	CreatedAt string      `json:"created_at"`
+	Nickname  interface{} `json:"nickname,omitempty"`
+}
+
+type Address struct {
+	City string  `json:"city"`
+	Zip  *string `json:"zip"`
+}
+</pre>
+<h3>결과 — 분석 정보</h3><pre>분석한 샘플: 2
+생성된 타입: Address, Root</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>Go에서 JSON API를 호출하려면 응답에 맞는 struct를 손으로 작성해야 합니다. 샘플 하나만 보고 만들면 어떤 응답에서는 없는 필드나 null인 필드를 놓치기 쉬워, 이 도구는 여러 샘플을 모두 분석합니다.</p>
+<ul><li>배열의 모든 요소(또는 이어 붙인 여러 JSON)를 합쳐 분석: 일부에만 있는 필드는 <code>omitempty</code>와 포인터로</li><li>null이 섞인 필드는 포인터(*string 등), 정수와 실수가 섞이면 float64, 타입이 제각각이면 interface{}/any</li><li>user_id → UserID, api_url → APIURL처럼 Go의 약어 관례(ID, URL, HTTP…)를 적용</li><li>중첩 객체는 별도 struct로 분리하고, 구조가 같은 객체는 하나로 재사용</li><li>int/int64, time.Time, any 사용 여부를 옵션으로 선택</li></ul>
+<p>생성된 코드는 초안입니다. 필드 이름과 타입을 프로젝트 규칙에 맞게 다듬어 사용하세요.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="json-to-python.html" class="related-card"><span class="related-icon">🐍</span><span>JSON → Python 모델 변환기</span></a>
+    <a href="json-to-java.html" class="related-card"><span class="related-icon">☕</span><span>JSON → Java 클래스 변환기</span></a>
+    <a href="json-to-ts.html" class="related-card"><span class="related-icon">🔷</span><span>JSON → TypeScript</span></a>
+    <a href="json-schema-generator.html" class="related-card"><span class="related-icon">📘</span><span>JSON 스키마 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>가능하면 서로 다른 응답 2–3개를 이어 붙여 넣으세요. 선택 필드를 훨씬 정확히 찾아냅니다.</li><li>ID나 개수처럼 큰 숫자는 int64 옵션을 켜 두는 것이 안전합니다.</li><li>RFC 3339 날짜 문자열은 "날짜-시간은 time.Time" 옵션으로 time.Time 필드가 됩니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>왜 일부 필드에 포인터가 붙나요?</summary><p>Go에서는 값이 없는 것(null)과 0/빈 문자열을 구분하려면 포인터가 필요합니다. 포인터 옵션을 끄면 일반 타입으로 생성됩니다.</p></details><details><summary>최상위가 배열이면 어떻게 하나요?</summary><p>배열 요소의 구조로 struct를 만들고, 주석으로 "JSON 최상위가 배열이므로 []타입으로 디코딩"하라고 안내합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tk-infer.js"></script>
+<script src="js/tk-codegen.js"></script>
+<script src="js/tools/json-to-go.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

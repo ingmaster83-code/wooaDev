@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROT13 · ROT47 · 시저 암호 · 모스 부호 변환기 | WooaDev</title>
+  <meta name="description" content="ROT13/ROT47/ROT5/ROT18, 이동값을 지정하는 시저 암호(25가지 전체 보기), 아트배시, 모스 부호 인코딩·디코딩을 지원합니다. CTF나 퍼즐, 스포일러 가리기에 유용하며 브라우저에서만 처리됩니다.">
+  <meta name="keywords" content="ROT13, ROT47, 시저 암호, 카이사르 암호, caesar cipher, 모스 부호 변환, 모스 부호 번역, 아트배시, CTF 암호 해독">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/rot-encoder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/rot-encoder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/rot-encoder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/rot-encoder.html">
+  <meta property="og:title" content="ROT13 · ROT47 · 시저 암호 · 모스 부호 변환기 | WooaDev">
+  <meta property="og:description" content="ROT13/ROT47/ROT5/ROT18, 이동값을 지정하는 시저 암호(25가지 전체 보기), 아트배시, 모스 부호 인코딩·디코딩을 지원합니다. CTF나 퍼즐, 스포일러 가리기에 유용하며 브라우저에서만 처리됩니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/rot-encoder.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ROT13 · ROT47 · 시저 암호 · 모스 부호 변환기 | WooaDev">
+  <meta name="twitter:description" content="ROT13/ROT47/ROT5/ROT18, 이동값을 지정하는 시저 암호(25가지 전체 보기), 아트배시, 모스 부호 인코딩·디코딩을 지원합니다. CTF나 퍼즐, 스포일러 가리기에 유용하며 브라우저에서만 처리됩니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"ROT13·시저 암호·모스 부호 변환기","url":"https://wooadev.wooahouse.com/rot-encoder.html","description":"ROT13/ROT47/ROT5/ROT18, 이동값을 지정하는 시저 암호(25가지 전체 보기), 아트배시, 모스 부호 인코딩·디코딩을 지원합니다. CTF나 퍼즐, 스포일러 가리기에 유용하며 브라우저에서만 처리됩니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["ROT13: 알파벳 13칸 이동(같은 연산으로 암호화=복호화). ROT47: 출력 가능한 ASCII 94자 전체를 이동","ROT5: 숫자만, ROT18: ROT13+ROT5","시저 암호: 1–25칸 이동으로 암호화/복호화, \"25가지 전체 보기\"로 이동값을 모를 때 해독","아트배시: 알파벳을 뒤집어 대응(A↔Z)","모스 부호: 영문·숫자·기호 인코딩과 디코딩 (단어 구분은 /)"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"ROT13은 안전한 암호인가요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 누구나 즉시 풀 수 있는 가벼운 가림용입니다. 민감한 정보는 AES 같은 현대 암호를 쓰세요."}},{"@type":"Question","name":"한글도 변환되나요?","acceptedAnswer":{"@type":"Answer","text":"ROT13·시저·아트배시는 영문 알파벳만, ROT5는 숫자만 바꾸고 한글은 그대로 둡니다. ROT47은 ASCII 기호까지 바꾸고 한글은 유지합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"ROT13·시저 암호·모스 부호 변환기","item":"https://wooadev.wooahouse.com/rot-encoder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="rot-encoder.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/rot-encoder.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>ROT13·시저 암호·모스 부호 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔐</span>
+    <h1>ROT13 · ROT47 · 시저 암호 · 모스 부호 변환기</h1>
+    <p>ROT13, ROT47, ROT5, ROT18, 시저 암호(이동값 지정·전체 시도), 아트배시, 모스 부호를 한 곳에서 변환합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 변환 완료</p>
+<h3>입력 — 입력</h3><pre>Hello, WooaDev! Attack at dawn 2026</pre>
+<h3>결과 — 결과</h3><pre>Uryyb, JbbnQri! Nggnpx ng qnja 2026</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>단순 치환 암호는 보안용이 아니라 스포일러 가리기, 퍼즐, CTF 입문, 이스터에그에 쓰입니다. 대표적인 방식을 한 번에 다룹니다.</p>
+<ul><li>ROT13: 알파벳 13칸 이동(같은 연산으로 암호화=복호화). ROT47: 출력 가능한 ASCII 94자 전체를 이동</li><li>ROT5: 숫자만, ROT18: ROT13+ROT5</li><li>시저 암호: 1–25칸 이동으로 암호화/복호화, "25가지 전체 보기"로 이동값을 모를 때 해독</li><li>아트배시: 알파벳을 뒤집어 대응(A↔Z)</li><li>모스 부호: 영문·숫자·기호 인코딩과 디코딩 (단어 구분은 /)</li></ul>
+<p>이런 방식은 암호학적으로 안전하지 않으므로 비밀 보호에는 쓰지 마세요.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="base-encoding-converter.html" class="related-card"><span class="related-icon">🔢</span><span>Base 인코딩 변환기</span></a>
+    <a href="case-converter.html" class="related-card"><span class="related-icon">🔠</span><span>케이스 변환기</span></a>
+    <a href="text-binary.html" class="related-card"><span class="related-icon">01</span><span>텍스트 ↔ 바이너리</span></a>
+    <a href="hash-generator.html" class="related-card"><span class="related-icon">🔑</span><span>Hash 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>이동값을 모르는 시저 암호는 "25가지 전체 보기"에서 읽히는 줄을 찾으면 됩니다.</li><li>모스 부호 디코딩에서는 글자 사이를 공백, 단어 사이를 / 또는 공백 3칸으로 구분하세요.</li><li>ROT13은 두 번 적용하면 원문으로 돌아옵니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>ROT13은 안전한 암호인가요?</summary><p>아니요. 누구나 즉시 풀 수 있는 가벼운 가림용입니다. 민감한 정보는 AES 같은 현대 암호를 쓰세요.</p></details><details><summary>한글도 변환되나요?</summary><p>ROT13·시저·아트배시는 영문 알파벳만, ROT5는 숫자만 바꾸고 한글은 그대로 둡니다. ROT47은 ASCII 기호까지 바꾸고 한글은 유지합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/rot-encoder.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

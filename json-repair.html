@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON 복구 도구 — 깨진·잘린 JSON 자동 수정 | WooaDev</title>
+  <meta name="description" content="후행 쉼표, 작은따옴표, 따옴표 없는 키, 주석, Python의 True/None, 잘려서 닫히지 않은 괄호까지 자동으로 고쳐 올바른 JSON으로 만듭니다. 수정 내역 표시, 서버 전송 없음.">
+  <meta name="keywords" content="JSON 복구, JSON repair, JSON 고치기, 깨진 JSON, JSON 자동 수정, 잘린 JSON, JSON fix, 작은따옴표 JSON, Python dict JSON 변환">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/json-repair.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/json-repair.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/json-repair.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/json-repair.html">
+  <meta property="og:title" content="JSON 복구 도구 — 깨진·잘린 JSON 자동 수정 | WooaDev">
+  <meta property="og:description" content="후행 쉼표, 작은따옴표, 따옴표 없는 키, 주석, Python의 True/None, 잘려서 닫히지 않은 괄호까지 자동으로 고쳐 올바른 JSON으로 만듭니다. 수정 내역 표시, 서버 전송 없음.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/json-repair.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON 복구 도구 — 깨진·잘린 JSON 자동 수정 | WooaDev">
+  <meta name="twitter:description" content="후행 쉼표, 작은따옴표, 따옴표 없는 키, 주석, Python의 True/None, 잘려서 닫히지 않은 괄호까지 자동으로 고쳐 올바른 JSON으로 만듭니다. 수정 내역 표시, 서버 전송 없음.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON 복구 도구","url":"https://wooadev.wooahouse.com/json-repair.html","description":"후행 쉼표, 작은따옴표, 따옴표 없는 키, 주석, Python의 True/None, 잘려서 닫히지 않은 괄호까지 자동으로 고쳐 올바른 JSON으로 만듭니다. 수정 내역 표시, 서버 전송 없음.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["주석(//, /* */, #) 제거, 후행 쉼표 제거, 빠진 쉼표·콜론 채우기","작은따옴표·스마트 따옴표 문자열과 따옴표 없는 키·값을 큰따옴표로 변환","True/False/None, undefined, NaN, Infinity, 16진수 숫자를 JSON 값으로 변환","닫히지 않은 괄호와 문자열을 닫고, ```json 코드 블록이나 앞뒤 설명 문장은 제거"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"복구하면 데이터가 바뀌지는 않나요?","acceptedAnswer":{"@type":"Answer","text":"문법만 고칩니다. 다만 잘린 문자열을 닫거나 값이 빠진 키를 null로 채우는 등 추정이 필요한 수정은 수정 내역에 모두 표시되니 확인해 주세요."}},{"@type":"Question","name":"중복된 키는 어떻게 처리되나요?","acceptedAnswer":{"@type":"Answer","text":"같은 객체에 같은 키가 여러 번 있으면 JSON.parse와 같이 마지막 값만 남기고, 수정 내역에 알려 드립니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"JSON 복구 도구","item":"https://wooadev.wooahouse.com/json-repair.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="json-repair.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/json-repair.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON 복구 도구</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔧</span>
+    <h1>JSON 복구 도구 — 깨진 JSON 자동 수정</h1>
+    <p>따옴표·쉼표·괄호가 틀렸거나 중간에 잘린 JSON을 올바른 JSON으로 고치고, 무엇을 고쳤는지 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>🔧 7종류의 문제를 고쳤습니다.</p>
+<h3>입력 — 깨진 JSON 입력</h3><pre>{
+  // user info
+  name: 'Wooa',
+  "age": 30,
+  tags: ['a', 'b',],
+  active: True,
+  "memo": "line1
+line2",
+  "nested": {"x": 1, "y": [1, 2
+</pre>
+<h3>결과 — 복구된 JSON</h3><pre>{
+  "name": "Wooa",
+  "age": 30,
+  "tags": [
+    "a",
+    "b"
+  ],
+  "active": true,
+  "memo": "line1\nline2",
+  "nested": {
+    "x": 1,
+    "y": [
+      1,
+      2
+    ]
+  }
+}</pre>
+<h3>결과 — 수정 내역</h3><pre>수정 내용 | 횟수
+주석 제거 | 1회
+따옴표 없는 키에 큰따옴표 추가 | 3회
+작은따옴표 문자열을 큰따옴표로 변환 | 3회
+후행 쉼표 제거 | 1회
+Python/대문자 불리언을 JSON 형식으로 변환 | 1회
+문자열 안의 줄바꿈을 \n 으로 변환 | 1회
+닫히지 않은 괄호를 닫음 | 3회</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>로그에서 복사한 JSON, ChatGPT 같은 AI가 만든 JSON, Python 딕셔너리 출력, 길이 제한으로 끝이 잘린 응답 등은 JSON.parse로 읽을 수 없는 경우가 많습니다. 이 도구는 느슨한 파서로 구조를 읽어 낸 뒤 표준 JSON으로 다시 써 줍니다.</p>
+<ul><li>주석(//, /* */, #) 제거, 후행 쉼표 제거, 빠진 쉼표·콜론 채우기</li><li>작은따옴표·스마트 따옴표 문자열과 따옴표 없는 키·값을 큰따옴표로 변환</li><li>True/False/None, undefined, NaN, Infinity, 16진수 숫자를 JSON 값으로 변환</li><li>닫히지 않은 괄호와 문자열을 닫고, ```json 코드 블록이나 앞뒤 설명 문장은 제거</li></ul>
+<p>수정한 항목이 표로 정리되므로, 의도와 다르게 고쳐진 부분이 없는지 확인한 뒤 사용하세요.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="json-validator.html" class="related-card"><span class="related-icon">✅</span><span>JSON 유효성 검사기</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+    <a href="json-to-ts.html" class="related-card"><span class="related-icon">🔷</span><span>JSON → TypeScript</span></a>
+    <a href="json-diff.html" class="related-card"><span class="related-icon">🔍</span><span>JSON 비교 도구</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>AI가 만든 응답에서 코드 블록(```)과 앞뒤 설명을 한 번에 걷어낼 수 있습니다.</li><li>끝이 잘린 JSON은 마지막 값이 불완전할 수 있으니 복구 결과의 끝부분을 꼭 확인하세요.</li><li>복구된 결과를 입력으로 되돌리는 버튼으로 다른 옵션(들여쓰기 등)을 이어서 적용할 수 있습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>복구하면 데이터가 바뀌지는 않나요?</summary><p>문법만 고칩니다. 다만 잘린 문자열을 닫거나 값이 빠진 키를 null로 채우는 등 추정이 필요한 수정은 수정 내역에 모두 표시되니 확인해 주세요.</p></details><details><summary>중복된 키는 어떻게 처리되나요?</summary><p>같은 객체에 같은 키가 여러 번 있으면 JSON.parse와 같이 마지막 값만 남기고, 수정 내역에 알려 드립니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tools/json-repair.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

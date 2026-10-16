@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON 키 추출기 — 특정 키 값 찾기·남기기·제거하기 | WooaDev</title>
+  <meta name="description" content="JSON에서 id, email 같은 키의 값을 중첩 깊이와 상관없이 모두 찾아 경로와 함께 추출합니다. 특정 키만 남기기, 제거하기, 사용된 모든 키 목록(빈도·타입) 기능을 제공합니다.">
+  <meta name="keywords" content="JSON 키 추출, JSON key extractor, JSON 값 추출, JSON 필터링, JSON 특정 키만 남기기, JSON 키 제거, JSON 키 목록">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/json-key-extractor.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/json-key-extractor.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/json-key-extractor.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/json-key-extractor.html">
+  <meta property="og:title" content="JSON 키 추출기 — 특정 키 값 찾기·남기기·제거하기 | WooaDev">
+  <meta property="og:description" content="JSON에서 id, email 같은 키의 값을 중첩 깊이와 상관없이 모두 찾아 경로와 함께 추출합니다. 특정 키만 남기기, 제거하기, 사용된 모든 키 목록(빈도·타입) 기능을 제공합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/json-key-extractor.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON 키 추출기 — 특정 키 값 찾기·남기기·제거하기 | WooaDev">
+  <meta name="twitter:description" content="JSON에서 id, email 같은 키의 값을 중첩 깊이와 상관없이 모두 찾아 경로와 함께 추출합니다. 특정 키만 남기기, 제거하기, 사용된 모든 키 목록(빈도·타입) 기능을 제공합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON 키 추출기","url":"https://wooadev.wooahouse.com/json-key-extractor.html","description":"JSON에서 id, email 같은 키의 값을 중첩 깊이와 상관없이 모두 찾아 경로와 함께 추출합니다. 특정 키만 남기기, 제거하기, 사용된 모든 키 목록(빈도·타입) 기능을 제공합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["찾기(재귀): 어느 깊이에 있든 그 이름의 키를 모두 찾아 경로·값을 표로 표시","남기기: 지정한 키만 남기고 나머지는 제거 (구조는 유지)","제거하기: 지정한 키를 모든 깊이에서 삭제","키 목록: 사용된 모든 키를 등장 횟수와 값 타입과 함께 나열"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"키 이름이 같지만 위치가 다른 값도 모두 나오나요?","acceptedAnswer":{"@type":"Answer","text":"네. 객체와 배열을 끝까지 탐색해 일치하는 모든 키를 경로와 함께 보여 줍니다."}},{"@type":"Question","name":"\"남기기\"에서 부모 객체는 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"지정한 키를 가진 항목까지의 경로는 유지하고, 해당 키가 하나도 없는 가지는 결과에서 빠집니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"JSON 키 추출기","item":"https://wooadev.wooahouse.com/json-key-extractor.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="json-key-extractor.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/json-key-extractor.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON 키 추출기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔑</span>
+    <h1>JSON 키 추출기 — 특정 키의 값 모아보기·필터링</h1>
+    <p>JSON 어디에 있든 지정한 키의 값을 찾아 경로와 함께 모으고, 특정 키만 남기거나 제거하거나 사용된 모든 키를 나열합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 7곳에서 찾았습니다</p>
+<h3>입력 — JSON 입력</h3><pre>{
+  "id": 1,
+  "name": "Kim",
+  "email": "kim@example.com",
+  "orders": [
+    { "id": 10, "total": 3200, "items": [{ "id": 1, "name": "pen" }] },
+    { "id": 11, "total": 900, "items": [] }
+  ],
+  "profile": { "id": "p-1", "email": "k@work.com" }
+}</pre>
+<h3>입력 — 키 이름 (쉼표·공백으로 여러 개)</h3><pre>id, email</pre>
+<h3>결과 — 결과 목록</h3><pre>경로 | 키 | 값
+$.id | id | 1
+$.email | email | "kim@example.com"
+$.orders[0].id | id | 10
+$.orders[0].items[0].id | id | 1
+$.orders[1].id | id | 11
+$.profile.id | id | "p-1"
+$.profile.email | email | "k@work.com"</pre>
+<h3>결과 — JSON 결과</h3><pre>[
+  1,
+  "kim@example.com",
+  10,
+  1,
+  11,
+  "p-1",
+  "k@work.com"
+]</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>큰 API 응답에서 id 값만 모으거나, 민감한 키(password, token)를 지우고 공유하고 싶을 때가 있습니다. 경로를 일일이 쓰지 않고 키 이름만 입력하면 됩니다.</p>
+<ul><li>찾기(재귀): 어느 깊이에 있든 그 이름의 키를 모두 찾아 경로·값을 표로 표시</li><li>남기기: 지정한 키만 남기고 나머지는 제거 (구조는 유지)</li><li>제거하기: 지정한 키를 모든 깊이에서 삭제</li><li>키 목록: 사용된 모든 키를 등장 횟수와 값 타입과 함께 나열</li></ul>
+<p>정확한 경로로 값을 뽑아야 한다면 JSONPath 테스터나 JMESPath 테스트기를 사용하세요.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="json-flatten.html" class="related-card"><span class="related-icon">📐</span><span>JSON 평탄화 도구</span></a>
+    <a href="jsonpath-tester.html" class="related-card"><span class="related-icon">🧭</span><span>JSONPath 테스터</span></a>
+    <a href="json-pointer.html" class="related-card"><span class="related-icon">📍</span><span>JSON 포인터 도구</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>공유 전 민감 정보를 지울 때는 "제거하기"에 password, token, secret 등을 쉼표로 넣으세요.</li><li>"키 목록"은 처음 보는 API 응답의 전체 필드를 빠르게 파악할 때 좋습니다.</li><li>대소문자 무시 옵션으로 userId / userid 같은 표기 차이를 한꺼번에 찾을 수 있습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>키 이름이 같지만 위치가 다른 값도 모두 나오나요?</summary><p>네. 객체와 배열을 끝까지 탐색해 일치하는 모든 키를 경로와 함께 보여 줍니다.</p></details><details><summary>"남기기"에서 부모 객체는 어떻게 되나요?</summary><p>지정한 키를 가진 항목까지의 경로는 유지하고, 해당 키가 하나도 없는 가지는 결과에서 빠집니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tools/json-key-extractor.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

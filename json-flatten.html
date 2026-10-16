@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON 평탄화 도구 — flatten·unflatten (a.b[0] 표기) | WooaDev</title>
+  <meta name="description" content="중첩 JSON을 한 단계 키-값(a.b[0].c)으로 펼치거나 다시 복원합니다. 구분자, 배열 표기(대괄호/점), 빈 객체·배열 유지 옵션 지원. CSV·환경 변수·i18n 파일 작업에 유용하며 브라우저에서만 처리됩니다.">
+  <meta name="keywords" content="JSON 평탄화, JSON flatten, JSON unflatten, 중첩 JSON 펼치기, JSON 키 경로, i18n JSON flatten, dot notation JSON">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/json-flatten.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/json-flatten.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/json-flatten.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/json-flatten.html">
+  <meta property="og:title" content="JSON 평탄화 도구 — flatten·unflatten (a.b[0] 표기) | WooaDev">
+  <meta property="og:description" content="중첩 JSON을 한 단계 키-값(a.b[0].c)으로 펼치거나 다시 복원합니다. 구분자, 배열 표기(대괄호/점), 빈 객체·배열 유지 옵션 지원. CSV·환경 변수·i18n 파일 작업에 유용하며 브라우저에서만 처리됩니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/json-flatten.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON 평탄화 도구 — flatten·unflatten (a.b[0] 표기) | WooaDev">
+  <meta name="twitter:description" content="중첩 JSON을 한 단계 키-값(a.b[0].c)으로 펼치거나 다시 복원합니다. 구분자, 배열 표기(대괄호/점), 빈 객체·배열 유지 옵션 지원. CSV·환경 변수·i18n 파일 작업에 유용하며 브라우저에서만 처리됩니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON 평탄화 도구","url":"https://wooadev.wooahouse.com/json-flatten.html","description":"중첩 JSON을 한 단계 키-값(a.b[0].c)으로 펼치거나 다시 복원합니다. 구분자, 배열 표기(대괄호/점), 빈 객체·배열 유지 옵션 지원. CSV·환경 변수·i18n 파일 작업에 유용하며 브라우저에서만 처리됩니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["평탄화: {\"a\":{\"b\":[1,2]}} → {\"a.b[0]\":1,\"a.b[1]\":2}","구분자(., /, _ 등)와 배열 표기(a[0] 또는 a.0)를 선택","빈 객체·배열을 값으로 유지하거나 제거","복원: 연속된 숫자 키(0,1,2…)는 배열로, 나머지는 객체로 재구성"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"평탄화한 뒤 완전히 원래대로 복원되나요?","acceptedAnswer":{"@type":"Answer","text":"대부분 그렇습니다. 다만 키 이름 안에 구분자가 있거나 숫자로만 이루어진 객체 키가 있으면 구조가 달라질 수 있어 구분자를 바꿔서 쓰는 것이 안전합니다."}},{"@type":"Question","name":"배열은 어떻게 표기되나요?","acceptedAnswer":{"@type":"Answer","text":"기본값은 a[0].b 형태의 대괄호 표기이고, a.0.b처럼 점 표기로도 바꿀 수 있습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"JSON 평탄화 도구","item":"https://wooadev.wooahouse.com/json-flatten.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="json-flatten.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/json-flatten.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON 평탄화 도구</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📐</span>
+    <h1>JSON 평탄화·복원 도구</h1>
+    <p>중첩된 JSON을 user.address.city 같은 한 단계 키로 펼치거나, 평탄화된 JSON을 다시 중첩 구조로 복원합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 평탄화 완료 — 값 8개</p>
+<h3>입력 — JSON 입력</h3><pre>{
+  "user": {
+    "name": "Kim",
+    "emails": ["a@x.com", "b@x.com"],
+    "address": { "city": "Seoul", "geo": { "lat": 37.5, "lng": 127 } }
+  },
+  "active": true,
+  "meta": {}
+}</pre>
+<h3>결과 — 결과</h3><pre>{
+  "user.name": "Kim",
+  "user.emails[0]": "a@x.com",
+  "user.emails[1]": "b@x.com",
+  "user.address.city": "Seoul",
+  "user.address.geo.lat": 37.5,
+  "user.address.geo.lng": 127,
+  "active": true,
+  "meta": {}
+}</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>다국어(i18n) 번역 파일, 환경 변수, 엑셀·CSV 변환처럼 한 단계 키-값 구조가 필요한 곳에서는 중첩 JSON을 펼쳐야 합니다. 반대로 평탄한 키를 다시 중첩 구조로 되돌릴 수도 있습니다.</p>
+<ul><li>평탄화: {"a":{"b":[1,2]}} → {"a.b[0]":1,"a.b[1]":2}</li><li>구분자(., /, _ 등)와 배열 표기(a[0] 또는 a.0)를 선택</li><li>빈 객체·배열을 값으로 유지하거나 제거</li><li>복원: 연속된 숫자 키(0,1,2…)는 배열로, 나머지는 객체로 재구성</li></ul>
+<p>경로만 필요하면 JSON 키 추출기나 JSON 포인터 도구가 더 편합니다.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="json-key-extractor.html" class="related-card"><span class="related-icon">🔑</span><span>JSON 키 추출기</span></a>
+    <a href="json-merge.html" class="related-card"><span class="related-icon">🔀</span><span>JSON 병합 도구</span></a>
+    <a href="json-pointer.html" class="related-card"><span class="related-icon">📍</span><span>JSON 포인터 도구</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>평탄화 후 키를 정렬하거나 필터링하고, 결과를 입력으로 되돌려 복원할 수 있습니다.</li><li>구분자가 키 이름에도 쓰이면 복원 시 구조가 달라질 수 있으니 키에 없는 문자(예: /)를 구분자로 고르세요.</li><li>숫자로만 된 객체 키("0","1")는 복원 시 배열로 해석될 수 있습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>평탄화한 뒤 완전히 원래대로 복원되나요?</summary><p>대부분 그렇습니다. 다만 키 이름 안에 구분자가 있거나 숫자로만 이루어진 객체 키가 있으면 구조가 달라질 수 있어 구분자를 바꿔서 쓰는 것이 안전합니다.</p></details><details><summary>배열은 어떻게 표기되나요?</summary><p>기본값은 a[0].b 형태의 대괄호 표기이고, a.0.b처럼 점 표기로도 바꿀 수 있습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tools/json-flatten.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

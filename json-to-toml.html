@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON → TOML 변환기 — pyproject·Cargo 설정 만들기 | WooaDev</title>
+  <meta name="description" content="JSON을 TOML로 변환합니다. 중첩 객체는 [table], 객체 배열은 [[array]]로 자동 변환하고, TOML에 없는 null 값의 처리 방식을 선택할 수 있습니다. 브라우저에서만 처리됩니다.">
+  <meta name="keywords" content="JSON TOML 변환, JSON to TOML, JSON을 TOML로, TOML 변환기, pyproject.toml 만들기, Cargo.toml 변환, 온라인 TOML">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/json-to-toml.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/json-to-toml.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/json-to-toml.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/json-to-toml.html">
+  <meta property="og:title" content="JSON → TOML 변환기 — pyproject·Cargo 설정 만들기 | WooaDev">
+  <meta property="og:description" content="JSON을 TOML로 변환합니다. 중첩 객체는 [table], 객체 배열은 [[array]]로 자동 변환하고, TOML에 없는 null 값의 처리 방식을 선택할 수 있습니다. 브라우저에서만 처리됩니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/json-to-toml.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON → TOML 변환기 — pyproject·Cargo 설정 만들기 | WooaDev">
+  <meta name="twitter:description" content="JSON을 TOML로 변환합니다. 중첩 객체는 [table], 객체 배열은 [[array]]로 자동 변환하고, TOML에 없는 null 값의 처리 방식을 선택할 수 있습니다. 브라우저에서만 처리됩니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON → TOML 변환기","url":"https://wooadev.wooahouse.com/json-to-toml.html","description":"JSON을 TOML로 변환합니다. 중첩 객체는 [table], 객체 배열은 [[array]]로 자동 변환하고, TOML에 없는 null 값의 처리 방식을 선택할 수 있습니다. 브라우저에서만 처리됩니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["중첩 객체 → [section] 테이블, 객체 배열 → [[servers]] 테이블 배열로 자동 구성","문자열 이스케이프, 숫자·불리언 표기, 배열 형식은 TOML 1.0 규격에 맞춰 생성","TOML에는 null이 없으므로 \"항목 제거 / 빈 문자열 / 오류\" 중 처리 방식을 선택","최상위가 객체가 아니면(배열·값) TOML이 될 수 없다는 점을 안내"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"TOML은 JSON과 무엇이 다른가요?","acceptedAnswer":{"@type":"Answer","text":"TOML은 주석을 쓸 수 있고 따옴표·쉼표 규칙이 단순해 사람이 직접 편집하는 설정 파일에 적합합니다. 대신 null이 없고 최상위는 반드시 테이블(객체)이어야 합니다."}},{"@type":"Question","name":"배열 안에 서로 다른 타입이 섞여 있어도 되나요?","acceptedAnswer":{"@type":"Answer","text":"TOML 1.0부터 허용됩니다. 이 도구는 TOML 1.0 규격으로 출력합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"JSON → TOML 변환기","item":"https://wooadev.wooahouse.com/json-to-toml.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="json-to-toml.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/json-to-toml.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON → TOML 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧾</span>
+    <h1>JSON → TOML 변환기</h1>
+    <p>JSON을 사람이 읽기 쉬운 TOML 설정으로 바꿉니다. 테이블([table])과 테이블 배열([[array]]) 구조를 자동으로 만듭니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 변환 완료</p>
+<h3>입력 — JSON 입력</h3><pre>{
+  "title": "Example",
+  "owner": { "name": "Kim", "active": true },
+  "database": { "ports": [8000, 8001], "connection_max": 5000 },
+  "servers": [
+    { "name": "alpha", "ip": "10.0.0.1" },
+    { "name": "beta", "ip": "10.0.0.2" }
+  ]
+}</pre>
+<h3>결과 — TOML 결과</h3><pre>title = "Example"
+
+[owner]
+name = "Kim"
+active = true
+
+[database]
+ports = [ 8000, 8001 ]
+connection_max = 5000
+
+[[servers]]
+name = "alpha"
+ip = "10.0.0.1"
+
+[[servers]]
+name = "beta"
+ip = "10.0.0.2"
+</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>TOML은 Rust의 Cargo.toml, Python의 pyproject.toml, Hugo·Netlify 설정 등에서 쓰는 설정 파일 형식입니다. 이미 JSON으로 갖고 있는 설정을 TOML로 옮길 때 사용하세요.</p>
+<ul><li>중첩 객체 → [section] 테이블, 객체 배열 → [[servers]] 테이블 배열로 자동 구성</li><li>문자열 이스케이프, 숫자·불리언 표기, 배열 형식은 TOML 1.0 규격에 맞춰 생성</li><li>TOML에는 null이 없으므로 "항목 제거 / 빈 문자열 / 오류" 중 처리 방식을 선택</li><li>최상위가 객체가 아니면(배열·값) TOML이 될 수 없다는 점을 안내</li></ul>
+<p>반대로 TOML을 JSON으로 바꾸려면 TOML → JSON 변환기를 사용하세요.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="toml-to-json.html" class="related-card"><span class="related-icon">🧾</span><span>TOML → JSON 변환기</span></a>
+    <a href="toml-formatter.html" class="related-card"><span class="related-icon">🧹</span><span>TOML 포맷터</span></a>
+    <a href="json-yaml.html" class="related-card"><span class="related-icon">🔄</span><span>JSON ↔ YAML</span></a>
+    <a href="config-converter.html" class="related-card"><span class="related-icon">🔁</span><span>설정 파일 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>JSON의 null이 많다면 "항목 제거"로 두고 선택값으로 취급하는 것이 일반적입니다.</li><li>변환 결과를 TOML 포맷터에 넣으면 키 정렬 등 추가 정리를 할 수 있습니다.</li><li>날짜·시간은 JSON에서 문자열이므로 TOML에서도 문자열로 변환됩니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>TOML은 JSON과 무엇이 다른가요?</summary><p>TOML은 주석을 쓸 수 있고 따옴표·쉼표 규칙이 단순해 사람이 직접 편집하는 설정 파일에 적합합니다. 대신 null이 없고 최상위는 반드시 테이블(객체)이어야 합니다.</p></details><details><summary>배열 안에 서로 다른 타입이 섞여 있어도 되나요?</summary><p>TOML 1.0부터 허용됩니다. 이 도구는 TOML 1.0 규격으로 출력합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tk-xml.js"></script>
+<script src="js/tk-env.js"></script>
+<script src="js/tk-config.js"></script>
+<script src="js/lib/toml.min.js"></script>
+<script src="js/tools/json-to-toml.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

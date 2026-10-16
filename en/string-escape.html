@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>String Escape &amp; Unescape – JSON, JavaScript, Python, SQL, Regex | WooaDev</title>
+  <meta name="description" content="Escape strings for JSON, JavaScript (incl. template literals), Python, Java/C#, C, SQL, MySQL and regex, or unescape \n and \uXXXX sequences back to real characters. Optional non-ASCII \u escaping.">
+  <meta name="keywords" content="string escape, unescape string, JSON escape, JavaScript escape string, regex escape, SQL escape quotes, unicode escape converter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/string-escape.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/string-escape.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/string-escape.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/string-escape.html">
+  <meta property="og:title" content="String Escape &amp; Unescape – JSON, JavaScript, Python, SQL, Regex | WooaDev">
+  <meta property="og:description" content="Escape strings for JSON, JavaScript (incl. template literals), Python, Java/C#, C, SQL, MySQL and regex, or unescape \n and \uXXXX sequences back to real characters. Optional non-ASCII \u escaping.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/string-escape.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="String Escape &amp; Unescape – JSON, JavaScript, Python, SQL, Regex | WooaDev">
+  <meta name="twitter:description" content="Escape strings for JSON, JavaScript (incl. template literals), Python, Java/C#, C, SQL, MySQL and regex, or unescape \n and \uXXXX sequences back to real characters. Optional non-ASCII \u escaping.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"String Escape / Unescape","url":"https://wooadev.wooahouse.com/en/string-escape.html","description":"Escape strings for JSON, JavaScript (incl. template literals), Python, Java/C#, C, SQL, MySQL and regex, or unescape \\n and \\uXXXX sequences back to real characters. Optional non-ASCII \\u escaping.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Escape: real string → a literal you can paste into code (choose the quote style and whether to include the quotes)","Unescape: a literal like \"a\\nb\\u0041\" → the real string (\\xHH, \\u{1F600}, octal and line continuations handled)","Targets: JSON, JavaScript (single/double/template), Python, Java & C#, C & C++, SQL (doubled single quotes), MySQL, regex literal","\"Escape non-ASCII as \\uXXXX\" handles CJK text and emoji (surrogate pairs)"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is the JSON output identical to JSON.stringify?","acceptedAnswer":{"@type":"Answer","text":"The JSON target follows JSON.stringify rules (\\n, \\t, \\\", \\\\ and control characters as \\u00XX). Other languages follow their own literal rules and may differ slightly."}},{"@type":"Question","name":"Does SQL escaping prevent SQL injection?","acceptedAnswer":{"@type":"Answer","text":"Not reliably. Always use prepared statements with bound parameters. This tool is for hand-written queries or logging values."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"String Escape / Unescape","item":"https://wooadev.wooahouse.com/en/string-escape.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../string-escape.html">KO</a>
+        <span>|</span>
+        <a href="string-escape.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>String Escape / Unescape</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔣</span>
+    <h1>String Escape &amp; Unescape Converter</h1>
+    <p>Escape strings full of quotes and line breaks for JSON, JavaScript, Python, Java, C, SQL or regex literals — or turn escape sequences back into real characters.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Escaped</p>
+<h3>Input — Input</h3><pre>He said "안녕"
+	Path: C:\Users\wooa
+😀</pre>
+<h3>Result — Result</h3><pre>"He said \"안녕\"\n\tPath: C:\\Users\\wooa\n😀"</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>When you put long text or JSON into code as a string, handling quotes, backslashes and newlines by hand is tedious and error-prone.</p>
+<ul><li>Escape: real string → a literal you can paste into code (choose the quote style and whether to include the quotes)</li><li>Unescape: a literal like "a\nb\u0041" → the real string (\xHH, \u{1F600}, octal and line continuations handled)</li><li>Targets: JSON, JavaScript (single/double/template), Python, Java &amp; C#, C &amp; C++, SQL (doubled single quotes), MySQL, regex literal</li><li>"Escape non-ASCII as \uXXXX" handles CJK text and emoji (surrogate pairs)</li></ul>
+<p>To check that the result is valid JSON, use the JSON Validator.</p>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="html-entity.html" class="related-card"><span class="related-icon">🔤</span><span>HTML Entity Encoder</span></a>
+    <a href="url-encoder.html" class="related-card"><span class="related-icon">🔗</span><span>URL Encoder</span></a>
+    <a href="base64.html" class="related-card"><span class="related-icon">🔐</span><span>Base64</span></a>
+    <a href="regex-tester.html" class="related-card"><span class="related-icon">🔍</span><span>Regex Tester</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>To embed multi-line JSON in code, escape with the JSON target and copy it including the quotes.</li><li>For SQL values, parameter binding is safer than escaping — this tool is for writing literals.</li><li>Unknown escapes (like \q) are kept as plain characters and counted.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Is the JSON output identical to JSON.stringify?</summary><p>The JSON target follows JSON.stringify rules (\n, \t, \", \\ and control characters as \u00XX). Other languages follow their own literal rules and may differ slightly.</p></details><details><summary>Does SQL escaping prevent SQL injection?</summary><p>Not reliably. Always use prepared statements with bound parameters. This tool is for hand-written queries or logging values.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/string-escape.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

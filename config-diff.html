@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>설정 파일 비교 도구 — TOML·INI·Properties·YAML 키 순서 무시 diff | WooaDev</title>
+  <meta name="description" content="TOML, INI, .properties, YAML, JSON, .env 설정 두 개를 파싱해 추가·삭제·변경된 값만 경로별로 비교합니다. 섹션 순서·키 순서·주석·공백 차이는 무시하고 값 타입을 맞춰 비교하는 옵션을 제공합니다.">
+  <meta name="keywords" content="설정 파일 비교, config diff, TOML 비교, INI 비교, properties 비교, 설정 파일 diff, application.properties 비교">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/config-diff.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/config-diff.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/config-diff.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/config-diff.html">
+  <meta property="og:title" content="설정 파일 비교 도구 — TOML·INI·Properties·YAML 키 순서 무시 diff | WooaDev">
+  <meta property="og:description" content="TOML, INI, .properties, YAML, JSON, .env 설정 두 개를 파싱해 추가·삭제·변경된 값만 경로별로 비교합니다. 섹션 순서·키 순서·주석·공백 차이는 무시하고 값 타입을 맞춰 비교하는 옵션을 제공합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/config-diff.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="설정 파일 비교 도구 — TOML·INI·Properties·YAML 키 순서 무시 diff | WooaDev">
+  <meta name="twitter:description" content="TOML, INI, .properties, YAML, JSON, .env 설정 두 개를 파싱해 추가·삭제·변경된 값만 경로별로 비교합니다. 섹션 순서·키 순서·주석·공백 차이는 무시하고 값 타입을 맞춰 비교하는 옵션을 제공합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"설정 파일 비교 도구","url":"https://wooadev.wooahouse.com/config-diff.html","description":"TOML, INI, .properties, YAML, JSON, .env 설정 두 개를 파싱해 추가·삭제·변경된 값만 경로별로 비교합니다. 섹션 순서·키 순서·주석·공백 차이는 무시하고 값 타입을 맞춰 비교하는 옵션을 제공합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["지원 형식: TOML, INI, Java .properties, YAML, JSON, .env","섹션/키 순서, 공백, 주석 차이는 무시하고 추가·삭제·변경을 경로와 함께 표시","INI·.properties·.env는 \"8080\"과 8080을 같은 값으로 보는 타입 맞춤 비교 옵션 제공","배열 순서 무시 옵션","파싱 오류가 있으면 A/B 중 어느 쪽인지 알려 줌"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"서로 다른 형식(TOML과 YAML)을 직접 비교할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"한 번에 하나의 형식만 선택해 두 입력을 같은 형식으로 읽습니다. 다른 형식은 변환기로 같은 형식으로 맞춘 뒤 비교하세요."}},{"@type":"Question","name":"주석만 다르면 같은 설정인가요?","acceptedAnswer":{"@type":"Answer","text":"네. 주석은 데이터가 아니므로 무시하고 값만 비교합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"설정 파일 비교 도구","item":"https://wooadev.wooahouse.com/config-diff.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="config-diff.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/config-diff.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>설정 파일 비교 도구</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔍</span>
+    <h1>설정 파일 비교 도구 — 키 순서·주석 무시</h1>
+    <p>TOML, INI, .properties, YAML, JSON, .env 두 파일을 데이터로 읽어 비교하므로 키 순서·공백·주석이 달라도 실제 변경만 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>🔍 추가 1 · 삭제 1 · 변경 2</p>
+<h3>입력 — 원본 설정 (A)</h3><pre>[server]
+host = "localhost"
+port = 8080
+
+[database]
+url = "postgres://localhost/app"
+pool = 5
+
+[features]
+beta = false</pre>
+<h3>입력 — 비교할 설정 (B)</h3><pre>[database]
+pool = 10
+url = "postgres://localhost/app"
+
+[server]
+port = 8080
+host = "0.0.0.0"
+
+[logging]
+level = "info"</pre>
+<h3>결과 — 변경 사항 (키 순서는 무시)</h3><pre>구분 | 경로 | 이전(A) | 이후(B)
+변경 | $.server.host | "localhost" | "0.0.0.0"
+변경 | $.database.pool | 5 | 10
+삭제 | $.features | {"beta":false} | 
+추가 | $.logging |  | {"level":"info"}</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>환경별 설정 파일(application-dev.properties vs application-prod.properties, config.ini 등)을 텍스트 diff로 비교하면 순서와 공백 때문에 노이즈가 많습니다. 이 도구는 파일을 형식에 맞게 읽어 값만 비교합니다.</p>
+<ul><li>지원 형식: TOML, INI, Java .properties, YAML, JSON, .env</li><li>섹션/키 순서, 공백, 주석 차이는 무시하고 추가·삭제·변경을 경로와 함께 표시</li><li>INI·.properties·.env는 "8080"과 8080을 같은 값으로 보는 타입 맞춤 비교 옵션 제공</li><li>배열 순서 무시 옵션</li><li>파싱 오류가 있으면 A/B 중 어느 쪽인지 알려 줌</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="env-diff.html" class="related-card"><span class="related-icon">🔍</span><span>ENV 비교·누락 확인</span></a>
+    <a href="yaml-diff.html" class="related-card"><span class="related-icon">🔍</span><span>YAML 비교 도구</span></a>
+    <a href="json-diff.html" class="related-card"><span class="related-icon">🔍</span><span>JSON 비교 도구</span></a>
+    <a href="config-converter.html" class="related-card"><span class="related-icon">🔁</span><span>설정 파일 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>개발/운영 설정 비교에는 .properties 형식과 "값 타입 맞춰 비교"를 켜 두면 노이즈가 줄어듭니다.</li><li>형식이 서로 다른 두 파일은 먼저 설정 파일 변환기로 같은 형식으로 맞춘 뒤 비교하세요.</li><li>.env는 ENV 비교 도구가 누락 확인에 더 편리합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>서로 다른 형식(TOML과 YAML)을 직접 비교할 수 있나요?</summary><p>한 번에 하나의 형식만 선택해 두 입력을 같은 형식으로 읽습니다. 다른 형식은 변환기로 같은 형식으로 맞춘 뒤 비교하세요.</p></details><details><summary>주석만 다르면 같은 설정인가요?</summary><p>네. 주석은 데이터가 아니므로 무시하고 값만 비교합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tk-infer.js"></script>
+<script src="js/tk-xml.js"></script>
+<script src="js/tk-env.js"></script>
+<script src="js/tk-config.js"></script>
+<script src="js/lib/toml.min.js"></script>
+<script src="js/lib/yaml.min.js"></script>
+<script src="js/tools/config-diff.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

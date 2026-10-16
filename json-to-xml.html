@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON → XML 변환기 — 속성·배열·특수문자 지원 | WooaDev</title>
+  <meta name="description" content="JSON을 XML로 변환합니다. @접두사 속성, #text, 배열 반복 요소, 빈 요소, XML 선언, 잘못된 태그 이름 자동 보정과 들여쓰기 옵션을 제공하며 브라우저에서만 처리됩니다.">
+  <meta name="keywords" content="JSON XML 변환, JSON to XML, JSON을 XML로, JSON XML converter, 온라인 JSON XML, XML 속성 JSON, JSON 배열 XML">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/json-to-xml.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/json-to-xml.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/json-to-xml.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/json-to-xml.html">
+  <meta property="og:title" content="JSON → XML 변환기 — 속성·배열·특수문자 지원 | WooaDev">
+  <meta property="og:description" content="JSON을 XML로 변환합니다. @접두사 속성, #text, 배열 반복 요소, 빈 요소, XML 선언, 잘못된 태그 이름 자동 보정과 들여쓰기 옵션을 제공하며 브라우저에서만 처리됩니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/json-to-xml.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON → XML 변환기 — 속성·배열·특수문자 지원 | WooaDev">
+  <meta name="twitter:description" content="JSON을 XML로 변환합니다. @접두사 속성, #text, 배열 반복 요소, 빈 요소, XML 선언, 잘못된 태그 이름 자동 보정과 들여쓰기 옵션을 제공하며 브라우저에서만 처리됩니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON → XML 변환기","url":"https://wooadev.wooahouse.com/json-to-xml.html","description":"JSON을 XML로 변환합니다. @접두사 속성, #text, 배열 반복 요소, 빈 요소, XML 선언, 잘못된 태그 이름 자동 보정과 들여쓰기 옵션을 제공하며 브라우저에서만 처리됩니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["키가 @로 시작하면 XML 속성, \"#text\"는 요소의 텍스트, \"#cdata\"는 CDATA 영역","배열은 같은 이름의 요소를 반복해서 출력 (최상위 배열은 지정한 이름으로 감쌈)","null과 빈 문자열은 빈 요소(<a/> 또는 <a><\/a>)로, &·<·>·\" 는 자동으로 이스케이프","숫자로 시작하거나 공백이 있는 키처럼 XML 태그로 쓸 수 없는 이름은 안전한 이름으로 바꾸고 알려 줌"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"JSON 배열은 XML에서 어떻게 표현되나요?","acceptedAnswer":{"@type":"Answer","text":"XML에는 배열이 없으므로 같은 이름의 요소를 여러 번 반복해 표현합니다. 예: {\"item\":[1,2]} → <item>1<\/item><item>2<\/item>."}},{"@type":"Question","name":"숫자·불리언 타입은 유지되나요?","acceptedAnswer":{"@type":"Answer","text":"XML은 모두 텍스트라 타입 정보가 사라집니다. 되돌릴 때는 XML → JSON 변환기의 \"숫자·불리언 변환\" 옵션을 쓰면 됩니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"JSON → XML 변환기","item":"https://wooadev.wooahouse.com/json-to-xml.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="json-to-xml.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/json-to-xml.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON → XML 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📰</span>
+    <h1>JSON → XML 변환기</h1>
+    <p>JSON 객체를 XML 요소로 바꿉니다. 속성(@), 텍스트(#text), 배열 반복, 특수문자 이스케이프를 지원합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 변환 완료</p>
+<h3>입력 — JSON 입력</h3><pre>{
+  "order": {
+    "@id": "A-1024",
+    "customer": "Kim &amp; Co.",
+    "items": [
+      { "sku": "P-1", "qty": 2, "price": 9.5 },
+      { "sku": "P-2", "qty": 1, "price": 20 }
+    ],
+    "note": null,
+    "paid": true
+  }
+}</pre>
+<h3>결과 — XML 결과</h3><pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;order id="A-1024"&gt;
+  &lt;customer&gt;Kim &amp;amp; Co.&lt;/customer&gt;
+  &lt;items&gt;
+    &lt;sku&gt;P-1&lt;/sku&gt;
+    &lt;qty&gt;2&lt;/qty&gt;
+    &lt;price&gt;9.5&lt;/price&gt;
+  &lt;/items&gt;
+  &lt;items&gt;
+    &lt;sku&gt;P-2&lt;/sku&gt;
+    &lt;qty&gt;1&lt;/qty&gt;
+    &lt;price&gt;20&lt;/price&gt;
+  &lt;/items&gt;
+  &lt;note/&gt;
+  &lt;paid&gt;true&lt;/paid&gt;
+&lt;/order&gt;</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>REST API(JSON)와 SOAP·레거시 시스템(XML)을 연결할 때 구조를 어떻게 옮길지가 가장 헷갈립니다. 이 변환기는 널리 쓰이는 규칙을 그대로 따릅니다.</p>
+<ul><li>키가 @로 시작하면 XML 속성, "#text"는 요소의 텍스트, "#cdata"는 CDATA 영역</li><li>배열은 같은 이름의 요소를 반복해서 출력 (최상위 배열은 지정한 이름으로 감쌈)</li><li>null과 빈 문자열은 빈 요소(&lt;a/&gt; 또는 &lt;a&gt;&lt;/a&gt;)로, &amp;·&lt;·&gt;·" 는 자동으로 이스케이프</li><li>숫자로 시작하거나 공백이 있는 키처럼 XML 태그로 쓸 수 없는 이름은 안전한 이름으로 바꾸고 알려 줌</li></ul>
+<p>반대 방향 변환은 XML → JSON 변환기를 사용하세요.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="xml-to-json.html" class="related-card"><span class="related-icon">🗂️</span><span>XML → JSON 변환기</span></a>
+    <a href="xml-formatter.html" class="related-card"><span class="related-icon">📄</span><span>XML 포맷터</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+    <a href="json-yaml.html" class="related-card"><span class="related-icon">🔄</span><span>JSON ↔ YAML</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>속성 접두사는 다른 문자(예: _)로 바꿀 수 있습니다. XML → JSON 변환기와 같은 접두사를 쓰면 왕복 변환이 됩니다.</li><li>최상위가 키 하나뿐인 객체면 그 키가 루트 요소가 됩니다. 아니면 "루트 요소 이름"으로 감쌉니다.</li><li>한 줄 출력은 SOAP 본문처럼 공백이 의미를 갖는 곳에 쓰기 좋습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>JSON 배열은 XML에서 어떻게 표현되나요?</summary><p>XML에는 배열이 없으므로 같은 이름의 요소를 여러 번 반복해 표현합니다. 예: {"item":[1,2]} → &lt;item&gt;1&lt;/item&gt;&lt;item&gt;2&lt;/item&gt;.</p></details><details><summary>숫자·불리언 타입은 유지되나요?</summary><p>XML은 모두 텍스트라 타입 정보가 사라집니다. 되돌릴 때는 XML → JSON 변환기의 "숫자·불리언 변환" 옵션을 쓰면 됩니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tk-xml.js"></script>
+<script src="js/tools/json-to-xml.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

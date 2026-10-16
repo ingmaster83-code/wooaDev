@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROT13, ROT47, Caesar Cipher &amp; Morse Code Converter Online | WooaDev</title>
+  <meta name="description" content="Encode and decode ROT13/ROT47/ROT5/ROT18, Caesar cipher with a custom shift (or all 25 at once), Atbash and Morse code. Handy for CTFs, puzzles and hiding spoilers. Runs locally.">
+  <meta name="keywords" content="ROT13, ROT47, Caesar cipher, Caesar cipher decoder, Morse code translator, Atbash cipher, CTF cipher tool">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/rot-encoder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/rot-encoder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/rot-encoder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/rot-encoder.html">
+  <meta property="og:title" content="ROT13, ROT47, Caesar Cipher &amp; Morse Code Converter Online | WooaDev">
+  <meta property="og:description" content="Encode and decode ROT13/ROT47/ROT5/ROT18, Caesar cipher with a custom shift (or all 25 at once), Atbash and Morse code. Handy for CTFs, puzzles and hiding spoilers. Runs locally.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/rot-encoder.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ROT13, ROT47, Caesar Cipher &amp; Morse Code Converter Online | WooaDev">
+  <meta name="twitter:description" content="Encode and decode ROT13/ROT47/ROT5/ROT18, Caesar cipher with a custom shift (or all 25 at once), Atbash and Morse code. Handy for CTFs, puzzles and hiding spoilers. Runs locally.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"ROT13, Caesar Cipher & Morse Code Converter","url":"https://wooadev.wooahouse.com/en/rot-encoder.html","description":"Encode and decode ROT13/ROT47/ROT5/ROT18, Caesar cipher with a custom shift (or all 25 at once), Atbash and Morse code. Handy for CTFs, puzzles and hiding spoilers. Runs locally.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["ROT13: shift letters by 13 (the same operation encrypts and decrypts). ROT47: shifts all 94 printable ASCII characters","ROT5: digits only; ROT18: ROT13 + ROT5","Caesar cipher: encrypt/decrypt with a 1–25 shift; \"Try all 25 shifts\" cracks it when the shift is unknown","Atbash: mirror the alphabet (A↔Z)","Morse code: encode/decode letters, digits and punctuation (words separated by /)"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is ROT13 secure?","acceptedAnswer":{"@type":"Answer","text":"No. Anyone can reverse it instantly — it's only for light obscuring. Use modern encryption such as AES for anything sensitive."}},{"@type":"Question","name":"Does it work on non-Latin text?","acceptedAnswer":{"@type":"Answer","text":"ROT13, Caesar and Atbash change only A–Z letters, ROT5 only digits; other scripts are left unchanged. ROT47 also shifts ASCII symbols but keeps non-ASCII text."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"ROT13, Caesar Cipher & Morse Code Converter","item":"https://wooadev.wooahouse.com/en/rot-encoder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../rot-encoder.html">KO</a>
+        <span>|</span>
+        <a href="rot-encoder.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>ROT13, Caesar Cipher &amp; Morse Code Converter</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔐</span>
+    <h1>ROT13 · ROT47 · Caesar Cipher · Morse Code Converter</h1>
+    <p>One place for ROT13, ROT47, ROT5, ROT18, Caesar cipher (custom shift or try all 25), Atbash and Morse code.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Converted</p>
+<h3>Input — Input</h3><pre>Hello, WooaDev! Attack at dawn 2026</pre>
+<h3>Result — Result</h3><pre>Uryyb, JbbnQri! Nggnpx ng qnja 2026</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Simple substitution ciphers aren't for security — they're for hiding spoilers, puzzles, CTF warm-ups and Easter eggs. The common ones are covered here.</p>
+<ul><li>ROT13: shift letters by 13 (the same operation encrypts and decrypts). ROT47: shifts all 94 printable ASCII characters</li><li>ROT5: digits only; ROT18: ROT13 + ROT5</li><li>Caesar cipher: encrypt/decrypt with a 1–25 shift; "Try all 25 shifts" cracks it when the shift is unknown</li><li>Atbash: mirror the alphabet (A↔Z)</li><li>Morse code: encode/decode letters, digits and punctuation (words separated by /)</li></ul>
+<p>None of these is cryptographically secure — don't use them to protect secrets.</p>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="base-encoding-converter.html" class="related-card"><span class="related-icon">🔢</span><span>Base Encoding Converter</span></a>
+    <a href="case-converter.html" class="related-card"><span class="related-icon">🔠</span><span>Case Converter</span></a>
+    <a href="text-binary.html" class="related-card"><span class="related-icon">01</span><span>Text ↔ Binary</span></a>
+    <a href="hash-generator.html" class="related-card"><span class="related-icon">🔑</span><span>Hash Generator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>For a Caesar cipher with an unknown shift, use "Try all 25 shifts" and look for the readable line.</li><li>When decoding Morse, separate letters by spaces and words by / or three spaces.</li><li>Applying ROT13 twice returns the original text.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Is ROT13 secure?</summary><p>No. Anyone can reverse it instantly — it's only for light obscuring. Use modern encryption such as AES for anything sensitive.</p></details><details><summary>Does it work on non-Latin text?</summary><p>ROT13, Caesar and Atbash change only A–Z letters, ROT5 only digits; other scripts are left unchanged. ROT47 also shifts ASCII symbols but keeps non-ASCII text.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/rot-encoder.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

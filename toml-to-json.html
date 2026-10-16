@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOML → JSON 변환기 — pyproject·Cargo 설정 읽기 | WooaDev</title>
+  <meta name="description" content="TOML을 JSON으로 변환하고 TOML 문법 오류의 줄·열을 알려 줍니다. 날짜·시간은 ISO 문자열, 2^53 넘는 큰 정수도 정밀도 손실 없이 처리하며 키 정렬을 지원합니다. 브라우저에서만 처리.">
+  <meta name="keywords" content="TOML JSON 변환, TOML to JSON, TOML을 JSON으로, TOML 파서, pyproject.toml JSON, Cargo.toml JSON, TOML 문법 검사">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/toml-to-json.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/toml-to-json.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/toml-to-json.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/toml-to-json.html">
+  <meta property="og:title" content="TOML → JSON 변환기 — pyproject·Cargo 설정 읽기 | WooaDev">
+  <meta property="og:description" content="TOML을 JSON으로 변환하고 TOML 문법 오류의 줄·열을 알려 줍니다. 날짜·시간은 ISO 문자열, 2^53 넘는 큰 정수도 정밀도 손실 없이 처리하며 키 정렬을 지원합니다. 브라우저에서만 처리.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/toml-to-json.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TOML → JSON 변환기 — pyproject·Cargo 설정 읽기 | WooaDev">
+  <meta name="twitter:description" content="TOML을 JSON으로 변환하고 TOML 문법 오류의 줄·열을 알려 줍니다. 날짜·시간은 ISO 문자열, 2^53 넘는 큰 정수도 정밀도 손실 없이 처리하며 키 정렬을 지원합니다. 브라우저에서만 처리.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"TOML → JSON 변환기","url":"https://wooadev.wooahouse.com/toml-to-json.html","description":"TOML을 JSON으로 변환하고 TOML 문법 오류의 줄·열을 알려 줍니다. 날짜·시간은 ISO 문자열, 2^53 넘는 큰 정수도 정밀도 손실 없이 처리하며 키 정렬을 지원합니다. 브라우저에서만 처리.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["TOML 1.0 전체 문법: 테이블, 인라인 테이블, 테이블 배열, 다중행 문자열, 날짜·시간","날짜/시간 값은 ISO 8601 문자열로 변환","9007199254740993처럼 JavaScript 숫자로는 표현이 깨지는 큰 정수도 원래 자릿수 그대로 출력","문법 오류가 있으면 줄·열 위치와 원인을 표시"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"TOML의 날짜는 JSON에서 어떻게 표현되나요?","acceptedAnswer":{"@type":"Answer","text":"JSON에는 날짜 타입이 없어 ISO 8601 문자열로 바뀝니다. 날짜만(2024-01-02), 시간만(03:04:05), 오프셋 포함 날짜시간 모두 원래 형식을 따릅니다."}},{"@type":"Question","name":"매우 큰 정수도 변환되나요?","acceptedAnswer":{"@type":"Answer","text":"네. 2^53을 넘는 정수는 BigInt로 읽어 JSON 숫자 그대로 출력합니다. 다만 이후 JavaScript의 JSON.parse로 읽으면 정밀도가 손실될 수 있다는 점에 유의하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"TOML → JSON 변환기","item":"https://wooadev.wooahouse.com/toml-to-json.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="toml-to-json.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/toml-to-json.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>TOML → JSON 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧾</span>
+    <h1>TOML → JSON 변환기</h1>
+    <p>TOML 설정 파일을 JSON으로 바꿉니다. 날짜·시간은 ISO 문자열로, 큰 정수는 정밀도 손실 없이 변환합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 변환 완료 — 키 15개, 최대 깊이 4</p>
+<h3>입력 — TOML 입력</h3><pre># This is a TOML document
+title = "TOML Example"
+
+[owner]
+name = "Kim"
+dob = 1979-05-27T07:32:00-08:00
+
+[database]
+enabled = true
+ports = [ 8000, 8001, 8002 ]
+temp_targets = { cpu = 79.5, case = 72.0 }
+
+[[servers]]
+name = "alpha"
+ip = "10.0.0.1"
+
+[[servers]]
+name = "beta"
+ip = "10.0.0.2"</pre>
+<h3>결과 — JSON 결과</h3><pre>{
+  "title": "TOML Example",
+  "owner": {
+    "name": "Kim",
+    "dob": "1979-05-27T07:32:00.000-08:00"
+  },
+  "database": {
+    "enabled": true,
+    "ports": [
+      8000,
+      8001,
+      8002
+    ],
+    "temp_targets": {
+      "cpu": 79.5,
+      "case": 72
+    }
+  },
+  "servers": [
+    {
+      "name": "alpha",
+      "ip": "10.0.0.1"
+    },
+    {
+      "name": "beta",
+      "ip": "10.0.0.2"
+    }
+  ]
+}</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>TOML로 작성된 설정(pyproject.toml, Cargo.toml, netlify.toml 등)을 스크립트나 API에서 쓰려면 JSON이 가장 다루기 쉽습니다.</p>
+<ul><li>TOML 1.0 전체 문법: 테이블, 인라인 테이블, 테이블 배열, 다중행 문자열, 날짜·시간</li><li>날짜/시간 값은 ISO 8601 문자열로 변환</li><li>9007199254740993처럼 JavaScript 숫자로는 표현이 깨지는 큰 정수도 원래 자릿수 그대로 출력</li><li>문법 오류가 있으면 줄·열 위치와 원인을 표시</li></ul>
+<p>JSON을 TOML로 만들려면 JSON → TOML 변환기를 사용하세요.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="json-to-toml.html" class="related-card"><span class="related-icon">🧾</span><span>JSON → TOML 변환기</span></a>
+    <a href="toml-formatter.html" class="related-card"><span class="related-icon">🧹</span><span>TOML 포맷터</span></a>
+    <a href="json-yaml.html" class="related-card"><span class="related-icon">🔄</span><span>JSON ↔ YAML</span></a>
+    <a href="config-converter.html" class="related-card"><span class="related-icon">🔁</span><span>설정 파일 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>변환 전후 값이 같은지 확인하려면 키 정렬 옵션으로 양쪽을 같은 순서로 맞춰 비교하세요.</li><li>TOML의 주석은 JSON에 담을 수 없어 결과에서 사라집니다.</li><li>inf, nan 같은 특수 부동소수점은 JSON에서 표현할 수 없어 null로 출력될 수 있습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>TOML의 날짜는 JSON에서 어떻게 표현되나요?</summary><p>JSON에는 날짜 타입이 없어 ISO 8601 문자열로 바뀝니다. 날짜만(2024-01-02), 시간만(03:04:05), 오프셋 포함 날짜시간 모두 원래 형식을 따릅니다.</p></details><details><summary>매우 큰 정수도 변환되나요?</summary><p>네. 2^53을 넘는 정수는 BigInt로 읽어 JSON 숫자 그대로 출력합니다. 다만 이후 JavaScript의 JSON.parse로 읽으면 정밀도가 손실될 수 있다는 점에 유의하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tk-xml.js"></script>
+<script src="js/tk-env.js"></script>
+<script src="js/tk-config.js"></script>
+<script src="js/lib/toml.min.js"></script>
+<script src="js/tools/toml-to-json.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

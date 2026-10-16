@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON to Go Struct Converter – json Tags, omitempty &amp; Pointers | WooaDev</title>
+  <meta name="description" content="Generate Go structs from JSON samples. Merges all samples so fields missing in some become omitempty pointers; supports Go initialisms (ID, URL), int64 and time.Time.">
+  <meta name="keywords" content="JSON to Go struct, JSON to Golang, go struct generator, json-to-go, Go json tags, convert JSON to Go online">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/json-to-go.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/json-to-go.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/json-to-go.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/json-to-go.html">
+  <meta property="og:title" content="JSON to Go Struct Converter – json Tags, omitempty &amp; Pointers | WooaDev">
+  <meta property="og:description" content="Generate Go structs from JSON samples. Merges all samples so fields missing in some become omitempty pointers; supports Go initialisms (ID, URL), int64 and time.Time.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/json-to-go.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON to Go Struct Converter – json Tags, omitempty &amp; Pointers | WooaDev">
+  <meta name="twitter:description" content="Generate Go structs from JSON samples. Merges all samples so fields missing in some become omitempty pointers; supports Go initialisms (ID, URL), int64 and time.Time.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON to Go Struct Converter","url":"https://wooadev.wooahouse.com/en/json-to-go.html","description":"Generate Go structs from JSON samples. Merges all samples so fields missing in some become omitempty pointers; supports Go initialisms (ID, URL), int64 and time.Time.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Merges every array element (or several concatenated JSON values): fields present in only some become `omitempty` pointers","Fields with null become pointers (*string…), int+float mixes become float64, inconsistent types become interface{}/any","Applies Go initialism conventions: user_id → UserID, api_url → APIURL","Nested objects get their own structs; identical shapes are reused","Options for int vs int64, time.Time and any"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why do some fields become pointers?","acceptedAnswer":{"@type":"Answer","text":"In Go you need a pointer to tell a missing value (null) from 0 or an empty string. Turn the pointer option off to get plain types."}},{"@type":"Question","name":"What if the top level is an array?","acceptedAnswer":{"@type":"Answer","text":"A struct is generated from the item shape and a comment reminds you to decode into a slice of that type."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"JSON to Go Struct Converter","item":"https://wooadev.wooahouse.com/en/json-to-go.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../json-to-go.html">KO</a>
+        <span>|</span>
+        <a href="json-to-go.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON to Go Struct Converter</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🐹</span>
+    <h1>JSON to Go Struct Converter</h1>
+    <p>Paste an API response and get Go structs with json tags. Every array element is analysed so missing fields are handled correctly.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Generated 2 struct(s) from 2 sample(s)</p>
+<h3>Input — JSON sample (e.g. an API response)</h3><pre>[
+  {
+    "id": 1,
+    "name": "Kim",
+    "email": "kim@example.com",
+    "is_active": true,
+    "score": 4.5,
+    "tags": ["admin", "dev"],
+    "address": { "city": "Seoul", "zip": "04524" },
+    "created_at": "2026-01-02T03:04:05Z"
+  },
+  {
+    "id": 2,
+    "name": "Lee",
+    "is_active": false,
+    "score": 3,
+    "tags": [],
+    "address": { "city": "Busan", "zip": null },
+    "created_at": "2026-02-03T04:05:06Z",
+    "nickname": null
+  }
+]</pre>
+<h3>Result — Go structs</h3><pre>package model
+
+type Root struct {
+	ID        int64       `json:"id"`
+	Name      string      `json:"name"`
+	Email     *string     `json:"email,omitempty"`
+	IsActive  bool        `json:"is_active"`
+	Score     float64     `json:"score"`
+	Tags      []string    `json:"tags"`
+	Address   Address     `json:"address"`
+	CreatedAt string      `json:"created_at"`
+	Nickname  interface{} `json:"nickname,omitempty"`
+}
+
+type Address struct {
+	City string  `json:"city"`
+	Zip  *string `json:"zip"`
+}
+</pre>
+<h3>Result — Analysis</h3><pre>Samples analysed: 2
+Generated types: Address, Root</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Calling a JSON API from Go means hand-writing structs for the response. A single sample hides fields that are absent or null in other responses, so this tool analyses all your samples.</p>
+<ul><li>Merges every array element (or several concatenated JSON values): fields present in only some become <code>omitempty</code> pointers</li><li>Fields with null become pointers (*string…), int+float mixes become float64, inconsistent types become interface{}/any</li><li>Applies Go initialism conventions: user_id → UserID, api_url → APIURL</li><li>Nested objects get their own structs; identical shapes are reused</li><li>Options for int vs int64, time.Time and any</li></ul>
+<p>The output is a starting point — adjust names and types to your project's conventions.</p>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="json-to-python.html" class="related-card"><span class="related-icon">🐍</span><span>JSON to Python Model Converter</span></a>
+    <a href="json-to-java.html" class="related-card"><span class="related-icon">☕</span><span>JSON to Java Class Converter</span></a>
+    <a href="json-to-ts.html" class="related-card"><span class="related-icon">🔷</span><span>JSON to TypeScript</span></a>
+    <a href="json-schema-generator.html" class="related-card"><span class="related-icon">📘</span><span>JSON Schema Generator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Paste 2–3 different responses together; optional fields are detected far more accurately.</li><li>Keep the int64 option on for IDs and counts that can grow large.</li><li>Enable "time.Time for date-time strings" to get time.Time fields for RFC 3339 dates.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Why do some fields become pointers?</summary><p>In Go you need a pointer to tell a missing value (null) from 0 or an empty string. Turn the pointer option off to get plain types.</p></details><details><summary>What if the top level is an array?</summary><p>A struct is generated from the item shape and a comment reminds you to decode into a slice of that type.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-json.js"></script>
+<script src="../js/tk-infer.js"></script>
+<script src="../js/tk-codegen.js"></script>
+<script src="../js/tools/json-to-go.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

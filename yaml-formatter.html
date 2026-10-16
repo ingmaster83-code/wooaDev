@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YAML 포맷터 — 주석 유지 들여쓰기 정리·검증 | WooaDev</title>
+  <meta name="description" content="YAML 들여쓰기를 2·3·4칸으로 통일하면서 주석, 키 순서, 블록 스칼라(|, &gt;)를 그대로 유지합니다. 정리 후 의미가 같은지 자동 검증하고, 구조 다시 쓰기·키 정렬 모드도 제공합니다.">
+  <meta name="keywords" content="YAML 포맷터, YAML formatter, YAML 들여쓰기, YAML 정리, YAML 검증, YAML lint, docker-compose 정리, Kubernetes YAML 포맷">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/yaml-formatter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/yaml-formatter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/yaml-formatter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/yaml-formatter.html">
+  <meta property="og:title" content="YAML 포맷터 — 주석 유지 들여쓰기 정리·검증 | WooaDev">
+  <meta property="og:description" content="YAML 들여쓰기를 2·3·4칸으로 통일하면서 주석, 키 순서, 블록 스칼라(|, &gt;)를 그대로 유지합니다. 정리 후 의미가 같은지 자동 검증하고, 구조 다시 쓰기·키 정렬 모드도 제공합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/yaml-formatter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="YAML 포맷터 — 주석 유지 들여쓰기 정리·검증 | WooaDev">
+  <meta name="twitter:description" content="YAML 들여쓰기를 2·3·4칸으로 통일하면서 주석, 키 순서, 블록 스칼라(|, &gt;)를 그대로 유지합니다. 정리 후 의미가 같은지 자동 검증하고, 구조 다시 쓰기·키 정렬 모드도 제공합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"YAML 포맷터","url":"https://wooadev.wooahouse.com/yaml-formatter.html","description":"YAML 들여쓰기를 2·3·4칸으로 통일하면서 주석, 키 순서, 블록 스칼라(|, >)를 그대로 유지합니다. 정리 후 의미가 같은지 자동 검증하고, 구조 다시 쓰기·키 정렬 모드도 제공합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["들여쓰기만 정리: 2·3·4칸 통일, 불필요한 줄 끝 공백 제거, 블록 스칼라(|, >) 내용 보존","정리 결과를 다시 파싱해 원본과 같은 데이터인지 확인하고, 다르면 결과를 내지 않고 알려 줌","구조 다시 쓰기: js-yaml 방식으로 완전히 재작성 (주석 제거, 키 정렬·긴 줄 접기·앵커 옵션)","여러 문서(---)와 시퀀스 안의 매핑(- name: x)도 올바르게 처리"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"정리하면 값이나 의미가 바뀔 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"기본 모드는 정리 후 다시 파싱해 원본과 동일한 데이터인지 비교하고, 달라지면 결과를 내지 않습니다. 따라서 의미가 바뀌는 상태로 출력되지 않습니다."}},{"@type":"Question","name":"블록 스칼라(|)의 들여쓰기 지시자(|2)는 지원하나요?","acceptedAnswer":{"@type":"Answer","text":"자동 정리에서는 지원하지 않고 안내 메시지를 표시합니다. 그런 경우 \"구조 다시 쓰기\" 모드를 사용하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"YAML 포맷터","item":"https://wooadev.wooahouse.com/yaml-formatter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="yaml-formatter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/yaml-formatter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>YAML 포맷터</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧹</span>
+    <h1>YAML 포맷터 — 주석과 구조를 지키며 들여쓰기 정리</h1>
+    <p>들여쓰기가 제각각인 YAML을 2칸·4칸으로 통일합니다. 주석과 키 순서를 그대로 두고, 결과가 원본과 같은 의미인지 검증합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 정리 완료 — 주석과 키 순서를 유지했고, 의미가 같은지 검증했습니다.</p>
+<h3>입력 — YAML 입력</h3><pre># service config
+service:
+    name: api      # keep this comment
+    ports:
+        - 80
+        - 443
+    env:
+        - name: MODE
+          value: prod
+    script: |
+        echo "start"
+        run --fast
+  
+limits: {cpu: 2, mem: 512}
+</pre>
+<h3>결과 — 정리된 YAML</h3><pre># service config
+service:
+  name: api      # keep this comment
+  ports:
+    - 80
+    - 443
+  env:
+    - name: MODE
+      value: prod
+  script: |
+    echo "start"
+    run --fast
+
+limits: {cpu: 2, mem: 512}
+</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>많은 YAML 포맷터가 파일을 파싱해서 다시 쓰기 때문에 주석이 모두 사라집니다. 이 도구의 기본 모드는 텍스트의 들여쓰기만 다시 계산해서 주석·키 순서·따옴표 스타일을 건드리지 않습니다.</p>
+<ul><li>들여쓰기만 정리: 2·3·4칸 통일, 불필요한 줄 끝 공백 제거, 블록 스칼라(|, &gt;) 내용 보존</li><li>정리 결과를 다시 파싱해 원본과 같은 데이터인지 확인하고, 다르면 결과를 내지 않고 알려 줌</li><li>구조 다시 쓰기: js-yaml 방식으로 완전히 재작성 (주석 제거, 키 정렬·긴 줄 접기·앵커 옵션)</li><li>여러 문서(---)와 시퀀스 안의 매핑(- name: x)도 올바르게 처리</li></ul>
+<p>문법 오류는 줄·열 위치와 함께 알려 줍니다.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="yaml-diff.html" class="related-card"><span class="related-icon">🔍</span><span>YAML 비교 도구</span></a>
+    <a href="json-yaml.html" class="related-card"><span class="related-icon">🔄</span><span>JSON ↔ YAML</span></a>
+    <a href="config-converter.html" class="related-card"><span class="related-icon">🔁</span><span>설정 파일 변환기</span></a>
+    <a href="toml-formatter.html" class="related-card"><span class="related-icon">🧹</span><span>TOML 포맷터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>docker-compose.yml, GitHub Actions, Kubernetes 매니페스트처럼 주석이 중요한 파일은 기본 모드를 쓰세요.</li><li>탭 문자로 들여쓴 YAML은 허용되지 않으므로 공백으로 바꾸라는 안내가 표시됩니다.</li><li>키 정렬이 필요하면 "구조 다시 쓰기" 모드를 선택하세요 (주석은 사라집니다).</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>정리하면 값이나 의미가 바뀔 수 있나요?</summary><p>기본 모드는 정리 후 다시 파싱해 원본과 동일한 데이터인지 비교하고, 달라지면 결과를 내지 않습니다. 따라서 의미가 바뀌는 상태로 출력되지 않습니다.</p></details><details><summary>블록 스칼라(|)의 들여쓰기 지시자(|2)는 지원하나요?</summary><p>자동 정리에서는 지원하지 않고 안내 메시지를 표시합니다. 그런 경우 "구조 다시 쓰기" 모드를 사용하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tk-xml.js"></script>
+<script src="js/tk-env.js"></script>
+<script src="js/tk-config.js"></script>
+<script src="js/lib/yaml.min.js"></script>
+<script src="js/tools/yaml-formatter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

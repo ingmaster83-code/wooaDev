@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YAML 비교 도구 — 의미 단위 diff, 경로별 변경 확인 | WooaDev</title>
+  <meta name="description" content="두 YAML 문서를 파싱해 추가·삭제·변경된 값을 경로($.spec.replicas)와 함께 비교합니다. 들여쓰기·주석·키 순서·따옴표 차이는 무시하고 배열 순서 무시 옵션을 제공합니다. Kubernetes·Helm 값 비교에 유용.">
+  <meta name="keywords" content="YAML 비교, YAML diff, YAML compare, 두 YAML 비교, Kubernetes YAML 비교, Helm values 비교, YAML 차이점">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/yaml-diff.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/yaml-diff.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/yaml-diff.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/yaml-diff.html">
+  <meta property="og:title" content="YAML 비교 도구 — 의미 단위 diff, 경로별 변경 확인 | WooaDev">
+  <meta property="og:description" content="두 YAML 문서를 파싱해 추가·삭제·변경된 값을 경로($.spec.replicas)와 함께 비교합니다. 들여쓰기·주석·키 순서·따옴표 차이는 무시하고 배열 순서 무시 옵션을 제공합니다. Kubernetes·Helm 값 비교에 유용.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/yaml-diff.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="YAML 비교 도구 — 의미 단위 diff, 경로별 변경 확인 | WooaDev">
+  <meta name="twitter:description" content="두 YAML 문서를 파싱해 추가·삭제·변경된 값을 경로($.spec.replicas)와 함께 비교합니다. 들여쓰기·주석·키 순서·따옴표 차이는 무시하고 배열 순서 무시 옵션을 제공합니다. Kubernetes·Helm 값 비교에 유용.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"YAML 비교 도구","url":"https://wooadev.wooahouse.com/yaml-diff.html","description":"두 YAML 문서를 파싱해 추가·삭제·변경된 값을 경로($.spec.replicas)와 함께 비교합니다. 들여쓰기·주석·키 순서·따옴표 차이는 무시하고 배열 순서 무시 옵션을 제공합니다. Kubernetes·Helm 값 비교에 유용.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["들여쓰기, 주석, 키 순서, 따옴표 유무(\"1\" vs 1은 별도 표시) 차이를 구분","추가/삭제/변경을 경로($.spec.template.spec.containers[0].image)와 함께 표로 표시","여러 문서(---)가 있으면 배열로 묶어 비교","앵커(&)와 별칭(*)은 펼쳐서 비교"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"주석만 다르면 같은 YAML로 보나요?","acceptedAnswer":{"@type":"Answer","text":"네. 주석, 들여쓰기, 키 순서는 데이터가 아니므로 무시하고 값만 비교합니다."}},{"@type":"Question","name":"YAML 앵커와 병합 키(<<)는 어떻게 비교되나요?","acceptedAnswer":{"@type":"Answer","text":"파싱 단계에서 앵커·별칭이 펼쳐지므로 최종적으로 적용되는 값을 기준으로 비교합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"YAML 비교 도구","item":"https://wooadev.wooahouse.com/yaml-diff.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="yaml-diff.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/yaml-diff.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>YAML 비교 도구</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔍</span>
+    <h1>YAML 비교 도구 — 들여쓰기·주석이 달라도 내용만 비교</h1>
+    <p>두 YAML을 데이터로 읽어 비교하므로 들여쓰기, 주석, 키 순서가 달라도 실제로 바뀐 값만 경로와 함께 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>🔍 추가 1 · 삭제 0 · 변경 3</p>
+<h3>입력 — 원본 YAML (A)</h3><pre>name: api
+replicas: 2
+image: app:1.0
+env:
+  - name: MODE
+    value: dev
+labels:
+  tier: backend</pre>
+<h3>입력 — 비교할 YAML (B)</h3><pre>name: api
+replicas: 3
+image: app:1.1
+env:
+  - name: MODE
+    value: prod
+labels:
+  tier: backend
+  team: core</pre>
+<h3>결과 — 변경 사항</h3><pre>구분 | 경로 | 이전(A) | 이후(B)
+변경 | $.replicas | 2 | 3
+변경 | $.image | "app:1.0" | "app:1.1"
+변경 | $.env[0].value | "dev" | "prod"
+추가 | $.labels.team |  | "core"</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>텍스트 diff는 들여쓰기만 바뀌어도 수십 줄이 달라 보입니다. 이 도구는 두 YAML을 먼저 데이터로 읽은 뒤 값 단위로 비교하므로 의미가 달라진 부분만 남습니다.</p>
+<ul><li>들여쓰기, 주석, 키 순서, 따옴표 유무("1" vs 1은 별도 표시) 차이를 구분</li><li>추가/삭제/변경을 경로($.spec.template.spec.containers[0].image)와 함께 표로 표시</li><li>여러 문서(---)가 있으면 배열로 묶어 비교</li><li>앵커(&amp;)와 별칭(*)은 펼쳐서 비교</li></ul>
+<p>배열 순서가 중요하지 않다면 "배열 순서 무시"를 켜세요.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="yaml-formatter.html" class="related-card"><span class="related-icon">🧹</span><span>YAML 포맷터</span></a>
+    <a href="json-diff.html" class="related-card"><span class="related-icon">🔍</span><span>JSON 비교 도구</span></a>
+    <a href="config-diff.html" class="related-card"><span class="related-icon">🔍</span><span>설정 파일 비교 도구</span></a>
+    <a href="diff-viewer.html" class="related-card"><span class="related-icon">📊</span><span>Diff 비교기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Helm values.yaml을 환경별로 비교하거나 Kubernetes 매니페스트의 배포 전후 변경을 확인할 때 유용합니다.</li><li>숫자로 쓴 값과 따옴표로 감싼 문자열은 다른 타입으로 취급됩니다.</li><li>한쪽에 문법 오류가 있으면 A/B 중 어느 쪽인지와 줄·열을 알려 줍니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>주석만 다르면 같은 YAML로 보나요?</summary><p>네. 주석, 들여쓰기, 키 순서는 데이터가 아니므로 무시하고 값만 비교합니다.</p></details><details><summary>YAML 앵커와 병합 키(&lt;&lt;)는 어떻게 비교되나요?</summary><p>파싱 단계에서 앵커·별칭이 펼쳐지므로 최종적으로 적용되는 값을 기준으로 비교합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tk-xml.js"></script>
+<script src="js/tk-env.js"></script>
+<script src="js/tk-config.js"></script>
+<script src="js/lib/yaml.min.js"></script>
+<script src="js/tools/yaml-diff.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

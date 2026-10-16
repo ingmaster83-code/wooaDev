@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON 포인터 도구 — RFC 6901 값 찾기·경로 변환 | WooaDev</title>
+  <meta name="description" content="JSON Pointer(RFC 6901)로 JSON의 값을 정확히 찾고, 이스케이프(~0, ~1)와 URI 조각(#/a/b)·JSONPath 표기를 변환합니다. 문서의 모든 값에 대한 포인터 목록도 생성합니다.">
+  <meta name="keywords" content="JSON Pointer, JSON 포인터, RFC 6901, JSON 경로, JSON 포인터 테스트, JSON URI fragment, $ref 경로">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/json-pointer.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/json-pointer.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/json-pointer.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/json-pointer.html">
+  <meta property="og:title" content="JSON 포인터 도구 — RFC 6901 값 찾기·경로 변환 | WooaDev">
+  <meta property="og:description" content="JSON Pointer(RFC 6901)로 JSON의 값을 정확히 찾고, 이스케이프(~0, ~1)와 URI 조각(#/a/b)·JSONPath 표기를 변환합니다. 문서의 모든 값에 대한 포인터 목록도 생성합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/json-pointer.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON 포인터 도구 — RFC 6901 값 찾기·경로 변환 | WooaDev">
+  <meta name="twitter:description" content="JSON Pointer(RFC 6901)로 JSON의 값을 정확히 찾고, 이스케이프(~0, ~1)와 URI 조각(#/a/b)·JSONPath 표기를 변환합니다. 문서의 모든 값에 대한 포인터 목록도 생성합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON 포인터 도구","url":"https://wooadev.wooahouse.com/json-pointer.html","description":"JSON Pointer(RFC 6901)로 JSON의 값을 정확히 찾고, 이스케이프(~0, ~1)와 URI 조각(#/a/b)·JSONPath 표기를 변환합니다. 문서의 모든 값에 대한 포인터 목록도 생성합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["/users/0/name 형태 입력 → 값, 정규화된 포인터, URI 조각(#/users/0/name), JSONPath($['users'][0]['name']) 표시","키에 포함된 / 와 ~ 는 ~1, ~0 으로 이스케이프하는 규칙을 자동 적용","#/my%20key 처럼 URI 조각 형식의 입력도 지원","\"모든 포인터 목록\" 모드는 문서의 모든 노드에 대한 포인터와 타입·값을 표로 제공"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"JSON Pointer와 JSONPath는 무엇이 다른가요?","acceptedAnswer":{"@type":"Answer","text":"JSON Pointer는 정확히 하나의 값을 가리키는 단순한 경로이고, JSONPath는 와일드카드·필터로 여러 값을 조회하는 쿼리 언어입니다."}},{"@type":"Question","name":"빈 포인터 \"\" 는 무엇을 가리키나요?","acceptedAnswer":{"@type":"Answer","text":"문서 전체(루트)를 가리킵니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"JSON 포인터 도구","item":"https://wooadev.wooahouse.com/json-pointer.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="json-pointer.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/json-pointer.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON 포인터 도구</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📍</span>
+    <h1>JSON 포인터(RFC 6901) 도구</h1>
+    <p>/users/0/name 같은 JSON Pointer로 정확한 값을 찾고, 모든 값의 포인터와 URI 조각 표기를 만들어 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 값을 찾았습니다 (string)</p>
+<h3>입력 — JSON 데이터</h3><pre>{
+  "users": [
+    { "name": "Kim", "tags": ["a/b", "c~d"] },
+    { "name": "Lee" }
+  ],
+  "a/b": { "m~n": 100 },
+  "my key": true
+}</pre>
+<h3>입력 — JSON Pointer</h3><pre>/users/0/tags/0</pre>
+<h3>결과 — 포인터 정보</h3><pre>정규화된 포인터: /users/0/tags/0
+URI 조각 형식: #/users/0/tags/0
+JSONPath 표기: $['users'][0]['tags'][0]</pre>
+<h3>결과 — 값</h3><pre>"a/b"</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>JSON Pointer는 JSON 안의 한 값을 가리키는 표준 경로 표기(RFC 6901)로, JSON Schema의 $ref와 JSON Patch(RFC 6902)에서 사용됩니다.</p>
+<ul><li>/users/0/name 형태 입력 → 값, 정규화된 포인터, URI 조각(#/users/0/name), JSONPath($['users'][0]['name']) 표시</li><li>키에 포함된 / 와 ~ 는 ~1, ~0 으로 이스케이프하는 규칙을 자동 적용</li><li>#/my%20key 처럼 URI 조각 형식의 입력도 지원</li><li>"모든 포인터 목록" 모드는 문서의 모든 노드에 대한 포인터와 타입·값을 표로 제공</li></ul>
+<p>여러 값을 조건으로 찾아야 한다면 JSONPath 테스터가 더 적합합니다.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="jsonpath-tester.html" class="related-card"><span class="related-icon">🧭</span><span>JSONPath 테스터</span></a>
+    <a href="json-key-extractor.html" class="related-card"><span class="related-icon">🔑</span><span>JSON 키 추출기</span></a>
+    <a href="json-flatten.html" class="related-card"><span class="related-icon">📐</span><span>JSON 평탄화 도구</span></a>
+    <a href="jmespath-tester.html" class="related-card"><span class="related-icon">🧪</span><span>JMESPath 테스트기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>$ref 값(예: #/definitions/User)을 입력하면 그 경로가 가리키는 스키마 조각을 바로 확인할 수 있습니다.</li><li>키 이름에 / 가 있으면 ~1 로 써야 합니다. 이 도구의 정규화 결과를 복사해서 쓰세요.</li><li>배열 인덱스는 0부터 시작하며 "-"(배열 끝 다음)는 읽기에 쓸 수 없습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>JSON Pointer와 JSONPath는 무엇이 다른가요?</summary><p>JSON Pointer는 정확히 하나의 값을 가리키는 단순한 경로이고, JSONPath는 와일드카드·필터로 여러 값을 조회하는 쿼리 언어입니다.</p></details><details><summary>빈 포인터 "" 는 무엇을 가리키나요?</summary><p>문서 전체(루트)를 가리킵니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tools/json-pointer.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

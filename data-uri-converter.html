@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data URI 변환기 — 텍스트·파일을 data: URL로 인코딩/디코딩 | WooaDev</title>
+  <meta name="description" content="텍스트와 파일을 Data URI(Base64/퍼센트 인코딩)로 변환하고, data: URL을 디코딩해 MIME 타입·charset·크기를 확인합니다. 인라인 SVG 최적화와 이미지 미리보기를 지원하며 브라우저에서만 처리됩니다.">
+  <meta name="keywords" content="Data URI 변환, data URL 생성, Data URI 디코딩, SVG data URI, data:image 변환, Base64 data URL, CSS data URI">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/data-uri-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/data-uri-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/data-uri-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/data-uri-converter.html">
+  <meta property="og:title" content="Data URI 변환기 — 텍스트·파일을 data: URL로 인코딩/디코딩 | WooaDev">
+  <meta property="og:description" content="텍스트와 파일을 Data URI(Base64/퍼센트 인코딩)로 변환하고, data: URL을 디코딩해 MIME 타입·charset·크기를 확인합니다. 인라인 SVG 최적화와 이미지 미리보기를 지원하며 브라우저에서만 처리됩니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/data-uri-converter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Data URI 변환기 — 텍스트·파일을 data: URL로 인코딩/디코딩 | WooaDev">
+  <meta name="twitter:description" content="텍스트와 파일을 Data URI(Base64/퍼센트 인코딩)로 변환하고, data: URL을 디코딩해 MIME 타입·charset·크기를 확인합니다. 인라인 SVG 최적화와 이미지 미리보기를 지원하며 브라우저에서만 처리됩니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Data URI 변환기","url":"https://wooadev.wooahouse.com/data-uri-converter.html","description":"텍스트와 파일을 Data URI(Base64/퍼센트 인코딩)로 변환하고, data: URL을 디코딩해 MIME 타입·charset·크기를 확인합니다. 인라인 SVG 최적화와 이미지 미리보기를 지원하며 브라우저에서만 처리됩니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["텍스트 → Data URI: MIME 타입 선택(svg, html, json, css, js 등), Base64 또는 퍼센트 인코딩 선택","파일 → Data URI: 이미지·폰트·PDF 등 어떤 파일이든 Base64 Data URI로 변환","Data URI → 내용: MIME, charset, 인코딩 방식, 디코딩된 크기를 표시하고 텍스트면 내용을, 바이너리면 16진수를 출력","이미지 Data URI는 투명 배경 위에 미리보기"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Data URI는 크기 제한이 있나요?","acceptedAnswer":{"@type":"Answer","text":"브라우저마다 다르지만 대부분 수 MB까지 처리합니다. 다만 HTML·CSS 파일이 커지고 캐시를 활용할 수 없으므로 작은 리소스에만 사용하는 것이 좋습니다."}},{"@type":"Question","name":"charset=utf-8은 꼭 필요한가요?","acceptedAnswer":{"@type":"Answer","text":"텍스트(HTML, JSON 등)에서 한글 같은 비ASCII 문자가 있다면 지정하는 것이 안전합니다. SVG는 XML 선언으로 인코딩이 정해져 생략해도 됩니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"Data URI 변환기","item":"https://wooadev.wooahouse.com/data-uri-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="data-uri-converter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/data-uri-converter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Data URI 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧩</span>
+    <h1>Data URI 변환기 — data: URL 만들기·해석</h1>
+    <p>텍스트나 파일을 data:URL(Base64 또는 퍼센트 인코딩)로 만들고, 기존 Data URI를 해석해 내용과 MIME 타입을 확인합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 변환 완료</p>
+<h3>입력 — 입력</h3><pre>&lt;svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"&gt;&lt;circle cx="20" cy="20" r="18" fill="#C4956A"/&gt;&lt;/svg&gt;</pre>
+<h3>결과 — 결과</h3><pre>data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%2240%22%20height=%2240%22%3E%3Ccircle%20cx=%2220%22%20cy=%2220%22%20r=%2218%22%20fill=%22%23C4956A%22/%3E%3C/svg%3E</pre>
+<h3>결과 — 정보</h3><pre>MIME: image/svg+xml
+원본: 116 bytes
+Data URI 길이: 205자
+CSS에서: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%2240%22%20height=%2240%22%3E%3Ccircle%20cx=%2220%22%20cy=%2220%22%20r=%2218%22%20fill=%22%23C4956A%22/%3E%3C/s…")</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>작은 이미지나 SVG, CSS·JS 조각을 별도 요청 없이 HTML·CSS에 직접 넣을 때 Data URI를 씁니다. 반대로 코드에서 발견한 긴 data: 문자열의 정체를 확인할 때도 필요합니다.</p>
+<ul><li>텍스트 → Data URI: MIME 타입 선택(svg, html, json, css, js 등), Base64 또는 퍼센트 인코딩 선택</li><li>파일 → Data URI: 이미지·폰트·PDF 등 어떤 파일이든 Base64 Data URI로 변환</li><li>Data URI → 내용: MIME, charset, 인코딩 방식, 디코딩된 크기를 표시하고 텍스트면 내용을, 바이너리면 16진수를 출력</li><li>이미지 Data URI는 투명 배경 위에 미리보기</li></ul>
+<p>SVG처럼 텍스트 기반 파일은 퍼센트 인코딩이 Base64보다 짧고 gzip에도 유리합니다.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="image-to-base64.html" class="related-card"><span class="related-icon">🖼️</span><span>이미지 → Base64</span></a>
+    <a href="base64.html" class="related-card"><span class="related-icon">🔐</span><span>Base64</span></a>
+    <a href="url-encoder.html" class="related-card"><span class="related-icon">🔗</span><span>URL 인코더</span></a>
+    <a href="html-entity.html" class="related-card"><span class="related-icon">🔤</span><span>HTML Entity 인코더</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>CSS에서는 url("data:image/svg+xml,...") 형태로 퍼센트 인코딩 SVG를 바로 쓸 수 있습니다.</li><li>Base64 Data URI는 원본보다 약 33% 커지므로 수 KB 이상의 파일에는 권장하지 않습니다.</li><li>이미지 파일만 변환한다면 이미지 → Base64 변환기도 있습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>Data URI는 크기 제한이 있나요?</summary><p>브라우저마다 다르지만 대부분 수 MB까지 처리합니다. 다만 HTML·CSS 파일이 커지고 캐시를 활용할 수 없으므로 작은 리소스에만 사용하는 것이 좋습니다.</p></details><details><summary>charset=utf-8은 꼭 필요한가요?</summary><p>텍스트(HTML, JSON 등)에서 한글 같은 비ASCII 문자가 있다면 지정하는 것이 안전합니다. SVG는 XML 선언으로 인코딩이 정해져 생략해도 됩니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-bytes.js"></script>
+<script src="js/tools/data-uri-converter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

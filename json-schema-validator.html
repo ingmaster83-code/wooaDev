@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON 스키마 검증기 — Schema로 JSON 유효성 검사 | WooaDev</title>
+  <meta name="description" content="JSON 데이터를 JSON Schema로 검증하고 모든 오류를 데이터 경로·키워드·메시지와 함께 표시합니다. Draft-07, 2019-09, 2020-12 지원, format 검사와 엄격 모드 옵션 제공. Ajv 기반, 브라우저에서만 처리.">
+  <meta name="keywords" content="JSON 스키마 검증, JSON Schema validator, JSON Schema 유효성 검사, ajv 검증, JSON Schema 오류, draft-07 검증, 스키마 테스트">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/json-schema-validator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/json-schema-validator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/json-schema-validator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/json-schema-validator.html">
+  <meta property="og:title" content="JSON 스키마 검증기 — Schema로 JSON 유효성 검사 | WooaDev">
+  <meta property="og:description" content="JSON 데이터를 JSON Schema로 검증하고 모든 오류를 데이터 경로·키워드·메시지와 함께 표시합니다. Draft-07, 2019-09, 2020-12 지원, format 검사와 엄격 모드 옵션 제공. Ajv 기반, 브라우저에서만 처리.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/json-schema-validator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON 스키마 검증기 — Schema로 JSON 유효성 검사 | WooaDev">
+  <meta name="twitter:description" content="JSON 데이터를 JSON Schema로 검증하고 모든 오류를 데이터 경로·키워드·메시지와 함께 표시합니다. Draft-07, 2019-09, 2020-12 지원, format 검사와 엄격 모드 옵션 제공. Ajv 기반, 브라우저에서만 처리.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON 스키마 검증기","url":"https://wooadev.wooahouse.com/json-schema-validator.html","description":"JSON 데이터를 JSON Schema로 검증하고 모든 오류를 데이터 경로·키워드·메시지와 함께 표시합니다. Draft-07, 2019-09, 2020-12 지원, format 검사와 엄격 모드 옵션 제공. Ajv 기반, 브라우저에서만 처리.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["사용 라이브러리: Ajv v8 (가장 널리 쓰이는 JSON Schema 검증기)","Draft-07 / 2019-09 / 2020-12 지원, $schema로 자동 선택하거나 직접 지정","모든 오류 수집: 데이터 경로(/items/1/price), 키워드(type, required, enum…), 메시지, 스키마 위치","format 검사(email, uri, date-time 등) 켜기/끄기, 엄격 모드(알 수 없는 키워드를 오류로)","스키마 자체가 잘못된 경우에는 그 사실을 따로 알려 줌"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"스키마의 $schema 값이 지원하지 않는 버전이면?","acceptedAnswer":{"@type":"Answer","text":"$schema는 버전 선택 용도로만 읽고 검증에서는 제외하므로, Draft-04 같은 구버전 문법만 쓰지 않는다면 대부분 동작합니다. 확실하지 않으면 버전을 직접 지정하세요."}},{"@type":"Question","name":"데이터가 서버에 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 스키마와 데이터 모두 브라우저에서 처리되며 외부로 전송되지 않습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"JSON 스키마 검증기","item":"https://wooadev.wooahouse.com/json-schema-validator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="json-schema-validator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/json-schema-validator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON 스키마 검증기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🛡️</span>
+    <h1>JSON 스키마 검증기 — Schema로 JSON 데이터 검증</h1>
+    <p>JSON 데이터가 JSON Schema를 만족하는지 검증하고, 어떤 경로의 어떤 규칙이 깨졌는지 모든 오류를 표로 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>❌ 검증 실패 — 오류 5건 (Draft 07)</p>
+<h3>입력 — JSON Schema</h3><pre>{
+  "type": "object",
+  "required": ["id", "email"],
+  "properties": {
+    "id": { "type": "integer", "minimum": 1 },
+    "email": { "type": "string", "format": "email" },
+    "role": { "enum": ["admin", "user"] },
+    "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+  },
+  "additionalProperties": false
+}</pre>
+<h3>입력 — 검증할 JSON 데이터</h3><pre>{
+  "id": 0,
+  "email": "not-an-email",
+  "role": "guest",
+  "tags": ["a", "a"],
+  "extra": true
+}</pre>
+<h3>결과 — 검증 오류</h3><pre>데이터 위치 | 키워드 | 메시지 | 세부 | 스키마 위치
+(root) | additionalProperties | must NOT have additional properties | additionalProperty="extra" | #/additionalProperties
+/id | minimum | must be &gt;= 1 | comparison="&gt;=", limit=1 | #/properties/id/minimum
+/email | format | must match format "email" | format="email" | #/properties/email/format
+/role | enum | must be equal to one of the allowed values | allowedValues=["admin","user"] | #/properties/role/enum
+/tags | uniqueItems | must NOT have duplicate items (items ## 1 and 0 are identical) | i=0, j=1 | #/properties/tags/uniqueItems</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>API 요청 본문, 설정 파일, 데이터 파일이 약속한 형식을 지키는지 확인하는 표준 방법이 JSON Schema입니다. 스키마와 데이터를 붙여 넣으면 모든 위반을 한 번에 보여 줍니다.</p>
+<ul><li>사용 라이브러리: Ajv v8 (가장 널리 쓰이는 JSON Schema 검증기)</li><li>Draft-07 / 2019-09 / 2020-12 지원, $schema로 자동 선택하거나 직접 지정</li><li>모든 오류 수집: 데이터 경로(/items/1/price), 키워드(type, required, enum…), 메시지, 스키마 위치</li><li>format 검사(email, uri, date-time 등) 켜기/끄기, 엄격 모드(알 수 없는 키워드를 오류로)</li><li>스키마 자체가 잘못된 경우에는 그 사실을 따로 알려 줌</li></ul>
+<p>스키마를 직접 쓰기 어렵다면 JSON 스키마 생성기로 초안을 만든 뒤 사용하세요.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="json-schema-generator.html" class="related-card"><span class="related-icon">📘</span><span>JSON 스키마 생성기</span></a>
+    <a href="schema-mock-data.html" class="related-card"><span class="related-icon">🎲</span><span>JSON 모의 데이터 생성기</span></a>
+    <a href="json-validator.html" class="related-card"><span class="related-icon">✅</span><span>JSON 유효성 검사기</span></a>
+    <a href="json-schema-diff.html" class="related-card"><span class="related-icon">⚖️</span><span>JSON 스키마 비교 도구</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>오류가 많을 때는 데이터 위치 열이 같은 것끼리 묶어 읽으면 원인이 보입니다.</li><li>format은 기본 검증 대상이 아닐 수 있으므로 이메일·날짜 형식 검사가 필요하면 format 옵션을 켜 두세요.</li><li>additionalProperties:false가 있으면 오타 난 키가 additionalProperties 오류로 표시됩니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>스키마의 $schema 값이 지원하지 않는 버전이면?</summary><p>$schema는 버전 선택 용도로만 읽고 검증에서는 제외하므로, Draft-04 같은 구버전 문법만 쓰지 않는다면 대부분 동작합니다. 확실하지 않으면 버전을 직접 지정하세요.</p></details><details><summary>데이터가 서버에 전송되나요?</summary><p>아니요. 스키마와 데이터 모두 브라우저에서 처리되며 외부로 전송되지 않습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/lib/ajv.min.js"></script>
+<script src="js/tools/json-schema-validator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

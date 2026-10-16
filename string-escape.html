@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>문자열 이스케이프 변환기 — JSON·JavaScript·Python·SQL·정규식 | WooaDev</title>
+  <meta name="description" content="문자열을 JSON, JavaScript(템플릿 리터럴 포함), Python, Java/C#, C, SQL, MySQL, 정규식 규칙으로 이스케이프하거나 \n, \uXXXX 같은 이스케이프 시퀀스를 원래 문자로 되돌립니다. 비ASCII \u 변환 지원.">
+  <meta name="keywords" content="문자열 이스케이프, string escape, 언이스케이프, JSON 이스케이프, JavaScript 이스케이프, 정규식 이스케이프, SQL 이스케이프, \u 유니코드 변환">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/string-escape.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/string-escape.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/string-escape.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/string-escape.html">
+  <meta property="og:title" content="문자열 이스케이프 변환기 — JSON·JavaScript·Python·SQL·정규식 | WooaDev">
+  <meta property="og:description" content="문자열을 JSON, JavaScript(템플릿 리터럴 포함), Python, Java/C#, C, SQL, MySQL, 정규식 규칙으로 이스케이프하거나 \n, \uXXXX 같은 이스케이프 시퀀스를 원래 문자로 되돌립니다. 비ASCII \u 변환 지원.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/string-escape.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="문자열 이스케이프 변환기 — JSON·JavaScript·Python·SQL·정규식 | WooaDev">
+  <meta name="twitter:description" content="문자열을 JSON, JavaScript(템플릿 리터럴 포함), Python, Java/C#, C, SQL, MySQL, 정규식 규칙으로 이스케이프하거나 \n, \uXXXX 같은 이스케이프 시퀀스를 원래 문자로 되돌립니다. 비ASCII \u 변환 지원.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"문자열 이스케이프 변환기","url":"https://wooadev.wooahouse.com/string-escape.html","description":"문자열을 JSON, JavaScript(템플릿 리터럴 포함), Python, Java/C#, C, SQL, MySQL, 정규식 규칙으로 이스케이프하거나 \\n, \\uXXXX 같은 이스케이프 시퀀스를 원래 문자로 되돌립니다. 비ASCII \\u 변환 지원.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["이스케이프: 실제 문자열 → 코드에 붙여 넣을 수 있는 리터럴 (따옴표 종류, 앞뒤 따옴표 포함 여부 선택)","언이스케이프: \"a\\nb\\u0041\" 같은 리터럴 → 실제 문자열 (\\xHH, \\u{1F600}, 8진수, 줄 이음 처리)","대상: JSON, JavaScript(작은/큰따옴표/템플릿), Python, Java·C#, C·C++, SQL(작은따옴표 두 번), MySQL, 정규식 리터럴","\"ASCII 밖 문자도 \\uXXXX\" 옵션으로 한글·이모지(서로게이트 쌍)를 이스케이프"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"JSON.stringify와 같은 결과인가요?","acceptedAnswer":{"@type":"Answer","text":"JSON 대상은 JSON.stringify 규칙(\\n, \\t, \\\", \\\\, 제어 문자 \\u00XX)을 따릅니다. 나머지 언어는 각 언어의 리터럴 규칙을 따라 약간 다를 수 있습니다."}},{"@type":"Question","name":"SQL 이스케이프로 SQL 인젝션을 막을 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"권장하지 않습니다. 인젝션 방지는 항상 준비된 쿼리(파라미터 바인딩)로 하세요. 이 도구는 쿼리를 손으로 작성하거나 로그에 값을 표기할 때 쓰는 보조 용도입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"문자열 이스케이프 변환기","item":"https://wooadev.wooahouse.com/string-escape.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="string-escape.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/string-escape.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>문자열 이스케이프 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔣</span>
+    <h1>문자열 이스케이프 · 언이스케이프 변환기</h1>
+    <p>줄바꿈과 따옴표가 섞인 문자열을 JSON, JavaScript, Python, Java, C, SQL, 정규식 규칙에 맞게 이스케이프하거나 되돌립니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 이스케이프 완료</p>
+<h3>입력 — 입력</h3><pre>He said "안녕"
+	Path: C:\Users\wooa
+😀</pre>
+<h3>결과 — 결과</h3><pre>"He said \"안녕\"\n\tPath: C:\\Users\\wooa\n😀"</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>코드에 긴 텍스트나 JSON을 문자열로 넣을 때 따옴표, 역슬래시, 줄바꿈을 일일이 처리하기는 번거롭고 실수하기 쉽습니다.</p>
+<ul><li>이스케이프: 실제 문자열 → 코드에 붙여 넣을 수 있는 리터럴 (따옴표 종류, 앞뒤 따옴표 포함 여부 선택)</li><li>언이스케이프: "a\nb\u0041" 같은 리터럴 → 실제 문자열 (\xHH, \u{1F600}, 8진수, 줄 이음 처리)</li><li>대상: JSON, JavaScript(작은/큰따옴표/템플릿), Python, Java·C#, C·C++, SQL(작은따옴표 두 번), MySQL, 정규식 리터럴</li><li>"ASCII 밖 문자도 \uXXXX" 옵션으로 한글·이모지(서로게이트 쌍)를 이스케이프</li></ul>
+<p>JSON 규격에 맞는지는 JSON 유효성 검사기로 확인하세요.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="html-entity.html" class="related-card"><span class="related-icon">🔤</span><span>HTML Entity 인코더</span></a>
+    <a href="url-encoder.html" class="related-card"><span class="related-icon">🔗</span><span>URL 인코더</span></a>
+    <a href="base64.html" class="related-card"><span class="related-icon">🔐</span><span>Base64</span></a>
+    <a href="regex-tester.html" class="related-card"><span class="related-icon">🔍</span><span>Regex 테스터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>여러 줄 JSON을 코드에 넣을 때는 JSON 대상으로 이스케이프한 뒤 앞뒤 따옴표를 포함해 복사하세요.</li><li>SQL 값 삽입은 이스케이프 대신 파라미터 바인딩을 사용하는 것이 안전합니다. 이 도구는 문자열 리터럴 작성용입니다.</li><li>알 수 없는 이스케이프(\q 등)는 문자 그대로 두고 개수를 알려 줍니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>JSON.stringify와 같은 결과인가요?</summary><p>JSON 대상은 JSON.stringify 규칙(\n, \t, \", \\, 제어 문자 \u00XX)을 따릅니다. 나머지 언어는 각 언어의 리터럴 규칙을 따라 약간 다를 수 있습니다.</p></details><details><summary>SQL 이스케이프로 SQL 인젝션을 막을 수 있나요?</summary><p>권장하지 않습니다. 인젝션 방지는 항상 준비된 쿼리(파라미터 바인딩)로 하세요. 이 도구는 쿼리를 손으로 작성하거나 로그에 값을 표기할 때 쓰는 보조 용도입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/string-escape.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

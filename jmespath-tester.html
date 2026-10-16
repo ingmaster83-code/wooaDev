@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JMESPath 테스트기 — 쿼리 실행·필터·투영·함수 | WooaDev</title>
+  <meta name="description" content="JMESPath 쿼리를 JSON에 바로 실행해 결과를 확인합니다. AWS CLI --query, Ansible, Azure CLI에서 쓰는 필터, 투영, 멀티셀렉트, sort/length/join 같은 함수를 연습하세요. 브라우저에서만 처리.">
+  <meta name="keywords" content="JMESPath 테스트, JMESPath tester, JMESPath 온라인, AWS CLI query, jmespath 예제, jmespath 필터, JMESPath playground">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/jmespath-tester.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/jmespath-tester.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/jmespath-tester.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/jmespath-tester.html">
+  <meta property="og:title" content="JMESPath 테스트기 — 쿼리 실행·필터·투영·함수 | WooaDev">
+  <meta property="og:description" content="JMESPath 쿼리를 JSON에 바로 실행해 결과를 확인합니다. AWS CLI --query, Ansible, Azure CLI에서 쓰는 필터, 투영, 멀티셀렉트, sort/length/join 같은 함수를 연습하세요. 브라우저에서만 처리.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/jmespath-tester.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JMESPath 테스트기 — 쿼리 실행·필터·투영·함수 | WooaDev">
+  <meta name="twitter:description" content="JMESPath 쿼리를 JSON에 바로 실행해 결과를 확인합니다. AWS CLI --query, Ansible, Azure CLI에서 쓰는 필터, 투영, 멀티셀렉트, sort/length/join 같은 함수를 연습하세요. 브라우저에서만 처리.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JMESPath 테스트기","url":"https://wooadev.wooahouse.com/jmespath-tester.html","description":"JMESPath 쿼리를 JSON에 바로 실행해 결과를 확인합니다. AWS CLI --query, Ansible, Azure CLI에서 쓰는 필터, 투영, 멀티셀렉트, sort/length/join 같은 함수를 연습하세요. 브라우저에서만 처리.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["필터 people[?age > `30`], 투영 people[*].name, 슬라이스 items[1:3]","멀티셀렉트 {name: name, state: state.name}, 파이프 a | b","함수 length(), sort_by(), max_by(), join(), contains(), keys(), values() 등 공식 함수 지원","리터럴은 백틱(`30`, `\"text\"`), 문자열 비교는 작은따옴표('WA')를 사용"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"JMESPath와 JSONPath는 어떻게 다른가요?","acceptedAnswer":{"@type":"Answer","text":"JMESPath는 명세와 함수가 엄격히 정의된 별도의 언어(프로젝션·파이프 등)이고, JSONPath는 XPath를 닮은 경로 표기입니다. 구문이 서로 호환되지 않습니다."}},{"@type":"Question","name":"식에 오류가 있으면 어떻게 표시되나요?","acceptedAnswer":{"@type":"Answer","text":"라이브러리가 보고하는 구문 오류 메시지를 그대로 보여 줍니다. 괄호·백틱·따옴표가 짝이 맞는지 확인하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"JMESPath 테스트기","item":"https://wooadev.wooahouse.com/jmespath-tester.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="jmespath-tester.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/jmespath-tester.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JMESPath 테스트기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧪</span>
+    <h1>JMESPath 테스트기</h1>
+    <p>people[?age &gt; `30`].name 같은 JMESPath 식을 JSON에 실행해 필터·투영·함수 결과를 확인합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 결과 타입: array (2)</p>
+<h3>입력 — JSON 데이터</h3><pre>{
+  "people": [
+    { "name": "Kim", "age": 29, "state": { "name": "WA" }, "tags": ["dev", "ops"] },
+    { "name": "Lee", "age": 41, "state": { "name": "NY" }, "tags": ["dev"] },
+    { "name": "Park", "age": 35, "state": { "name": "WA" }, "tags": [] }
+  ]
+}</pre>
+<h3>입력 — JMESPath 식</h3><pre>people[?age &gt; `30`].{name: name, state: state.name}</pre>
+<h3>결과 — 결과</h3><pre>[
+  {
+    "name": "Lee",
+    "state": "NY"
+  },
+  {
+    "name": "Park",
+    "state": "WA"
+  }
+]</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>JMESPath는 AWS CLI(--query), Azure CLI, Ansible, Terraform 등에서 JSON 출력을 가공할 때 쓰는 쿼리 언어입니다. 명령에 넣기 전에 실제 응답으로 식을 시험해 볼 수 있습니다.</p>
+<ul><li>필터 people[?age &gt; <code>30</code>], 투영 people[*].name, 슬라이스 items[1:3]</li><li>멀티셀렉트 {name: name, state: state.name}, 파이프 a | b</li><li>함수 length(), sort_by(), max_by(), join(), contains(), keys(), values() 등 공식 함수 지원</li><li>리터럴은 백틱(<code>30</code>, <code>"text"</code>), 문자열 비교는 작은따옴표('WA')를 사용</li></ul>
+<p>경로 목록까지 필요하면 JSONPath 테스터를, 정확한 한 값의 위치는 JSON 포인터 도구를 사용하세요.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="jsonpath-tester.html" class="related-card"><span class="related-icon">🧭</span><span>JSONPath 테스터</span></a>
+    <a href="json-pointer.html" class="related-card"><span class="related-icon">📍</span><span>JSON 포인터 도구</span></a>
+    <a href="json-key-extractor.html" class="related-card"><span class="related-icon">🔑</span><span>JSON 키 추출기</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>AWS CLI의 --query 옵션에 넣을 식은 여기서 먼저 결과를 확인하고 작은따옴표로 감싸 붙여 넣으세요.</li><li>숫자·문자열 리터럴은 백틱으로, 필드 비교 문자열은 작은따옴표로 씁니다.</li><li>결과가 null이면 경로 이름이나 대소문자를 먼저 확인하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>JMESPath와 JSONPath는 어떻게 다른가요?</summary><p>JMESPath는 명세와 함수가 엄격히 정의된 별도의 언어(프로젝션·파이프 등)이고, JSONPath는 XPath를 닮은 경로 표기입니다. 구문이 서로 호환되지 않습니다.</p></details><details><summary>식에 오류가 있으면 어떻게 표시되나요?</summary><p>라이브러리가 보고하는 구문 오류 메시지를 그대로 보여 줍니다. 괄호·백틱·따옴표가 짝이 맞는지 확인하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/lib/jmespath.min.js"></script>
+<script src="js/tools/jmespath-tester.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

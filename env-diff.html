@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>.env 비교 도구 — 누락된 환경 변수·변경 값 확인 | WooaDev</title>
+  <meta name="description" content=".env와 .env.example 같은 두 환경 변수 파일을 비교해 누락·추가·값이 다른 변수를 찾습니다. 값 가리기, 차이만 보기 옵션과 B에 없는 키 목록 복사 기능을 제공하며 서버로 전송하지 않습니다.">
+  <meta name="keywords" content=".env 비교, env diff, 환경 변수 비교, .env 누락 확인, .env.example 비교, dotenv 비교, 환경변수 누락">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/env-diff.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/env-diff.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/env-diff.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/env-diff.html">
+  <meta property="og:title" content=".env 비교 도구 — 누락된 환경 변수·변경 값 확인 | WooaDev">
+  <meta property="og:description" content=".env와 .env.example 같은 두 환경 변수 파일을 비교해 누락·추가·값이 다른 변수를 찾습니다. 값 가리기, 차이만 보기 옵션과 B에 없는 키 목록 복사 기능을 제공하며 서버로 전송하지 않습니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/env-diff.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content=".env 비교 도구 — 누락된 환경 변수·변경 값 확인 | WooaDev">
+  <meta name="twitter:description" content=".env와 .env.example 같은 두 환경 변수 파일을 비교해 누락·추가·값이 다른 변수를 찾습니다. 값 가리기, 차이만 보기 옵션과 B에 없는 키 목록 복사 기능을 제공하며 서버로 전송하지 않습니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"ENV 비교·누락 확인","url":"https://wooadev.wooahouse.com/env-diff.html","description":".env와 .env.example 같은 두 환경 변수 파일을 비교해 누락·추가·값이 다른 변수를 찾습니다. 값 가리기, 차이만 보기 옵션과 B에 없는 키 목록 복사 기능을 제공하며 서버로 전송하지 않습니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["B에 누락 / B에만 있음 / 값 다름 / 동일로 분류해 색으로 구분","export 접두사, 따옴표, 인라인 주석(# …), 여러 줄 값을 올바르게 파싱","\"값 가리기\"로 화면 공유 중에도 비밀 값을 노출하지 않고 비교","B에 없는 키를 `KEY=` 형태로 모아 바로 붙여 넣을 수 있게 제공","중복 키나 형식에 맞지 않는 줄은 경고로 표시"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"비교하는 .env 내용이 어딘가에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다."}},{"@type":"Question","name":"따옴표가 있는 값과 없는 값은 다르게 비교되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. KEY=\"a b\"와 KEY=a b 처럼 따옴표 유무가 달라도 파싱된 실제 값이 같으면 같은 값으로 봅니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"ENV 비교·누락 확인","item":"https://wooadev.wooahouse.com/env-diff.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="env-diff.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/env-diff.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>ENV 비교·누락 확인</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔍</span>
+    <h1>ENV 비교 도구 — 누락·추가·변경된 환경 변수 찾기</h1>
+    <p>두 .env 파일을 비교해 한쪽에만 있는 변수와 값이 달라진 변수를 표로 보여 주고, 빠진 키를 붙여 넣기 좋은 형태로 뽑아 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>🔍 B에 누락 1 · B에만 있음 1 · 값 다름 3 · 동일 2</p>
+<h3>입력 — 기준 파일 (A) — 예: .env.example</h3><pre># app
+NODE_ENV=development
+PORT=3000
+DATABASE_URL=postgres://user:pass@localhost:5432/app
+REDIS_URL=redis://localhost:6379
+JWT_SECRET=changeme
+SENTRY_DSN=</pre>
+<h3>입력 — 비교 파일 (B) — 예: .env</h3><pre>NODE_ENV=production
+PORT=8080
+DATABASE_URL=postgres://app:s3cret@db.internal:5432/app
+JWT_SECRET=changeme
+SMTP_HOST=smtp.example.com
+SENTRY_DSN=</pre>
+<h3>결과 — 비교 결과</h3><pre>변수 | 상태 | A | B
+NODE_ENV | 값 다름 | development | production
+PORT | 값 다름 | 3000 | 8080
+DATABASE_URL | 값 다름 | postgres://user:pass@localhost:5432/app | postgres://app:s3cret@db.internal:5432/app
+REDIS_URL | B에 누락 | redis://localhost:6379 | 
+JWT_SECRET | 동일 | changeme | changeme
+SENTRY_DSN | 동일 |  | 
+SMTP_HOST | B에만 있음 |  | smtp.example.com</pre>
+<h3>결과 — B에 없는 키 (붙여넣기용)</h3><pre>REDIS_URL=</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>새 팀원이 프로젝트를 받았을 때, 혹은 배포 서버에 환경 변수를 옮길 때 가장 흔한 문제가 변수 하나가 빠져 앱이 죽는 것입니다. 기준 파일(A)과 실제 파일(B)을 붙여 넣으면 차이를 바로 확인할 수 있습니다.</p>
+<ul><li>B에 누락 / B에만 있음 / 값 다름 / 동일로 분류해 색으로 구분</li><li>export 접두사, 따옴표, 인라인 주석(# …), 여러 줄 값을 올바르게 파싱</li><li>"값 가리기"로 화면 공유 중에도 비밀 값을 노출하지 않고 비교</li><li>B에 없는 키를 <code>KEY=</code> 형태로 모아 바로 붙여 넣을 수 있게 제공</li><li>중복 키나 형식에 맞지 않는 줄은 경고로 표시</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="env-example-generator.html" class="related-card"><span class="related-icon">📄</span><span>.env.example 생성기</span></a>
+    <a href="env-editor.html" class="related-card"><span class="related-icon">✏️</span><span>.env 편집기</span></a>
+    <a href="env-json-converter.html" class="related-card"><span class="related-icon">🔄</span><span>ENV ↔ JSON 변환기</span></a>
+    <a href="config-diff.html" class="related-card"><span class="related-icon">🔍</span><span>설정 파일 비교 도구</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>기준 파일에는 보통 .env.example을 두고, 실제 .env와 비교해 누락만 확인하세요.</li><li>"값 변경도 비교"를 끄면 키 존재 여부만 확인합니다 (환경마다 값이 다른 파일 비교에 적합).</li><li>비밀 키가 포함된 파일을 화면에 띄울 때는 "값 가리기"를 켜세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>비교하는 .env 내용이 어딘가에 저장되나요?</summary><p>아니요. 모든 처리는 브라우저에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다.</p></details><details><summary>따옴표가 있는 값과 없는 값은 다르게 비교되나요?</summary><p>아니요. KEY="a b"와 KEY=a b 처럼 따옴표 유무가 달라도 파싱된 실제 값이 같으면 같은 값으로 봅니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tk-env.js"></script>
+<script src="js/tools/env-diff.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

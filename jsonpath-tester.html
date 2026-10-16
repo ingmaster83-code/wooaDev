@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSONPath 테스터 — 식 실행·필터·재귀 탐색 결과 확인 | WooaDev</title>
+  <meta name="description" content="JSONPath 식을 JSON에 바로 실행해 일치한 값과 정규화된 경로를 보여 줍니다. 필터([?()]), 재귀(..), 슬라이스, 와일드카드, 정규식(=~), length() 등 지원. eval 없이 브라우저에서 안전하게 처리.">
+  <meta name="keywords" content="JSONPath 테스터, JSONPath tester, JSONPath 온라인, JSONPath evaluator, JSON 필터, jsonpath 문법, jsonpath 정규식">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/jsonpath-tester.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/jsonpath-tester.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/jsonpath-tester.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/jsonpath-tester.html">
+  <meta property="og:title" content="JSONPath 테스터 — 식 실행·필터·재귀 탐색 결과 확인 | WooaDev">
+  <meta property="og:description" content="JSONPath 식을 JSON에 바로 실행해 일치한 값과 정규화된 경로를 보여 줍니다. 필터([?()]), 재귀(..), 슬라이스, 와일드카드, 정규식(=~), length() 등 지원. eval 없이 브라우저에서 안전하게 처리.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/jsonpath-tester.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSONPath 테스터 — 식 실행·필터·재귀 탐색 결과 확인 | WooaDev">
+  <meta name="twitter:description" content="JSONPath 식을 JSON에 바로 실행해 일치한 값과 정규화된 경로를 보여 줍니다. 필터([?()]), 재귀(..), 슬라이스, 와일드카드, 정규식(=~), length() 등 지원. eval 없이 브라우저에서 안전하게 처리.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSONPath 테스터","url":"https://wooadev.wooahouse.com/jsonpath-tester.html","description":"JSONPath 식을 JSON에 바로 실행해 일치한 값과 정규화된 경로를 보여 줍니다. 필터([?()]), 재귀(..), 슬라이스, 와일드카드, 정규식(=~), length() 등 지원. eval 없이 브라우저에서 안전하게 처리.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["기본: $.a.b, $['a'], $[0], $[-1], $.*, 합집합 $['a','b']","재귀 탐색 $..price, 슬라이스 $[1:5:2], 역순 $[::-1]","필터 [?(@.price < 10 && @.category == 'fiction')], 존재 검사 [?(@.isbn)], 정규식 [?(@.name =~ /^a/)]","함수 length(), count(), match(), search() 지원","일치한 항목마다 정규화된 경로($['store']['book'][0])를 함께 표시"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"JSONPath 구현마다 결과가 다르다던데요?","acceptedAnswer":{"@type":"Answer","text":"표준(RFC 9535)이 나오기 전의 구현들이 서로 달라서 필터 문법이나 .length 같은 부분이 다를 수 있습니다. 이 도구는 RFC 9535와 가장 널리 쓰이는 Goessner 문법을 함께 지원합니다."}},{"@type":"Question","name":"입력한 식이 서버에서 실행되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 브라우저 안에서 식을 직접 해석하며 서버로 전송하거나 자바스크립트 eval로 실행하지 않습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"JSONPath 테스터","item":"https://wooadev.wooahouse.com/jsonpath-tester.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="jsonpath-tester.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/jsonpath-tester.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSONPath 테스터</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧭</span>
+    <h1>JSONPath 테스터 — 값과 경로를 함께 확인</h1>
+    <p>$.store.book[?(@.price &lt; 10)].title 같은 JSONPath 식을 실행해 일치한 값과 그 경로를 바로 확인합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 2개 일치</p>
+<h3>입력 — JSON 데이터</h3><pre>{
+  "store": {
+    "book": [
+      { "category": "reference", "author": "Nigel Rees", "title": "Sayings of the Century", "price": 8.95 },
+      { "category": "fiction", "author": "Evelyn Waugh", "title": "Sword of Honour", "price": 12.99 },
+      { "category": "fiction", "author": "Herman Melville", "title": "Moby Dick", "isbn": "0-553-21311-3", "price": 8.99 },
+      { "category": "fiction", "author": "J. R. R. Tolkien", "title": "The Lord of the Rings", "isbn": "0-395-19395-8", "price": 22.99 }
+    ],
+    "bicycle": { "color": "red", "price": 399 }
+  }
+}</pre>
+<h3>입력 — JSONPath 식</h3><pre>$.store.book[?(@.price &lt; 10)].title</pre>
+<h3>결과 — 일치 항목 (경로 + 값)</h3><pre># | 경로 | 값
+1 | $['store']['book'][0]['title'] | "Sayings of the Century"
+2 | $['store']['book'][2]['title'] | "Moby Dick"</pre>
+<h3>결과 — 값만 모은 JSON</h3><pre>[
+  "Sayings of the Century",
+  "Moby Dick"
+]</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>JSONPath는 JSON을 위한 쿼리 언어(RFC 9535)로, 설정 도구·API 게이트웨이·테스트 프레임워크에서 널리 쓰입니다. 식을 코드에 넣기 전에 실제 데이터로 확인해 보세요.</p>
+<ul><li>기본: $.a.b, $['a'], $[0], $[-1], $.*, 합집합 $['a','b']</li><li>재귀 탐색 $..price, 슬라이스 $[1:5:2], 역순 $[::-1]</li><li>필터 [?(@.price &lt; 10 &amp;&amp; @.category == 'fiction')], 존재 검사 [?(@.isbn)], 정규식 [?(@.name =~ /^a/)]</li><li>함수 length(), count(), match(), search() 지원</li><li>일치한 항목마다 정규화된 경로($['store']['book'][0])를 함께 표시</li></ul>
+<p>자바스크립트 eval을 쓰지 않고 직접 해석하므로 입력한 식이 코드로 실행되지 않습니다.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="jmespath-tester.html" class="related-card"><span class="related-icon">🧪</span><span>JMESPath 테스트기</span></a>
+    <a href="json-pointer.html" class="related-card"><span class="related-icon">📍</span><span>JSON 포인터 도구</span></a>
+    <a href="json-key-extractor.html" class="related-card"><span class="related-icon">🔑</span><span>JSON 키 추출기</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>필터에서 문자열은 작은따옴표나 큰따옴표로 감싸고, 숫자는 그대로 씁니다.</li><li>결과 경로를 복사해서 JSON 포인터 도구나 코드의 접근 경로로 활용하세요.</li><li>$ 없이 a.b 만 입력해도 루트부터의 경로로 해석합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>JSONPath 구현마다 결과가 다르다던데요?</summary><p>표준(RFC 9535)이 나오기 전의 구현들이 서로 달라서 필터 문법이나 .length 같은 부분이 다를 수 있습니다. 이 도구는 RFC 9535와 가장 널리 쓰이는 Goessner 문법을 함께 지원합니다.</p></details><details><summary>입력한 식이 서버에서 실행되나요?</summary><p>아니요. 브라우저 안에서 식을 직접 해석하며 서버로 전송하거나 자바스크립트 eval로 실행하지 않습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tk-jsonpath.js"></script>
+<script src="js/tools/jsonpath-tester.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

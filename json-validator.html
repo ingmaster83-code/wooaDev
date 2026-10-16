@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON 유효성 검사기 — 문법 오류 위치·중복 키 찾기 | WooaDev</title>
+  <meta name="description" content="JSON 문법 오류의 줄·열 위치를 바로 확인하고, JSON.parse가 조용히 무시하는 중복 키도 찾아냅니다. 후행 쉼표·작은따옴표·주석 오류를 한국어로 설명하며 서버로 전송하지 않습니다.">
+  <meta name="keywords" content="JSON 유효성 검사, JSON validator, JSON 문법 검사, JSON 오류 위치, JSON 중복 키, JSON lint, JSON 에러 찾기, 온라인 JSON 검사">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/json-validator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/json-validator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/json-validator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/json-validator.html">
+  <meta property="og:title" content="JSON 유효성 검사기 — 문법 오류 위치·중복 키 찾기 | WooaDev">
+  <meta property="og:description" content="JSON 문법 오류의 줄·열 위치를 바로 확인하고, JSON.parse가 조용히 무시하는 중복 키도 찾아냅니다. 후행 쉼표·작은따옴표·주석 오류를 한국어로 설명하며 서버로 전송하지 않습니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/json-validator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON 유효성 검사기 — 문법 오류 위치·중복 키 찾기 | WooaDev">
+  <meta name="twitter:description" content="JSON 문법 오류의 줄·열 위치를 바로 확인하고, JSON.parse가 조용히 무시하는 중복 키도 찾아냅니다. 후행 쉼표·작은따옴표·주석 오류를 한국어로 설명하며 서버로 전송하지 않습니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON 유효성 검사기","url":"https://wooadev.wooahouse.com/json-validator.html","description":"JSON 문법 오류의 줄·열 위치를 바로 확인하고, JSON.parse가 조용히 무시하는 중복 키도 찾아냅니다. 후행 쉼표·작은따옴표·주석 오류를 한국어로 설명하며 서버로 전송하지 않습니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["후행 쉼표, 작은따옴표, 따옴표 없는 키, 주석, undefined·NaN 같은 흔한 실수를 구체적인 문장으로 안내","같은 객체 안에서 반복된 키를 경로와 위치까지 목록으로 표시 (뒤의 값이 앞의 값을 덮어씀)","최대 깊이, 객체·배열·문자열·숫자 개수와 파일 크기를 함께 요약"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"JSON.parse 오류 메시지만으로는 어디가 틀렸는지 모르겠어요.","acceptedAnswer":{"@type":"Answer","text":"브라우저마다 오류 문구가 달라 위치를 알려 주지 않는 경우가 많습니다. 이 도구는 자체 파서로 줄·열 번호와 앞뒤 몇 줄의 코드를 함께 보여 주므로 틀린 곳을 바로 찾을 수 있습니다."}},{"@type":"Question","name":"중복 키가 있으면 JSON이 잘못된 건가요?","acceptedAnswer":{"@type":"Answer","text":"RFC 8259는 키가 유일해야 한다고 권고할 뿐 문법 오류로 보지는 않습니다. 다만 파서마다 처리 방식이 달라(대부분 마지막 값 사용) 의도하지 않은 설정으로 이어질 수 있어 따로 알려 드립니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"JSON 유효성 검사기","item":"https://wooadev.wooahouse.com/json-validator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="json-validator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/json-validator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON 유효성 검사기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">✅</span>
+    <h1>JSON 유효성 검사기 — 문법 오류 위치·중복 키 찾기</h1>
+    <p>JSON 문법 오류가 몇 번째 줄 몇 번째 칸에 있는지 알려주고, 조용히 덮어써지는 중복 키까지 찾아냅니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>❌ 유효하지 않은 JSON — 후행 쉼표(trailing comma)는 허용되지 않습니다 (줄 4, 열 17)</p>
+<h3>입력 — JSON 입력</h3><pre>{
+  "name": "WooaDev",
+  "tools": [1, 2, 3],
+  "active": true,
+}</pre>
+<h3>결과 — 오류 위치</h3><pre>     2 │   "name": "WooaDev",
+     3 │   "tools": [1, 2, 3],
+▶    4 │   "active": true,
+       │                 ^ 후행 쉼표(trailing comma)는 허용되지 않습니다
+     5 │ }</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>JSON.parse()는 오류가 나도 "Unexpected token" 정도만 알려 주고, 같은 키가 두 번 나와도 아무 말 없이 마지막 값으로 덮어씁니다. 이 도구는 JSON을 처음부터 끝까지 직접 읽으면서 오류가 생긴 줄·열 위치와 원인을 쉬운 말로 설명합니다.</p>
+<ul><li>후행 쉼표, 작은따옴표, 따옴표 없는 키, 주석, undefined·NaN 같은 흔한 실수를 구체적인 문장으로 안내</li><li>같은 객체 안에서 반복된 키를 경로와 위치까지 목록으로 표시 (뒤의 값이 앞의 값을 덮어씀)</li><li>최대 깊이, 객체·배열·문자열·숫자 개수와 파일 크기를 함께 요약</li></ul>
+<p>구조가 심하게 깨진 JSON은 JSON 복구 도구로 고치고, 보기 좋게 정리하려면 JSON 포맷터를 쓰세요.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="json-repair.html" class="related-card"><span class="related-icon">🔧</span><span>JSON 복구 도구</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+    <a href="json-schema-validator.html" class="related-card"><span class="related-icon">🛡️</span><span>JSON 스키마 검증기</span></a>
+    <a href="json-diff.html" class="related-card"><span class="related-icon">🔍</span><span>JSON 비교 도구</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>오류 위치의 ▶ 표시 줄이 문제가 처음 발견된 곳입니다. 실제 원인은 바로 앞 줄(닫히지 않은 따옴표·괄호)인 경우가 많습니다.</li><li>설정 파일처럼 같은 키가 실수로 두 번 들어가기 쉬운 JSON은 중복 키 검사로 점검하세요.</li><li>숫자 앞의 0(007), 16진수(0xFF), Infinity는 JSON 규격에서 허용되지 않습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>JSON.parse 오류 메시지만으로는 어디가 틀렸는지 모르겠어요.</summary><p>브라우저마다 오류 문구가 달라 위치를 알려 주지 않는 경우가 많습니다. 이 도구는 자체 파서로 줄·열 번호와 앞뒤 몇 줄의 코드를 함께 보여 주므로 틀린 곳을 바로 찾을 수 있습니다.</p></details><details><summary>중복 키가 있으면 JSON이 잘못된 건가요?</summary><p>RFC 8259는 키가 유일해야 한다고 권고할 뿐 문법 오류로 보지는 않습니다. 다만 파서마다 처리 방식이 달라(대부분 마지막 값 사용) 의도하지 않은 설정으로 이어질 수 있어 따로 알려 드립니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tools/json-validator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

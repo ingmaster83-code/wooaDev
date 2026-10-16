@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON 모의 데이터 생성기 — JSON Schema로 목업 데이터 만들기 | WooaDev</title>
+  <meta name="description" content="JSON Schema에서 제약을 만족하는 모의(mock) JSON 데이터를 생성합니다. min/max, multipleOf, enum, const, format(email·uuid·date-time), pattern(정규식), $ref, allOf/oneOf, 배열 길이와 시드 고정을 지원합니다.">
+  <meta name="keywords" content="JSON 모의 데이터, mock data generator, JSON Schema mock, 가짜 JSON 데이터, 테스트 데이터 생성, JSON Schema faker, 목업 데이터">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/schema-mock-data.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/schema-mock-data.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/schema-mock-data.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/schema-mock-data.html">
+  <meta property="og:title" content="JSON 모의 데이터 생성기 — JSON Schema로 목업 데이터 만들기 | WooaDev">
+  <meta property="og:description" content="JSON Schema에서 제약을 만족하는 모의(mock) JSON 데이터를 생성합니다. min/max, multipleOf, enum, const, format(email·uuid·date-time), pattern(정규식), $ref, allOf/oneOf, 배열 길이와 시드 고정을 지원합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/schema-mock-data.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON 모의 데이터 생성기 — JSON Schema로 목업 데이터 만들기 | WooaDev">
+  <meta name="twitter:description" content="JSON Schema에서 제약을 만족하는 모의(mock) JSON 데이터를 생성합니다. min/max, multipleOf, enum, const, format(email·uuid·date-time), pattern(정규식), $ref, allOf/oneOf, 배열 길이와 시드 고정을 지원합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON 모의 데이터 생성기","url":"https://wooadev.wooahouse.com/schema-mock-data.html","description":"JSON Schema에서 제약을 만족하는 모의(mock) JSON 데이터를 생성합니다. min/max, multipleOf, enum, const, format(email·uuid·date-time), pattern(정규식), $ref, allOf/oneOf, 배열 길이와 시드 고정을 지원합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["숫자: minimum/maximum, exclusive*, multipleOf를 지키는 정수·실수","문자열: minLength/maxLength, format(email, uuid, date, date-time, uri, ipv4…), pattern(정규식에 맞는 문자열 생성)","enum, const, default/examples(옵션), 배열의 minItems/maxItems/uniqueItems와 tuple(prefixItems)","$ref(#/definitions, #/$defs), allOf 병합, oneOf/anyOf 선택","선택 속성의 포함 여부, 생성 개수, 시드(같은 값이면 같은 결과)"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"생성된 데이터가 항상 스키마를 통과하나요?","acceptedAnswer":{"@type":"Answer","text":"지원하는 키워드 범위에서는 통과하도록 만들어지며, 내부적으로도 여러 스키마·시드로 검증 도구와 교차 검증했습니다. 다만 매우 복잡한 조건(if/then/else, not 등)은 보장하지 않습니다."}},{"@type":"Question","name":"실제 개인정보가 만들어지나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 이름은 임의의 예시 이름 목록에서, 이메일은 example.com 도메인으로만 만들어지는 가짜 데이터입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"JSON 모의 데이터 생성기","item":"https://wooadev.wooahouse.com/schema-mock-data.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="schema-mock-data.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/schema-mock-data.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON 모의 데이터 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🎲</span>
+    <h1>JSON 모의 데이터 생성기 — 스키마에 맞는 테스트 데이터</h1>
+    <p>JSON Schema를 붙여 넣으면 타입, 범위, enum, format, pattern, 배열 길이 같은 제약을 지키는 가짜 JSON 데이터를 만들어 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 3개를 생성했습니다 (시드 1)</p>
+<h3>입력 — JSON Schema</h3><pre>{
+  "type": "object",
+  "required": ["id", "name", "email", "role"],
+  "properties": {
+    "id": { "type": "integer", "minimum": 1000, "maximum": 9999 },
+    "name": { "type": "string", "minLength": 2 },
+    "email": { "type": "string", "format": "email" },
+    "role": { "enum": ["admin", "editor", "viewer"] },
+    "code": { "type": "string", "pattern": "^[A-Z]{3}-[0-9]{4}$" },
+    "score": { "type": "number", "minimum": 0, "maximum": 5, "multipleOf": 0.5 },
+    "tags": { "type": "array", "items": { "type": "string" }, "minItems": 1, "maxItems": 3, "uniqueItems": true },
+    "created": { "type": "string", "format": "date-time" }
+  }
+}</pre>
+<h3>결과 — 모의 데이터</h3><pre>[
+  {
+    "id": 6643,
+    "name": "Kim Minjun",
+    "email": "dolore98@example.com",
+    "role": "viewer",
+    "code": "SLZ-1421",
+    "score": 2.5,
+    "tags": [
+      "forest sed"
+    ],
+    "created": "2021-01-12T14:47:17Z"
+  },
+  {
+    "id": 2849,
+    "name": "Kang Soyeon",
+    "email": "dolore75@example.com",
+    "role": "admin",
+    "code": "UZG-3421",
+    "score": 3.5,
+    "tags": [
+      "sed",
+      "apple"
+    ],
+    "created": "2026-03-28T17:24:18Z"
+  },
+  {
+    "id": 7094,
+    "name": "Sam Rivera",
+    "email": "planet69@example.com",
+    "role": "viewer",
+    "code": "CBW-5971",
+    "score": 3.5,
+    "tags": [
+      "coffee",
+      "incididunt",
+      "river"
+    ],
+    "created": "2023-07-03T19:51:16Z"
+  }
+]</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>프런트엔드 개발이나 API 테스트에서 백엔드가 준비되기 전에 그럴듯한 데이터가 필요할 때가 많습니다. 스키마가 있다면 그에 맞는 데이터를 바로 만들 수 있습니다.</p>
+<ul><li>숫자: minimum/maximum, exclusive*, multipleOf를 지키는 정수·실수</li><li>문자열: minLength/maxLength, format(email, uuid, date, date-time, uri, ipv4…), pattern(정규식에 맞는 문자열 생성)</li><li>enum, const, default/examples(옵션), 배열의 minItems/maxItems/uniqueItems와 tuple(prefixItems)</li><li>$ref(#/definitions, #/$defs), allOf 병합, oneOf/anyOf 선택</li><li>선택 속성의 포함 여부, 생성 개수, 시드(같은 값이면 같은 결과)</li></ul>
+<p>생성된 데이터는 스키마 검증기에서 다시 검증해 볼 수 있습니다.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="json-schema-generator.html" class="related-card"><span class="related-icon">📘</span><span>JSON 스키마 생성기</span></a>
+    <a href="json-schema-validator.html" class="related-card"><span class="related-icon">🛡️</span><span>JSON 스키마 검증기</span></a>
+    <a href="uuid-generator.html" class="related-card"><span class="related-icon">🆔</span><span>UUID 생성기</span></a>
+    <a href="lorem-ipsum.html" class="related-card"><span class="related-icon">📝</span><span>Lorem Ipsum</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>시드를 고정하면 테스트 픽스처를 재현 가능하게 만들 수 있습니다.</li><li>pattern은 문자 클래스·수량자·그룹·대안(|) 중심의 일반적인 정규식을 지원하며, lookahead 같은 고급 구문은 오류로 알려 줍니다.</li><li>name, city, title 같은 속성 이름이면 사람이 읽을 만한 값이 만들어집니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>생성된 데이터가 항상 스키마를 통과하나요?</summary><p>지원하는 키워드 범위에서는 통과하도록 만들어지며, 내부적으로도 여러 스키마·시드로 검증 도구와 교차 검증했습니다. 다만 매우 복잡한 조건(if/then/else, not 등)은 보장하지 않습니다.</p></details><details><summary>실제 개인정보가 만들어지나요?</summary><p>아니요. 이름은 임의의 예시 이름 목록에서, 이메일은 example.com 도메인으로만 만들어지는 가짜 데이터입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tk-schema.js"></script>
+<script src="js/tools/schema-mock-data.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

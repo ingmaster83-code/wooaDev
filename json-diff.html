@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON 비교 도구 — 추가·삭제·변경 경로별 비교, JSON Patch 생성 | WooaDev</title>
+  <meta name="description" content="두 JSON을 키 순서와 공백에 상관없이 비교해 추가·삭제·변경된 값을 경로($.a.b[0])와 함께 표로 보여 줍니다. 배열 순서 무시 옵션과 JSON Patch(RFC 6902) 생성을 지원합니다.">
+  <meta name="keywords" content="JSON 비교, JSON diff, JSON 차이 비교, JSON compare, JSON 변경점, JSON Patch 생성, 두 JSON 비교 온라인">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/json-diff.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/json-diff.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/json-diff.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/json-diff.html">
+  <meta property="og:title" content="JSON 비교 도구 — 추가·삭제·변경 경로별 비교, JSON Patch 생성 | WooaDev">
+  <meta property="og:description" content="두 JSON을 키 순서와 공백에 상관없이 비교해 추가·삭제·변경된 값을 경로($.a.b[0])와 함께 표로 보여 줍니다. 배열 순서 무시 옵션과 JSON Patch(RFC 6902) 생성을 지원합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/json-diff.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON 비교 도구 — 추가·삭제·변경 경로별 비교, JSON Patch 생성 | WooaDev">
+  <meta name="twitter:description" content="두 JSON을 키 순서와 공백에 상관없이 비교해 추가·삭제·변경된 값을 경로($.a.b[0])와 함께 표로 보여 줍니다. 배열 순서 무시 옵션과 JSON Patch(RFC 6902) 생성을 지원합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON 비교 도구","url":"https://wooadev.wooahouse.com/json-diff.html","description":"두 JSON을 키 순서와 공백에 상관없이 비교해 추가·삭제·변경된 값을 경로($.a.b[0])와 함께 표로 보여 줍니다. 배열 순서 무시 옵션과 JSON Patch(RFC 6902) 생성을 지원합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["키 순서·공백·줄바꿈 차이는 무시하고 추가/삭제/변경만 경로($.user.tags[1])와 함께 표시","타입이 바뀐 경우(숫자 1 → 문자열 \"1\")는 별도로 표시","\"배열 순서 무시\"를 켜면 요소만 같으면 같은 JSON으로 판단","A를 B로 바꾸는 JSON Patch(RFC 6902)를 함께 생성해 API PATCH 요청이나 변경 이력에 활용"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"키 순서만 다르면 다른 JSON인가요?","acceptedAnswer":{"@type":"Answer","text":"아니요. JSON 객체의 키 순서는 의미가 없으므로 이 도구는 순서가 달라도 같다고 판단합니다. 배열은 기본적으로 순서까지 비교합니다."}},{"@type":"Question","name":"1과 1.0은 같은 값인가요?","acceptedAnswer":{"@type":"Answer","text":"JSON에는 정수와 실수의 구분이 없어 같은 숫자로 취급합니다. 숫자와 문자열(1과 \"1\")은 다른 타입으로 표시됩니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"JSON 비교 도구","item":"https://wooadev.wooahouse.com/json-diff.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="json-diff.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/json-diff.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JSON 비교 도구</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔍</span>
+    <h1>JSON 비교 도구 — 두 JSON의 차이를 경로별로</h1>
+    <p>두 JSON을 의미 단위로 비교해 추가·삭제·변경된 값을 경로와 함께 보여 주고, 이를 JSON Patch로 만들어 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>🔍 추가 2 · 삭제 1 · 변경 2</p>
+<h3>입력 — 원본 JSON (A)</h3><pre>{
+  "name": "WooaDev",
+  "version": "1.0.0",
+  "tags": ["json", "tool"],
+  "author": { "name": "Kim", "email": "kim@example.com" },
+  "legacy": true
+}</pre>
+<h3>입력 — 비교할 JSON (B)</h3><pre>{
+  "name": "WooaDev",
+  "version": "1.1.0",
+  "tags": ["json", "tool", "free"],
+  "author": { "name": "Kim", "email": "kim@wooahouse.com" },
+  "license": "MIT"
+}</pre>
+<h3>결과 — 변경 사항</h3><pre>구분 | 경로 | 이전(A) | 이후(B)
+변경 | $.version | "1.0.0" | "1.1.0"
+추가 | $.tags[2] |  | "free"
+변경 | $.author.email | "kim@example.com" | "kim@wooahouse.com"
+삭제 | $.legacy | true | 
+추가 | $.license |  | "MIT"</pre>
+<h3>결과 — JSON Patch (A → B)</h3><pre>[
+  {
+    "op": "replace",
+    "path": "/version",
+    "value": "1.1.0"
+  },
+  {
+    "op": "add",
+    "path": "/tags/2",
+    "value": "free"
+  },
+  {
+    "op": "replace",
+    "path": "/author/email",
+    "value": "kim@wooahouse.com"
+  },
+  {
+    "op": "add",
+    "path": "/license",
+    "value": "MIT"
+  },
+  {
+    "op": "remove",
+    "path": "/legacy"
+  }
+]</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>텍스트 비교 도구는 들여쓰기나 키 순서만 달라도 모두 다른 줄로 표시합니다. 이 도구는 JSON을 먼저 파싱해서 값 단위로 비교하므로 의미가 달라진 부분만 정확히 보여 줍니다.</p>
+<ul><li>키 순서·공백·줄바꿈 차이는 무시하고 추가/삭제/변경만 경로($.user.tags[1])와 함께 표시</li><li>타입이 바뀐 경우(숫자 1 → 문자열 "1")는 별도로 표시</li><li>"배열 순서 무시"를 켜면 요소만 같으면 같은 JSON으로 판단</li><li>A를 B로 바꾸는 JSON Patch(RFC 6902)를 함께 생성해 API PATCH 요청이나 변경 이력에 활용</li></ul>
+<p>텍스트 줄 단위 비교가 필요하면 Diff 비교기를 사용하세요.</p>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="json-merge.html" class="related-card"><span class="related-icon">🔀</span><span>JSON 병합 도구</span></a>
+    <a href="yaml-diff.html" class="related-card"><span class="related-icon">🔍</span><span>YAML 비교 도구</span></a>
+    <a href="diff-viewer.html" class="related-card"><span class="related-icon">📊</span><span>Diff 비교기</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>API 응답이 배포 전후로 어떻게 달라졌는지 확인할 때, 두 응답을 그대로 붙여 넣기만 하면 됩니다.</li><li>순서가 중요하지 않은 태그·ID 목록은 "배열 순서 무시"를 켜세요.</li><li>생성된 JSON Patch는 배열 끝 요소 삭제 순서까지 고려해 순서대로 적용하면 A가 B가 되도록 만들어집니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>키 순서만 다르면 다른 JSON인가요?</summary><p>아니요. JSON 객체의 키 순서는 의미가 없으므로 이 도구는 순서가 달라도 같다고 판단합니다. 배열은 기본적으로 순서까지 비교합니다.</p></details><details><summary>1과 1.0은 같은 값인가요?</summary><p>JSON에는 정수와 실수의 구분이 없어 같은 숫자로 취급합니다. 숫자와 문자열(1과 "1")은 다른 타입으로 표시됩니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-json.js"></script>
+<script src="js/tools/json-diff.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>
