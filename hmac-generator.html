@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HMAC 생성기 — HMAC-SHA256 서명 생성·검증 | WooaDev</title>
+  <meta name="description" content="HMAC-SHA256, SHA-1, SHA-384, SHA-512 서명을 비밀 키와 메시지로 계산하고 16진수·Base64·Base64URL 결과를 보여 줍니다. 웹훅 서명 비교 검증과 hex 키·메시지 입력 지원.">
+  <meta name="keywords" content="HMAC 생성기, HMAC-SHA256, 웹훅 서명 검증, HMAC 계산, HMAC online, API 서명, hmac sha256 generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/hmac-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/hmac-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/hmac-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/hmac-generator.html">
+  <meta property="og:title" content="HMAC 생성기 — HMAC-SHA256 서명 생성·검증 | WooaDev">
+  <meta property="og:description" content="HMAC-SHA256, SHA-1, SHA-384, SHA-512 서명을 비밀 키와 메시지로 계산하고 16진수·Base64·Base64URL 결과를 보여 줍니다. 웹훅 서명 비교 검증과 hex 키·메시지 입력 지원.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/hmac-generator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HMAC 생성기 — HMAC-SHA256 서명 생성·검증 | WooaDev">
+  <meta name="twitter:description" content="HMAC-SHA256, SHA-1, SHA-384, SHA-512 서명을 비밀 키와 메시지로 계산하고 16진수·Base64·Base64URL 결과를 보여 줍니다. 웹훅 서명 비교 검증과 hex 키·메시지 입력 지원.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"HMAC 생성기","url":"https://wooadev.wooahouse.com/hmac-generator.html","description":"HMAC-SHA256, SHA-1, SHA-384, SHA-512 서명을 비밀 키와 메시지로 계산하고 16진수·Base64·Base64URL 결과를 보여 줍니다. 웹훅 서명 비교 검증과 hex 키·메시지 입력 지원.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["알고리즘: HMAC-SHA256(기본), SHA-1, SHA-384, SHA-512","키·메시지를 텍스트, 16진수, Base64 중 선택해 입력","결과를 16진수, Base64, Base64URL로 동시에 표시","받은 서명(sha256=… 접두사 포함 가능)을 붙여 넣으면 일치 여부를 확인","긴 키는 해시로 먼저 줄이는 HMAC 규칙을 그대로 따름"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"HMAC과 그냥 해시는 무엇이 다른가요?","acceptedAnswer":{"@type":"Answer","text":"해시는 누구나 계산할 수 있지만 HMAC은 비밀 키가 있어야만 계산할 수 있어, 메시지가 바뀌지 않았고 키를 가진 쪽이 보냈음을 확인할 수 있습니다."}},{"@type":"Question","name":"SHA-1 HMAC도 안전한가요?","acceptedAnswer":{"@type":"Answer","text":"HMAC은 해시 충돌에 덜 민감해 HMAC-SHA1도 당장 깨진 것은 아니지만 새 시스템에는 SHA-256 이상을 권장합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"HMAC 생성기","item":"https://wooadev.wooahouse.com/hmac-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="hmac-generator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/hmac-generator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>HMAC 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔏</span>
+    <h1>HMAC 생성기 · 검증기 — 웹훅 서명 확인</h1>
+    <p>비밀 키와 메시지로 HMAC을 계산하고 받은 서명과 비교합니다. GitHub·Stripe·Slack 같은 웹훅 서명을 확인하거나 API 요청 서명을 만들 때 쓰세요.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ HMAC-SHA256 계산 완료 (256비트)</p>
+<h3>입력 — 메시지</h3><pre>GET
+/api/v1/orders?id=100
+1760577000</pre>
+<h3>입력 — 비밀 키</h3><pre>my-secret-key</pre>
+<h3>결과 — HMAC 결과</h3><pre>형식 | 값
+hex | 992e0355fd3aadb66a5885a757a90d1dba0104871215eb40cc5150d42e621a32
+HEX (대문자) | 992E0355FD3AADB66A5885A757A90D1DBA0104871215EB40CC5150D42E621A32
+Base64 | mS4DVf06rbZqWIWnV6kNHboBBIcSFetAzFFQ1C5iGjI=
+Base64URL | mS4DVf06rbZqWIWnV6kNHboBBIcSFetAzFFQ1C5iGjI</pre>
+<h3>결과 — HMAC (hex)</h3><pre>992e0355fd3aadb66a5885a757a90d1dba0104871215eb40cc5150d42e621a32</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>HMAC은 비밀 키를 아는 쪽만 만들 수 있는 서명으로, 웹훅 검증과 API 인증에 널리 쓰입니다. 입력과 결과 모두 브라우저에서만 계산됩니다.</p>
+<ul><li>알고리즘: HMAC-SHA256(기본), SHA-1, SHA-384, SHA-512</li><li>키·메시지를 텍스트, 16진수, Base64 중 선택해 입력</li><li>결과를 16진수, Base64, Base64URL로 동시에 표시</li><li>받은 서명(sha256=… 접두사 포함 가능)을 붙여 넣으면 일치 여부를 확인</li><li>긴 키는 해시로 먼저 줄이는 HMAC 규칙을 그대로 따름</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="hash-generator.html" class="related-card"><span class="related-icon">🔑</span><span>Hash 생성기</span></a>
+    <a href="jwt-generator.html" class="related-card"><span class="related-icon">🔐</span><span>JWT 생성기</span></a>
+    <a href="jwt-decoder.html" class="related-card"><span class="related-icon">🎫</span><span>JWT 디코더</span></a>
+    <a href="auth-header-tool.html" class="related-card"><span class="related-icon">🪪</span><span>Authorization 헤더 도구</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>웹훅 서명은 파싱한 JSON이 아니라 '받은 원문 그대로의 바이트'로 계산해야 맞습니다. 줄바꿈·공백도 포함됩니다.</li><li>서버에서 서명을 비교할 때는 일반 == 대신 상수 시간 비교(timingSafeEqual 등)를 쓰세요.</li><li>키가 16진수 문자열이라면 키 형식을 hex 로 바꿔야 합니다. 텍스트로 넣으면 전혀 다른 값이 됩니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>HMAC과 그냥 해시는 무엇이 다른가요?</summary><p>해시는 누구나 계산할 수 있지만 HMAC은 비밀 키가 있어야만 계산할 수 있어, 메시지가 바뀌지 않았고 키를 가진 쪽이 보냈음을 확인할 수 있습니다.</p></details><details><summary>SHA-1 HMAC도 안전한가요?</summary><p>HMAC은 해시 충돌에 덜 민감해 HMAC-SHA1도 당장 깨진 것은 아니지만 새 시스템에는 SHA-256 이상을 권장합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-hash.js"></script>
+<script src="js/tools/hmac-generator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

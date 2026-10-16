@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shell Escape – POSIX, Bash, PowerShell &amp; cmd Argument Quoting | WooaDev</title>
+  <meta name="description" content="Escape a string as POSIX sh / bash single quotes, Bash $&#x27;…&#x27;, double quotes, fish, PowerShell, cmd.exe or JSON. Handles single quotes, $, backticks and newlines; can prepend a command.">
+  <meta name="keywords" content="shell escape, bash escape, escape single quote, PowerShell escape, cmd escape, shell argument quoting, shell escape online">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/shell-escape.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/shell-escape.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/shell-escape.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/shell-escape.html">
+  <meta property="og:title" content="Shell Escape – POSIX, Bash, PowerShell &amp; cmd Argument Quoting | WooaDev">
+  <meta property="og:description" content="Escape a string as POSIX sh / bash single quotes, Bash $&#x27;…&#x27;, double quotes, fish, PowerShell, cmd.exe or JSON. Handles single quotes, $, backticks and newlines; can prepend a command.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/shell-escape.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Shell Escape – POSIX, Bash, PowerShell &amp; cmd Argument Quoting | WooaDev">
+  <meta name="twitter:description" content="Escape a string as POSIX sh / bash single quotes, Bash $&#x27;…&#x27;, double quotes, fish, PowerShell, cmd.exe or JSON. Handles single quotes, $, backticks and newlines; can prepend a command.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Shell Escape Converter","url":"https://wooadev.wooahouse.com/en/shell-escape.html","description":"Escape a string as POSIX sh / bash single quotes, Bash $'…', double quotes, fish, PowerShell, cmd.exe or JSON. Handles single quotes, $, backticks and newlines; can prepend a command.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Targets: POSIX sh / bash / zsh single quotes ('It'\\''s'), Bash $'…' (ANSI-C), POSIX double quotes, fish, PowerShell single and double quotes, cmd.exe and JSON","Handle many arguments one per line, or treat the whole text (with newlines) as a single argument","Prepend a command (for example echo or scp) to get something runnable","Safe characters stay bare and an empty string becomes ''","Notes on NUL bytes, newline limits and $ / backtick expansion inside double quotes"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I put a single quote inside single quotes?","acceptedAnswer":{"@type":"Answer","text":"No escaping works inside single quotes, so close the quote, write \\' and reopen: 'It'\\''s'."}},{"@type":"Question","name":"Why is cmd.exe output so complicated?","acceptedAnswer":{"@type":"Answer","text":"cmd.exe's own rules (^, %) overlap with each program's argument parsing, so perfect quoting is hard. Prefer PowerShell or argument arrays."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Shell Escape Converter","item":"https://wooadev.wooahouse.com/en/shell-escape.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../shell-escape.html">KO</a>
+        <span>|</span>
+        <a href="shell-escape.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Shell Escape Converter</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🐚</span>
+    <h1>Shell Escape Converter — POSIX, Bash, PowerShell &amp; cmd</h1>
+    <p>Escapes strings containing spaces, quotes, $, backticks or semicolons so a shell receives them as one safe argument, in POSIX sh / bash, Bash $'…', fish, PowerShell and cmd.exe styles at once.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Escaped 5 argument(s)</p>
+<h3>Input — Strings to escape (one argument per line; use the option below for a single multi-line argument)</h3><pre>It's a "quoted" $HOME `value`
+plain-word
+C:\Program Files\App
+hello world; rm -rf /
+single\backslash</pre>
+<h3>Result — Escaped output</h3><pre># POSIX sh / bash / zsh
+echo 'It'\''s a "quoted" $HOME `value`'
+echo plain-word
+echo 'C:\Program Files\App'
+echo 'hello world; rm -rf /'
+echo 'single\backslash'
+
+# Bash $'…'
+echo $'It\'s a "quoted" $HOME `value`'
+echo plain-word
+echo $'C:\\Program Files\\App'
+echo $'hello world; rm -rf /'
+echo $'single\\backslash'
+
+# POSIX "…"
+echo "It's a \"quoted\" \$HOME \`value\`"
+echo "plain-word"
+echo "C:\\Program Files\\App"
+echo "hello world; rm -rf /"
+echo "single\\backslash"
+
+# fish
+echo 'It\'s a "quoted" $HOME `value`'
+echo plain-word
+echo 'C:\\Program Files\\App'
+echo 'hello world; rm -rf /'
+echo 'single\\backslash'
+
+# PowerShell '…'
+echo 'It''s a "quoted" $HOME `value`'
+echo 'plain-word'
+echo 'C:\Program Files\App'
+echo 'hello world; rm -rf /'
+echo 'single\backslash'
+
+# PowerShell "…"
+echo "It's a `"quoted`" `$HOME ``value``"
+echo "plain-word"
+echo "C:\Program Files\App"
+echo "hello world; rm -rf /"
+echo "single\backslash"
+
+# cmd.exe
+echo "It's a \"quoted\" $HOME `value`"
+echo plain-word
+echo "C:\Program Files\App"
+echo "hello world; rm -rf /"
+echo "single\backslash"
+
+# JSON
+echo "It's a \"quoted\" $HOME `value`"
+echo "plain-word"
+echo "C:\\Program Files\\App"
+echo "hello world; rm -rf /"
+echo "single\\backslash"</pre>
+<h3>Result — Notes</h3><pre>Inside double quotes $ ` \ " ! are still special — prefer the single-quote form when you do not want expansion
+Escaping makes a string a single safe argument. Never build shell command strings from user input — pass an argument array to an exec-style API (shell=False)
+cmd.exe rules vary by program (CommandLineToArgvW). % and ^ behave differently inside and outside .bat files</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Wrong quoting when putting user input or file names into a shell command breaks the command or opens a security hole. Rules differ per shell, so compare them side by side.</p>
+<ul><li>Targets: POSIX sh / bash / zsh single quotes ('It'\''s'), Bash $'…' (ANSI-C), POSIX double quotes, fish, PowerShell single and double quotes, cmd.exe and JSON</li><li>Handle many arguments one per line, or treat the whole text (with newlines) as a single argument</li><li>Prepend a command (for example echo or scp) to get something runnable</li><li>Safe characters stay bare and an empty string becomes ''</li><li>Notes on NUL bytes, newline limits and $ / backtick expansion inside double quotes</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="string-escape.html" class="related-card"><span class="related-icon">🔣</span><span>String Escape / Unescape</span></a>
+    <a href="command-line-parser.html" class="related-card"><span class="related-icon">🖥️</span><span>Command Line, PATH &amp; Env Analyzer</span></a>
+    <a href="url-encoder.html" class="related-card"><span class="related-icon">🔗</span><span>URL Encoder</span></a>
+    <a href="base64.html" class="related-card"><span class="related-icon">🔐</span><span>Base64</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Instead of building shell command strings from user input pass an argument array to an execve-style API (for example Python subprocess with shell=False).</li><li>If you do not want variable expansion, single quotes are safer than double quotes.</li><li>PowerShell writes a single quote inside single quotes as ''.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>How do I put a single quote inside single quotes?</summary><p>No escaping works inside single quotes, so close the quote, write \' and reopen: 'It'\''s'.</p></details><details><summary>Why is cmd.exe output so complicated?</summary><p>cmd.exe's own rules (^, %) overlap with each program's argument parsing, so perfect quoting is hard. Prefer PowerShell or argument arrays.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/shell-escape.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>systemd Timer Generator – OnCalendar Explainer &amp; Unit Files | WooaDev</title>
+  <meta name="description" content="Parse systemd OnCalendar expressions (daily, weekly, Mon..Fri *-*-* 09:00), see the next run times and generate .timer and .service files with Persistent and RandomizedDelaySec options.">
+  <meta name="keywords" content="systemd timer, OnCalendar, systemd.timer example, systemd cron replacement, Persistent=true, RandomizedDelaySec, systemd-analyze calendar">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/systemd-timer-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/systemd-timer-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/systemd-timer-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/systemd-timer-generator.html">
+  <meta property="og:title" content="systemd Timer Generator – OnCalendar Explainer &amp; Unit Files | WooaDev">
+  <meta property="og:description" content="Parse systemd OnCalendar expressions (daily, weekly, Mon..Fri *-*-* 09:00), see the next run times and generate .timer and .service files with Persistent and RandomizedDelaySec options.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/systemd-timer-generator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="systemd Timer Generator – OnCalendar Explainer &amp; Unit Files | WooaDev">
+  <meta name="twitter:description" content="Parse systemd OnCalendar expressions (daily, weekly, Mon..Fri *-*-* 09:00), see the next run times and generate .timer and .service files with Persistent and RandomizedDelaySec options.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"systemd Timer Generator","url":"https://wooadev.wooahouse.com/en/systemd-timer-generator.html","description":"Parse systemd OnCalendar expressions (daily, weekly, Mon..Fri *-*-* 09:00), see the next run times and generate .timer and .service files with Persistent and RandomizedDelaySec options.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Aliases: minutely, hourly, daily, weekly, monthly, quarterly, yearly","Format: [weekday] year-month-day hour:minute:second with ranges (..), lists (,), steps (/) and the * wildcard","Shows the explanation, the normalized form (like systemd-analyze calendar) and the next N run times","Generates unit files with Persistent=true (catch up on missed runs) and RandomizedDelaySec (avoid pile-ups)","Give a service name and ExecStart command to get the .service file too"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is better than cron?","acceptedAnswer":{"@type":"Answer","text":"Results land in journald, services get dependencies, limits and retries, missed runs can be replayed (Persistent) and monotonic timers such as N minutes after boot are available."}},{"@type":"Question","name":"OnCalendar vs OnBootSec?","acceptedAnswer":{"@type":"Answer","text":"OnCalendar follows wall-clock times (daily at 3), while OnBootSec and OnUnitActiveSec count elapsed time after boot or the last run. This tool handles calendar expressions."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"systemd Timer Generator","item":"https://wooadev.wooahouse.com/en/systemd-timer-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../systemd-timer-generator.html">KO</a>
+        <span>|</span>
+        <a href="systemd-timer-generator.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>systemd Timer Generator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🕒</span>
+    <h1>systemd Timer Generator — OnCalendar Explainer &amp; Unit Files</h1>
+    <p>Interprets systemd.timer OnCalendar expressions such as Mon..Fri *-*-* 09:00:00, calculates the next run times and writes copy-ready .service and .timer unit files.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Valid OnCalendar expression</p>
+<h3>Input — OnCalendar expression</h3><pre>Mon..Fri *-*-* 09:00:00</pre>
+<h3>Result — Interpretation</h3><pre>Input: Mon..Fri *-*-* 09:00:00
+Normalised form: Mon..Fri *-*-* 09:00:00
+Weekday: mon, tue, wed, thu, fri</pre>
+<h3>Result — Upcoming runs</h3><pre># | UTC | Selected zone
+1 | 2026-10-19T00:00:00Z | 2026-10-19 09:00:00 (UTC+09:00)
+2 | 2026-10-20T00:00:00Z | 2026-10-20 09:00:00 (UTC+09:00)
+3 | 2026-10-21T00:00:00Z | 2026-10-21 09:00:00 (UTC+09:00)
+4 | 2026-10-22T00:00:00Z | 2026-10-22 09:00:00 (UTC+09:00)
+5 | 2026-10-23T00:00:00Z | 2026-10-23 09:00:00 (UTC+09:00)
+6 | 2026-10-26T00:00:00Z | 2026-10-26 09:00:00 (UTC+09:00)</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>systemd timers give you journald logs and dependency handling compared with cron, but the OnCalendar syntax is unfamiliar. Paste an expression to see what it means.</p>
+<ul><li>Aliases: minutely, hourly, daily, weekly, monthly, quarterly, yearly</li><li>Format: [weekday] year-month-day hour:minute:second with ranges (..), lists (,), steps (/) and the * wildcard</li><li>Shows the explanation, the normalized form (like systemd-analyze calendar) and the next N run times</li><li>Generates unit files with Persistent=true (catch up on missed runs) and RandomizedDelaySec (avoid pile-ups)</li><li>Give a service name and ExecStart command to get the .service file too</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="cron-generator.html" class="related-card"><span class="related-icon">⏰</span><span>Cron Generator</span></a>
+    <a href="quartz-cron-generator.html" class="related-card"><span class="related-icon">⏲️</span><span>Quartz Cron Generator</span></a>
+    <a href="duration-parser.html" class="related-card"><span class="related-icon">⏱️</span><span>Duration Converter</span></a>
+    <a href="timezone-converter.html" class="related-card"><span class="related-icon">🌏</span><span>Time Zone Converter</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Add Persistent=true to backups on machines that may be powered off.</li><li>If many servers call the same service at once, spread them with RandomizedDelaySec.</li><li>Enable with systemctl enable --now name.timer and verify with systemctl list-timers.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What is better than cron?</summary><p>Results land in journald, services get dependencies, limits and retries, missed runs can be replayed (Persistent) and monotonic timers such as N minutes after boot are available.</p></details><details><summary>OnCalendar vs OnBootSec?</summary><p>OnCalendar follows wall-clock times (daily at 3), while OnBootSec and OnUnitActiveSec count elapsed time after boot or the last run. This tool handles calendar expressions.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-time.js"></script>
+<script src="../js/tk-cron.js"></script>
+<script src="../js/tools/systemd-timer-generator.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OAuth 인가 URL 생성기 — authorize URL 만들기·점검 | WooaDev</title>
+  <meta name="description" content="OAuth 2.0·OIDC 인가 요청 URL을 만들고 분석합니다. state·nonce 자동 생성, PKCE code_challenge, response_type별 점검, redirect_uri http·와일드카드·암시적 흐름 위험을 알려 줍니다.">
+  <meta name="keywords" content="OAuth URL 생성기, authorize URL, OIDC 인가 요청, response_type, state nonce, redirect_uri, oauth url builder">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/oauth-url-builder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/oauth-url-builder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/oauth-url-builder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/oauth-url-builder.html">
+  <meta property="og:title" content="OAuth 인가 URL 생성기 — authorize URL 만들기·점검 | WooaDev">
+  <meta property="og:description" content="OAuth 2.0·OIDC 인가 요청 URL을 만들고 분석합니다. state·nonce 자동 생성, PKCE code_challenge, response_type별 점검, redirect_uri http·와일드카드·암시적 흐름 위험을 알려 줍니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/oauth-url-builder.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="OAuth 인가 URL 생성기 — authorize URL 만들기·점검 | WooaDev">
+  <meta name="twitter:description" content="OAuth 2.0·OIDC 인가 요청 URL을 만들고 분석합니다. state·nonce 자동 생성, PKCE code_challenge, response_type별 점검, redirect_uri http·와일드카드·암시적 흐름 위험을 알려 줍니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"OAuth 인가 URL 생성기","url":"https://wooadev.wooahouse.com/oauth-url-builder.html","description":"OAuth 2.0·OIDC 인가 요청 URL을 만들고 분석합니다. state·nonce 자동 생성, PKCE code_challenge, response_type별 점검, redirect_uri http·와일드카드·암시적 흐름 위험을 알려 줍니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["만들기: 엔드포인트, client_id, redirect_uri, scope, response_type(code/id_token/hybrid), prompt, 추가 파라미터","state와 nonce는 비워 두면 안전한 난수로 자동 생성, PKCE code_challenge(S256) 추가","점검: state 누락, 암시적 흐름(token), PKCE 없음, nonce 없는 id_token, http redirect_uri, 와일드카드","각 파라미터의 의미를 표로 설명","URL 인코딩(%20 등)을 올바르게 처리"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"response_type=token 은 왜 위험한가요?","acceptedAnswer":{"@type":"Answer","text":"암시적 흐름은 액세스 토큰이 URL 조각으로 브라우저 기록·리퍼러에 노출될 수 있어 OAuth 2.1에서 제거되었습니다. 인가 코드 + PKCE를 쓰세요."}},{"@type":"Question","name":"state와 nonce는 무엇이 다른가요?","acceptedAnswer":{"@type":"Answer","text":"state는 요청과 콜백을 짝지어 CSRF를 막고, nonce는 발급된 ID 토큰이 이 요청에 대한 것인지 확인해 재전송 공격을 막습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"OAuth 인가 URL 생성기","item":"https://wooadev.wooahouse.com/oauth-url-builder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="oauth-url-builder.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/oauth-url-builder.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>OAuth 인가 URL 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔗</span>
+    <h1>OAuth 인가 URL 생성기 · 점검기</h1>
+    <p>response_type, scope, state, nonce, PKCE 파라미터가 들어간 OAuth 2.0 / OpenID Connect 인가 요청 URL을 만들고, 이미 가진 URL의 보안 문제를 점검합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>🔍 점검할 항목 4개</p>
+<h3>입력 — 분석할 인가 요청 URL</h3><pre>https://accounts.example.com/oauth2/authorize?response_type=token&amp;client_id=abc123&amp;redirect_uri=http%3A%2F%2Fapp.example.com%2Fcb&amp;scope=openid%20email</pre>
+<h3>입력 — 인가 엔드포인트</h3><pre>https://accounts.example.com/oauth2/authorize</pre>
+<h3>입력 — client_id</h3><pre>my-client</pre>
+<h3>입력 — redirect_uri</h3><pre>https://app.example.com/callback</pre>
+<h3>결과 — 인가 URL</h3><pre>https://accounts.example.com/oauth2/authorize?response_type=token&amp;client_id=abc123&amp;redirect_uri=http%3A%2F%2Fapp.example.com%2Fcb&amp;scope=openid%20email</pre>
+<h3>결과 — 파라미터 설명</h3><pre>파라미터 | 값 | 설명
+response_type | token | 응답 유형: code=인가 코드, token/id_token=암시적 흐름
+client_id | abc123 | 앱을 식별하는 ID
+redirect_uri | http://app.example.com/cb | 인가 후 돌아올 주소 (사전 등록값과 정확히 일치해야 함)
+scope | openid email | 요청하는 권한 목록</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>로그인 연동에서 가장 자주 틀리는 부분이 인가 요청 URL입니다. 파라미터를 인코딩해 URL을 만들고, 붙여 넣은 URL은 항목별로 설명하고 위험 요소를 알려 줍니다.</p>
+<ul><li>만들기: 엔드포인트, client_id, redirect_uri, scope, response_type(code/id_token/hybrid), prompt, 추가 파라미터</li><li>state와 nonce는 비워 두면 안전한 난수로 자동 생성, PKCE code_challenge(S256) 추가</li><li>점검: state 누락, 암시적 흐름(token), PKCE 없음, nonce 없는 id_token, http redirect_uri, 와일드카드</li><li>각 파라미터의 의미를 표로 설명</li><li>URL 인코딩(%20 등)을 올바르게 처리</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="pkce-generator.html" class="related-card"><span class="related-icon">🔑</span><span>PKCE 생성기</span></a>
+    <a href="query-string-builder.html" class="related-card"><span class="related-icon">❓</span><span>쿼리 문자열 파서·빌더</span></a>
+    <a href="url-parser.html" class="related-card"><span class="related-icon">🔗</span><span>URL 파서</span></a>
+    <a href="jwt-decoder.html" class="related-card"><span class="related-icon">🎫</span><span>JWT 디코더</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>redirect_uri는 제공자에 등록한 값과 글자 하나까지 같아야 합니다 (끝의 슬래시 포함).</li><li>state는 로그인 시작 때 만든 값을 세션에 저장해 두었다가 콜백에서 반드시 비교하세요 (CSRF 방지).</li><li>scope에 openid가 있으면 OIDC 요청입니다. id_token을 받는다면 nonce도 검증해야 합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>response_type=token 은 왜 위험한가요?</summary><p>암시적 흐름은 액세스 토큰이 URL 조각으로 브라우저 기록·리퍼러에 노출될 수 있어 OAuth 2.1에서 제거되었습니다. 인가 코드 + PKCE를 쓰세요.</p></details><details><summary>state와 nonce는 무엇이 다른가요?</summary><p>state는 요청과 콜백을 짝지어 CSRF를 막고, nonce는 발급된 ID 토큰이 이 요청에 대한 것인지 확인해 재전송 공격을 막습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-bytes.js"></script>
+<script src="js/tk-hash.js"></script>
+<script src="js/tools/oauth-url-builder.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

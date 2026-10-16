@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSP Builder – Build &amp; Audit Content-Security-Policy | WooaDev</title>
+  <meta name="description" content="Build a Content-Security-Policy from strict, SPA or typical-site presets, audit unsafe-inline, wildcards and missing base-uri, and test whether request URLs pass the policy. Report-Only supported.">
+  <meta name="keywords" content="CSP builder, Content-Security-Policy, CSP tester, unsafe-inline, CSP Report-Only, script-src, csp generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/csp-builder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/csp-builder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/csp-builder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/csp-builder.html">
+  <meta property="og:title" content="CSP Builder – Build &amp; Audit Content-Security-Policy | WooaDev">
+  <meta property="og:description" content="Build a Content-Security-Policy from strict, SPA or typical-site presets, audit unsafe-inline, wildcards and missing base-uri, and test whether request URLs pass the policy. Report-Only supported.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/csp-builder.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSP Builder – Build &amp; Audit Content-Security-Policy | WooaDev">
+  <meta name="twitter:description" content="Build a Content-Security-Policy from strict, SPA or typical-site presets, audit unsafe-inline, wildcards and missing base-uri, and test whether request URLs pass the policy. Report-Only supported.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSP Builder & Analyzer","url":"https://wooadev.wooahouse.com/en/csp-builder.html","description":"Build a Content-Security-Policy from strict, SPA or typical-site presets, audit unsafe-inline, wildcards and missing base-uri, and test whether request URLs pass the policy. Report-Only supported.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Build: strict / SPA + external API / typical-site presets, add script, style, img, connect and frame sources, upgrade-insecure-requests, report-uri and Report-Only","Audit: unsafe-inline and unsafe-eval, wildcards (*), http: sources, missing object-src, base-uri and form-action","Test: give the page origin and a list of requests (type URL) to see which are blocked, per directive","Falls back to default-src and matches 'self', hosts and schemes the way browsers do","A table explains each directive"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Adding CSP broke my site.","acceptedAnswer":{"@type":"Answer","text":"Inline scripts and styles, external CDNs or analytics got blocked. Use Report-Only to list the violations and then allow only the sources you need."}},{"@type":"Question","name":"Can I use a meta tag for CSP?","acceptedAnswer":{"@type":"Answer","text":"Some directives work, but frame-ancestors, report-uri and sandbox are ignored in meta. Prefer the HTTP header."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"CSP Builder & Analyzer","item":"https://wooadev.wooahouse.com/en/csp-builder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../csp-builder.html">KO</a>
+        <span>|</span>
+        <a href="csp-builder.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CSP Builder &amp; Analyzer</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🚧</span>
+    <h1>CSP Builder &amp; Analyzer — Content-Security-Policy</h1>
+    <p>Build a Content-Security-Policy from presets, find weaknesses in an existing policy (unsafe-inline, wildcards) and test whether a given script or image request would be allowed.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>🔍 4 finding(s)</p>
+<h3>Input — CSP to analyse / test</h3><pre>default-src 'self'; script-src 'self' https://cdn.example.com 'unsafe-inline'; img-src 'self' data: https:; object-src *; frame-ancestors 'self'</pre>
+<h3>Input — Requests to test (one per line: type URL)</h3><pre>script https://cdn.example.com/app.js
+script https://evil.example.net/x.js
+img https://images.example.org/a.png
+style inline
+connect https://api.example.com/v1</pre>
+<h3>Input — Page origin (self)</h3><pre>https://www.example.com</pre>
+<h3>Result — CSP</h3><pre>default-src 'self'; script-src 'self' https://cdn.example.com 'unsafe-inline'; img-src 'self' data: https:; object-src *; frame-ancestors 'self'</pre>
+<h3>Result — Directives</h3><pre>Directive | Sources | Meaning
+default-src | 'self' | Fallback for other fetch directives
+script-src | 'self' https://cdn.example.com 'unsafe-inline' | Script sources
+img-src | 'self' data: https: | Image sources
+object-src | * | &lt;object&gt;/&lt;embed&gt; sources
+frame-ancestors | 'self' | Who may embed this page (clickjacking)</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>CSP is the strongest defence against the impact of XSS, but a wrong policy breaks the site. Build, audit and test it here.</p>
+<ul><li>Build: strict / SPA + external API / typical-site presets, add script, style, img, connect and frame sources, upgrade-insecure-requests, report-uri and Report-Only</li><li>Audit: unsafe-inline and unsafe-eval, wildcards (*), http: sources, missing object-src, base-uri and form-action</li><li>Test: give the page origin and a list of requests (type URL) to see which are blocked, per directive</li><li>Falls back to default-src and matches 'self', hosts and schemes the way browsers do</li><li>A table explains each directive</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="security-header-builder.html" class="related-card"><span class="related-icon">🧱</span><span>Security Header Builder</span></a>
+    <a href="sri-generator.html" class="related-card"><span class="related-icon">🛡️</span><span>SRI Hash Generator</span></a>
+    <a href="http-headers-parser.html" class="related-card"><span class="related-icon">📨</span><span>HTTP Headers Parser</span></a>
+    <a href="meta-tag.html" class="related-card"><span class="related-icon">🏷️</span><span>Meta Tag Generator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Start with Content-Security-Policy-Report-Only to collect violations before enforcing.</li><li>If you need inline scripts, use a nonce or a hash (sha256-…) instead of unsafe-inline.</li><li>object-src 'none'; base-uri 'self'; are safe additions for almost every site.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Adding CSP broke my site.</summary><p>Inline scripts and styles, external CDNs or analytics got blocked. Use Report-Only to list the violations and then allow only the sources you need.</p></details><details><summary>Can I use a meta tag for CSP?</summary><p>Some directives work, but frame-ancestors, report-uri and sandbox are ignored in meta. Prefer the HTTP header.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/csp-builder.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

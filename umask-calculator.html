@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>umask 계산기 — 파일·디렉터리 기본 권한 계산 | WooaDev</title>
+  <meta name="description" content="umask 값(022, 027, 077)에서 새 파일(666 기준)과 디렉터리(777 기준)의 권한을 계산하고 반대로 원하는 권한에서 umask 를 구합니다. rwx 기호 표기, umask -S 형식, 영구 적용 위치를 알려 줍니다.">
+  <meta name="keywords" content="umask 계산기, umask 022 의미, umask 027, 리눅스 기본 권한, umask 설정, 파일 권한 계산, umask calculator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/umask-calculator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/umask-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/umask-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/umask-calculator.html">
+  <meta property="og:title" content="umask 계산기 — 파일·디렉터리 기본 권한 계산 | WooaDev">
+  <meta property="og:description" content="umask 값(022, 027, 077)에서 새 파일(666 기준)과 디렉터리(777 기준)의 권한을 계산하고 반대로 원하는 권한에서 umask 를 구합니다. rwx 기호 표기, umask -S 형식, 영구 적용 위치를 알려 줍니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/umask-calculator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="umask 계산기 — 파일·디렉터리 기본 권한 계산 | WooaDev">
+  <meta name="twitter:description" content="umask 값(022, 027, 077)에서 새 파일(666 기준)과 디렉터리(777 기준)의 권한을 계산하고 반대로 원하는 권한에서 umask 를 구합니다. rwx 기호 표기, umask -S 형식, 영구 적용 위치를 알려 줍니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"umask 계산기","url":"https://wooadev.wooahouse.com/umask-calculator.html","description":"umask 값(022, 027, 077)에서 새 파일(666 기준)과 디렉터리(777 기준)의 권한을 계산하고 반대로 원하는 권한에서 umask 를 구합니다. rwx 기호 표기, umask -S 형식, 영구 적용 위치를 알려 줍니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["umask → 권한: 파일은 666, 디렉터리는 777 에서 umask 비트를 제거","권한 → umask: 640/750 또는 rw-r----- 형식의 원하는 권한에서 필요한 umask 계산","rwx 기호 표기와 umask -S 형식(u=rwx,g=rx,o=) 표시","자주 쓰는 umask(022, 002, 027, 077, 007) 비교표","~/.bashrc, /etc/login.defs, systemd UMask=, Dockerfile 에서 영구 적용하는 방법 안내"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"umask 022 는 왜 644 가 되나요?","acceptedAnswer":{"@type":"Answer","text":"파일 기본 666(rw-rw-rw-)에서 umask 의 022(----w--w-)를 빼면 644(rw-r--r--)입니다. 디렉터리는 777 에서 같은 비트를 빼 755 가 됩니다."}},{"@type":"Question","name":"umask 를 바꿨는데 기존 파일 권한은 그대로예요.","acceptedAnswer":{"@type":"Answer","text":"umask 는 앞으로 만들 파일에만 적용됩니다. 기존 파일은 chmod 로 바꿔야 합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"umask 계산기","item":"https://wooadev.wooahouse.com/umask-calculator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="umask-calculator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/umask-calculator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>umask 계산기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔒</span>
+    <h1>umask 계산기 — 새 파일·디렉터리 기본 권한</h1>
+    <p>umask 022 이면 새 파일은 644, 디렉터리는 755 가 됩니다. umask 에서 권한을 계산하거나, 원하는 권한(예: 640/750)에서 필요한 umask 를 거꾸로 구하고 자주 쓰는 값 표를 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ umask 027 → 파일 640 · 디렉터리 750</p>
+<h3>입력 — umask (8진수, 예: 022)</h3><pre>027</pre>
+<h3>입력 — 원하는 파일 권한 (8진수 또는 rw-r--r--)</h3><pre>640</pre>
+<h3>입력 — 원하는 디렉터리 권한 (8진수 또는 rwxr-x---)</h3><pre>750</pre>
+<h3>결과 — 결과</h3><pre>항목 | 값 | 권한
+umask | 027 | ----w-rwx (마스크로 빼는 권한)
+새 파일 권한 | 640 | rw-r-----
+새 디렉터리 권한 | 750 | rwxr-x---
+umask 기호 표기 | u=rwx,g=rx,o= | umask -S 가 출력하는 형식</pre>
+<h3>결과 — 명령어</h3><pre>umask 027
+umask u=rwx,g=rx,o=
+
+# 영구 적용 위치
+echo 'umask 027' &gt;&gt; ~/.bashrc    # 사용자 셸
+# /etc/login.defs → UMASK 027            # 로그인 기본값
+# systemd 서비스: UMask=027
+# Dockerfile: RUN umask 027 &amp;&amp; …    # 해당 RUN 안에서만 유효</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>새로 만들어지는 파일의 권한은 chmod 가 아니라 umask 가 결정합니다. 값을 뺀다는 개념이 헷갈릴 때 바로 계산해 보세요.</p>
+<ul><li>umask → 권한: 파일은 666, 디렉터리는 777 에서 umask 비트를 제거</li><li>권한 → umask: 640/750 또는 rw-r----- 형식의 원하는 권한에서 필요한 umask 계산</li><li>rwx 기호 표기와 umask -S 형식(u=rwx,g=rx,o=) 표시</li><li>자주 쓰는 umask(022, 002, 027, 077, 007) 비교표</li><li>~/.bashrc, /etc/login.defs, systemd UMask=, Dockerfile 에서 영구 적용하는 방법 안내</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="chmod.html" class="related-card"><span class="related-icon">🔐</span><span>Chmod 계산기</span></a>
+    <a href="linux-capability-decoder.html" class="related-card"><span class="related-icon">🛡️</span><span>Linux capability 디코더</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+    <a href="bitwise-calculator.html" class="related-card"><span class="related-icon">🧮</span><span>비트 연산 계산기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>서버 계정 기본값으로는 027(그룹 읽기, 기타 접근 불가)이나 077 이 안전합니다.</li><li>파일에는 기본적으로 실행 권한이 붙지 않습니다. 스크립트는 chmod +x 로 따로 지정하세요.</li><li>systemd 서비스, cron, sshd 는 로그인 셸의 umask 를 물려받지 않으니 서비스 설정에서 UMask= 를 지정하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>umask 022 는 왜 644 가 되나요?</summary><p>파일 기본 666(rw-rw-rw-)에서 umask 의 022(----w--w-)를 빼면 644(rw-r--r--)입니다. 디렉터리는 777 에서 같은 비트를 빼 755 가 됩니다.</p></details><details><summary>umask 를 바꿨는데 기존 파일 권한은 그대로예요.</summary><p>umask 는 앞으로 만들 파일에만 적용됩니다. 기존 파일은 chmod 로 바꿔야 합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/umask-calculator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

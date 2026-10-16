@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git diff 뷰어 — 패치 파일별 요약과 줄 번호 diff | WooaDev</title>
+  <meta name="description" content="git diff·.patch(unified diff)를 붙여 넣어 파일별 변경 요약(추가/삭제/이름 변경/바이너리), 줄 번호가 있는 색상 diff, --stat 요약을 확인합니다. 헝크 줄 수 불일치와 비밀 파일 포함을 경고합니다.">
+  <meta name="keywords" content="git diff 뷰어, 패치 파일 보기, unified diff 뷰어, diff stat, .patch 파일 열기, git diff 읽기, git diff viewer">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/git-diff-viewer.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/git-diff-viewer.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/git-diff-viewer.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/git-diff-viewer.html">
+  <meta property="og:title" content="Git diff 뷰어 — 패치 파일별 요약과 줄 번호 diff | WooaDev">
+  <meta property="og:description" content="git diff·.patch(unified diff)를 붙여 넣어 파일별 변경 요약(추가/삭제/이름 변경/바이너리), 줄 번호가 있는 색상 diff, --stat 요약을 확인합니다. 헝크 줄 수 불일치와 비밀 파일 포함을 경고합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/git-diff-viewer.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Git diff 뷰어 — 패치 파일별 요약과 줄 번호 diff | WooaDev">
+  <meta name="twitter:description" content="git diff·.patch(unified diff)를 붙여 넣어 파일별 변경 요약(추가/삭제/이름 변경/바이너리), 줄 번호가 있는 색상 diff, --stat 요약을 확인합니다. 헝크 줄 수 불일치와 비밀 파일 포함을 경고합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Git diff 뷰어","url":"https://wooadev.wooahouse.com/git-diff-viewer.html","description":"git diff·.patch(unified diff)를 붙여 넣어 파일별 변경 요약(추가/삭제/이름 변경/바이너리), 줄 번호가 있는 색상 diff, --stat 요약을 확인합니다. 헝크 줄 수 불일치와 비밀 파일 포함을 경고합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["파일별 요약: 상태(수정/추가/삭제/이름 변경 %/권한 변경/바이너리), 추가·삭제 줄 수, 헝크 수","변경 내용: 원본·수정본 줄 번호가 붙은 색상 diff, 변경된 줄만 보기, 파일 이름 필터","git diff --stat 과 같은 형식의 요약 출력","헝크 헤더의 줄 수와 실제 줄 수가 다르면(패치가 잘렸거나 수정됨) 경고",".env·키·credentials 같은 비밀 파일 포함, 줄 끝 공백, 1,000줄이 넘는 큰 변경을 경고"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"두 파일 내용을 직접 비교할 수도 있나요?","acceptedAnswer":{"@type":"Answer","text":"이 도구는 이미 만들어진 diff를 읽는 용도입니다. 두 텍스트를 직접 비교하려면 diff 뷰어 도구를 쓰세요."}},{"@type":"Question","name":"바이너리 파일 변경은 어떻게 보이나요?","acceptedAnswer":{"@type":"Answer","text":"내용은 표시되지 않고 파일 목록에 '바이너리'로 나타납니다. 크기 변화는 git diff --stat 로 확인하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"Git diff 뷰어","item":"https://wooadev.wooahouse.com/git-diff-viewer.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="git-diff-viewer.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/git-diff-viewer.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Git diff 뷰어</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧩</span>
+    <h1>Git diff 뷰어 — 패치를 읽기 쉽게</h1>
+    <p>git diff, git show, .patch/.diff 파일 내용을 붙여 넣으면 파일별 추가·삭제 줄 수, 이름 변경·신규·삭제 여부를 요약하고 줄 번호가 붙은 색상 diff로 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 3개 파일 · +4 −2</p>
+<h3>입력 — git diff / 패치 (unified diff)</h3><pre>diff --git a/src/app.js b/src/app.js
+index 3b18e51..a9c2d4f 100644
+--- a/src/app.js
++++ b/src/app.js
+@@ -1,5 +1,7 @@
+ const express = require('express');
++const helmet = require('helmet');
+ const app = express();
+-app.listen(3000);
++app.use(helmet());
++app.listen(process.env.PORT || 3000);
+ 
+ module.exports = app;
+diff --git a/old-name.txt b/docs/new-name.txt
+similarity index 92%
+rename from old-name.txt
+rename to docs/new-name.txt
+index 1111111..2222222 100644
+--- a/old-name.txt
++++ b/docs/new-name.txt
+@@ -1,2 +1,2 @@
+ hello
+-world
++WooaDev
+diff --git a/logo.png b/logo.png
+new file mode 100644
+Binary files /dev/null and b/logo.png differ
+</pre>
+<h3>결과 — 파일별 요약</h3><pre>파일 | 상태 | 추가 | 삭제 | 헝크
+src/app.js | M 수정 | +3 | −1 | 1
+old-name.txt → docs/new-name.txt | R 이름 변경 (92%) | +1 | −1 | 1
+logo.png | A 추가 | 바이너리 |  | 0</pre>
+<h3>결과 — 변경 내용</h3><pre>  ━━━━ src/app.js (수정) ━━━━
+  @@ 줄 -1,5 +1,7 @@
+     1    1 const express = require('express');
++         2 const helmet = require('helmet');
+     2    3 const app = express();
+-    3      app.listen(3000);
++         4 app.use(helmet());
++         5 app.listen(process.env.PORT || 3000);
+     4    6 
+     5    7 module.exports = app;
+  ━━━━ old-name.txt → docs/new-name.txt (이름 변경) ━━━━
+  @@ 줄 -1,2 +1,2 @@
+     1    1 hello
+-    2      world
++         2 WooaDev
+  ━━━━ logo.png (추가) ━━━━
+  (바이너리 파일 — 내용을 표시할 수 없습니다)</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>이메일이나 PR 설명에 붙은 긴 패치를 열어 볼 편한 도구가 없을 때 쓰세요. 입력한 패치는 브라우저에서만 처리됩니다.</p>
+<ul><li>파일별 요약: 상태(수정/추가/삭제/이름 변경 %/권한 변경/바이너리), 추가·삭제 줄 수, 헝크 수</li><li>변경 내용: 원본·수정본 줄 번호가 붙은 색상 diff, 변경된 줄만 보기, 파일 이름 필터</li><li>git diff --stat 과 같은 형식의 요약 출력</li><li>헝크 헤더의 줄 수와 실제 줄 수가 다르면(패치가 잘렸거나 수정됨) 경고</li><li>.env·키·credentials 같은 비밀 파일 포함, 줄 끝 공백, 1,000줄이 넘는 큰 변경을 경고</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="diff-viewer.html" class="related-card"><span class="related-icon">📊</span><span>Diff 비교기</span></a>
+    <a href="git-command-builder.html" class="related-card"><span class="related-icon">⌨️</span><span>Git 명령어 생성기</span></a>
+    <a href="git-history-planner.html" class="related-card"><span class="related-icon">🌿</span><span>Git 병합·리베이스 시뮬레이터</span></a>
+    <a href="json-diff.html" class="related-card"><span class="related-icon">🔍</span><span>JSON 비교 도구</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>git diff 대신 git diff --no-color 로 복사하세요. 색상 코드가 섞이면 해석이 어려워집니다.</li><li>큰 PR은 파일 이름 필터로 관심 있는 부분만 먼저 보세요.</li><li>패치를 적용하기 전에는 git apply --check 로 충돌 여부를 확인할 수 있습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>두 파일 내용을 직접 비교할 수도 있나요?</summary><p>이 도구는 이미 만들어진 diff를 읽는 용도입니다. 두 텍스트를 직접 비교하려면 diff 뷰어 도구를 쓰세요.</p></details><details><summary>바이너리 파일 변경은 어떻게 보이나요?</summary><p>내용은 표시되지 않고 파일 목록에 '바이너리'로 나타납니다. 크기 변화는 git diff --stat 로 확인하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/git-diff-viewer.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

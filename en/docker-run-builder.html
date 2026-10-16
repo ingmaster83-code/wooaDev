@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>docker run Command Builder – compose Converter &amp; Security Checks | WooaDev</title>
+  <meta name="description" content="Build docker run commands and docker-compose.yml from image, ports, volumes, env and security options. Flags exposed DB ports, docker.sock mounts, privileged mode and plain passwords.">
+  <meta name="keywords" content="docker run command, docker run options, docker-compose converter, docker run -p -v -e, docker port mapping, docker security settings, docker run builder">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/docker-run-builder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/docker-run-builder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/docker-run-builder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/docker-run-builder.html">
+  <meta property="og:title" content="docker run Command Builder – compose Converter &amp; Security Checks | WooaDev">
+  <meta property="og:description" content="Build docker run commands and docker-compose.yml from image, ports, volumes, env and security options. Flags exposed DB ports, docker.sock mounts, privileged mode and plain passwords.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/docker-run-builder.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="docker run Command Builder – compose Converter &amp; Security Checks | WooaDev">
+  <meta name="twitter:description" content="Build docker run commands and docker-compose.yml from image, ports, volumes, env and security options. Flags exposed DB ports, docker.sock mounts, privileged mode and plain passwords.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"docker run Command Builder","url":"https://wooadev.wooahouse.com/en/docker-run-builder.html","description":"Build docker run commands and docker-compose.yml from image, ports, volumes, env and security options. Flags exposed DB ports, docker.sock mounts, privileged mode and plain passwords.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Input: image, name, -d / -it / --rm, restart policy, network, ports (host:container[/udp]), volumes, environment, user, working directory, memory and CPU, read-only, cap-drop, no-new-privileges, privileged","Output: a multi-line docker run command and the same docker-compose.yml (ports, volumes, networks and named volumes)","Port validation (1–65535, bind IP) and relative-path volumes converted to $(pwd)/…","🚨 warnings for database ports (MySQL, PostgreSQL, Redis …) on 0.0.0.0, docker.sock mounts, --privileged and host networking","Checks plain-text password variables, running as root, missing memory limit, latest tag and -d with --rm"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Relative ./ volumes fail in docker run.","acceptedAnswer":{"@type":"Answer","text":"docker run -v accepts absolute paths only, so use $(pwd)/path (PowerShell: ${PWD}). docker-compose accepts ./ as is."}},{"@type":"Question","name":"Can I combine --restart and --rm?","acceptedAnswer":{"@type":"Answer","text":"Docker rejects it. --rm deletes the container on exit, which contradicts a restart policy."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"docker run Command Builder","item":"https://wooadev.wooahouse.com/en/docker-run-builder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../docker-run-builder.html">KO</a>
+        <span>|</span>
+        <a href="docker-run-builder.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>docker run Command Builder</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🐋</span>
+    <h1>docker run Command Builder + docker-compose Converter</h1>
+    <p>Fill in image, ports, volumes, environment variables, resource limits and security options to get a docker run command and the equivalent docker-compose.yml. Risky settings are flagged immediately.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ docker run command built</p>
+<h3>Input — Ports (one per line: host:container)</h3><pre>8080:80
+127.0.0.1:5432:5432
+53:53/udp</pre>
+<h3>Input — Volumes (one per line: source:target[:ro])</h3><pre>./html:/usr/share/nginx/html:ro
+pgdata:/var/lib/postgresql/data</pre>
+<h3>Input — Environment variables (KEY=value, one per line)</h3><pre>TZ=Asia/Seoul
+POSTGRES_PASSWORD=changeme</pre>
+<h3>Result — docker run command</h3><pre>docker run \
+  -d \
+  --name web \
+  --restart unless-stopped \
+  -p 8080:80 \
+  -p 127.0.0.1:5432:5432 \
+  -p 53:53/udp \
+  -v "$(pwd)/html:/usr/share/nginx/html:ro" \
+  -v pgdata:/var/lib/postgresql/data \
+  -e TZ=Asia/Seoul \
+  -e POSTGRES_PASSWORD=changeme \
+  nginx:1.27-alpine</pre>
+<h3>Result — docker-compose.yml equivalent</h3><pre>services:
+  web:
+    image: nginx:1.27-alpine
+    container_name: web
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+      - "127.0.0.1:5432:5432"
+      - "53:53/udp"
+    volumes:
+      - ./html:/usr/share/nginx/html:ro
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      TZ: "Asia/Seoul"
+      POSTGRES_PASSWORD: "changeme"
+
+volumes:
+  pgdata:</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Fill a form instead of remembering docker run's many options and get a multi-line command plus a docker-compose.yml. Handy for the first container or when moving to compose.</p>
+<ul><li>Input: image, name, -d / -it / --rm, restart policy, network, ports (host:container[/udp]), volumes, environment, user, working directory, memory and CPU, read-only, cap-drop, no-new-privileges, privileged</li><li>Output: a multi-line docker run command and the same docker-compose.yml (ports, volumes, networks and named volumes)</li><li>Port validation (1–65535, bind IP) and relative-path volumes converted to $(pwd)/…</li><li>🚨 warnings for database ports (MySQL, PostgreSQL, Redis …) on 0.0.0.0, docker.sock mounts, --privileged and host networking</li><li>Checks plain-text password variables, running as root, missing memory limit, latest tag and -d with --rm</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="docker-image-parser.html" class="related-card"><span class="related-icon">🐳</span><span>Docker Image Name Parser</span></a>
+    <a href="linux-capability-decoder.html" class="related-card"><span class="related-icon">🛡️</span><span>Linux Capability Decoder</span></a>
+    <a href="env-editor.html" class="related-card"><span class="related-icon">✏️</span><span>.env Editor</span></a>
+    <a href="command-line-parser.html" class="related-card"><span class="related-icon">🖥️</span><span>Command Line, PATH &amp; Env Analyzer</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Bind ports that need no outside access to localhost, such as 127.0.0.1:5432:5432. On Linux ports opened with -p can bypass ufw rules.</li><li>Do not pass passwords with -e; use --env-file or Docker secrets. They are visible via docker inspect.</li><li>For production consider --user, --memory, --read-only and --cap-drop ALL by default.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Relative ./ volumes fail in docker run.</summary><p>docker run -v accepts absolute paths only, so use $(pwd)/path (PowerShell: ${PWD}). docker-compose accepts ./ as is.</p></details><details><summary>Can I combine --restart and --rm?</summary><p>Docker rejects it. --rm deletes the container on exit, which contradicts a restart policy.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-net.js"></script>
+<script src="../js/tools/docker-run-builder.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

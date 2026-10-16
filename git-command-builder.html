@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git 명령어 생성기 — 명령어·옵션 뜻·되돌리는 법 | WooaDev</title>
+  <meta name="description" content="commit, branch, merge, rebase, reset, revert, cherry-pick, stash, log, push, clone 등 18가지 git 작업의 명령어를 옵션 선택으로 만들고 각 옵션의 뜻, --hard·--force 위험, 되돌리는 방법을 안내합니다.">
+  <meta name="keywords" content="git 명령어 생성기, git 명령어 정리, git reset hard, git rebase 옵션, git push force with lease, git cheat sheet, git command builder">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/git-command-builder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/git-command-builder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/git-command-builder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/git-command-builder.html">
+  <meta property="og:title" content="Git 명령어 생성기 — 명령어·옵션 뜻·되돌리는 법 | WooaDev">
+  <meta property="og:description" content="commit, branch, merge, rebase, reset, revert, cherry-pick, stash, log, push, clone 등 18가지 git 작업의 명령어를 옵션 선택으로 만들고 각 옵션의 뜻, --hard·--force 위험, 되돌리는 방법을 안내합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/git-command-builder.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Git 명령어 생성기 — 명령어·옵션 뜻·되돌리는 법 | WooaDev">
+  <meta name="twitter:description" content="commit, branch, merge, rebase, reset, revert, cherry-pick, stash, log, push, clone 등 18가지 git 작업의 명령어를 옵션 선택으로 만들고 각 옵션의 뜻, --hard·--force 위험, 되돌리는 방법을 안내합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Git 명령어 생성기","url":"https://wooadev.wooahouse.com/git-command-builder.html","description":"commit, branch, merge, rebase, reset, revert, cherry-pick, stash, log, push, clone 등 18가지 git 작업의 명령어를 옵션 선택으로 만들고 각 옵션의 뜻, --hard·--force 위험, 되돌리는 방법을 안내합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["지원 작업: commit, branch/switch, merge, rebase, reset, revert, cherry-pick, stash, log, diff, push, pull, fetch, clone, tag, restore, clean, remote","각 부분의 뜻을 표로 설명 (예: --force-with-lease 는 안전한 강제 푸시)","🚨 reset --hard, push --force, clean -f, stash clear 등 되돌릴 수 없는 작업 경고","되돌리는 방법 안내 (reflog, ORIG_HEAD, reset --soft HEAD~1 등)","메시지·경로는 셸에서 안전하게 인용되어 그대로 복사 가능"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"실수로 reset --hard 를 했어요.","acceptedAnswer":{"@type":"Answer","text":"커밋된 내용이었다면 git reflog 로 이전 커밋 해시를 찾아 git reset --hard 해시 로 되돌릴 수 있습니다. 커밋하지 않은 변경은 복구할 수 없습니다."}},{"@type":"Question","name":"git switch 와 git checkout 은 다른가요?","acceptedAnswer":{"@type":"Answer","text":"switch 는 브랜치 전환, restore 는 파일 복원으로 checkout 의 두 역할을 나눈 최신 명령입니다. 동작은 같지만 의도가 분명합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"Git 명령어 생성기","item":"https://wooadev.wooahouse.com/git-command-builder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="git-command-builder.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/git-command-builder.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Git 명령어 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">⌨️</span>
+    <h1>Git 명령어 생성기 — 실행 전에 뜻 확인</h1>
+    <p>작업을 고르고 옵션을 체크하면 git 명령어를 만들어 주고, 각 부분이 무슨 뜻인지, 어떤 위험이 있는지, 실수했을 때 되돌리는 방법을 함께 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 명령어를 만들었습니다</p>
+<h3>결과 — Git 명령어</h3><pre>git push -u origin feature/login</pre>
+<h3>결과 — 각 부분의 뜻</h3><pre>부분 | 뜻
+git | Git 실행
+push | 로컬 커밋을 원격에 올림
+-u | 이후 git push/pull 에 이 원격 브랜치를 기본값으로 연결
+origin | 원격 이름
+feature/login | 올릴 브랜치</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>외우기 어려운 옵션 조합을 체크박스로 고르면 한 줄 명령어와 설명 표, 주의사항이 함께 나옵니다. 위험한 명령은 실행 전에 한 번 더 확인하게 됩니다.</p>
+<ul><li>지원 작업: commit, branch/switch, merge, rebase, reset, revert, cherry-pick, stash, log, diff, push, pull, fetch, clone, tag, restore, clean, remote</li><li>각 부분의 뜻을 표로 설명 (예: --force-with-lease 는 안전한 강제 푸시)</li><li>🚨 reset --hard, push --force, clean -f, stash clear 등 되돌릴 수 없는 작업 경고</li><li>되돌리는 방법 안내 (reflog, ORIG_HEAD, reset --soft HEAD~1 등)</li><li>메시지·경로는 셸에서 안전하게 인용되어 그대로 복사 가능</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="git-history-planner.html" class="related-card"><span class="related-icon">🌿</span><span>Git 병합·리베이스 시뮬레이터</span></a>
+    <a href="git-ref-validator.html" class="related-card"><span class="related-icon">🏷️</span><span>Git 브랜치·태그 이름 검사기</span></a>
+    <a href="conventional-commit-builder.html" class="related-card"><span class="related-icon">📝</span><span>Conventional Commits 작성기</span></a>
+    <a href="gitignore-generator.html" class="related-card"><span class="related-icon">🚫</span><span>.gitignore 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>강제 푸시가 필요하면 --force 대신 --force-with-lease 를 쓰세요. 다른 사람이 올린 커밋을 지우지 않습니다.</li><li>rebase·amend·reset 은 커밋 해시를 바꿉니다. 이미 공유한 브랜치에서는 revert 를 쓰세요.</li><li>clean 은 기본이 미리보기(-n)입니다. 목록을 확인한 뒤에만 -f 로 실제 삭제하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>실수로 reset --hard 를 했어요.</summary><p>커밋된 내용이었다면 git reflog 로 이전 커밋 해시를 찾아 git reset --hard 해시 로 되돌릴 수 있습니다. 커밋하지 않은 변경은 복구할 수 없습니다.</p></details><details><summary>git switch 와 git checkout 은 다른가요?</summary><p>switch 는 브랜치 전환, restore 는 파일 복원으로 checkout 의 두 역할을 나눈 최신 명령입니다. 동작은 같지만 의도가 분명합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/git-command-builder.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

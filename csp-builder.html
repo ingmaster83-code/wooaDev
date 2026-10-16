@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSP 생성기 — Content-Security-Policy 만들기·점검 | WooaDev</title>
+  <meta name="description" content="Content-Security-Policy를 프리셋(엄격·SPA·일반)으로 만들고 정책의 unsafe-inline, 와일드카드, base-uri 누락 등을 점검하며, 요청 URL이 정책에서 허용되는지 테스트합니다. Report-Only 지원.">
+  <meta name="keywords" content="CSP 생성기, Content-Security-Policy, CSP 테스트, unsafe-inline, CSP Report-Only, script-src, csp builder">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/csp-builder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/csp-builder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/csp-builder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/csp-builder.html">
+  <meta property="og:title" content="CSP 생성기 — Content-Security-Policy 만들기·점검 | WooaDev">
+  <meta property="og:description" content="Content-Security-Policy를 프리셋(엄격·SPA·일반)으로 만들고 정책의 unsafe-inline, 와일드카드, base-uri 누락 등을 점검하며, 요청 URL이 정책에서 허용되는지 테스트합니다. Report-Only 지원.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/csp-builder.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSP 생성기 — Content-Security-Policy 만들기·점검 | WooaDev">
+  <meta name="twitter:description" content="Content-Security-Policy를 프리셋(엄격·SPA·일반)으로 만들고 정책의 unsafe-inline, 와일드카드, base-uri 누락 등을 점검하며, 요청 URL이 정책에서 허용되는지 테스트합니다. Report-Only 지원.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSP 생성기·분석기","url":"https://wooadev.wooahouse.com/csp-builder.html","description":"Content-Security-Policy를 프리셋(엄격·SPA·일반)으로 만들고 정책의 unsafe-inline, 와일드카드, base-uri 누락 등을 점검하며, 요청 URL이 정책에서 허용되는지 테스트합니다. Report-Only 지원.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["만들기: 엄격 / SPA + 외부 API / 일반 사이트 프리셋에 script·style·img·connect·frame 출처 추가, upgrade-insecure-requests, report-uri, Report-Only","점검: unsafe-inline·unsafe-eval, 와일드카드(*), http: 출처, object-src·base-uri·form-action 누락","테스트: 페이지 출처와 요청 목록(종류 URL)을 넣으면 어떤 요청이 차단되는지 지시어별로 판정","default-src 로의 폴백, 'self', 호스트·스킴 출처 매칭을 브라우저와 같은 방식으로 처리","각 지시어의 의미를 표로 설명"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"CSP를 넣었더니 사이트가 깨져요.","acceptedAnswer":{"@type":"Answer","text":"인라인 스크립트·스타일, 외부 CDN, 구글 애널리틱스 등이 차단된 것입니다. Report-Only 로 위반 목록을 보고 필요한 출처만 허용하세요."}},{"@type":"Question","name":"meta 태그로도 CSP를 쓸 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"일부 지시어는 가능하지만 frame-ancestors, report-uri, sandbox 는 meta 에서 동작하지 않습니다. 가능하면 HTTP 헤더로 보내세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"CSP 생성기·분석기","item":"https://wooadev.wooahouse.com/csp-builder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="csp-builder.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/csp-builder.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CSP 생성기·분석기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🚧</span>
+    <h1>CSP 생성기 · 분석기 — Content-Security-Policy</h1>
+    <p>Content-Security-Policy 헤더를 프리셋으로 만들고, 이미 가진 정책의 약점(unsafe-inline, 와일드카드)을 찾아내며, 특정 스크립트·이미지 요청이 허용되는지 직접 테스트합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>🔍 점검할 항목 4개</p>
+<h3>입력 — 분석·테스트할 CSP</h3><pre>default-src 'self'; script-src 'self' https://cdn.example.com 'unsafe-inline'; img-src 'self' data: https:; object-src *; frame-ancestors 'self'</pre>
+<h3>입력 — 테스트할 요청 (한 줄에 하나: 종류 URL)</h3><pre>script https://cdn.example.com/app.js
+script https://evil.example.net/x.js
+img https://images.example.org/a.png
+style inline
+connect https://api.example.com/v1</pre>
+<h3>입력 — 페이지 출처 (self)</h3><pre>https://www.example.com</pre>
+<h3>결과 — CSP</h3><pre>default-src 'self'; script-src 'self' https://cdn.example.com 'unsafe-inline'; img-src 'self' data: https:; object-src *; frame-ancestors 'self'</pre>
+<h3>결과 — 지시어</h3><pre>지시어 | 출처 | 의미
+default-src | 'self' | 다른 *-src가 없을 때의 기본 출처
+script-src | 'self' https://cdn.example.com 'unsafe-inline' | 스크립트 출처
+img-src | 'self' data: https: | 이미지 출처
+object-src | * | &lt;object&gt;/&lt;embed&gt; 출처
+frame-ancestors | 'self' | 이 페이지를 임베드할 수 있는 출처 (클릭재킹 방지)</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>CSP는 XSS 피해를 줄이는 가장 강력한 헤더이지만 잘못 쓰면 사이트가 깨집니다. 만들고, 점검하고, 시험해 볼 수 있습니다.</p>
+<ul><li>만들기: 엄격 / SPA + 외부 API / 일반 사이트 프리셋에 script·style·img·connect·frame 출처 추가, upgrade-insecure-requests, report-uri, Report-Only</li><li>점검: unsafe-inline·unsafe-eval, 와일드카드(*), http: 출처, object-src·base-uri·form-action 누락</li><li>테스트: 페이지 출처와 요청 목록(종류 URL)을 넣으면 어떤 요청이 차단되는지 지시어별로 판정</li><li>default-src 로의 폴백, 'self', 호스트·스킴 출처 매칭을 브라우저와 같은 방식으로 처리</li><li>각 지시어의 의미를 표로 설명</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="security-header-builder.html" class="related-card"><span class="related-icon">🧱</span><span>보안 헤더 생성기</span></a>
+    <a href="sri-generator.html" class="related-card"><span class="related-icon">🛡️</span><span>SRI 해시 생성기</span></a>
+    <a href="http-headers-parser.html" class="related-card"><span class="related-icon">📨</span><span>HTTP 헤더 파서</span></a>
+    <a href="meta-tag.html" class="related-card"><span class="related-icon">🏷️</span><span>Meta Tag 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>처음에는 Content-Security-Policy-Report-Only 로 배포해 위반 보고만 모은 뒤 차단 모드로 바꾸세요.</li><li>인라인 스크립트가 필요하다면 unsafe-inline 대신 nonce 또는 해시(sha256-…)를 쓰세요.</li><li>object-src 'none'; base-uri 'self'; 두 줄은 거의 모든 사이트에서 안전하게 추가할 수 있습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>CSP를 넣었더니 사이트가 깨져요.</summary><p>인라인 스크립트·스타일, 외부 CDN, 구글 애널리틱스 등이 차단된 것입니다. Report-Only 로 위반 목록을 보고 필요한 출처만 허용하세요.</p></details><details><summary>meta 태그로도 CSP를 쓸 수 있나요?</summary><p>일부 지시어는 가능하지만 frame-ancestors, report-uri, sandbox 는 meta 에서 동작하지 않습니다. 가능하면 HTTP 헤더로 보내세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/csp-builder.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

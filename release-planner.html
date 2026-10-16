@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>릴리스 플래너 — 커밋으로 SemVer 버전·CHANGELOG 생성 | WooaDev</title>
+  <meta name="description" content="Conventional Commits 목록에서 다음 SemVer 버전을 계산하고 CHANGELOG(Conventional/Keep a Changelog) 초안과 릴리스 명령어를 생성합니다. BREAKING CHANGE, 0.x 규칙, 프리릴리스(rc), 이슈·커밋·비교 링크 지원.">
+  <meta name="keywords" content="릴리스 노트 생성, CHANGELOG 생성, SemVer 다음 버전, Conventional Commits 체인지로그, keep a changelog, 릴리스 플래너, changelog generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/release-planner.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/release-planner.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/release-planner.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/release-planner.html">
+  <meta property="og:title" content="릴리스 플래너 — 커밋으로 SemVer 버전·CHANGELOG 생성 | WooaDev">
+  <meta property="og:description" content="Conventional Commits 목록에서 다음 SemVer 버전을 계산하고 CHANGELOG(Conventional/Keep a Changelog) 초안과 릴리스 명령어를 생성합니다. BREAKING CHANGE, 0.x 규칙, 프리릴리스(rc), 이슈·커밋·비교 링크 지원.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/release-planner.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="릴리스 플래너 — 커밋으로 SemVer 버전·CHANGELOG 생성 | WooaDev">
+  <meta name="twitter:description" content="Conventional Commits 목록에서 다음 SemVer 버전을 계산하고 CHANGELOG(Conventional/Keep a Changelog) 초안과 릴리스 명령어를 생성합니다. BREAKING CHANGE, 0.x 규칙, 프리릴리스(rc), 이슈·커밋·비교 링크 지원.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"릴리스 플래너·체인지로그 생성기","url":"https://wooadev.wooahouse.com/release-planner.html","description":"Conventional Commits 목록에서 다음 SemVer 버전을 계산하고 CHANGELOG(Conventional/Keep a Changelog) 초안과 릴리스 명령어를 생성합니다. BREAKING CHANGE, 0.x 규칙, 프리릴리스(rc), 이슈·커밋·비교 링크 지원.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["버전 결정: BREAKING CHANGE/! → major, feat → minor, fix·perf → patch, docs·chore 만 있으면 릴리스 없음","0.x 버전은 호환성 파괴를 minor 로 올리는 옵션, 프리릴리스(rc·beta) 번호 증가 처리","CHANGELOG: 새 기능/버그 수정/성능/되돌림 분류 또는 Keep a Changelog(Added/Changed/Fixed)","저장소 URL을 주면 이슈(#123)·커밋 해시·버전 비교 링크 포함","형식이 맞지 않는 커밋은 제외하고 알려 줌, git tag·push 명령어 제공"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"커밋이 규칙을 안 지켰으면요?","acceptedAnswer":{"@type":"Answer","text":"형식에 맞지 않는 줄은 버전 계산과 노트에서 제외되고 목록에 표시됩니다. 팀에서 커밋 메시지 규칙을 정해 두면 가장 정확합니다."}},{"@type":"Question","name":"1.0.0 이전에는 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"0.x 는 안정 API가 아니라는 SemVer 규칙에 따라 호환성 파괴도 minor 로 올리는 관행이 있습니다. 옵션으로 선택하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"릴리스 플래너·체인지로그 생성기","item":"https://wooadev.wooahouse.com/release-planner.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="release-planner.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/release-planner.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>릴리스 플래너·체인지로그 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🚀</span>
+    <h1>릴리스 플래너 — 다음 버전과 CHANGELOG 자동 생성</h1>
+    <p>Conventional Commits 형식의 커밋 목록을 붙여 넣으면 다음 버전(major/minor/patch)을 계산하고, 기능·수정별로 분류한 CHANGELOG 초안과 태그·푸시 명령어까지 만들어 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 1.4.2 → 2.0.0 (major)</p>
+<h3>입력 — 커밋 메시지 목록 (한 줄에 하나, 해시 접두 가능)</h3><pre>a1b2c3d feat(auth): add OAuth login with PKCE
+e4f5a6b fix(api): handle empty response from /items (#214)
+7c8d9e0 perf(db): add index on orders.created_at
+1f2e3d4 docs: explain deployment steps
+5a6b7c8 refactor(core)!: drop the legacy session store
+9d0e1f2 fix: typo in error message
+3c4d5e6 chore(deps): bump express to 4.19.2
+WIP stuff
+8b9c0d1 feat(ui): dark mode toggle (closes #230)</pre>
+<h3>결과 — 체인지로그 (Markdown)</h3><pre>## [2.0.0](https://github.com/example/app/compare/v1.4.2...v2.0.0) (2026-10-17)
+
+### 💥 호환성 파괴 (BREAKING CHANGES)
+- **core:** drop the legacy session store ([5a6b7c8](https://github.com/example/app/commit/5a6b7c8))
+
+### ✨ 새 기능
+- **auth:** add OAuth login with PKCE ([a1b2c3d](https://github.com/example/app/commit/a1b2c3d))
+- **ui:** dark mode toggle ([#230](https://github.com/example/app/issues/230)) ([8b9c0d1](https://github.com/example/app/commit/8b9c0d1))
+
+### 🐛 버그 수정
+- **api:** handle empty response from /items ([#214](https://github.com/example/app/issues/214)) ([e4f5a6b](https://github.com/example/app/commit/e4f5a6b))
+- typo in error message ([9d0e1f2](https://github.com/example/app/commit/9d0e1f2))
+
+### ⚡ 성능 개선
+- **db:** add index on orders.created_at ([7c8d9e0](https://github.com/example/app/commit/7c8d9e0))
+
+### ♻️ 리팩터링
+- **core:** drop the legacy session store ([5a6b7c8](https://github.com/example/app/commit/5a6b7c8))</pre>
+<h3>결과 — 커밋 분류</h3><pre>커밋 | 분류 | 버전 영향 | 해시
+a1b2c3d feat(auth): add OAuth login with PKCE | feat(auth) | minor | a1b2c3d
+e4f5a6b fix(api): handle empty response from /items (#214) | fix(api) | patch | e4f5a6b
+7c8d9e0 perf(db): add index on orders.created_at | perf(db) | patch | 7c8d9e0
+1f2e3d4 docs: explain deployment steps | docs | 릴리스에 영향 없음 | 1f2e3d4
+5a6b7c8 refactor(core)!: drop the legacy session store | refactor(core) | 💥 호환성 파괴 → major | 5a6b7c8
+9d0e1f2 fix: typo in error message | fix | patch | 9d0e1f2
+3c4d5e6 chore(deps): bump express to 4.19.2 | chore(deps) | 릴리스에 영향 없음 | 3c4d5e6
+WIP stuff | — | 무시됨 (Conventional 형식 아님) | 
+8b9c0d1 feat(ui): dark mode toggle (closes #230) | feat(ui) | minor | 8b9c0d1</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>릴리스할 때마다 git log 를 읽고 버전을 정하고 노트를 쓰는 일을 자동화합니다. 커밋만 붙여 넣으면 됩니다.</p>
+<ul><li>버전 결정: BREAKING CHANGE/! → major, feat → minor, fix·perf → patch, docs·chore 만 있으면 릴리스 없음</li><li>0.x 버전은 호환성 파괴를 minor 로 올리는 옵션, 프리릴리스(rc·beta) 번호 증가 처리</li><li>CHANGELOG: 새 기능/버그 수정/성능/되돌림 분류 또는 Keep a Changelog(Added/Changed/Fixed)</li><li>저장소 URL을 주면 이슈(#123)·커밋 해시·버전 비교 링크 포함</li><li>형식이 맞지 않는 커밋은 제외하고 알려 줌, git tag·push 명령어 제공</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="conventional-commit-builder.html" class="related-card"><span class="related-icon">📝</span><span>Conventional Commits 작성기</span></a>
+    <a href="semver-calculator.html" class="related-card"><span class="related-icon">🔢</span><span>SemVer 계산기</span></a>
+    <a href="git-command-builder.html" class="related-card"><span class="related-icon">⌨️</span><span>Git 명령어 생성기</span></a>
+    <a href="git-history-planner.html" class="related-card"><span class="related-icon">🌿</span><span>Git 병합·리베이스 시뮬레이터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>git log --oneline 결과(해시 + 메시지)를 그대로 붙여 넣을 수 있습니다.</li><li>자동 생성된 노트는 초안입니다. 사용자가 이해할 수 있는 문장으로 다듬어 릴리스하세요.</li><li>기능 브랜치를 squash merge 한다면 PR 제목을 Conventional Commits 형식으로 쓰게 하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>커밋이 규칙을 안 지켰으면요?</summary><p>형식에 맞지 않는 줄은 버전 계산과 노트에서 제외되고 목록에 표시됩니다. 팀에서 커밋 메시지 규칙을 정해 두면 가장 정확합니다.</p></details><details><summary>1.0.0 이전에는 어떻게 되나요?</summary><p>0.x 는 안정 API가 아니라는 SemVer 규칙에 따라 호환성 파괴도 minor 로 올리는 관행이 있습니다. 옵션으로 선택하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/release-planner.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

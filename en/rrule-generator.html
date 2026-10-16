@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RRULE Generator – iCalendar Recurrence Rule Explainer | WooaDev</title>
+  <meta name="description" content="Parse iCalendar RRULE such as FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1, build one with a form and preview occurrences. Supports nth weekdays, BYMONTHDAY, BYSETPOS, COUNT and UNTIL.">
+  <meta name="keywords" content="RRULE, iCalendar recurrence rule, RFC 5545, recurring event rule, BYDAY BYSETPOS, calendar repeat, ics RRULE generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/rrule-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/rrule-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/rrule-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/rrule-generator.html">
+  <meta property="og:title" content="RRULE Generator – iCalendar Recurrence Rule Explainer | WooaDev">
+  <meta property="og:description" content="Parse iCalendar RRULE such as FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1, build one with a form and preview occurrences. Supports nth weekdays, BYMONTHDAY, BYSETPOS, COUNT and UNTIL.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/rrule-generator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RRULE Generator – iCalendar Recurrence Rule Explainer | WooaDev">
+  <meta name="twitter:description" content="Parse iCalendar RRULE such as FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1, build one with a form and preview occurrences. Supports nth weekdays, BYMONTHDAY, BYSETPOS, COUNT and UNTIL.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"RRULE Recurrence Generator","url":"https://wooadev.wooahouse.com/en/rrule-generator.html","description":"Parse iCalendar RRULE such as FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1, build one with a form and preview occurrences. Supports nth weekdays, BYMONTHDAY, BYSETPOS, COUNT and UNTIL.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Parse mode: paste RRULE:FREQ=WEEKLY;BYDAY=MO,WE,FR;COUNT=5 to get a sentence and the list of occurrences","Build mode: pick frequency, interval, weekdays, month days, months, BYSETPOS and the end (count / until) in a form","Advanced rules such as 1MO (first Monday), -1FR (last Friday) and BYSETPOS=-1 (last weekday) are supported","Calculates N occurrences from DTSTART and shows the weekday","Invalid combinations are explained"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How is RRULE different from cron?","acceptedAnswer":{"@type":"Answer","text":"cron is a time pattern; RRULE expresses calendar rules such as the second Tuesday of each month or every other week. For minute or second level schedules cron fits better."}},{"@type":"Question","name":"What about EXDATE and RDATE?","acceptedAnswer":{"@type":"Answer","text":"This tool covers the RRULE itself. Excluded (EXDATE) and extra (RDATE) dates go on separate lines of the .ics file."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"RRULE Recurrence Generator","item":"https://wooadev.wooahouse.com/en/rrule-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../rrule-generator.html">KO</a>
+        <span>|</span>
+        <a href="rrule-generator.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>RRULE Recurrence Generator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔁</span>
+    <h1>RRULE Generator &amp; Explainer — iCalendar Recurrence Rules</h1>
+    <p>Explains or builds the RRULE recurrence of calendar events (Google, Outlook, iCal) and previews the dates it really produces. Supports BYDAY, BYSETPOS, COUNT and UNTIL.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Valid RRULE</p>
+<h3>Input — RRULE (iCalendar recurrence rule)</h3><pre>RRULE:FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1;COUNT=6</pre>
+<h3>Result — RRULE</h3><pre>RRULE:FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1;COUNT=6</pre>
+<h3>Result — Interpretation</h3><pre>Summary: every month · Mon, Tue, Wed, Thu, Fri · taking position -1 of the matching set · 10:00 · 6 times in total
+DTSTART: 2026-10-16T10:00:00 (floating local time)
+Occurrences shown: 6</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Recurring events in calendar apps and .ics files are expressed by a single RRULE line. Read one, or build your own and check that the dates come out as intended.</p>
+<ul><li>Parse mode: paste RRULE:FREQ=WEEKLY;BYDAY=MO,WE,FR;COUNT=5 to get a sentence and the list of occurrences</li><li>Build mode: pick frequency, interval, weekdays, month days, months, BYSETPOS and the end (count / until) in a form</li><li>Advanced rules such as 1MO (first Monday), -1FR (last Friday) and BYSETPOS=-1 (last weekday) are supported</li><li>Calculates N occurrences from DTSTART and shows the weekday</li><li>Invalid combinations are explained</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="timezone-converter.html" class="related-card"><span class="related-icon">🌏</span><span>Time Zone Converter</span></a>
+    <a href="iso8601-converter.html" class="related-card"><span class="related-icon">📅</span><span>ISO 8601 / RFC Date Converter</span></a>
+    <a href="cron-generator.html" class="related-card"><span class="related-icon">⏰</span><span>Cron Generator</span></a>
+    <a href="duration-parser.html" class="related-card"><span class="related-icon">⏱️</span><span>Duration Converter</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>The last weekday of every month is FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1.</li><li>Give UNTIL in the same form as DTSTART (date or UTC time) so strict calendars accept it.</li><li>COUNT and UNTIL cannot be combined; use one of them.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>How is RRULE different from cron?</summary><p>cron is a time pattern; RRULE expresses calendar rules such as the second Tuesday of each month or every other week. For minute or second level schedules cron fits better.</p></details><details><summary>What about EXDATE and RDATE?</summary><p>This tool covers the RRULE itself. Excluded (EXDATE) and extra (RDATE) dates go on separate lines of the .ics file.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-time.js"></script>
+<script src="../js/tk-cron.js"></script>
+<script src="../js/tools/rrule-generator.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DKIM Record Parser – Public Key Size &amp; Tags, BIMI | WooaDev</title>
+  <meta name="description" content="Analyse DKIM TXT records (v=DKIM1; k=rsa; p=…): tags, public key type and bit size (1024 / 2048), revoked and testing flags and sha1 use. Also checks and generates BIMI records.">
+  <meta name="keywords" content="DKIM record check, DKIM key length, DKIM 2048, BIMI record, selector._domainkey, DKIM parser, dkim record checker">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/dkim-record-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/dkim-record-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/dkim-record-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/dkim-record-parser.html">
+  <meta property="og:title" content="DKIM Record Parser – Public Key Size &amp; Tags, BIMI | WooaDev">
+  <meta property="og:description" content="Analyse DKIM TXT records (v=DKIM1; k=rsa; p=…): tags, public key type and bit size (1024 / 2048), revoked and testing flags and sha1 use. Also checks and generates BIMI records.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/dkim-record-parser.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DKIM Record Parser – Public Key Size &amp; Tags, BIMI | WooaDev">
+  <meta name="twitter:description" content="Analyse DKIM TXT records (v=DKIM1; k=rsa; p=…): tags, public key type and bit size (1024 / 2048), revoked and testing flags and sha1 use. Also checks and generates BIMI records.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"DKIM & BIMI Record Parser","url":"https://wooadev.wooahouse.com/en/dkim-record-parser.html","description":"Analyse DKIM TXT records (v=DKIM1; k=rsa; p=…): tags, public key type and bit size (1024 / 2048), revoked and testing flags and sha1 use. Also checks and generates BIMI records.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Split quoted TXT strings are joined automatically","p is decoded as a DER public key to read the RSA bit size and exponent, or the 32-byte Ed25519 length","Errors under 1024 bits, advice to replace 1024-bit keys, 2048-bit recommended","Warns about revoked keys (empty p=), t=y testing mode, t=s strict mode, sha1 hashes and unknown tags","BIMI: checks the https SVG logo (l=) and certificate (a=) of a v=BIMI1 record and builds a default._bimi.domain record"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Where do I find the selector?","acceptedAnswer":{"@type":"Answer","text":"In the DKIM-Signature header of a received message: s= is the selector and d= the domain. The DNS name is s._domainkey.d."}},{"@type":"Question","name":"Are 1024-bit keys still acceptable?","acceptedAnswer":{"@type":"Answer","text":"RFC 8301 allows them only as a minimum. Some receivers warn or reject, so move to 2048-bit."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"DKIM & BIMI Record Parser","item":"https://wooadev.wooahouse.com/en/dkim-record-parser.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../dkim-record-parser.html">KO</a>
+        <span>|</span>
+        <a href="dkim-record-parser.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>DKIM &amp; BIMI Record Parser</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🗝️</span>
+    <h1>DKIM &amp; BIMI Record Parser</h1>
+    <p>Decode a DKIM TXT record, check the public key type (RSA / Ed25519) and bit size, and see whether it is revoked or in testing mode. Also checks and builds BIMI records.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Record for default._domainkey.example.com parsed</p>
+<h3>Input — DKIM TXT record (split quoted strings are fine)</h3><pre>"v=DKIM1; k=rsa; " "p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwD7um1NI6ouII/AyCLTevnokBKlsjf2xcGgJxfxxWbPzIVfsD82zbhpejG5HjdfSSDW9pCfXJxfd+7y3R2NN/2sUg20k1z+r/GPXcL7CF2mnYEA6JsIpXJ76HRIg03TgTYQ1zAvFCD63JQfWEZ2LsmZbhpCXfQeriPaaJkUAPGqJ1yxqJHj8oXDDQMVWPRkH38lzhQJfp6k6vidOmuHrNd/AYyay+XD27oiizyYBf32VWjfXNrgqf/NXQ2SJJF5ZbGuB83PRoug6ajaLynBnmEVzBs1RejxHYsmmLEezrDM836NjYf5BHLykBDx+lUD5Aickk/srKg9FgDeq2V3wqQIDAQAB"</pre>
+<h3>Input — Logo SVG URL (l=)</h3><pre>https://www.example.com/brand/logo.svg</pre>
+<h3>Input — Certificate (VMC/CMC) PEM URL (a=, optional)</h3><pre>https://www.example.com/brand/vmc.pem</pre>
+<h3>Result — DNS record</h3><pre>default._domainkey.example.com.  IN  TXT  "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwD7um1NI6ouII/AyCLTevnokBKlsjf2xcGgJxfxxWbPzIVfsD82zbhpejG5HjdfSSDW9pCfXJxfd+7y3R2NN/2sUg20k1z+r/GPXcL7CF2mnYEA6JsIpXJ76HRIg03TgTYQ1zAvFCD63JQfWEZ2LsmZbhpCXfQeriPaaJkUAPGqJ1yxqJHj8oXDDQMVWPRkH3" "8lzhQJfp6k6vidOmuHrNd/AYyay+XD27oiizyYBf32VWjfXNrgqf/NXQ2SJJF5ZbGuB83PRoug6ajaLynBnmEVzBs1RejxHYsmmLEezrDM836NjYf5BHLykBDx+lUD5Aickk/srKg9FgDeq2V3wqQIDAQAB"</pre>
+<h3>Result — Tag breakdown</h3><pre>Tag | Value | Meaning
+v | DKIM1 | Version
+k | rsa | Key type
+p | MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ…(392 chars) | Public key (Base64)
+Key analysis | RSA · 2048-bit · e=65537 | p decoded as DER</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>DKIM signs mail and publishes the public key in DNS (selector._domainkey.domain). A key that is too short or a malformed record makes verification fail.</p>
+<ul><li>Split quoted TXT strings are joined automatically</li><li>p is decoded as a DER public key to read the RSA bit size and exponent, or the 32-byte Ed25519 length</li><li>Errors under 1024 bits, advice to replace 1024-bit keys, 2048-bit recommended</li><li>Warns about revoked keys (empty p=), t=y testing mode, t=s strict mode, sha1 hashes and unknown tags</li><li>BIMI: checks the https SVG logo (l=) and certificate (a=) of a v=BIMI1 record and builds a default._bimi.domain record</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="spf-builder.html" class="related-card"><span class="related-icon">📧</span><span>SPF Record Builder &amp; Checker</span></a>
+    <a href="dmarc-builder.html" class="related-card"><span class="related-icon">🛂</span><span>DMARC Record Builder &amp; Analyzer</span></a>
+    <a href="dns-zone-editor.html" class="related-card"><span class="related-icon">🗂️</span><span>DNS Zone File Editor</span></a>
+    <a href="domain-validator.html" class="related-card"><span class="related-icon">✔️</span><span>Domain &amp; Hostname Validator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>A 2048-bit key exceeds 255 characters, so check whether your DNS panel needs the string split.</li><li>To rotate, publish the new key under a new selector, switch your sending setup, then revoke the old selector with an empty p=.</li><li>BIMI only works when DMARC is quarantine / reject at pct=100, and most providers also demand a VMC / CMC certificate.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Where do I find the selector?</summary><p>In the DKIM-Signature header of a received message: s= is the selector and d= the domain. The DNS name is s._domainkey.d.</p></details><details><summary>Are 1024-bit keys still acceptable?</summary><p>RFC 8301 allows them only as a minimum. Some receivers warn or reject, so move to 2048-bit.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-hash.js"></script>
+<script src="../js/tk-asn1.js"></script>
+<script src="../js/tools/dkim-record-parser.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이메일 주소 검사기 — 형식 검사·중복 제거·mailto 생성 | WooaDev</title>
+  <meta name="description" content="이메일 주소 목록의 형식을 RFC 규칙으로 검사하고 중복 제거, 도메인 소문자 정리, gmial.com 같은 오타 제안, IDN 변환을 합니다. 참조·제목·본문이 인코딩된 mailto 링크와 HTML 링크도 생성합니다.">
+  <meta name="keywords" content="이메일 주소 검사, 이메일 중복 제거, 이메일 형식 검증, mailto 링크 생성, 이메일 정리, mailto 제목 본문, email address validator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/email-address-tool.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/email-address-tool.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/email-address-tool.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/email-address-tool.html">
+  <meta property="og:title" content="이메일 주소 검사기 — 형식 검사·중복 제거·mailto 생성 | WooaDev">
+  <meta property="og:description" content="이메일 주소 목록의 형식을 RFC 규칙으로 검사하고 중복 제거, 도메인 소문자 정리, gmial.com 같은 오타 제안, IDN 변환을 합니다. 참조·제목·본문이 인코딩된 mailto 링크와 HTML 링크도 생성합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/email-address-tool.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="이메일 주소 검사기 — 형식 검사·중복 제거·mailto 생성 | WooaDev">
+  <meta name="twitter:description" content="이메일 주소 목록의 형식을 RFC 규칙으로 검사하고 중복 제거, 도메인 소문자 정리, gmial.com 같은 오타 제안, IDN 변환을 합니다. 참조·제목·본문이 인코딩된 mailto 링크와 HTML 링크도 생성합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"이메일 주소 검사·mailto 생성기","url":"https://wooadev.wooahouse.com/email-address-tool.html","description":"이메일 주소 목록의 형식을 RFC 규칙으로 검사하고 중복 제거, 도메인 소문자 정리, gmial.com 같은 오타 제안, IDN 변환을 합니다. 참조·제목·본문이 인코딩된 mailto 링크와 HTML 링크도 생성합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["검사: 로컬 파트 규칙(연속된 점, 64자, 인용 형식), 도메인 레이블(63자, 하이픈 위치), 숫자뿐인 TLD, IP 리터럴, 한글 도메인(IDN→punycode)","구분자: 줄바꿈·쉼표·세미콜론, \"이름\" <주소> 형식의 표시 이름도 해석","정리: 도메인 소문자 정규화, 중복 제거, +태그 주소의 기본 주소 안내, 오타 도메인 제안","mailto: 받는 사람·참조·숨은 참조·제목·본문을 RFC 6068에 맞게 인코딩 (공백 %20, 줄바꿈 %0D%0A)","한글 제목·본문도 안전하게 인코딩하고 HTML a 태그까지 생성"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"RFC 5322의 모든 형식을 허용하나요?","acceptedAnswer":{"@type":"Answer","text":"인용된 로컬 파트와 IP 리터럴까지 받아들이지만, 주석((…))이나 구식 문법은 실무에서 거의 쓰이지 않아 제외했습니다."}},{"@type":"Question","name":"mailto 에서 bcc 는 안전한가요?","acceptedAnswer":{"@type":"Answer","text":"링크 자체에 숨은 참조 주소가 그대로 적혀 있어 페이지 소스를 보면 노출됩니다. 공개 페이지에는 쓰지 않는 것이 좋습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"이메일 주소 검사·mailto 생성기","item":"https://wooadev.wooahouse.com/email-address-tool.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="email-address-tool.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/email-address-tool.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>이메일 주소 검사·mailto 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">✉️</span>
+    <h1>이메일 주소 검사 · 정리 · mailto 링크 생성</h1>
+    <p>여러 이메일 주소를 한꺼번에 붙여 넣어 형식을 검사하고 중복을 제거하며 오타 도메인을 찾습니다. 받는 사람·참조·제목·본문이 들어간 mailto 링크와 HTML 태그도 만들어 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>🔍 8개 중 2개가 올바르지 않습니다</p>
+<h3>입력 — 이메일 주소 (줄바꿈·쉼표·세미콜론으로 구분, "이름 &lt;주소&gt;" 형식 가능)</h3><pre>Kim &lt;kim@example.com&gt;
+lee@exmaple.com; park@gmial.com
+kim@example.com
+bad@@example.com
+"john doe"@example.org
+user+tag@xn--bcher-kva.example
+someone@localhost</pre>
+<h3>입력 — 받는 사람 (쉼표 구분)</h3><pre>team@example.com, boss@example.com</pre>
+<h3>입력 — 참조 (cc)</h3><pre>manager@example.com</pre>
+<h3>입력 — 제목</h3><pre>문의 드립니다 / Inquiry</pre>
+<h3>입력 — 본문</h3><pre>안녕하세요,
+견적을 요청드립니다.
+감사합니다.</pre>
+<h3>결과 — 결과</h3><pre>Kim &lt;kim@example.com&gt;
+lee@exmaple.com
+park@gmial.com
+"john doe"@example.org
+user+tag@xn--bcher-kva.example</pre>
+<h3>결과 — 주소별 검사</h3><pre>입력 | 상태 | 정규화 | 비고
+Kim &lt;kim@example.com&gt; | ✅ | kim@example.com | 표시 이름: Kim
+lee@exmaple.com | ✅ | lee@exmaple.com | 혹시 @example.com 아닌가요?
+park@gmial.com | ✅ | park@gmial.com | 혹시 @gmail.com 아닌가요?
+kim@example.com | ♻️ | kim@example.com | 중복
+bad@@example.com | ❌ |  | @ 가 두 번 이상 있습니다
+"john doe"@example.org | ✅ | "john doe"@example.org | 
+user+tag@xn--bcher-kva.example | ✅ | user+tag@xn--bcher-kva.example | +태그 주소 (기본 주소: user@xn--bcher-kva.example)
+someone@localhost | ❌ |  | 도메인에 점(.)이 없습니다 — 인터넷 주소가 아닙니다 (localhost 등)</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>고객 목록이나 메일링 주소를 정리하거나, 웹페이지에 문의 링크를 넣을 때 자주 필요한 두 가지를 한 도구에 담았습니다.</p>
+<ul><li>검사: 로컬 파트 규칙(연속된 점, 64자, 인용 형식), 도메인 레이블(63자, 하이픈 위치), 숫자뿐인 TLD, IP 리터럴, 한글 도메인(IDN→punycode)</li><li>구분자: 줄바꿈·쉼표·세미콜론, "이름" &lt;주소&gt; 형식의 표시 이름도 해석</li><li>정리: 도메인 소문자 정규화, 중복 제거, +태그 주소의 기본 주소 안내, 오타 도메인 제안</li><li>mailto: 받는 사람·참조·숨은 참조·제목·본문을 RFC 6068에 맞게 인코딩 (공백 %20, 줄바꿈 %0D%0A)</li><li>한글 제목·본문도 안전하게 인코딩하고 HTML a 태그까지 생성</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="email-validator.html" class="related-card"><span class="related-icon">📧</span><span>이메일 검증기</span></a>
+    <a href="dmarc-builder.html" class="related-card"><span class="related-icon">🛂</span><span>DMARC 레코드 생성기·분석기</span></a>
+    <a href="punycode-converter.html" class="related-card"><span class="related-icon">🈳</span><span>퓨니코드 변환기</span></a>
+    <a href="domain-validator.html" class="related-card"><span class="related-icon">✔️</span><span>도메인·호스트 이름 검증기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>형식이 올바르다고 실제로 존재하는 메일함은 아닙니다. 확인하려면 인증 메일을 보내 확인 링크를 누르게 하세요.</li><li>mailto 링크가 2,000자를 넘으면 일부 메일 앱에서 잘립니다. 긴 본문은 양식을 쓰는 편이 좋습니다.</li><li>웹페이지에 주소를 그대로 적으면 스팸 수집 봇에 노출됩니다. 문의 양식이나 난독화를 고려하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>RFC 5322의 모든 형식을 허용하나요?</summary><p>인용된 로컬 파트와 IP 리터럴까지 받아들이지만, 주석((…))이나 구식 문법은 실무에서 거의 쓰이지 않아 제외했습니다.</p></details><details><summary>mailto 에서 bcc 는 안전한가요?</summary><p>링크 자체에 숨은 참조 주소가 그대로 적혀 있어 페이지 소스를 보면 노출됩니다. 공개 페이지에는 쓰지 않는 것이 좋습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-net.js"></script>
+<script src="js/tk-dns.js"></script>
+<script src="js/tools/email-address-tool.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

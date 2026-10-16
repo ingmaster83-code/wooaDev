@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OAuth Authorization URL Builder – Build &amp; Audit authorize URLs | WooaDev</title>
+  <meta name="description" content="Build and analyse OAuth 2.0 and OIDC authorization URLs. Auto-generates state and nonce, adds PKCE code_challenge and flags missing state, implicit flow, http redirect_uri and wildcards.">
+  <meta name="keywords" content="OAuth URL builder, authorize URL, OIDC authorization request, response_type, state nonce, redirect_uri, oauth url generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/oauth-url-builder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/oauth-url-builder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/oauth-url-builder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/oauth-url-builder.html">
+  <meta property="og:title" content="OAuth Authorization URL Builder – Build &amp; Audit authorize URLs | WooaDev">
+  <meta property="og:description" content="Build and analyse OAuth 2.0 and OIDC authorization URLs. Auto-generates state and nonce, adds PKCE code_challenge and flags missing state, implicit flow, http redirect_uri and wildcards.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/oauth-url-builder.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="OAuth Authorization URL Builder – Build &amp; Audit authorize URLs | WooaDev">
+  <meta name="twitter:description" content="Build and analyse OAuth 2.0 and OIDC authorization URLs. Auto-generates state and nonce, adds PKCE code_challenge and flags missing state, implicit flow, http redirect_uri and wildcards.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"OAuth Authorization URL Builder","url":"https://wooadev.wooahouse.com/en/oauth-url-builder.html","description":"Build and analyse OAuth 2.0 and OIDC authorization URLs. Auto-generates state and nonce, adds PKCE code_challenge and flags missing state, implicit flow, http redirect_uri and wildcards.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Build: endpoint, client_id, redirect_uri, scope, response_type (code / id_token / hybrid), prompt and extra parameters","Empty state and nonce are filled with secure random values; optionally add a PKCE S256 code_challenge","Audit: missing state, implicit flow (token), no PKCE, id_token without nonce, http redirect_uri, wildcards","A table explains what every parameter means","URL encoding (%20 and friends) is handled correctly"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why is response_type=token dangerous?","acceptedAnswer":{"@type":"Answer","text":"The implicit flow puts the access token in the URL fragment where history and referrers can leak it, so OAuth 2.1 removed it. Use authorization code with PKCE."}},{"@type":"Question","name":"How do state and nonce differ?","acceptedAnswer":{"@type":"Answer","text":"state ties a request to its callback to stop CSRF; nonce ties the issued ID token to this request to stop replay."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"OAuth Authorization URL Builder","item":"https://wooadev.wooahouse.com/en/oauth-url-builder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../oauth-url-builder.html">KO</a>
+        <span>|</span>
+        <a href="oauth-url-builder.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>OAuth Authorization URL Builder</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔗</span>
+    <h1>OAuth Authorization URL Builder &amp; Auditor</h1>
+    <p>Builds OAuth 2.0 / OpenID Connect authorization request URLs with response_type, scope, state, nonce and PKCE, and audits an existing URL for security problems.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>🔍 4 finding(s)</p>
+<h3>Input — Authorization URL to analyse</h3><pre>https://accounts.example.com/oauth2/authorize?response_type=token&amp;client_id=abc123&amp;redirect_uri=http%3A%2F%2Fapp.example.com%2Fcb&amp;scope=openid%20email</pre>
+<h3>Input — Authorization endpoint</h3><pre>https://accounts.example.com/oauth2/authorize</pre>
+<h3>Input — client_id</h3><pre>my-client</pre>
+<h3>Input — redirect_uri</h3><pre>https://app.example.com/callback</pre>
+<h3>Result — Authorization URL</h3><pre>https://accounts.example.com/oauth2/authorize?response_type=token&amp;client_id=abc123&amp;redirect_uri=http%3A%2F%2Fapp.example.com%2Fcb&amp;scope=openid%20email</pre>
+<h3>Result — Parameters</h3><pre>Parameter | Value | Meaning
+response_type | token | Response type: code = authorization code; token/id_token = implicit
+client_id | abc123 | Identifies your application
+redirect_uri | http://app.example.com/cb | Where to return after consent (must match the registered value exactly)
+scope | openid email | Requested permissions</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>The authorization request URL is where login integrations most often go wrong. Build one with properly encoded parameters, or paste a URL to get each parameter explained and risks flagged.</p>
+<ul><li>Build: endpoint, client_id, redirect_uri, scope, response_type (code / id_token / hybrid), prompt and extra parameters</li><li>Empty state and nonce are filled with secure random values; optionally add a PKCE S256 code_challenge</li><li>Audit: missing state, implicit flow (token), no PKCE, id_token without nonce, http redirect_uri, wildcards</li><li>A table explains what every parameter means</li><li>URL encoding (%20 and friends) is handled correctly</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="pkce-generator.html" class="related-card"><span class="related-icon">🔑</span><span>PKCE Generator</span></a>
+    <a href="query-string-builder.html" class="related-card"><span class="related-icon">❓</span><span>Query String Parser &amp; Builder</span></a>
+    <a href="url-parser.html" class="related-card"><span class="related-icon">🔗</span><span>URL Parser</span></a>
+    <a href="jwt-decoder.html" class="related-card"><span class="related-icon">🎫</span><span>JWT Decoder</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>redirect_uri must match the registered value character for character, including a trailing slash.</li><li>Store the state you generate in the session and compare it in the callback (CSRF protection).</li><li>openid in scope makes it an OIDC request; if you receive an id_token, also validate the nonce.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Why is response_type=token dangerous?</summary><p>The implicit flow puts the access token in the URL fragment where history and referrers can leak it, so OAuth 2.1 removed it. Use authorization code with PKCE.</p></details><details><summary>How do state and nonce differ?</summary><p>state ties a request to its callback to stop CSRF; nonce ties the issued ID token to this request to stop replay.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-bytes.js"></script>
+<script src="../js/tk-hash.js"></script>
+<script src="../js/tools/oauth-url-builder.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

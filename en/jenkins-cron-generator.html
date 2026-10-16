@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jenkins Cron Generator – H Syntax Explainer &amp; Next Runs | WooaDev</title>
+  <meta name="description" content="Parse Jenkins schedule cron such as H H(0-7) * * 1-5, see the minute and hour H resolves to for a job name, and the next run times per time zone. Six presets and @daily aliases included.">
+  <meta name="keywords" content="Jenkins cron, Jenkins schedule, H syntax, Jenkins H * * * *, Build periodically, Poll SCM, cron explainer, Jenkins cron generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/jenkins-cron-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/jenkins-cron-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/jenkins-cron-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/jenkins-cron-generator.html">
+  <meta property="og:title" content="Jenkins Cron Generator – H Syntax Explainer &amp; Next Runs | WooaDev">
+  <meta property="og:description" content="Parse Jenkins schedule cron such as H H(0-7) * * 1-5, see the minute and hour H resolves to for a job name, and the next run times per time zone. Six presets and @daily aliases included.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/jenkins-cron-generator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jenkins Cron Generator – H Syntax Explainer &amp; Next Runs | WooaDev">
+  <meta name="twitter:description" content="Parse Jenkins schedule cron such as H H(0-7) * * 1-5, see the minute and hour H resolves to for a job name, and the next run times per time zone. Six presets and @daily aliases included.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Jenkins Cron Generator","url":"https://wooadev.wooahouse.com/en/jenkins-cron-generator.html","description":"Parse Jenkins schedule cron such as H H(0-7) * * 1-5, see the minute and hour H resolves to for a job name, and the next run times per time zone. Six presets and @daily aliases included.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["H is replaced by one value derived from the job name, which keeps every job from firing at minute 0","Ranged and stepped forms such as H(0-29)/10 and H(0-7) work, and aliases @hourly, @daily, @midnight, @weekly, @monthly are understood","When both day-of-month and day-of-week are set, either matching fires the job (OR) like Vixie cron","Change the job name to see which minute H picks, and change the display time zone to compare next runs","Anything that is not five fields, or out of range, is reported with the offending field"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What exactly does H pick?","acceptedAnswer":{"@type":"Answer","text":"It deterministically picks one value inside the range from a hash of the job name. The same job always gets the same time while different jobs are spread out. This tool computes a spread value from the job name you enter."}},{"@type":"Question","name":"Can I use six fields?","acceptedAnswer":{"@type":"Answer","text":"Jenkins accepts only five fields: minute, hour, day, month, weekday. Use the Quartz cron generator if you need seconds."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Jenkins Cron Generator","item":"https://wooadev.wooahouse.com/en/jenkins-cron-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../jenkins-cron-generator.html">KO</a>
+        <span>|</span>
+        <a href="jenkins-cron-generator.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Jenkins Cron Generator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🏗️</span>
+    <h1>Jenkins Cron Generator &amp; Explainer (H syntax)</h1>
+    <p>Turns a Jenkins build-trigger cron into plain language, shows the minute and hour the H (hash) symbol picks for your job name, and lists the next run times.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Valid Jenkins cron expression</p>
+<h3>Input — Jenkins cron expression (min hour dom mon dow, H allowed)</h3><pre>H(0-29)/10 9-18 * * 1-5</pre>
+<h3>Result — Interpretation</h3><pre>Summary: every MON–FRI 9–18h · every 10 min (0, 10, 20)
+Minute: 0, 10, 20
+Hour: 9–18
+Day of month: every day
+Month: every month
+Day of week: MON–FRI
+About H: H lets Jenkins pick one fixed value per job within the range. The times above are an illustration for the job name "my-job" and may differ from what Jenkins actually chooses.</pre>
+<h3>Result — Upcoming runs</h3><pre># | UTC | Selected zone
+1 | 2026-10-19T00:00:00Z | 2026-10-19 09:00:00 (UTC+09:00)
+2 | 2026-10-19T00:10:00Z | 2026-10-19 09:10:00 (UTC+09:00)
+3 | 2026-10-19T00:20:00Z | 2026-10-19 09:20:00 (UTC+09:00)
+4 | 2026-10-19T01:00:00Z | 2026-10-19 10:00:00 (UTC+09:00)
+5 | 2026-10-19T01:10:00Z | 2026-10-19 10:10:00 (UTC+09:00)
+6 | 2026-10-19T01:20:00Z | 2026-10-19 10:20:00 (UTC+09:00)
+7 | 2026-10-19T02:00:00Z | 2026-10-19 11:00:00 (UTC+09:00)
+8 | 2026-10-19T02:10:00Z | 2026-10-19 11:10:00 (UTC+09:00)</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>The cron you put in Jenkins Build periodically or Poll SCM looks like Unix cron but adds the H (hash) symbol, so the same line fires at different times for different jobs.</p>
+<ul><li>H is replaced by one value derived from the job name, which keeps every job from firing at minute 0</li><li>Ranged and stepped forms such as H(0-29)/10 and H(0-7) work, and aliases @hourly, @daily, @midnight, @weekly, @monthly are understood</li><li>When both day-of-month and day-of-week are set, either matching fires the job (OR) like Vixie cron</li><li>Change the job name to see which minute H picks, and change the display time zone to compare next runs</li><li>Anything that is not five fields, or out of range, is reported with the offending field</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="cron-generator.html" class="related-card"><span class="related-icon">⏰</span><span>Cron Generator</span></a>
+    <a href="quartz-cron-generator.html" class="related-card"><span class="related-icon">⏲️</span><span>Quartz Cron Generator</span></a>
+    <a href="timezone-converter.html" class="related-card"><span class="related-icon">🌏</span><span>Time Zone Converter</span></a>
+    <a href="systemd-timer-generator.html" class="related-card"><span class="related-icon">🕒</span><span>systemd Timer Generator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Use H instead of 0 to avoid the top-of-the-hour pile-up, for example H * * * * runs at a different minute for each job.</li><li>Jenkins runs on the controller's time zone. Check whether it is UTC (you can also set it with a TZ= prefix).</li><li>Frequent SCM polling stresses the repository. Prefer webhooks and keep polling around H/15.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What exactly does H pick?</summary><p>It deterministically picks one value inside the range from a hash of the job name. The same job always gets the same time while different jobs are spread out. This tool computes a spread value from the job name you enter.</p></details><details><summary>Can I use six fields?</summary><p>Jenkins accepts only five fields: minute, hour, day, month, weekday. Use the Quartz cron generator if you need seconds.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-time.js"></script>
+<script src="../js/tk-cron.js"></script>
+<script src="../js/tools/jenkins-cron-generator.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

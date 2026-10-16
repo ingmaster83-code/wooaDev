@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>보안 헤더 생성기 — HSTS·CORS 설정 Nginx/Apache 코드 | WooaDev</title>
+  <meta name="description" content="HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy, CORS, COOP/COEP 헤더를 Nginx, Apache, Caddy, Express, Netlify 설정 코드로 생성합니다.">
+  <meta name="keywords" content="보안 헤더, HSTS 설정, X-Frame-Options, CORS 헤더 생성, nginx add_header, Permissions-Policy, security headers generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/security-header-builder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/security-header-builder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/security-header-builder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/security-header-builder.html">
+  <meta property="og:title" content="보안 헤더 생성기 — HSTS·CORS 설정 Nginx/Apache 코드 | WooaDev">
+  <meta property="og:description" content="HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy, CORS, COOP/COEP 헤더를 Nginx, Apache, Caddy, Express, Netlify 설정 코드로 생성합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/security-header-builder.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="보안 헤더 생성기 — HSTS·CORS 설정 Nginx/Apache 코드 | WooaDev">
+  <meta name="twitter:description" content="HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy, CORS, COOP/COEP 헤더를 Nginx, Apache, Caddy, Express, Netlify 설정 코드로 생성합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"보안 헤더 생성기","url":"https://wooadev.wooahouse.com/security-header-builder.html","description":"HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy, CORS, COOP/COEP 헤더를 Nginx, Apache, Caddy, Express, Netlify 설정 코드로 생성합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["출력 형식: Nginx add_header, Apache .htaccess, Caddy, Express helmet + cors, Netlify/Cloudflare Pages _headers, 단순 목록","프리셋(권장·엄격·최소)과 HSTS(max-age, includeSubDomains, preload) 세부 설정","CORS: 허용 출처·메서드·헤더·자격 증명, * 와 자격 증명 동시 사용 등 잘못된 조합 경고","교차 출처 격리(COOP + COEP) 선택과 영향 안내","각 헤더가 하는 일을 표로 설명"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"X-Frame-Options 대신 CSP를 써도 되나요?","acceptedAnswer":{"@type":"Answer","text":"네. CSP의 frame-ancestors 가 더 유연하고 최신 방식입니다. 오래된 브라우저 호환을 위해 둘 다 두는 경우가 많습니다."}},{"@type":"Question","name":"Access-Control-Allow-Origin: * 는 안전한가요?","acceptedAnswer":{"@type":"Answer","text":"공개 API라면 괜찮지만 쿠키·인증이 필요한 요청에는 쓸 수 없고(자격 증명과 함께 불가), 특정 출처만 허용하는 편이 안전합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"보안 헤더 생성기","item":"https://wooadev.wooahouse.com/security-header-builder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="security-header-builder.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/security-header-builder.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>보안 헤더 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧱</span>
+    <h1>보안 헤더 생성기 — Nginx · Apache · Caddy · helmet</h1>
+    <p>HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy, CORS, COOP/COEP를 골라 서버 종류에 맞는 설정 코드를 바로 만들어 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 헤더 5개 설정을 만들었습니다</p>
+<h3>결과 — 보안 헤더 설정</h3><pre># server { … } 또는 location 블록 안에
+add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-Frame-Options "DENY" always;
+add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()" always;</pre>
+<h3>결과 — 적용되는 헤더</h3><pre>헤더 | 값 | 의미
+Strict-Transport-Security | max-age=31536000; includeSubDomains | HTTPS만 사용하도록 브라우저에 기억시킴
+X-Content-Type-Options | nosniff | MIME 스니핑 방지
+X-Frame-Options | DENY | 클릭재킹 방지 (CSP frame-ancestors로 대체 가능)
+Referrer-Policy | strict-origin-when-cross-origin | Referer 헤더로 새는 정보 제한
+Permissions-Policy | camera=(), microphone=(), geolocation=(), interest-cohort=() | 브라우저 기능 사용 제한</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>보안 점검 사이트에서 헤더 누락 경고를 받았을 때, 어떤 헤더를 어떤 값으로 넣어야 하는지 설정 코드까지 만들어 줍니다.</p>
+<ul><li>출력 형식: Nginx add_header, Apache .htaccess, Caddy, Express helmet + cors, Netlify/Cloudflare Pages _headers, 단순 목록</li><li>프리셋(권장·엄격·최소)과 HSTS(max-age, includeSubDomains, preload) 세부 설정</li><li>CORS: 허용 출처·메서드·헤더·자격 증명, * 와 자격 증명 동시 사용 등 잘못된 조합 경고</li><li>교차 출처 격리(COOP + COEP) 선택과 영향 안내</li><li>각 헤더가 하는 일을 표로 설명</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="csp-builder.html" class="related-card"><span class="related-icon">🚧</span><span>CSP 생성기·분석기</span></a>
+    <a href="sri-generator.html" class="related-card"><span class="related-icon">🛡️</span><span>SRI 해시 생성기</span></a>
+    <a href="cache-control-builder.html" class="related-card"><span class="related-icon">🗄️</span><span>Cache-Control 생성·분석기</span></a>
+    <a href="http-headers-parser.html" class="related-card"><span class="related-icon">📨</span><span>HTTP 헤더 파서</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>HSTS preload는 되돌리기 어렵습니다. 모든 하위 도메인이 HTTPS를 지원하는지 확인한 뒤 켜세요.</li><li>Nginx에서는 add_header 에 always 를 붙여야 오류 응답(4xx/5xx)에도 헤더가 붙습니다.</li><li>CSP는 사이트마다 달라 별도 도구(CSP 생성기)에서 만드세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>X-Frame-Options 대신 CSP를 써도 되나요?</summary><p>네. CSP의 frame-ancestors 가 더 유연하고 최신 방식입니다. 오래된 브라우저 호환을 위해 둘 다 두는 경우가 많습니다.</p></details><details><summary>Access-Control-Allow-Origin: * 는 안전한가요?</summary><p>공개 API라면 괜찮지만 쿠키·인증이 필요한 요청에는 쓸 수 없고(자격 증명과 함께 불가), 특정 출처만 허용하는 편이 안전합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/security-header-builder.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

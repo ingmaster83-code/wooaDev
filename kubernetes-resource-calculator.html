@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kubernetes 리소스 계산기 — requests·limits·QoS 계산 | WooaDev</title>
+  <meta name="description" content="컨테이너별 CPU(m)·메모리(Mi/Gi) requests/limits로 파드 합계와 QoS 클래스를 계산하고 노드당 파드 수, 필요 노드 수, resources YAML을 만듭니다. limit&lt;request 오류, 메모리 한도 없음, 단위 실수를 점검합니다.">
+  <meta name="keywords" content="Kubernetes 리소스 계산, requests limits 계산, QoS 클래스, 파드 리소스, 250m 의미, Mi Gi 단위, kubernetes resource calculator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/kubernetes-resource-calculator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/kubernetes-resource-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/kubernetes-resource-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/kubernetes-resource-calculator.html">
+  <meta property="og:title" content="Kubernetes 리소스 계산기 — requests·limits·QoS 계산 | WooaDev">
+  <meta property="og:description" content="컨테이너별 CPU(m)·메모리(Mi/Gi) requests/limits로 파드 합계와 QoS 클래스를 계산하고 노드당 파드 수, 필요 노드 수, resources YAML을 만듭니다. limit&lt;request 오류, 메모리 한도 없음, 단위 실수를 점검합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/kubernetes-resource-calculator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kubernetes 리소스 계산기 — requests·limits·QoS 계산 | WooaDev">
+  <meta name="twitter:description" content="컨테이너별 CPU(m)·메모리(Mi/Gi) requests/limits로 파드 합계와 QoS 클래스를 계산하고 노드당 파드 수, 필요 노드 수, resources YAML을 만듭니다. limit&lt;request 오류, 메모리 한도 없음, 단위 실수를 점검합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Kubernetes 리소스 계산기","url":"https://wooadev.wooahouse.com/kubernetes-resource-calculator.html","description":"컨테이너별 CPU(m)·메모리(Mi/Gi) requests/limits로 파드 합계와 QoS 클래스를 계산하고 노드당 파드 수, 필요 노드 수, resources YAML을 만듭니다. limit<request 오류, 메모리 한도 없음, 단위 실수를 점검합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: 한 줄에 컨테이너 하나 — 이름, CPU 요청, CPU 한도, 메모리 요청, 메모리 한도 (없으면 -)","단위: 250m·0.5·2 코어, Ki·Mi·Gi·Ti, K·M·G·T, 지수 표기(129e6) 인식","계산: 파드 합계, 레플리카 합계, QoS 클래스(요청 없이 한도만 있으면 요청 = 한도), 노드 할당량·시스템 몫을 반영한 노드당 파드 수와 필요 노드 수(HPA 최대 포함)","컨테이너별 resources YAML 블록 생성","🚨 한도 < 요청, 메모리 한도 없음, CPU 요청 없음, 한도/요청 비율 과다, 노드보다 큰 파드, 단위 실수 의심 경고"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"QoS 클래스가 왜 중요한가요?","acceptedAnswer":{"@type":"Answer","text":"노드 자원이 부족할 때 BestEffort → Burstable → Guaranteed 순으로 파드가 쫓겨납니다. 중요한 서비스는 requests = limits 로 Guaranteed 를 만들 수 있습니다."}},{"@type":"Question","name":"250m 은 무슨 뜻인가요?","acceptedAnswer":{"@type":"Answer","text":"1000m = 1 코어이므로 250m 은 0.25 코어입니다. 메모리의 Mi 는 2의 거듭제곱(1Mi=1,048,576바이트), M 은 10의 거듭제곱 단위입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"Kubernetes 리소스 계산기","item":"https://wooadev.wooahouse.com/kubernetes-resource-calculator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="kubernetes-resource-calculator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/kubernetes-resource-calculator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Kubernetes 리소스 계산기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">☸️</span>
+    <h1>Kubernetes 리소스 계산기 — requests · limits · QoS</h1>
+    <p>컨테이너별 CPU/메모리 requests와 limits를 입력하면 파드 합계, QoS 클래스(Guaranteed/Burstable/BestEffort), 레플리카·HPA 최대치에서 필요한 노드 수와 resources YAML을 계산합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 파드 1개 요청 320m CPU · 352Mi · QoS Burstable</p>
+<h3>입력 — 컨테이너 (한 줄에 하나: 이름 CPU요청 CPU한도 메모리요청 메모리한도, 없으면 -)</h3><pre>app 250m 500m 256Mi 512Mi
+sidecar 50m 100m 64Mi 128Mi
+log-agent 20m - 32Mi 64Mi</pre>
+<h3>결과 — 컨테이너별 리소스</h3><pre>컨테이너 | CPU 요청 / 한도 | 메모리 요청 / 한도
+app | 250m / 500m | 256Mi / 512Mi
+sidecar | 50m / 100m | 64Mi / 128Mi
+log-agent | 20m / — | 32Mi / 64Mi</pre>
+<h3>결과 — 파드·배포 합계</h3><pre>항목 | 값
+파드 1개 요청 (CPU / 메모리) | 320m / 352Mi
+파드 1개 한도 (CPU / 메모리) | 600m / 704Mi
+QoS | Burstable — 요청 &lt; 한도(또는 일부만 지정) — 노드 자원이 부족하면 중간 우선순위로 쫓겨남
+레플리카 3개 요청 합계 | 960m / 1Gi
+레플리카 3개 한도 합계 | 1800m / 2.1Gi
+노드 1대당 들어가는 파드 수 | 11개 (CPU 기준 11, 메모리 기준 36)
+레플리카 3개에 필요한 노드 | 1대 이상
+HPA 최대 10개일 때 필요한 노드 | 1대 이상
+노드 사용 효율 (병목 자원) | CPU · 100% CPU, 30% 메모리</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>리소스 설정은 단위(m, Mi, Gi, M)를 헷갈리기 쉽고, 잘못 설정하면 스케줄링 실패(Pending)나 OOMKilled 로 이어집니다.</p>
+<ul><li>입력: 한 줄에 컨테이너 하나 — 이름, CPU 요청, CPU 한도, 메모리 요청, 메모리 한도 (없으면 -)</li><li>단위: 250m·0.5·2 코어, Ki·Mi·Gi·Ti, K·M·G·T, 지수 표기(129e6) 인식</li><li>계산: 파드 합계, 레플리카 합계, QoS 클래스(요청 없이 한도만 있으면 요청 = 한도), 노드 할당량·시스템 몫을 반영한 노드당 파드 수와 필요 노드 수(HPA 최대 포함)</li><li>컨테이너별 resources YAML 블록 생성</li><li>🚨 한도 &lt; 요청, 메모리 한도 없음, CPU 요청 없음, 한도/요청 비율 과다, 노드보다 큰 파드, 단위 실수 의심 경고</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="docker-run-builder.html" class="related-card"><span class="related-icon">🐋</span><span>docker run 명령어 생성기</span></a>
+    <a href="kubernetes-label-selector.html" class="related-card"><span class="related-icon">🏷️</span><span>Kubernetes 레이블 셀렉터 테스터</span></a>
+    <a href="transfer-time-calculator.html" class="related-card"><span class="related-icon">📥</span><span>다운로드·전송 시간 계산기</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>CPU 한도는 초과하면 종료가 아니라 스로틀링(느려짐)이고, 메모리 한도 초과는 OOMKilled 입니다.</li><li>스케줄러는 requests 합계로 배치하므로 requests 가 너무 크면 노드가 놀고, 너무 작으면 과밀해집니다.</li><li>노드 할당 가능량은 kubectl describe node 의 Allocatable 값을 넣으세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>QoS 클래스가 왜 중요한가요?</summary><p>노드 자원이 부족할 때 BestEffort → Burstable → Guaranteed 순으로 파드가 쫓겨납니다. 중요한 서비스는 requests = limits 로 Guaranteed 를 만들 수 있습니다.</p></details><details><summary>250m 은 무슨 뜻인가요?</summary><p>1000m = 1 코어이므로 250m 은 0.25 코어입니다. 메모리의 Mi 는 2의 거듭제곱(1Mi=1,048,576바이트), M 은 10의 거듭제곱 단위입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/kubernetes-resource-calculator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

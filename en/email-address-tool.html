@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Address Checker – Validate, De-duplicate &amp; mailto Builder | WooaDev</title>
+  <meta name="description" content="Validate email address lists by RFC rules, remove duplicates, catch typos such as gmial.com and convert IDN. Also builds mailto links with encoded cc, subject and body.">
+  <meta name="keywords" content="email address validator, email list cleaner, remove duplicate emails, mailto link generator, email format check, mailto subject body, email checker">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/email-address-tool.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/email-address-tool.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/email-address-tool.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/email-address-tool.html">
+  <meta property="og:title" content="Email Address Checker – Validate, De-duplicate &amp; mailto Builder | WooaDev">
+  <meta property="og:description" content="Validate email address lists by RFC rules, remove duplicates, catch typos such as gmial.com and convert IDN. Also builds mailto links with encoded cc, subject and body.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/email-address-tool.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Email Address Checker – Validate, De-duplicate &amp; mailto Builder | WooaDev">
+  <meta name="twitter:description" content="Validate email address lists by RFC rules, remove duplicates, catch typos such as gmial.com and convert IDN. Also builds mailto links with encoded cc, subject and body.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Email Address Checker & mailto Builder","url":"https://wooadev.wooahouse.com/en/email-address-tool.html","description":"Validate email address lists by RFC rules, remove duplicates, catch typos such as gmial.com and convert IDN. Also builds mailto links with encoded cc, subject and body.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Validate: local part rules (consecutive dots, 64 characters, quoted form), domain labels (63 characters, hyphen placement), all-numeric TLDs, IP literals and IDN domains (to punycode)","Separators: newlines, commas and semicolons; display names in \"Name\" <address> form are understood","Clean up: lowercase domains, remove duplicates, show the base address of +tag addresses and suggest fixes for typo domains","mailto: recipients, cc, bcc, subject and body encoded per RFC 6068 (spaces as %20, newlines as %0D%0A)","Non-English subjects and bodies are encoded safely and an HTML a tag is generated"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does it accept every RFC 5322 form?","acceptedAnswer":{"@type":"Answer","text":"It accepts quoted local parts and IP literals but leaves out comments ((…)) and obsolete syntax, which are almost never used in practice."}},{"@type":"Question","name":"Is bcc in a mailto link safe?","acceptedAnswer":{"@type":"Answer","text":"The hidden address is written plainly in the link, so anyone viewing the page source sees it. Avoid it on public pages."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Email Address Checker & mailto Builder","item":"https://wooadev.wooahouse.com/en/email-address-tool.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../email-address-tool.html">KO</a>
+        <span>|</span>
+        <a href="email-address-tool.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Email Address Checker &amp; mailto Builder</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">✉️</span>
+    <h1>Email Address Checker, Cleaner &amp; mailto Link Builder</h1>
+    <p>Paste many email addresses to check their format, remove duplicates and spot mistyped domains. It also builds mailto links, with recipients, cc, subject and body, plus the HTML tag.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>🔍 2 of 8 address(es) are invalid</p>
+<h3>Input — Email addresses (separated by newlines, commas or semicolons; "Name &lt;addr&gt;" allowed)</h3><pre>Kim &lt;kim@example.com&gt;
+lee@exmaple.com; park@gmial.com
+kim@example.com
+bad@@example.com
+"john doe"@example.org
+user+tag@xn--bcher-kva.example
+someone@localhost</pre>
+<h3>Input — To (comma separated)</h3><pre>team@example.com, boss@example.com</pre>
+<h3>Input — Cc</h3><pre>manager@example.com</pre>
+<h3>Input — Subject</h3><pre>문의 드립니다 / Inquiry</pre>
+<h3>Input — Body</h3><pre>안녕하세요,
+견적을 요청드립니다.
+감사합니다.</pre>
+<h3>Result — Result</h3><pre>Kim &lt;kim@example.com&gt;
+lee@exmaple.com
+park@gmial.com
+"john doe"@example.org
+user+tag@xn--bcher-kva.example</pre>
+<h3>Result — Per-address results</h3><pre>Input | Status | Normalised | Notes
+Kim &lt;kim@example.com&gt; | ✅ | kim@example.com | Display name: Kim
+lee@exmaple.com | ✅ | lee@exmaple.com | Did you mean @example.com?
+park@gmial.com | ✅ | park@gmial.com | Did you mean @gmail.com?
+kim@example.com | ♻️ | kim@example.com | Duplicate
+bad@@example.com | ❌ |  | More than one @
+"john doe"@example.org | ✅ | "john doe"@example.org | 
+user+tag@xn--bcher-kva.example | ✅ | user+tag@xn--bcher-kva.example | +tag address (base: user@xn--bcher-kva.example)
+someone@localhost | ❌ |  | No dot in the domain — not an internet address (e.g. localhost)</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Two things you often need when cleaning a customer list or adding a contact link to a web page, in one tool.</p>
+<ul><li>Validate: local part rules (consecutive dots, 64 characters, quoted form), domain labels (63 characters, hyphen placement), all-numeric TLDs, IP literals and IDN domains (to punycode)</li><li>Separators: newlines, commas and semicolons; display names in "Name" &lt;address&gt; form are understood</li><li>Clean up: lowercase domains, remove duplicates, show the base address of +tag addresses and suggest fixes for typo domains</li><li>mailto: recipients, cc, bcc, subject and body encoded per RFC 6068 (spaces as %20, newlines as %0D%0A)</li><li>Non-English subjects and bodies are encoded safely and an HTML a tag is generated</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="email-validator.html" class="related-card"><span class="related-icon">📧</span><span>Email Validator</span></a>
+    <a href="dmarc-builder.html" class="related-card"><span class="related-icon">🛂</span><span>DMARC Record Builder &amp; Analyzer</span></a>
+    <a href="punycode-converter.html" class="related-card"><span class="related-icon">🈳</span><span>Punycode Converter</span></a>
+    <a href="domain-validator.html" class="related-card"><span class="related-icon">✔️</span><span>Domain &amp; Hostname Validator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>A well-formed address does not prove the mailbox exists. Send a confirmation email with a link to verify it.</li><li>mailto links over 2,000 characters get truncated by some mail apps; use a form for long bodies.</li><li>Publishing an address in plain HTML exposes it to spam harvesters; consider a contact form or obfuscation.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Does it accept every RFC 5322 form?</summary><p>It accepts quoted local parts and IP literals but leaves out comments ((…)) and obsolete syntax, which are almost never used in practice.</p></details><details><summary>Is bcc in a mailto link safe?</summary><p>The hidden address is written plainly in the link, so anyone viewing the page source sees it. Avoid it on public pages.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-net.js"></script>
+<script src="../js/tk-dns.js"></script>
+<script src="../js/tools/email-address-tool.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

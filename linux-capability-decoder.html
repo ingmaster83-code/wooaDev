@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linux capability 디코더 — CapEff 마스크를 이름으로 | WooaDev</title>
+  <meta name="description" content="CapEff·CapPrm 16진수 값(0000003fffffffff, a80425fb)을 CAP_NET_ADMIN 같은 이름과 위험도로 변환하거나 이름을 마스크로 만듭니다. Docker 기본값 비교와 --cap-add 예시 제공.">
+  <meta name="keywords" content="Linux capability, CapEff 디코딩, CAP_SYS_ADMIN, capsh decode, docker cap-add cap-drop, /proc status Cap, linux capability decoder">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/linux-capability-decoder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/linux-capability-decoder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/linux-capability-decoder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/linux-capability-decoder.html">
+  <meta property="og:title" content="Linux capability 디코더 — CapEff 마스크를 이름으로 | WooaDev">
+  <meta property="og:description" content="CapEff·CapPrm 16진수 값(0000003fffffffff, a80425fb)을 CAP_NET_ADMIN 같은 이름과 위험도로 변환하거나 이름을 마스크로 만듭니다. Docker 기본값 비교와 --cap-add 예시 제공.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/linux-capability-decoder.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Linux capability 디코더 — CapEff 마스크를 이름으로 | WooaDev">
+  <meta name="twitter:description" content="CapEff·CapPrm 16진수 값(0000003fffffffff, a80425fb)을 CAP_NET_ADMIN 같은 이름과 위험도로 변환하거나 이름을 마스크로 만듭니다. Docker 기본값 비교와 --cap-add 예시 제공.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Linux capability 디코더","url":"https://wooadev.wooahouse.com/linux-capability-decoder.html","description":"CapEff·CapPrm 16진수 값(0000003fffffffff, a80425fb)을 CAP_NET_ADMIN 같은 이름과 위험도로 변환하거나 이름을 마스크로 만듭니다. Docker 기본값 비교와 --cap-add 예시 제공.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: 16진수 마스크(0x 접두사 가능) 또는 CAP_ 이름 목록(접두사 생략·소문자·쉼표 가능, ALL 지원)","출력: 비트 번호, 이름, 권한 설명, 위험도, Docker 기본 capability 여부","변환 결과: CapEff 마스크, getpcaps/capsh 이름, docker run --cap-drop ALL --cap-add …, Kubernetes securityContext","Docker 기본 14개와의 차이(추가/제외) 표시","🚨 CAP_SYS_ADMIN, SYS_MODULE, SYS_PTRACE, SYS_RAWIO, DAC_READ_SEARCH, MAC_OVERRIDE 같은 위험한 권한 경고"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"CapInh, CapPrm, CapEff, CapBnd, CapAmb 는 무엇이 다른가요?","acceptedAnswer":{"@type":"Answer","text":"Eff(유효)가 지금 실제로 쓸 수 있는 권한이고, Prm(허용)은 가질 수 있는 상한, Bnd(경계)는 자식이 얻을 수 있는 최대치입니다. 보통 CapEff 를 보면 됩니다."}},{"@type":"Question","name":"0000003fffffffff 는 어떤 의미인가요?","acceptedAnswer":{"@type":"Answer","text":"비트 0~37(38개)이 켜진 값으로, 5.8 이전 커널에서 root 프로세스가 가지는 전체 권한 마스크입니다. 최신 커널은 비트 40까지 있어 전체가 000001ffffffffff 입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"Linux capability 디코더","item":"https://wooadev.wooahouse.com/linux-capability-decoder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="linux-capability-decoder.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/linux-capability-decoder.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Linux capability 디코더</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🛡️</span>
+    <h1>Linux capability 디코더 · 인코더</h1>
+    <p>/proc/PID/status 의 CapEff 같은 16진수 값을 CAP_ 이름과 설명, 위험도로 풀고, 반대로 capability 이름 목록을 마스크와 docker --cap-add, Kubernetes securityContext 로 바꿉니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ capability 14개 · 최고 위험도: 높음</p>
+<h3>입력 — capability 값 (16진수 마스크 또는 CAP_ 이름 목록)</h3><pre>00000000a80425fb</pre>
+<h3>결과 — capability 목록</h3><pre>비트 | 이름 | 권한 | 위험도
+0 | CAP_CHOWN | 파일 소유자(uid/gid)를 임의로 변경 | 낮음 · Docker 기본
+1 | CAP_DAC_OVERRIDE | 파일 읽기·쓰기·실행 권한 검사를 무시 | 중간 · Docker 기본
+3 | CAP_FOWNER | 파일 소유자만 가능한 작업(chmod 등)을 수행 | 낮음 · Docker 기본
+4 | CAP_FSETID | setuid/setgid 비트 유지 | 낮음 · Docker 기본
+5 | CAP_KILL | 다른 사용자 프로세스에 시그널 전송 | 낮음 · Docker 기본
+6 | CAP_SETGID | GID 를 임의로 변경 | 중간 · Docker 기본
+7 | CAP_SETUID | UID 를 임의로 변경 (root 로 전환 가능) | 높음 · Docker 기본
+8 | CAP_SETPCAP | 다른 프로세스의 capability 변경 | 중간 · Docker 기본
+10 | CAP_NET_BIND_SERVICE | 1024 미만 포트에 바인딩 | 낮음 · Docker 기본
+13 | CAP_NET_RAW | RAW·PACKET 소켓 (ping, 패킷 스니핑·위조) | 중간 · Docker 기본
+18 | CAP_SYS_CHROOT | chroot 실행 | 중간 · Docker 기본
+27 | CAP_MKNOD | 특수 파일(장치 노드) 생성 | 중간 · Docker 기본
+29 | CAP_AUDIT_WRITE | 커널 감사 로그에 기록 | 낮음 · Docker 기본
+31 | CAP_SETFCAP | 파일에 capability 설정 | 중간 · Docker 기본</pre>
+<h3>결과 — 변환 결과</h3><pre>CapEff/CapPrm  : 00000000a80425fb
+0x             : 0xa80425fb
+개수           : 14
+
+getpcaps / capsh : cap_chown,cap_dac_override,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_mknod,cap_audit_write,cap_setfcap
+
+# Docker/Podman
+docker run --cap-drop ALL --cap-add CHOWN --cap-add DAC_OVERRIDE --cap-add FOWNER --cap-add FSETID --cap-add KILL --cap-add SETGID --cap-add SETUID --cap-add SETPCAP --cap-add NET_BIND_SERVICE --cap-add NET_RAW --cap-add SYS_CHROOT --cap-add MKNOD --cap-add AUDIT_WRITE --cap-add SETFCAP …
+# Docker 기본 capability 14개와 동일합니다
+
+# Kubernetes securityContext
+securityContext:
+  capabilities:
+    drop: ["ALL"]
+    add: ["CHOWN", "DAC_OVERRIDE", "FOWNER", "FSETID", "KILL", "SETGID", "SETUID", "SETPCAP", "NET_BIND_SERVICE", "NET_RAW", "SYS_CHROOT", "MKNOD", "AUDIT_WRITE", "SETFCAP"]</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>컨테이너가 가진 권한을 점검할 때 grep Cap /proc/self/status 로 나온 16진수는 사람이 읽을 수 없습니다. 이 도구가 이름과 의미로 풀어 줍니다.</p>
+<ul><li>입력: 16진수 마스크(0x 접두사 가능) 또는 CAP_ 이름 목록(접두사 생략·소문자·쉼표 가능, ALL 지원)</li><li>출력: 비트 번호, 이름, 권한 설명, 위험도, Docker 기본 capability 여부</li><li>변환 결과: CapEff 마스크, getpcaps/capsh 이름, docker run --cap-drop ALL --cap-add …, Kubernetes securityContext</li><li>Docker 기본 14개와의 차이(추가/제외) 표시</li><li>🚨 CAP_SYS_ADMIN, SYS_MODULE, SYS_PTRACE, SYS_RAWIO, DAC_READ_SEARCH, MAC_OVERRIDE 같은 위험한 권한 경고</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="docker-run-builder.html" class="related-card"><span class="related-icon">🐋</span><span>docker run 명령어 생성기</span></a>
+    <a href="chmod.html" class="related-card"><span class="related-icon">🔐</span><span>Chmod 계산기</span></a>
+    <a href="umask-calculator.html" class="related-card"><span class="related-icon">🔒</span><span>umask 계산기</span></a>
+    <a href="bitwise-calculator.html" class="related-card"><span class="related-icon">🧮</span><span>비트 연산 계산기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>필요한 capability 만 남기려면 --cap-drop ALL 로 모두 버린 뒤 필요한 것만 --cap-add 하세요.</li><li>1024 미만 포트만 열면 되는 서비스라면 NET_BIND_SERVICE 하나로 충분합니다.</li><li>CAP_SYS_ADMIN 은 사실상 root 에 가까워 컨테이너 탈출에 자주 쓰입니다. --privileged 못지않게 위험합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>CapInh, CapPrm, CapEff, CapBnd, CapAmb 는 무엇이 다른가요?</summary><p>Eff(유효)가 지금 실제로 쓸 수 있는 권한이고, Prm(허용)은 가질 수 있는 상한, Bnd(경계)는 자식이 얻을 수 있는 최대치입니다. 보통 CapEff 를 보면 됩니다.</p></details><details><summary>0000003fffffffff 는 어떤 의미인가요?</summary><p>비트 0~37(38개)이 켜진 값으로, 5.8 이전 커널에서 root 프로세스가 가지는 전체 권한 마스크입니다. 최신 커널은 비트 40까지 있어 전체가 000001ffffffffff 입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/linux-capability-decoder.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

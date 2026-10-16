@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>명령줄 분석기 — 인수·파이프·리디렉션·PATH 점검 | WooaDev</title>
+  <meta name="description" content="셸 명령줄을 따옴표 규칙대로 인수, 파이프, &amp;&amp;, 리디렉션(2&gt;&amp;1)으로 분해하고 따옴표 없는 변수, rm -rf, curl | sh를 경고합니다. PATH 중복·빈 항목, 환경 변수(.env) 정리와 Windows 인수 규칙 지원.">
+  <meta name="keywords" content="명령줄 분석, 셸 명령어 파싱, PATH 환경변수 확인, 환경 변수 정리, 2&gt;&amp;1 순서, bash 인수 분리, command line parser">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/command-line-parser.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/command-line-parser.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/command-line-parser.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/command-line-parser.html">
+  <meta property="og:title" content="명령줄 분석기 — 인수·파이프·리디렉션·PATH 점검 | WooaDev">
+  <meta property="og:description" content="셸 명령줄을 따옴표 규칙대로 인수, 파이프, &amp;&amp;, 리디렉션(2&gt;&amp;1)으로 분해하고 따옴표 없는 변수, rm -rf, curl | sh를 경고합니다. PATH 중복·빈 항목, 환경 변수(.env) 정리와 Windows 인수 규칙 지원.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/command-line-parser.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="명령줄 분석기 — 인수·파이프·리디렉션·PATH 점검 | WooaDev">
+  <meta name="twitter:description" content="셸 명령줄을 따옴표 규칙대로 인수, 파이프, &amp;&amp;, 리디렉션(2&gt;&amp;1)으로 분해하고 따옴표 없는 변수, rm -rf, curl | sh를 경고합니다. PATH 중복·빈 항목, 환경 변수(.env) 정리와 Windows 인수 규칙 지원.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"명령줄·PATH·환경 변수 분석기","url":"https://wooadev.wooahouse.com/command-line-parser.html","description":"셸 명령줄을 따옴표 규칙대로 인수, 파이프, &&, 리디렉션(2>&1)으로 분해하고 따옴표 없는 변수, rm -rf, curl | sh를 경고합니다. PATH 중복·빈 항목, 환경 변수(.env) 정리와 Windows 인수 규칙 지원.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["명령줄: POSIX 따옴표('…', \"…\", $'…', \\), 환경 변수 접두사, 파이프(|, |&), 연결(&&, ||, ;, &), 리디렉션(>, >>, <, 2>, 2>&1, &>), 하위 셸","경고: 따옴표 없는 $변수(단어 분리·글로빙), 명령 치환, rm -rf, chmod 777, curl | sh, eval, 2>&1 순서 오류","Windows 규칙(CommandLineToArgvW)으로 인수 분리도 지원","PATH: 중복, 빈 항목(현재 디렉터리), 상대 경로, ~ 사용, 끝 슬래시 점검과 정리된 export 문 생성","환경 변수: KEY=VALUE/export/.env 정리, 중복·잘못된 이름·비밀 값 표시, export·.env·docker -e·JSON 출력"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"이 도구가 명령을 실행하나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 문자열을 분석만 하고 실행하지 않습니다. 변수 확장이나 명령 치환도 계산하지 않고 그대로 표시합니다."}},{"@type":"Question","name":"PATH 앞쪽과 뒤쪽 중 어느 쪽이 우선인가요?","acceptedAnswer":{"@type":"Answer","text":"앞쪽 항목이 먼저 검색됩니다. 같은 이름의 프로그램이 여러 곳에 있으면 첫 번째가 실행되므로 which -a 로 확인하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"명령줄·PATH·환경 변수 분석기","item":"https://wooadev.wooahouse.com/command-line-parser.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="command-line-parser.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/command-line-parser.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>명령줄·PATH·환경 변수 분석기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🖥️</span>
+    <h1>명령줄 · PATH · 환경 변수 분석기</h1>
+    <p>복잡한 셸 명령줄을 프로그램, 인수, 앞에 붙은 환경 변수, 파이프, 리디렉션으로 나눠 보여 주고, PATH 변수의 중복·위험 항목과 환경 변수 목록의 오류를 점검합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 명령 3개로 분해했습니다</p>
+<h3>입력 — 명령줄</h3><pre>API_KEY=abc123 NODE_ENV=production curl -sS -H "Authorization: Bearer $TOKEN" 'https://api.example.com/v1/items?limit=10' | jq '.items[] | .name' &gt; names.txt 2&gt;&amp;1 &amp;&amp; echo "done: $(date +%F)"</pre>
+<h3>입력 — PATH 값</h3><pre>/usr/local/bin:/usr/bin:/bin:/usr/local/bin:./node_modules/.bin::~/bin:/opt/tools/</pre>
+<h3>입력 — 환경 변수 (KEY=VALUE, export 가능)</h3><pre>export NODE_ENV=production
+DATABASE_URL="postgres://user:pa ss@db:5432/app"
+API_TOKEN='abc.def'
+PORT=3000
+PORT=8080
+# comment
+1BAD=nope
+empty=</pre>
+<h3>결과 — 분석 결과</h3><pre># | 프로그램 | 인수 (⏐ 로 구분) | 앞에 붙은 환경 변수 | 리디렉션 | 다음 연결
+1 | curl | -sS ⏐ -H ⏐ Authorization: Bearer $TOKEN ⏐ https://api.example.com/v1/items?limit=10 | API_KEY=abc123, NODE_ENV=production | — | 파이프 (출력 → 다음 입력)
+2 | jq | .items[] | .name | — | &gt; names.txt (덮어쓰기), 2&gt;&amp;1  (stderr → stdout) | 앞이 성공하면 다음 실행
+3 | echo | done: $(date +%F) | — | — | —</pre>
+<h3>결과 — 정리된 출력</h3><pre>[
+  {
+    "env": {
+      "API_KEY": "abc123",
+      "NODE_ENV": "production"
+    },
+    "argv": [
+      "curl",
+      "-sS",
+      "-H",
+      "Authorization: Bearer $TOKEN",
+      "https://api.example.com/v1/items?limit=10"
+    ],
+    "redirects": [],
+    "next": "|"
+  },
+  {
+    "env": {},
+    "argv": [
+      "jq",
+      ".items[] | .name"
+    ],
+    "redirects": [
+      "&gt; names.txt",
+      "2&gt;&amp;1 "
+    ],
+    "next": "&amp;&amp;"
+  },
+  {
+    "env": {},
+    "argv": [
+      "echo",
+      "done: $(date +%F)"
+    ],
+    "redirects": [],
+    "next": null
+  }
+]</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>길고 따옴표가 섞인 명령을 읽거나 스크립트에 옮기기 전에 구조를 확인하세요. 입력은 브라우저에서만 처리되며 실행되지 않습니다.</p>
+<ul><li>명령줄: POSIX 따옴표('…', "…", $'…', \), 환경 변수 접두사, 파이프(|, |&amp;), 연결(&amp;&amp;, ||, ;, &amp;), 리디렉션(&gt;, &gt;&gt;, &lt;, 2&gt;, 2&gt;&amp;1, &amp;&gt;), 하위 셸</li><li>경고: 따옴표 없는 $변수(단어 분리·글로빙), 명령 치환, rm -rf, chmod 777, curl | sh, eval, 2&gt;&amp;1 순서 오류</li><li>Windows 규칙(CommandLineToArgvW)으로 인수 분리도 지원</li><li>PATH: 중복, 빈 항목(현재 디렉터리), 상대 경로, ~ 사용, 끝 슬래시 점검과 정리된 export 문 생성</li><li>환경 변수: KEY=VALUE/export/.env 정리, 중복·잘못된 이름·비밀 값 표시, export·.env·docker -e·JSON 출력</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="shell-escape.html" class="related-card"><span class="related-icon">🐚</span><span>쉘 이스케이프 변환기</span></a>
+    <a href="string-escape.html" class="related-card"><span class="related-icon">🔣</span><span>문자열 이스케이프 변환기</span></a>
+    <a href="curl-to-code.html" class="related-card"><span class="related-icon">🔄</span><span>cURL → 코드 변환기</span></a>
+    <a href="env-editor.html" class="related-card"><span class="related-icon">✏️</span><span>.env 편집기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>PATH 의 빈 항목(::)이나 . 은 현재 폴더를 뜻해 악성 실행 파일 실행 위험이 있습니다.</li><li>스크립트에서는 "$변수" 처럼 항상 따옴표로 감싸세요. 공백이 있는 값이 여러 인수로 쪼개지는 것을 막습니다.</li><li>2&gt;&amp;1 은 &gt; 파일 뒤에 써야 합니다: command &gt; out.log 2&gt;&amp;1.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>이 도구가 명령을 실행하나요?</summary><p>아니요. 문자열을 분석만 하고 실행하지 않습니다. 변수 확장이나 명령 치환도 계산하지 않고 그대로 표시합니다.</p></details><details><summary>PATH 앞쪽과 뒤쪽 중 어느 쪽이 우선인가요?</summary><p>앞쪽 항목이 먼저 검색됩니다. 같은 이름의 프로그램이 여러 곳에 있으면 첫 번째가 실행되므로 which -a 로 확인하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/command-line-parser.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

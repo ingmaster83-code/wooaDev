@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AWS EventBridge Cron Generator – cron() &amp; rate() Checker | WooaDev</title>
+  <meta name="description" content="Validate EventBridge cron(min hour day month weekday year) and rate(5 minutes) expressions and list the next run times in UTC and your time zone. Explains the ? rule, L, W and # too.">
+  <meta name="keywords" content="AWS EventBridge cron, CloudWatch Events cron, rate expression, EventBridge Scheduler, Lambda schedule, cron(0 12 * * ? *), aws cron expression">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/aws-eventbridge-cron.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/aws-eventbridge-cron.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/aws-eventbridge-cron.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/aws-eventbridge-cron.html">
+  <meta property="og:title" content="AWS EventBridge Cron Generator – cron() &amp; rate() Checker | WooaDev">
+  <meta property="og:description" content="Validate EventBridge cron(min hour day month weekday year) and rate(5 minutes) expressions and list the next run times in UTC and your time zone. Explains the ? rule, L, W and # too.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/aws-eventbridge-cron.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AWS EventBridge Cron Generator – cron() &amp; rate() Checker | WooaDev">
+  <meta name="twitter:description" content="Validate EventBridge cron(min hour day month weekday year) and rate(5 minutes) expressions and list the next run times in UTC and your time zone. Explains the ? rule, L, W and # too.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"AWS EventBridge Cron Generator","url":"https://wooadev.wooahouse.com/en/aws-eventbridge-cron.html","description":"Validate EventBridge cron(min hour day month weekday year) and rate(5 minutes) expressions and list the next run times in UTC and your time zone. Explains the ? rule, L, W and # too.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["One of day-of-month and day-of-week must be ?, as in cron(0 18 ? * MON-FRI *)","rate(1 minute) vs rate(5 minutes): the unit must be singular for 1 and plural otherwise","Supports L, W, # and the year field (1970–2199)","Rules are always evaluated in UTC; the tool also converts run times to your time zone","Presets and clear error messages help you fix a rule quickly"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why do I always need a ?","acceptedAnswer":{"@type":"Answer","text":"Day-of-month and day-of-week cannot both be specified, so one must be ?. Daily at noon is cron(0 12 * * ? *)."}},{"@type":"Question","name":"What is the shortest interval?","acceptedAnswer":{"@type":"Answer","text":"One minute for both rate and cron. For anything faster, loop inside a single invocation or look at Step Functions."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"AWS EventBridge Cron Generator","item":"https://wooadev.wooahouse.com/en/aws-eventbridge-cron.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../aws-eventbridge-cron.html">KO</a>
+        <span>|</span>
+        <a href="aws-eventbridge-cron.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>AWS EventBridge Cron Generator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">☁️</span>
+    <h1>AWS EventBridge Schedule Expressions — cron() &amp; rate()</h1>
+    <p>Validates cron(...) and rate(...) expressions used by EventBridge (CloudWatch Events) and EventBridge Scheduler and shows the real UTC run times plus times in any other time zone.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Valid EventBridge expression</p>
+<h3>Input — EventBridge schedule — cron(min hour dom mon dow year) or rate(5 minutes)</h3><pre>cron(0 18 ? * MON-FRI *)</pre>
+<h3>Result — Interpretation</h3><pre>Summary: every MON–FRI 18:00
+Minute: 0
+Hour: 18
+Day of month: not specified (?)
+Month: every month
+Day of week: MON–FRI
+Year: every year</pre>
+<h3>Result — Upcoming runs</h3><pre># | UTC | Selected zone
+1 | 2026-10-16T18:00:00Z | 2026-10-16 18:00:00 (UTC+00:00)
+2 | 2026-10-19T18:00:00Z | 2026-10-19 18:00:00 (UTC+00:00)
+3 | 2026-10-20T18:00:00Z | 2026-10-20 18:00:00 (UTC+00:00)
+4 | 2026-10-21T18:00:00Z | 2026-10-21 18:00:00 (UTC+00:00)
+5 | 2026-10-22T18:00:00Z | 2026-10-22 18:00:00 (UTC+00:00)
+6 | 2026-10-23T18:00:00Z | 2026-10-23 18:00:00 (UTC+00:00)
+7 | 2026-10-26T18:00:00Z | 2026-10-26 18:00:00 (UTC+00:00)
+8 | 2026-10-27T18:00:00Z | 2026-10-27 18:00:00 (UTC+00:00)</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>AWS scheduled rules use a six-field format (minute hour day month weekday year) wrapped in cron( ), which differs from ordinary cron and is easy to get wrong for Lambda or ECS schedules.</p>
+<ul><li>One of day-of-month and day-of-week must be ?, as in cron(0 18 ? * MON-FRI *)</li><li>rate(1 minute) vs rate(5 minutes): the unit must be singular for 1 and plural otherwise</li><li>Supports L, W, # and the year field (1970–2199)</li><li>Rules are always evaluated in UTC; the tool also converts run times to your time zone</li><li>Presets and clear error messages help you fix a rule quickly</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="cron-generator.html" class="related-card"><span class="related-icon">⏰</span><span>Cron Generator</span></a>
+    <a href="quartz-cron-generator.html" class="related-card"><span class="related-icon">⏲️</span><span>Quartz Cron Generator</span></a>
+    <a href="timezone-converter.html" class="related-card"><span class="related-icon">🌏</span><span>Time Zone Converter</span></a>
+    <a href="iso8601-converter.html" class="related-card"><span class="related-icon">📅</span><span>ISO 8601 / RFC Date Converter</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>EventBridge Rules only support UTC. For 9 AM in Seoul write cron(0 0 * * ? *).</li><li>EventBridge Scheduler accepts a time zone and handles daylight saving; prefer it when you can.</li><li>rate counts from rule creation, so use cron when a run has to land on the hour.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Why do I always need a ?</summary><p>Day-of-month and day-of-week cannot both be specified, so one must be ?. Daily at noon is cron(0 12 * * ? *).</p></details><details><summary>What is the shortest interval?</summary><p>One minute for both rate and cron. For anything faster, loop inside a single invocation or look at Step Functions.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-time.js"></script>
+<script src="../js/tk-cron.js"></script>
+<script src="../js/tools/aws-eventbridge-cron.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

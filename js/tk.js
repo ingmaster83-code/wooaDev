@@ -242,11 +242,11 @@
           if (!f) { files[i.id] = null; $('tk-fi-' + i.id).textContent = ''; return schedule(); }
           var rd = new FileReader();
           rd.onload = function () {
-            files[i.id] = { name: f.name, type: f.type, size: f.size, dataUrl: i.binary ? rd.result : null, text: i.binary ? null : rd.result };
+            files[i.id] = { name: f.name, type: f.type, size: f.size, dataUrl: i.binary ? rd.result : null, text: (i.binary || i.buffer) ? null : rd.result, buf: i.buffer ? rd.result : null };
             $('tk-fi-' + i.id).textContent = f.name + ' · ' + f.size.toLocaleString() + ' bytes';
             schedule();
           };
-          if (i.binary) rd.readAsDataURL(f); else rd.readAsText(f);
+          if (i.buffer) rd.readAsArrayBuffer(f); else if (i.binary) rd.readAsDataURL(f); else rd.readAsText(f);
         });
       } else {
         el.addEventListener('input', schedule);

@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SRI Hash Generator – Create integrity for Script &amp; Link Tags | WooaDev</title>
+  <meta name="description" content="Create SRI hashes (sha256, sha384, sha512) for JS and CSS files or text and generate script or link tags with integrity and crossorigin. Also verifies an existing integrity value against the file.">
+  <meta name="keywords" content="SRI generator, integrity attribute, Subresource Integrity, SRI hash calculator, script integrity, sha384 integrity, SRI hash generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/sri-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/sri-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/sri-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/sri-generator.html">
+  <meta property="og:title" content="SRI Hash Generator – Create integrity for Script &amp; Link Tags | WooaDev">
+  <meta property="og:description" content="Create SRI hashes (sha256, sha384, sha512) for JS and CSS files or text and generate script or link tags with integrity and crossorigin. Also verifies an existing integrity value against the file.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/sri-generator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SRI Hash Generator – Create integrity for Script &amp; Link Tags | WooaDev">
+  <meta name="twitter:description" content="Create SRI hashes (sha256, sha384, sha512) for JS and CSS files or text and generate script or link tags with integrity and crossorigin. Also verifies an existing integrity value against the file.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SRI Hash Generator","url":"https://wooadev.wooahouse.com/en/sri-generator.html","description":"Create SRI hashes (sha256, sha384, sha512) for JS and CSS files or text and generate script or link tags with integrity and crossorigin. Also verifies an existing integrity value against the file.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Pick a file or paste its content to get sha384 (recommended), sha256 or sha512 integrity values","Optionally output all three algorithms separated by spaces","A .css URL gives a link tag, anything else a script tag, both with crossorigin=anonymous","Paste an integrity value you already have to check it against the current file","Files are processed locally and never uploaded"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why is sha384 recommended?","acceptedAnswer":{"@type":"Answer","text":"The W3C spec recommends it and all major browsers support sha256, sha384 and sha512. It balances strength and length."}},{"@type":"Question","name":"What happens when SRI fails?","acceptedAnswer":{"@type":"Answer","text":"The browser refuses to run the script or apply the stylesheet and logs a console error. The page may break, so plan a fallback."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"SRI Hash Generator","item":"https://wooadev.wooahouse.com/en/sri-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../sri-generator.html">KO</a>
+        <span>|</span>
+        <a href="sri-generator.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>SRI Hash Generator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🛡️</span>
+    <h1>SRI Hash Generator — The integrity Attribute</h1>
+    <p>Generate the Subresource Integrity value (sha256 / sha384 / sha512) for JS and CSS files loaded from a CDN and get a ready-made script or link tag.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ SRI hash computed for 22 bytes</p>
+<h3>Input — Paste the file content</h3><pre>console.log("hello");
+</pre>
+<h3>Input — Resource URL (for the tag example)</h3><pre>https://cdn.example.com/lib/app.min.js</pre>
+<h3>Result — integrity value</h3><pre>sha384-M5mGpKxRozBpvsX+PXs0ssm1NdoBYDPN4gQsyCwq+RTqmuLt5T6LWQKklQd4sArc</pre>
+<h3>Result — HTML tag examples</h3><pre>&lt;script src="https://cdn.example.com/lib/app.min.js" integrity="sha384-M5mGpKxRozBpvsX+PXs0ssm1NdoBYDPN4gQsyCwq+RTqmuLt5T6LWQKklQd4sArc" crossorigin="anonymous"&gt;&lt;/script&gt;
+
+&lt;!-- SRI only works for resources served with CORS (Access-Control-Allow-Origin). If even one byte changes the browser blocks the load --&gt;</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>SRI makes the browser refuse a script whose hash differs, even if the CDN was compromised or the file changed. All you need is the file content.</p>
+<ul><li>Pick a file or paste its content to get sha384 (recommended), sha256 or sha512 integrity values</li><li>Optionally output all three algorithms separated by spaces</li><li>A .css URL gives a link tag, anything else a script tag, both with crossorigin=anonymous</li><li>Paste an integrity value you already have to check it against the current file</li><li>Files are processed locally and never uploaded</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="csp-builder.html" class="related-card"><span class="related-icon">🚧</span><span>CSP Builder &amp; Analyzer</span></a>
+    <a href="security-header-builder.html" class="related-card"><span class="related-icon">🧱</span><span>Security Header Builder</span></a>
+    <a href="hash-generator.html" class="related-card"><span class="related-icon">🔑</span><span>Hash Generator</span></a>
+    <a href="file-checksum.html" class="related-card"><span class="related-icon">🧾</span><span>File Checksum Calculator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>SRI only works when the resource is served with CORS (Access-Control-Allow-Origin); keep crossorigin=anonymous.</li><li>Pin the CDN URL to a version (lib@3.7.1) and hash that exact file so the value stays stable.</li><li>If even one byte changes the browser blocks the load, so update the hash in your deploy pipeline.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Why is sha384 recommended?</summary><p>The W3C spec recommends it and all major browsers support sha256, sha384 and sha512. It balances strength and length.</p></details><details><summary>What happens when SRI fails?</summary><p>The browser refuses to run the script or apply the stylesheet and logs a console error. The page may break, so plan a fallback.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-hash.js"></script>
+<script src="../js/tools/sri-generator.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

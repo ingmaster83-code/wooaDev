@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kubernetes Label Selector Tester – Match Test &amp; YAML Converter | WooaDev</title>
+  <meta name="description" content="Validate kubectl -l label selectors (=, !=, in, notin, exists) and test which objects match their labels. Converts to matchLabels / matchExpressions YAML and reports syntax errors.">
+  <meta name="keywords" content="Kubernetes label selector, kubectl -l, matchLabels matchExpressions, label selector syntax, in notin, label key value rules, kubernetes label selector tester">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/kubernetes-label-selector.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/kubernetes-label-selector.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/kubernetes-label-selector.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/kubernetes-label-selector.html">
+  <meta property="og:title" content="Kubernetes Label Selector Tester – Match Test &amp; YAML Converter | WooaDev">
+  <meta property="og:description" content="Validate kubectl -l label selectors (=, !=, in, notin, exists) and test which objects match their labels. Converts to matchLabels / matchExpressions YAML and reports syntax errors.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/kubernetes-label-selector.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kubernetes Label Selector Tester – Match Test &amp; YAML Converter | WooaDev">
+  <meta name="twitter:description" content="Validate kubectl -l label selectors (=, !=, in, notin, exists) and test which objects match their labels. Converts to matchLabels / matchExpressions YAML and reports syntax errors.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Kubernetes Label Selector Tester","url":"https://wooadev.wooahouse.com/en/kubernetes-label-selector.html","description":"Validate kubectl -l label selectors (=, !=, in, notin, exists) and test which objects match their labels. Converts to matchLabels / matchExpressions YAML and reports syntax errors.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Syntax: key=value, key==value, key!=value, key in (a,b), key notin (a,b), key (exists), !key (absent), numeric > and <","Enter labels (name: key=value,key=value) to see which objects match and which requirement failed","Reminds you that != and notin also match objects without the key","Convert to matchLabels + matchExpressions (In / NotIn / Exists / DoesNotExist) YAML, or a plain Service selector","Validates keys and values: 63 character limit, allowed characters, prefix as DNS subdomain"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What does an empty selector match?","acceptedAnswer":{"@type":"Answer","text":"It depends on the field: everything in kubectl, no Pods in a Service, and all Pods of the namespace in a NetworkPolicy podSelector."}},{"@type":"Question","name":"Does tier!=frontend include Pods with no tier label?","acceptedAnswer":{"@type":"Answer","text":"Yes. != and notin match objects that lack the key. To require the key, combine tier, tier!=frontend."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Kubernetes Label Selector Tester","item":"https://wooadev.wooahouse.com/en/kubernetes-label-selector.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../kubernetes-label-selector.html">KO</a>
+        <span>|</span>
+        <a href="kubernetes-label-selector.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Kubernetes Label Selector Tester</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🏷️</span>
+    <h1>Kubernetes Label Selector Tester &amp; Converter</h1>
+    <p>Parses selectors such as env=prod,tier in (frontend,backend),!deprecated, tests them against a list of object labels and converts them to matchLabels / matchExpressions YAML for Deployments and Services.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ 4 requirement(s) · 2 of 6 object(s) match</p>
+<h3>Input — Label selector (kubectl -l syntax)</h3><pre>env=prod,tier in (frontend,backend),!deprecated,release notin (canary)</pre>
+<h3>Input — Objects to test (one per line: name: key=value,key=value)</h3><pre>web-1: env=prod,tier=frontend,app=shop
+api-1: env=prod,tier=backend,release=stable
+api-canary: env=prod,tier=backend,release=canary
+old-web: env=prod,tier=frontend,deprecated=true
+db-1: env=prod,tier=data
+web-dev: env=dev,tier=frontend</pre>
+<h3>Result — Requirements</h3><pre>Key | Operator | Values | Meaning
+env | = | prod | equals
+tier | in | frontend, backend | one of
+deprecated | !key | — | key absent
+release | notin | canary | none of, or key missing</pre>
+<h3>Result — Match results</h3><pre>Object | Result | Reason | Labels
+web-1 | ✅ | All requirements met | env=prod, tier=frontend, app=shop
+api-1 | ✅ | All requirements met | env=prod, tier=backend, release=stable
+api-canary | ❌ | release notin (canary) (failed) | env=prod, tier=backend, release=canary
+old-web | ❌ | !deprecated (failed) | env=prod, tier=frontend, deprecated=true
+db-1 | ❌ | tier in (frontend,backend) (failed) | env=prod, tier=data
+web-dev | ❌ | env=prod (failed) | env=dev, tier=frontend</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Find out why kubectl get pods -l '...' misses the Pods you expect, or which Pods a Service selector connects to.</p>
+<ul><li>Syntax: key=value, key==value, key!=value, key in (a,b), key notin (a,b), key (exists), !key (absent), numeric &gt; and &lt;</li><li>Enter labels (name: key=value,key=value) to see which objects match and which requirement failed</li><li>Reminds you that != and notin also match objects without the key</li><li>Convert to matchLabels + matchExpressions (In / NotIn / Exists / DoesNotExist) YAML, or a plain Service selector</li><li>Validates keys and values: 63 character limit, allowed characters, prefix as DNS subdomain</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="kubernetes-resource-calculator.html" class="related-card"><span class="related-icon">☸️</span><span>Kubernetes Resource Calculator</span></a>
+    <a href="docker-run-builder.html" class="related-card"><span class="related-icon">🐋</span><span>docker run Command Builder</span></a>
+    <a href="yaml-formatter.html" class="related-card"><span class="related-icon">🧹</span><span>YAML Formatter</span></a>
+    <a href="json-yaml.html" class="related-card"><span class="related-icon">🔄</span><span>JSON ↔ YAML</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>A Service selector supports key=value only. Use matchExpressions in Deployments / ReplicaSets for set-based rules.</li><li>A Deployment selector is immutable after creation and must match the Pod template labels.</li><li>Consistent recommended labels such as app.kubernetes.io/name keep selectors simple.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What does an empty selector match?</summary><p>It depends on the field: everything in kubectl, no Pods in a Service, and all Pods of the namespace in a NetworkPolicy podSelector.</p></details><details><summary>Does tier!=frontend include Pods with no tier label?</summary><p>Yes. != and notin match objects that lack the key. To require the key, combine tier, tier!=frontend.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/kubernetes-label-selector.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

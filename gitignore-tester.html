@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>.gitignore 테스터 — 경로가 왜 무시되는지 확인 | WooaDev</title>
+  <meta name="description" content=".gitignore 규칙과 경로를 넣어 무시 여부와 적용된 줄을 확인합니다. 마지막 일치 규칙 우선, 폴더 전용 패턴, **, [], ?, 부정(!) 재포함 불가 규칙, 대소문자 옵션을 Git과 같이 처리합니다.">
+  <meta name="keywords" content=".gitignore 테스트, gitignore 규칙 확인, git check-ignore, gitignore 안 먹힘, gitignore 부정 규칙, gitignore tester">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/gitignore-tester.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/gitignore-tester.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/gitignore-tester.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/gitignore-tester.html">
+  <meta property="og:title" content=".gitignore 테스터 — 경로가 왜 무시되는지 확인 | WooaDev">
+  <meta property="og:description" content=".gitignore 규칙과 경로를 넣어 무시 여부와 적용된 줄을 확인합니다. 마지막 일치 규칙 우선, 폴더 전용 패턴, **, [], ?, 부정(!) 재포함 불가 규칙, 대소문자 옵션을 Git과 같이 처리합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/gitignore-tester.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content=".gitignore 테스터 — 경로가 왜 무시되는지 확인 | WooaDev">
+  <meta name="twitter:description" content=".gitignore 규칙과 경로를 넣어 무시 여부와 적용된 줄을 확인합니다. 마지막 일치 규칙 우선, 폴더 전용 패턴, **, [], ?, 부정(!) 재포함 불가 규칙, 대소문자 옵션을 Git과 같이 처리합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":".gitignore 테스터","url":"https://wooadev.wooahouse.com/gitignore-tester.html","description":".gitignore 규칙과 경로를 넣어 무시 여부와 적용된 줄을 확인합니다. 마지막 일치 규칙 우선, 폴더 전용 패턴, **, [], ?, 부정(!) 재포함 불가 규칙, 대소문자 옵션을 Git과 같이 처리합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["각 경로의 결과: 무시됨/추적됨, 근거가 된 줄 번호와 규칙, 이유 설명","git check-ignore -v 와 같은 형식의 출력 제공","지원 문법: *, ?, [abc], [!abc], **/, /**/, 끝의 /**, 앞의 / (루트 고정), 끝의 / (폴더 전용), \\# 와 \\! 이스케이프","상위 폴더가 무시되면 안의 파일을 ! 로 다시 포함할 수 없다는 Git 규칙을 경고","core.ignorecase(대소문자 구분 안 함) 옵션"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"왜 !로 다시 포함해도 무시되나요?","acceptedAnswer":{"@type":"Answer","text":"상위 폴더 자체가 무시되면 Git은 그 폴더 안을 아예 보지 않아서입니다. dir/ 대신 dir/* 로 쓰면 폴더는 열어 두고 내용만 무시할 수 있습니다."}},{"@type":"Question","name":"build 와 build/ 는 다른가요?","acceptedAnswer":{"@type":"Answer","text":"build/ 는 폴더에만 적용되고, build 는 같은 이름의 파일과 폴더 모두에 적용됩니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":".gitignore 테스터","item":"https://wooadev.wooahouse.com/gitignore-tester.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="gitignore-tester.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/gitignore-tester.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>.gitignore 테스터</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🙈</span>
+    <h1>.gitignore 테스터 — 어떤 규칙이 적용되는가</h1>
+    <p>.gitignore 내용과 확인할 경로를 넣으면 각 경로가 무시되는지, 어떤 줄의 규칙 때문인지, 부정(!) 규칙이 왜 먹히지 않는지를 Git과 같은 규칙으로 판정해 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 10개 중 6개가 무시됩니다</p>
+<h3>입력 — .gitignore 내용</h3><pre># 빌드 산출물
+node_modules/
+dist/
+*.log
+.env
+!.env.example
+/config/*.local
+build/**/*.map
+!important.log</pre>
+<h3>입력 — 확인할 경로 (한 줄에 하나, 폴더는 끝에 /)</h3><pre>node_modules/express/index.js
+dist/app.js
+src/debug.log
+important.log
+.env
+.env.example
+config/db.local
+config/sub/db.local
+build/js/main.js.map
+src/index.js</pre>
+<h3>결과 — 판정 결과</h3><pre>경로 | 결과 | 근거 규칙 | 설명
+node_modules/express/index.js | 🚫 무시됨 | 2: node_modules/ | 상위 폴더 node_modules/ 가 무시되어 안의 파일은 모두 무시됩니다 (줄 2)
+dist/app.js | 🚫 무시됨 | 3: dist/ | 상위 폴더 dist/ 가 무시되어 안의 파일은 모두 무시됩니다 (줄 3)
+src/debug.log | 🚫 무시됨 | 4: *.log | 줄 4 규칙과 일치
+important.log | ✅ 추적됨 | 9: !important.log | 줄 9 의 ! 규칙이 다시 포함시킴
+.env | 🚫 무시됨 | 5: .env | 줄 5 규칙과 일치
+.env.example | ✅ 추적됨 | 6: !.env.example | 줄 6 의 ! 규칙이 다시 포함시킴
+config/db.local | 🚫 무시됨 | 7: /config/*.local | 줄 7 규칙과 일치
+config/sub/db.local | ✅ 추적됨 | — | 일치하는 규칙 없음 → 추적됨
+build/js/main.js.map | 🚫 무시됨 | 8: build/**/*.map | 줄 8 규칙과 일치
+src/index.js | ✅ 추적됨 | — | 일치하는 규칙 없음 → 추적됨</pre>
+<h3>결과 — git check-ignore -v 형식</h3><pre>.gitignore:2:node_modules/	node_modules/express/index.js
+.gitignore:3:dist/	dist/app.js
+.gitignore:4:*.log	src/debug.log
+.gitignore:9:!important.log	important.log
+.gitignore:5:.env	.env
+.gitignore:6:!.env.example	.env.example
+.gitignore:7:/config/*.local	config/db.local
+::	config/sub/db.local
+.gitignore:8:build/**/*.map	build/js/main.js.map
+::	src/index.js</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>'분명히 .gitignore에 넣었는데 계속 추적돼요', '!로 다시 포함했는데 안 돼요' 같은 문제를 규칙별로 추적합니다. 모든 판정은 브라우저에서 이뤄집니다.</p>
+<ul><li>각 경로의 결과: 무시됨/추적됨, 근거가 된 줄 번호와 규칙, 이유 설명</li><li>git check-ignore -v 와 같은 형식의 출력 제공</li><li>지원 문법: *, ?, [abc], [!abc], **/, /**/, 끝의 /**, 앞의 / (루트 고정), 끝의 / (폴더 전용), \# 와 \! 이스케이프</li><li>상위 폴더가 무시되면 안의 파일을 ! 로 다시 포함할 수 없다는 Git 규칙을 경고</li><li>core.ignorecase(대소문자 구분 안 함) 옵션</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="gitignore-generator.html" class="related-card"><span class="related-icon">🚫</span><span>.gitignore 생성기</span></a>
+    <a href="git-command-builder.html" class="related-card"><span class="related-icon">⌨️</span><span>Git 명령어 생성기</span></a>
+    <a href="git-ref-validator.html" class="related-card"><span class="related-icon">🏷️</span><span>Git 브랜치·태그 이름 검사기</span></a>
+    <a href="regex-tester.html" class="related-card"><span class="related-icon">🔍</span><span>Regex 테스터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>이미 커밋된 파일은 .gitignore에 추가해도 계속 추적됩니다. git rm --cached 파일 로 추적을 해제하세요.</li><li>폴더 안의 일부만 남기려면 dir/ 대신 dir/* 로 무시하고 !dir/keep.txt 로 되살립니다.</li><li>하위 폴더의 .gitignore, .git/info/exclude, 전역 ignore 는 이 도구가 반영하지 않으니 한 파일씩 테스트하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>왜 !로 다시 포함해도 무시되나요?</summary><p>상위 폴더 자체가 무시되면 Git은 그 폴더 안을 아예 보지 않아서입니다. dir/ 대신 dir/* 로 쓰면 폴더는 열어 두고 내용만 무시할 수 있습니다.</p></details><details><summary>build 와 build/ 는 다른가요?</summary><p>build/ 는 폴더에만 적용되고, build 는 같은 이름의 파일과 폴더 모두에 적용됩니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/gitignore-tester.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

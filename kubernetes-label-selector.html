@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kubernetes 레이블 셀렉터 테스터 — 일치 테스트·YAML 변환 | WooaDev</title>
+  <meta name="description" content="kubectl -l 레이블 셀렉터(=, !=, in, notin, 키 존재/없음)를 검증하고 오브젝트 레이블과 일치 여부를 시험합니다. matchLabels·matchExpressions YAML 변환, 레이블 키·값 문법 오류를 안내합니다.">
+  <meta name="keywords" content="Kubernetes 레이블 셀렉터, kubectl -l, matchLabels matchExpressions, label selector 문법, in notin, 레이블 키 값 규칙, kubernetes label selector tester">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/kubernetes-label-selector.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/kubernetes-label-selector.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/kubernetes-label-selector.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/kubernetes-label-selector.html">
+  <meta property="og:title" content="Kubernetes 레이블 셀렉터 테스터 — 일치 테스트·YAML 변환 | WooaDev">
+  <meta property="og:description" content="kubectl -l 레이블 셀렉터(=, !=, in, notin, 키 존재/없음)를 검증하고 오브젝트 레이블과 일치 여부를 시험합니다. matchLabels·matchExpressions YAML 변환, 레이블 키·값 문법 오류를 안내합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/kubernetes-label-selector.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kubernetes 레이블 셀렉터 테스터 — 일치 테스트·YAML 변환 | WooaDev">
+  <meta name="twitter:description" content="kubectl -l 레이블 셀렉터(=, !=, in, notin, 키 존재/없음)를 검증하고 오브젝트 레이블과 일치 여부를 시험합니다. matchLabels·matchExpressions YAML 변환, 레이블 키·값 문법 오류를 안내합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Kubernetes 레이블 셀렉터 테스터","url":"https://wooadev.wooahouse.com/kubernetes-label-selector.html","description":"kubectl -l 레이블 셀렉터(=, !=, in, notin, 키 존재/없음)를 검증하고 오브젝트 레이블과 일치 여부를 시험합니다. matchLabels·matchExpressions YAML 변환, 레이블 키·값 문법 오류를 안내합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["문법: key=value, key==value, key!=value, key in (a,b), key notin (a,b), key (존재), !key (없음), 숫자 비교(>, <)","레이블 목록(이름: 키=값,키=값)을 넣으면 각 오브젝트가 일치하는지와 실패한 조건을 표시","!= 와 notin 은 키가 없는 오브젝트도 일치시킨다는 점을 안내","변환: matchLabels + matchExpressions(In/NotIn/Exists/DoesNotExist) YAML, Service 용 단순 selector","키·값 형식 검증: 63자 제한, 허용 문자, 접두사는 DNS 서브도메인"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"비어 있는 셀렉터는 무엇과 일치하나요?","acceptedAnswer":{"@type":"Answer","text":"API 필드마다 다릅니다. kubectl 에서는 전부, Service 에서는 파드를 선택하지 않고, NetworkPolicy podSelector 는 네임스페이스의 모든 파드를 뜻합니다."}},{"@type":"Question","name":"tier!=frontend 에 tier 레이블이 없는 파드도 포함되나요?","acceptedAnswer":{"@type":"Answer","text":"예. != 와 notin 은 해당 키가 없는 오브젝트도 일치합니다. 키가 있는 것만 원하면 tier, tier!=frontend 로 조합하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"Kubernetes 레이블 셀렉터 테스터","item":"https://wooadev.wooahouse.com/kubernetes-label-selector.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="kubernetes-label-selector.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/kubernetes-label-selector.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Kubernetes 레이블 셀렉터 테스터</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🏷️</span>
+    <h1>Kubernetes 레이블 셀렉터 테스터 · 변환기</h1>
+    <p>env=prod,tier in (frontend,backend),!deprecated 같은 레이블 셀렉터를 해석하고, 오브젝트 레이블 목록과 일치하는지 시험하며, Deployment/Service 용 matchLabels·matchExpressions YAML로 바꿔 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 조건 4개 · 6개 오브젝트 중 2개 일치</p>
+<h3>입력 — 레이블 셀렉터 (kubectl -l 문법)</h3><pre>env=prod,tier in (frontend,backend),!deprecated,release notin (canary)</pre>
+<h3>입력 — 테스트할 오브젝트 (한 줄에 하나: 이름: 키=값,키=값)</h3><pre>web-1: env=prod,tier=frontend,app=shop
+api-1: env=prod,tier=backend,release=stable
+api-canary: env=prod,tier=backend,release=canary
+old-web: env=prod,tier=frontend,deprecated=true
+db-1: env=prod,tier=data
+web-dev: env=dev,tier=frontend</pre>
+<h3>결과 — 요구 조건</h3><pre>키 | 연산자 | 값 | 의미
+env | = | prod | 같다
+tier | in | frontend, backend | 목록 중 하나
+deprecated | !key | — | 키가 없음
+release | notin | canary | 목록에 없거나 키 없음</pre>
+<h3>결과 — 일치 여부</h3><pre>오브젝트 | 결과 | 사유 | 레이블
+web-1 | ✅ | 모든 조건 충족 | env=prod, tier=frontend, app=shop
+api-1 | ✅ | 모든 조건 충족 | env=prod, tier=backend, release=stable
+api-canary | ❌ | release notin (canary) (실패) | env=prod, tier=backend, release=canary
+old-web | ❌ | !deprecated (실패) | env=prod, tier=frontend, deprecated=true
+db-1 | ❌ | tier in (frontend,backend) (실패) | env=prod, tier=data
+web-dev | ❌ | env=prod (실패) | env=dev, tier=frontend</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>kubectl get pods -l '...' 가 왜 원하는 파드를 못 찾는지, Service selector 가 어느 파드와 연결되는지 직접 시험해 볼 수 있습니다.</p>
+<ul><li>문법: key=value, key==value, key!=value, key in (a,b), key notin (a,b), key (존재), !key (없음), 숫자 비교(&gt;, &lt;)</li><li>레이블 목록(이름: 키=값,키=값)을 넣으면 각 오브젝트가 일치하는지와 실패한 조건을 표시</li><li>!= 와 notin 은 키가 없는 오브젝트도 일치시킨다는 점을 안내</li><li>변환: matchLabels + matchExpressions(In/NotIn/Exists/DoesNotExist) YAML, Service 용 단순 selector</li><li>키·값 형식 검증: 63자 제한, 허용 문자, 접두사는 DNS 서브도메인</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="kubernetes-resource-calculator.html" class="related-card"><span class="related-icon">☸️</span><span>Kubernetes 리소스 계산기</span></a>
+    <a href="docker-run-builder.html" class="related-card"><span class="related-icon">🐋</span><span>docker run 명령어 생성기</span></a>
+    <a href="yaml-formatter.html" class="related-card"><span class="related-icon">🧹</span><span>YAML 포맷터</span></a>
+    <a href="json-yaml.html" class="related-card"><span class="related-icon">🔄</span><span>JSON ↔ YAML</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Service 의 selector 는 key=value 만 지원합니다. 집합 기반 조건은 Deployment/ReplicaSet 의 matchExpressions 로 쓰세요.</li><li>Deployment 의 selector 는 생성 후 바꿀 수 없습니다. 파드 템플릿 레이블과 반드시 일치해야 합니다.</li><li>app.kubernetes.io/name 같은 권장 레이블을 일관되게 쓰면 셀렉터가 단순해집니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>비어 있는 셀렉터는 무엇과 일치하나요?</summary><p>API 필드마다 다릅니다. kubectl 에서는 전부, Service 에서는 파드를 선택하지 않고, NetworkPolicy podSelector 는 네임스페이스의 모든 파드를 뜻합니다.</p></details><details><summary>tier!=frontend 에 tier 레이블이 없는 파드도 포함되나요?</summary><p>예. != 와 notin 은 해당 키가 없는 오브젝트도 일치합니다. 키가 있는 것만 원하면 tier, tier!=frontend 로 조합하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/kubernetes-label-selector.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

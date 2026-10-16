@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRC Checksum Calculator – CRC-16 Modbus, CRC-32, CRC-64 | WooaDev</title>
+  <meta name="description" content="Compute 21 checksums of text or hex bytes: CRC-8, CRC-16 (Modbus, XMODEM, CCITT, X-25), CRC-32/32C, CRC-64, Adler-32 and Fletcher-16, checked against the standard check value 123456789.">
+  <meta name="keywords" content="CRC calculator, CRC16 Modbus, CRC32 calculator, CRC-16 CCITT, checksum calculator, Adler-32, CRC online">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/checksum-calculator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/checksum-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/checksum-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/checksum-calculator.html">
+  <meta property="og:title" content="CRC Checksum Calculator – CRC-16 Modbus, CRC-32, CRC-64 | WooaDev">
+  <meta property="og:description" content="Compute 21 checksums of text or hex bytes: CRC-8, CRC-16 (Modbus, XMODEM, CCITT, X-25), CRC-32/32C, CRC-64, Adler-32 and Fletcher-16, checked against the standard check value 123456789.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/checksum-calculator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CRC Checksum Calculator – CRC-16 Modbus, CRC-32, CRC-64 | WooaDev">
+  <meta name="twitter:description" content="Compute 21 checksums of text or hex bytes: CRC-8, CRC-16 (Modbus, XMODEM, CCITT, X-25), CRC-32/32C, CRC-64, Adler-32 and Fletcher-16, checked against the standard check value 123456789.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CRC & Checksum Calculator","url":"https://wooadev.wooahouse.com/en/checksum-calculator.html","description":"Compute 21 checksums of text or hex bytes: CRC-8, CRC-16 (Modbus, XMODEM, CCITT, X-25), CRC-32/32C, CRC-64, Adler-32 and Fletcher-16, checked against the standard check value 123456789.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["CRC-8 (MAXIM, CDMA2000), CRC-16 (ARC, MODBUS, USB, CCITT-FALSE, XMODEM, KERMIT, X-25, GENIBUS, DNP)","CRC-32 (zlib / PNG), CRC-32C (iSCSI), BZIP2, MPEG-2, JAMCRC, XFER, CRC-64/XZ, Adler-32, Fletcher-16","Input is UTF-8 text or hex bytes, and each algorithm's standard check value is shown to verify the implementation","Enter a value to highlight the matching algorithm","Byte-swap option for protocols such as Modbus RTU that send the CRC-16 low byte first"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why are there so many CRC-16 variants?","acceptedAnswer":{"@type":"Answer","text":"Each standard picks its own polynomial, initial value, bit reflection and final XOR. Match the name in your device's documentation (for example CRC-16/MODBUS)."}},{"@type":"Question","name":"Can a CRC protect against tampering?","acceptedAnswer":{"@type":"Answer","text":"No. CRCs detect accidental errors only and are easy to forge. Use SHA-256 and HMAC for security."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"CRC & Checksum Calculator","item":"https://wooadev.wooahouse.com/en/checksum-calculator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../checksum-calculator.html">KO</a>
+        <span>|</span>
+        <a href="checksum-calculator.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CRC &amp; Checksum Calculator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔢</span>
+    <h1>CRC &amp; Checksum Calculator — CRC-16/32/64 and More</h1>
+    <p>Calculates the CRC-8, CRC-16 (Modbus, XMODEM, CCITT), CRC-32, CRC-32C, CRC-64, Adler-32 and Fletcher variants used by protocols and file formats, and compares each with its standard check value.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ 1 algorithm(s) match the value you entered (green rows)</p>
+<h3>Input — Data</h3><pre>123456789</pre>
+<h3>Input — Value to compare (optional, hex)</h3><pre>CBF43926</pre>
+<h3>Result — Checksums</h3><pre>Algorithm | Value (hex) | Decimal | Standard check ("123456789")
+CRC-8 | 0xF4 | 244 | 0xF4
+CRC-8/MAXIM (Dallas 1-Wire) | 0xA1 | 161 | 0xA1
+CRC-8/CDMA2000 | 0xDA | 218 | 0xDA
+CRC-16/ARC (CRC-16) | 0xBB3D | 47933 | 0xBB3D
+CRC-16/MODBUS | 0x4B37 | 19255 | 0x4B37
+CRC-16/USB | 0xB4C8 | 46280 | 0xB4C8
+CRC-16/CCITT-FALSE | 0x29B1 | 10673 | 0x29B1
+CRC-16/XMODEM | 0x31C3 | 12739 | 0x31C3
+CRC-16/KERMIT (CCITT-TRUE) | 0x2189 | 8585 | 0x2189
+CRC-16/X-25 (IBM-SDLC) | 0x906E | 36974 | 0x906E
+CRC-16/GENIBUS | 0xD64E | 54862 | 0xD64E
+CRC-16/DNP | 0xEA82 | 60034 | 0xEA82
+CRC-32 (ISO-HDLC, zlib, PNG, Ethernet) ✓ | 0xCBF43926 | 3421780262 | 0xCBF43926
+CRC-32C (Castagnoli, iSCSI) | 0xE3069283 | 3808858755 | 0xE3069283
+CRC-32/BZIP2 | 0xFC891918 | 4236843288 | 0xFC891918
+CRC-32/MPEG-2 | 0x0376E6E7 | 58124007 | 0x0376E6E7
+CRC-32/JAMCRC | 0x340BC6D9 | 873187033 | 0x340BC6D9
+CRC-32/XFER | 0xBD0BE338 | 3171672888 | 0xBD0BE338
+CRC-64/XZ | 0x995DC9BBDF1939FA | 11051210869376104954 | 0x995DC9BBDF1939FA
+Adler-32 | 0x091E01DE | 152961502 | 0x091E01DE
+Fletcher-16 | 0x1EDE | 7902 | 0x1EDE</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>PLCs, sensors, serial links and formats like ZIP, PNG or Ethernet each use a different CRC variant. Polynomial, initial value and reflection differ, so pick by name and compare them all at once.</p>
+<ul><li>CRC-8 (MAXIM, CDMA2000), CRC-16 (ARC, MODBUS, USB, CCITT-FALSE, XMODEM, KERMIT, X-25, GENIBUS, DNP)</li><li>CRC-32 (zlib / PNG), CRC-32C (iSCSI), BZIP2, MPEG-2, JAMCRC, XFER, CRC-64/XZ, Adler-32, Fletcher-16</li><li>Input is UTF-8 text or hex bytes, and each algorithm's standard check value is shown to verify the implementation</li><li>Enter a value to highlight the matching algorithm</li><li>Byte-swap option for protocols such as Modbus RTU that send the CRC-16 low byte first</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="file-checksum.html" class="related-card"><span class="related-icon">🧾</span><span>File Checksum Calculator</span></a>
+    <a href="hash-generator.html" class="related-card"><span class="related-icon">🔑</span><span>Hash Generator</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>Number Base Converter</span></a>
+    <a href="bitwise-calculator.html" class="related-card"><span class="related-icon">🧮</span><span>Bitwise Calculator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Modbus RTU transmits the low byte of the CRC-16 first; use the byte-swap option to see the wire order.</li><li>Same-named CRCs can differ in initial value between implementations, so first confirm the check value 123456789.</li><li>Hex input tolerates spaces and 0x prefixes.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Why are there so many CRC-16 variants?</summary><p>Each standard picks its own polynomial, initial value, bit reflection and final XOR. Match the name in your device's documentation (for example CRC-16/MODBUS).</p></details><details><summary>Can a CRC protect against tampering?</summary><p>No. CRCs detect accidental errors only and are easy to forge. Use SHA-256 and HMAC for security.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-hash.js"></script>
+<script src="../js/tools/checksum-calculator.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

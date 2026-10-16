@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>systemd 타이머 생성기 — OnCalendar 해석·유닛 파일 | WooaDev</title>
+  <meta name="description" content="systemd OnCalendar 식(daily, weekly, Mon..Fri *-*-* 09:00 등)을 해석하고 다음 실행 시각을 계산하며 Persistent, RandomizedDelaySec 옵션이 들어간 .timer/.service 파일을 만듭니다.">
+  <meta name="keywords" content="systemd timer, OnCalendar, systemd.timer 예제, systemd cron 대체, Persistent=true, RandomizedDelaySec, systemd-analyze calendar">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/systemd-timer-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/systemd-timer-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/systemd-timer-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/systemd-timer-generator.html">
+  <meta property="og:title" content="systemd 타이머 생성기 — OnCalendar 해석·유닛 파일 | WooaDev">
+  <meta property="og:description" content="systemd OnCalendar 식(daily, weekly, Mon..Fri *-*-* 09:00 등)을 해석하고 다음 실행 시각을 계산하며 Persistent, RandomizedDelaySec 옵션이 들어간 .timer/.service 파일을 만듭니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/systemd-timer-generator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="systemd 타이머 생성기 — OnCalendar 해석·유닛 파일 | WooaDev">
+  <meta name="twitter:description" content="systemd OnCalendar 식(daily, weekly, Mon..Fri *-*-* 09:00 등)을 해석하고 다음 실행 시각을 계산하며 Persistent, RandomizedDelaySec 옵션이 들어간 .timer/.service 파일을 만듭니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"systemd 타이머 생성기","url":"https://wooadev.wooahouse.com/systemd-timer-generator.html","description":"systemd OnCalendar 식(daily, weekly, Mon..Fri *-*-* 09:00 등)을 해석하고 다음 실행 시각을 계산하며 Persistent, RandomizedDelaySec 옵션이 들어간 .timer/.service 파일을 만듭니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["별칭: minutely, hourly, daily, weekly, monthly, quarterly, yearly","형식: [요일] 연-월-일 시:분:초, 범위(..), 목록(,), 간격(/), * 와일드카드","해석 결과와 정규화된 표현식(systemd-analyze calendar와 같은 형태), 다음 N회 실행 시각","Persistent=true(꺼져 있던 동안 놓친 실행 보충)와 RandomizedDelaySec(몰림 방지)을 넣은 유닛 파일 생성","서비스 이름과 ExecStart 명령을 입력하면 .service도 함께 만들어 줌"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"cron과 비교해 장점은 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"실행 결과가 journald에 남고, 서비스 의존성·자원 제한·재시도를 쓸 수 있으며, 놓친 실행 보충(Persistent)과 부팅 후 N분 같은 모노토닉 타이머도 지원합니다."}},{"@type":"Question","name":"OnCalendar 와 OnBootSec 의 차이는요?","acceptedAnswer":{"@type":"Answer","text":"OnCalendar는 달력 시각(매일 3시 등) 기준이고, OnBootSec·OnUnitActiveSec는 부팅이나 마지막 실행 후 경과 시간 기준입니다. 이 도구는 달력 기준 식을 다룹니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"systemd 타이머 생성기","item":"https://wooadev.wooahouse.com/systemd-timer-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="systemd-timer-generator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/systemd-timer-generator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>systemd 타이머 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🕒</span>
+    <h1>systemd 타이머 생성기 — OnCalendar 해석 · 유닛 파일</h1>
+    <p>systemd.timer의 OnCalendar 표현식(Mon..Fri *-*-* 09:00:00 등)을 해석하고 다음 실행 시각을 계산한 뒤, 바로 복사할 수 있는 .service/.timer 유닛 파일을 만들어 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 올바른 OnCalendar 식입니다</p>
+<h3>입력 — OnCalendar 식</h3><pre>Mon..Fri *-*-* 09:00:00</pre>
+<h3>결과 — 해석</h3><pre>입력: Mon..Fri *-*-* 09:00:00
+정규화된 형태: Mon..Fri *-*-* 09:00:00
+요일: 월, 화, 수, 목, 금</pre>
+<h3>결과 — 다음 실행 시각</h3><pre># | UTC | 선택한 시간대
+1 | 2026-10-19T00:00:00Z | 2026-10-19 09:00:00 (UTC+09:00)
+2 | 2026-10-20T00:00:00Z | 2026-10-20 09:00:00 (UTC+09:00)
+3 | 2026-10-21T00:00:00Z | 2026-10-21 09:00:00 (UTC+09:00)
+4 | 2026-10-22T00:00:00Z | 2026-10-22 09:00:00 (UTC+09:00)
+5 | 2026-10-23T00:00:00Z | 2026-10-23 09:00:00 (UTC+09:00)
+6 | 2026-10-26T00:00:00Z | 2026-10-26 09:00:00 (UTC+09:00)</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>cron 대신 systemd 타이머를 쓰면 로그(journalctl)와 의존성 관리가 편하지만 OnCalendar 문법이 낯섭니다. 식을 바로 해석해 확인할 수 있습니다.</p>
+<ul><li>별칭: minutely, hourly, daily, weekly, monthly, quarterly, yearly</li><li>형식: [요일] 연-월-일 시:분:초, 범위(..), 목록(,), 간격(/), * 와일드카드</li><li>해석 결과와 정규화된 표현식(systemd-analyze calendar와 같은 형태), 다음 N회 실행 시각</li><li>Persistent=true(꺼져 있던 동안 놓친 실행 보충)와 RandomizedDelaySec(몰림 방지)을 넣은 유닛 파일 생성</li><li>서비스 이름과 ExecStart 명령을 입력하면 .service도 함께 만들어 줌</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="cron-generator.html" class="related-card"><span class="related-icon">⏰</span><span>Cron 생성기</span></a>
+    <a href="quartz-cron-generator.html" class="related-card"><span class="related-icon">⏲️</span><span>Quartz cron 생성기</span></a>
+    <a href="duration-parser.html" class="related-card"><span class="related-icon">⏱️</span><span>시간 단위·기간 변환기</span></a>
+    <a href="timezone-converter.html" class="related-card"><span class="related-icon">🌏</span><span>시간대 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>서버가 꺼져 있을 수 있는 백업 작업에는 Persistent=true를 꼭 넣으세요.</li><li>여러 서버가 같은 시각에 외부 서비스를 호출한다면 RandomizedDelaySec 으로 분산하세요.</li><li>만든 뒤 systemctl enable --now 이름.timer 로 켜고 systemctl list-timers 로 다음 실행을 확인합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>cron과 비교해 장점은 무엇인가요?</summary><p>실행 결과가 journald에 남고, 서비스 의존성·자원 제한·재시도를 쓸 수 있으며, 놓친 실행 보충(Persistent)과 부팅 후 N분 같은 모노토닉 타이머도 지원합니다.</p></details><details><summary>OnCalendar 와 OnBootSec 의 차이는요?</summary><p>OnCalendar는 달력 시각(매일 3시 등) 기준이고, OnBootSec·OnUnitActiveSec는 부팅이나 마지막 실행 후 경과 시간 기준입니다. 이 도구는 달력 기준 식을 다룹니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-time.js"></script>
+<script src="js/tk-cron.js"></script>
+<script src="js/tools/systemd-timer-generator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

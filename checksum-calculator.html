@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRC 체크섬 계산기 — CRC-16 Modbus·CRC-32·CRC-64 | WooaDev</title>
+  <meta name="description" content="텍스트나 16진수 바이트의 CRC-8, CRC-16(Modbus·XMODEM·CCITT·X-25), CRC-32/32C, CRC-64, Adler-32, Fletcher-16 등 21종을 계산하고 표준 검증값(123456789)과 대조합니다.">
+  <meta name="keywords" content="CRC 계산기, CRC16 Modbus, CRC32 계산, CRC-16 CCITT, 체크섬 계산기, Adler-32, CRC calculator online">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/checksum-calculator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/checksum-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/checksum-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/checksum-calculator.html">
+  <meta property="og:title" content="CRC 체크섬 계산기 — CRC-16 Modbus·CRC-32·CRC-64 | WooaDev">
+  <meta property="og:description" content="텍스트나 16진수 바이트의 CRC-8, CRC-16(Modbus·XMODEM·CCITT·X-25), CRC-32/32C, CRC-64, Adler-32, Fletcher-16 등 21종을 계산하고 표준 검증값(123456789)과 대조합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/checksum-calculator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CRC 체크섬 계산기 — CRC-16 Modbus·CRC-32·CRC-64 | WooaDev">
+  <meta name="twitter:description" content="텍스트나 16진수 바이트의 CRC-8, CRC-16(Modbus·XMODEM·CCITT·X-25), CRC-32/32C, CRC-64, Adler-32, Fletcher-16 등 21종을 계산하고 표준 검증값(123456789)과 대조합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CRC·체크섬 계산기","url":"https://wooadev.wooahouse.com/checksum-calculator.html","description":"텍스트나 16진수 바이트의 CRC-8, CRC-16(Modbus·XMODEM·CCITT·X-25), CRC-32/32C, CRC-64, Adler-32, Fletcher-16 등 21종을 계산하고 표준 검증값(123456789)과 대조합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["CRC-8(MAXIM, CDMA2000), CRC-16(ARC, MODBUS, USB, CCITT-FALSE, XMODEM, KERMIT, X-25, GENIBUS, DNP)","CRC-32(zlib/PNG), CRC-32C(iSCSI), BZIP2, MPEG-2, JAMCRC, XFER, CRC-64/XZ, Adler-32, Fletcher-16","입력은 텍스트(UTF-8) 또는 16진수 바이트열, 각 알고리즘의 표준 검증값을 함께 표시해 구현 확인","비교할 값을 넣으면 일치하는 알고리즘 행을 강조","Modbus RTU처럼 CRC-16을 낮은 바이트 먼저 전송하는 경우를 위한 바이트 순서 뒤집기"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"왜 CRC-16이 이렇게 많은가요?","acceptedAnswer":{"@type":"Answer","text":"다항식, 초기값, 입출력 비트 반사, 최종 XOR 조합이 표준마다 달라서입니다. 장비 문서에 적힌 이름(예: CRC-16/MODBUS)과 같은 행을 보면 됩니다."}},{"@type":"Question","name":"CRC로 보안을 지킬 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. CRC는 우연한 전송 오류를 찾는 용도이며 의도적인 변조는 쉽게 맞출 수 있습니다. 보안에는 SHA-256 같은 해시와 HMAC을 쓰세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"CRC·체크섬 계산기","item":"https://wooadev.wooahouse.com/checksum-calculator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="checksum-calculator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/checksum-calculator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CRC·체크섬 계산기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔢</span>
+    <h1>CRC · 체크섬 계산기 — CRC-16/32/64 외 21종</h1>
+    <p>통신 프로토콜과 파일 포맷에서 쓰는 CRC-8, CRC-16(Modbus, XMODEM, CCITT), CRC-32, CRC-32C, CRC-64, Adler-32, Fletcher를 계산하고 표준 검증값과 비교합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 1개 알고리즘이 입력한 값과 일치합니다 (초록색 행)</p>
+<h3>입력 — 데이터</h3><pre>123456789</pre>
+<h3>입력 — 비교할 값 (선택, 16진수)</h3><pre>CBF43926</pre>
+<h3>결과 — 체크섬 결과</h3><pre>알고리즘 | 값 (16진) | 10진수 | 표준 검증값("123456789")
+CRC-8 | 0xF4 | 244 | 0xF4
+CRC-8/MAXIM (Dallas 1-Wire) | 0xA1 | 161 | 0xA1
+CRC-8/CDMA2000 | 0xDA | 218 | 0xDA
+CRC-16/ARC (CRC-16) | 0xBB3D | 47933 | 0xBB3D
+CRC-16/MODBUS | 0x4B37 | 19255 | 0x4B37
+CRC-16/USB | 0xB4C8 | 46280 | 0xB4C8
+CRC-16/CCITT-FALSE | 0x29B1 | 10673 | 0x29B1
+CRC-16/XMODEM | 0x31C3 | 12739 | 0x31C3
+CRC-16/KERMIT (CCITT-TRUE) | 0x2189 | 8585 | 0x2189
+CRC-16/X-25 (IBM-SDLC) | 0x906E | 36974 | 0x906E
+CRC-16/GENIBUS | 0xD64E | 54862 | 0xD64E
+CRC-16/DNP | 0xEA82 | 60034 | 0xEA82
+CRC-32 (ISO-HDLC, zlib, PNG, Ethernet) ✓ | 0xCBF43926 | 3421780262 | 0xCBF43926
+CRC-32C (Castagnoli, iSCSI) | 0xE3069283 | 3808858755 | 0xE3069283
+CRC-32/BZIP2 | 0xFC891918 | 4236843288 | 0xFC891918
+CRC-32/MPEG-2 | 0x0376E6E7 | 58124007 | 0x0376E6E7
+CRC-32/JAMCRC | 0x340BC6D9 | 873187033 | 0x340BC6D9
+CRC-32/XFER | 0xBD0BE338 | 3171672888 | 0xBD0BE338
+CRC-64/XZ | 0x995DC9BBDF1939FA | 11051210869376104954 | 0x995DC9BBDF1939FA
+Adler-32 | 0x091E01DE | 152961502 | 0x091E01DE
+Fletcher-16 | 0x1EDE | 7902 | 0x1EDE</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>PLC·센서·시리얼 통신, ZIP·PNG·이더넷 같은 포맷은 저마다 다른 CRC 변형을 씁니다. 다항식·초기값·반사 설정이 달라 결과가 달라지므로 이름으로 골라 한꺼번에 비교하세요.</p>
+<ul><li>CRC-8(MAXIM, CDMA2000), CRC-16(ARC, MODBUS, USB, CCITT-FALSE, XMODEM, KERMIT, X-25, GENIBUS, DNP)</li><li>CRC-32(zlib/PNG), CRC-32C(iSCSI), BZIP2, MPEG-2, JAMCRC, XFER, CRC-64/XZ, Adler-32, Fletcher-16</li><li>입력은 텍스트(UTF-8) 또는 16진수 바이트열, 각 알고리즘의 표준 검증값을 함께 표시해 구현 확인</li><li>비교할 값을 넣으면 일치하는 알고리즘 행을 강조</li><li>Modbus RTU처럼 CRC-16을 낮은 바이트 먼저 전송하는 경우를 위한 바이트 순서 뒤집기</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="file-checksum.html" class="related-card"><span class="related-icon">🧾</span><span>파일 체크섬 계산기</span></a>
+    <a href="hash-generator.html" class="related-card"><span class="related-icon">🔑</span><span>Hash 생성기</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+    <a href="bitwise-calculator.html" class="related-card"><span class="related-icon">🧮</span><span>비트 연산 계산기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Modbus RTU의 CRC-16은 계산값의 낮은 바이트를 먼저 보냅니다. 바이트 순서 뒤집기 옵션으로 전송 순서를 확인하세요.</li><li>같은 이름의 CRC라도 구현에 따라 초기값이 달라질 수 있습니다. 표준 검증값(123456789)이 맞는지 먼저 확인하세요.</li><li>16진수 입력은 공백·0x 접두사가 있어도 인식합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>왜 CRC-16이 이렇게 많은가요?</summary><p>다항식, 초기값, 입출력 비트 반사, 최종 XOR 조합이 표준마다 달라서입니다. 장비 문서에 적힌 이름(예: CRC-16/MODBUS)과 같은 행을 보면 됩니다.</p></details><details><summary>CRC로 보안을 지킬 수 있나요?</summary><p>아니요. CRC는 우연한 전송 오류를 찾는 용도이며 의도적인 변조는 쉽게 맞출 수 있습니다. 보안에는 SHA-256 같은 해시와 HMAC을 쓰세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-hash.js"></script>
+<script src="js/tools/checksum-calculator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

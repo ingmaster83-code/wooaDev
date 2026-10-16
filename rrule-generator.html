@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RRULE 생성기 — iCalendar 반복 일정 규칙 해석 | WooaDev</title>
+  <meta name="description" content="iCalendar RRULE(FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1)을 해석하고 폼으로 생성하며 발생 일시를 미리 봅니다. BYDAY n번째 요일, BYMONTHDAY, BYSETPOS, COUNT, UNTIL 지원.">
+  <meta name="keywords" content="RRULE, iCalendar 반복 규칙, RFC 5545, 반복 일정 규칙, BYDAY BYSETPOS, 캘린더 반복, ics RRULE 생성">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/rrule-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/rrule-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/rrule-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/rrule-generator.html">
+  <meta property="og:title" content="RRULE 생성기 — iCalendar 반복 일정 규칙 해석 | WooaDev">
+  <meta property="og:description" content="iCalendar RRULE(FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1)을 해석하고 폼으로 생성하며 발생 일시를 미리 봅니다. BYDAY n번째 요일, BYMONTHDAY, BYSETPOS, COUNT, UNTIL 지원.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/rrule-generator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RRULE 생성기 — iCalendar 반복 일정 규칙 해석 | WooaDev">
+  <meta name="twitter:description" content="iCalendar RRULE(FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1)을 해석하고 폼으로 생성하며 발생 일시를 미리 봅니다. BYDAY n번째 요일, BYMONTHDAY, BYSETPOS, COUNT, UNTIL 지원.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"RRULE 반복 일정 생성기","url":"https://wooadev.wooahouse.com/rrule-generator.html","description":"iCalendar RRULE(FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1)을 해석하고 폼으로 생성하며 발생 일시를 미리 봅니다. BYDAY n번째 요일, BYMONTHDAY, BYSETPOS, COUNT, UNTIL 지원.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["해석 모드: RRULE:FREQ=WEEKLY;BYDAY=MO,WE,FR;COUNT=5 같은 식을 붙여 넣으면 문장과 발생 일시 목록 출력","생성 모드: 반복 단위·간격·요일·월일·월·BYSETPOS·종료(횟수/날짜)를 폼으로 지정","1MO(첫째 월요일), -1FR(마지막 금요일), BYSETPOS=-1(마지막 평일) 같은 고급 규칙 지원","DTSTART 기준으로 N개 발생을 계산해 요일과 함께 표시","올바르지 않은 조합은 이유와 함께 안내"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"RRULE과 cron은 어떻게 다른가요?","acceptedAnswer":{"@type":"Answer","text":"cron은 시각 패턴이고, RRULE은 '매월 둘째 화요일', '격주' 같은 달력 규칙을 표현합니다. 대신 분·초 단위의 촘촘한 스케줄에는 cron이 더 적합합니다."}},{"@type":"Question","name":"EXDATE, RDATE 는 지원하나요?","acceptedAnswer":{"@type":"Answer","text":"이 도구는 RRULE 자체를 다룹니다. 예외 날짜(EXDATE)나 추가 날짜(RDATE)는 .ics 파일의 별도 줄에 적습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"RRULE 반복 일정 생성기","item":"https://wooadev.wooahouse.com/rrule-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="rrule-generator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/rrule-generator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>RRULE 반복 일정 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔁</span>
+    <h1>RRULE 생성기 · 해석기 — iCalendar 반복 규칙</h1>
+    <p>캘린더(Google, Outlook, iCal)의 반복 일정 규칙 RRULE을 해석하거나 폼으로 만들고, 실제로 일정이 생기는 날짜를 미리 확인합니다. BYDAY·BYSETPOS·COUNT·UNTIL을 지원합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 올바른 RRULE입니다</p>
+<h3>입력 — RRULE (iCalendar 반복 규칙)</h3><pre>RRULE:FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1;COUNT=6</pre>
+<h3>결과 — RRULE</h3><pre>RRULE:FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1;COUNT=6</pre>
+<h3>결과 — 해석</h3><pre>요약: 매월 · 월요일, 화요일, 수요일, 목요일, 금요일 · 조건에 맞는 날 중 마지막 · 10:00 · 총 6회
+DTSTART (시작): 2026-10-16T10:00:00 (시간대 없는 로컬 시각)
+발생 횟수(표시 한도 내): 6</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>캘린더 앱과 .ics 파일의 반복 일정은 RRULE 한 줄로 표현됩니다. 의미를 읽거나 직접 만들 때 날짜가 의도대로 나오는지 바로 확인할 수 있습니다.</p>
+<ul><li>해석 모드: RRULE:FREQ=WEEKLY;BYDAY=MO,WE,FR;COUNT=5 같은 식을 붙여 넣으면 문장과 발생 일시 목록 출력</li><li>생성 모드: 반복 단위·간격·요일·월일·월·BYSETPOS·종료(횟수/날짜)를 폼으로 지정</li><li>1MO(첫째 월요일), -1FR(마지막 금요일), BYSETPOS=-1(마지막 평일) 같은 고급 규칙 지원</li><li>DTSTART 기준으로 N개 발생을 계산해 요일과 함께 표시</li><li>올바르지 않은 조합은 이유와 함께 안내</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="timezone-converter.html" class="related-card"><span class="related-icon">🌏</span><span>시간대 변환기</span></a>
+    <a href="iso8601-converter.html" class="related-card"><span class="related-icon">📅</span><span>ISO 8601 / RFC 날짜 변환기</span></a>
+    <a href="cron-generator.html" class="related-card"><span class="related-icon">⏰</span><span>Cron 생성기</span></a>
+    <a href="duration-parser.html" class="related-card"><span class="related-icon">⏱️</span><span>시간 단위·기간 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>'매월 마지막 평일'은 FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1 로 표현합니다.</li><li>UNTIL 은 DTSTART 와 같은 형식(날짜 또는 UTC 시각)이어야 일부 캘린더가 오류를 내지 않습니다.</li><li>COUNT 와 UNTIL 은 함께 쓸 수 없습니다. 둘 중 하나만 지정하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>RRULE과 cron은 어떻게 다른가요?</summary><p>cron은 시각 패턴이고, RRULE은 '매월 둘째 화요일', '격주' 같은 달력 규칙을 표현합니다. 대신 분·초 단위의 촘촘한 스케줄에는 cron이 더 적합합니다.</p></details><details><summary>EXDATE, RDATE 는 지원하나요?</summary><p>이 도구는 RRULE 자체를 다룹니다. 예외 날짜(EXDATE)나 추가 날짜(RDATE)는 .ics 파일의 별도 줄에 적습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-time.js"></script>
+<script src="js/tk-cron.js"></script>
+<script src="js/tools/rrule-generator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

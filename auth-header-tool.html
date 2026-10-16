@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authorization 헤더 도구 — Basic·Bearer·JWT 해독 | WooaDev</title>
+  <meta name="description" content="Authorization 헤더의 Basic 사용자/비밀번호를 해독하고 Bearer·JWT 토큰의 헤더·클레임·만료(exp/nbf)를 분석합니다. Basic 헤더 생성과 alg none, 만료 경고를 제공합니다.">
+  <meta name="keywords" content="Authorization 헤더, Basic 인증 해독, Bearer 토큰, JWT 만료 확인, Basic auth 생성, Authorization header decoder">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/auth-header-tool.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/auth-header-tool.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/auth-header-tool.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/auth-header-tool.html">
+  <meta property="og:title" content="Authorization 헤더 도구 — Basic·Bearer·JWT 해독 | WooaDev">
+  <meta property="og:description" content="Authorization 헤더의 Basic 사용자/비밀번호를 해독하고 Bearer·JWT 토큰의 헤더·클레임·만료(exp/nbf)를 분석합니다. Basic 헤더 생성과 alg none, 만료 경고를 제공합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/auth-header-tool.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Authorization 헤더 도구 — Basic·Bearer·JWT 해독 | WooaDev">
+  <meta name="twitter:description" content="Authorization 헤더의 Basic 사용자/비밀번호를 해독하고 Bearer·JWT 토큰의 헤더·클레임·만료(exp/nbf)를 분석합니다. Basic 헤더 생성과 alg none, 만료 경고를 제공합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Authorization 헤더 도구","url":"https://wooadev.wooahouse.com/auth-header-tool.html","description":"Authorization 헤더의 Basic 사용자/비밀번호를 해독하고 Bearer·JWT 토큰의 헤더·클레임·만료(exp/nbf)를 분석합니다. Basic 헤더 생성과 alg none, 만료 경고를 제공합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["Basic: Base64를 풀어 사용자:비밀번호 표시, 사용자 이름의 콜론 같은 문제 점검","Bearer/JWT: 헤더 alg, 클레임(sub, iss, aud, iat, nbf, exp)을 사람이 읽는 시각으로 표시","기준 시각을 넣어 '만료까지 N분' 또는 '만료됨(N분 전)' 판정","alg=none 같은 위험한 토큰, exp 없는 토큰 경고","사용자·비밀번호를 입력해 Authorization: Basic ... 헤더 생성"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Bearer 토큰은 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"토큰을 가진 쪽이면 누구나 사용할 수 있는 방식입니다. 그래서 유출되면 곧바로 악용될 수 있어 HTTPS와 짧은 만료 시간이 중요합니다."}},{"@type":"Question","name":"JWT 서명도 검증해 주나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 서명 검증에는 비밀 키/공개 키가 필요합니다. 내용 확인과 만료 점검 용도로 쓰고, 검증은 서버에서 수행하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"Authorization 헤더 도구","item":"https://wooadev.wooahouse.com/auth-header-tool.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="auth-header-tool.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/auth-header-tool.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Authorization 헤더 도구</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🪪</span>
+    <h1>Authorization 헤더 도구 — Basic · Bearer · JWT</h1>
+    <p>Authorization 헤더나 토큰을 붙여 넣으면 방식(Basic/Bearer/JWT)을 알아내 해독하고 만료 여부를 점검합니다. 사용자·비밀번호로 Basic 헤더도 만들 수 있습니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ JWT 토큰을 해석했습니다</p>
+<h3>입력 — Authorization 헤더 또는 토큰</h3><pre>Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTYiLCJuYW1lIjoiS2ltIiwiaWF0IjoxNzAwMDAwMDAwLCJleHAiOjE3MDAwMDM2MDB9.signature</pre>
+<h3>입력 — 사용자 이름</h3><pre>aladdin</pre>
+<h3>입력 — 비밀번호</h3><pre>open sesame</pre>
+<h3>결과 — 결과</h3><pre>{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+
+{
+  "sub": "123456",
+  "name": "Kim",
+  "iat": 1700000000,
+  "exp": 1700003600
+}</pre>
+<h3>결과 — 상세</h3><pre>클레임 | 값
+알고리즘 (alg) | HS256
+typ | JWT
+sub | "123456"
+name | "Kim"
+iat | 2023-11-14T22:13:20Z  (1700000000)
+exp | 2023-11-14T23:13:20Z  (1700003600)</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>API 호출이 401을 돌려줄 때 헤더가 제대로 만들어졌는지 확인하는 도구입니다. 모든 해독은 브라우저에서만 이뤄지므로 실제 토큰을 붙여 넣어도 서버로 전송되지 않습니다.</p>
+<ul><li>Basic: Base64를 풀어 사용자:비밀번호 표시, 사용자 이름의 콜론 같은 문제 점검</li><li>Bearer/JWT: 헤더 alg, 클레임(sub, iss, aud, iat, nbf, exp)을 사람이 읽는 시각으로 표시</li><li>기준 시각을 넣어 '만료까지 N분' 또는 '만료됨(N분 전)' 판정</li><li>alg=none 같은 위험한 토큰, exp 없는 토큰 경고</li><li>사용자·비밀번호를 입력해 Authorization: Basic ... 헤더 생성</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="jwt-decoder.html" class="related-card"><span class="related-icon">🎫</span><span>JWT 디코더</span></a>
+    <a href="jwt-generator.html" class="related-card"><span class="related-icon">🔐</span><span>JWT 생성기</span></a>
+    <a href="base64.html" class="related-card"><span class="related-icon">🔐</span><span>Base64</span></a>
+    <a href="hmac-generator.html" class="related-card"><span class="related-icon">🔏</span><span>HMAC 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Basic 인증은 암호화가 아니라 Base64 인코딩일 뿐입니다. 반드시 HTTPS에서만 사용하세요.</li><li>서명은 이 도구가 검증하지 않습니다. 내용은 누구나 읽을 수 있으므로 JWT에 민감 정보를 넣지 마세요.</li><li>토큰이 방금 만료된 것 같다면 서버와 클라이언트의 시계 차이(clock skew)도 의심해 보세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>Bearer 토큰은 무엇인가요?</summary><p>토큰을 가진 쪽이면 누구나 사용할 수 있는 방식입니다. 그래서 유출되면 곧바로 악용될 수 있어 HTTPS와 짧은 만료 시간이 중요합니다.</p></details><details><summary>JWT 서명도 검증해 주나요?</summary><p>아니요. 서명 검증에는 비밀 키/공개 키가 필요합니다. 내용 확인과 만료 점검 용도로 쓰고, 검증은 서버에서 수행하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-hash.js"></script>
+<script src="js/tk-time.js"></script>
+<script src="js/tools/auth-header-tool.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Release Planner – SemVer Version &amp; CHANGELOG from Commits | WooaDev</title>
+  <meta name="description" content="Calculate the next SemVer version from Conventional Commits and generate a CHANGELOG draft plus release commands. Handles BREAKING CHANGE, 0.x rules, rc prereleases and compare links.">
+  <meta name="keywords" content="release notes generator, CHANGELOG generator, next semver version, Conventional Commits changelog, keep a changelog, release planner, changelog from commits">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/release-planner.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/release-planner.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/release-planner.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/release-planner.html">
+  <meta property="og:title" content="Release Planner – SemVer Version &amp; CHANGELOG from Commits | WooaDev">
+  <meta property="og:description" content="Calculate the next SemVer version from Conventional Commits and generate a CHANGELOG draft plus release commands. Handles BREAKING CHANGE, 0.x rules, rc prereleases and compare links.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/release-planner.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Release Planner – SemVer Version &amp; CHANGELOG from Commits | WooaDev">
+  <meta name="twitter:description" content="Calculate the next SemVer version from Conventional Commits and generate a CHANGELOG draft plus release commands. Handles BREAKING CHANGE, 0.x rules, rc prereleases and compare links.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Release Planner & Changelog Generator","url":"https://wooadev.wooahouse.com/en/release-planner.html","description":"Calculate the next SemVer version from Conventional Commits and generate a CHANGELOG draft plus release commands. Handles BREAKING CHANGE, 0.x rules, rc prereleases and compare links.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Version: BREAKING CHANGE / ! → major, feat → minor, fix / perf → patch, docs and chores alone → no release","Option to treat breaking changes as minor in 0.x, and prerelease (rc, beta) counters","CHANGELOG grouped as Features / Bug Fixes / Performance / Reverts, or Keep a Changelog (Added / Changed / Fixed)","With a repository URL it adds issue (#123), commit and version compare links","Lines that do not follow the format are skipped and reported; git tag and push commands included"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What if commits do not follow the convention?","acceptedAnswer":{"@type":"Answer","text":"Lines in another form are left out of the version calculation and notes, and listed so you can see them. A team commit convention gives the best results."}},{"@type":"Question","name":"What about versions before 1.0.0?","acceptedAnswer":{"@type":"Answer","text":"SemVer treats 0.x as unstable, and it is common to bump minor for breaking changes there. Choose it with the option."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Release Planner & Changelog Generator","item":"https://wooadev.wooahouse.com/en/release-planner.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../release-planner.html">KO</a>
+        <span>|</span>
+        <a href="release-planner.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Release Planner &amp; Changelog Generator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🚀</span>
+    <h1>Release Planner — Next Version &amp; CHANGELOG from Commits</h1>
+    <p>Paste a list of Conventional Commits to get the next version (major / minor / patch), a CHANGELOG draft grouped by features and fixes, and the tag and push commands.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ 1.4.2 → 2.0.0 (major)</p>
+<h3>Input — Commit messages (one per line, hash prefix allowed)</h3><pre>a1b2c3d feat(auth): add OAuth login with PKCE
+e4f5a6b fix(api): handle empty response from /items (#214)
+7c8d9e0 perf(db): add index on orders.created_at
+1f2e3d4 docs: explain deployment steps
+5a6b7c8 refactor(core)!: drop the legacy session store
+9d0e1f2 fix: typo in error message
+3c4d5e6 chore(deps): bump express to 4.19.2
+WIP stuff
+8b9c0d1 feat(ui): dark mode toggle (closes #230)</pre>
+<h3>Result — Changelog (Markdown)</h3><pre>## [2.0.0](https://github.com/example/app/compare/v1.4.2...v2.0.0) (2026-10-17)
+
+### 💥 BREAKING CHANGES
+- **core:** drop the legacy session store ([5a6b7c8](https://github.com/example/app/commit/5a6b7c8))
+
+### ✨ Features
+- **auth:** add OAuth login with PKCE ([a1b2c3d](https://github.com/example/app/commit/a1b2c3d))
+- **ui:** dark mode toggle ([#230](https://github.com/example/app/issues/230)) ([8b9c0d1](https://github.com/example/app/commit/8b9c0d1))
+
+### 🐛 Bug Fixes
+- **api:** handle empty response from /items ([#214](https://github.com/example/app/issues/214)) ([e4f5a6b](https://github.com/example/app/commit/e4f5a6b))
+- typo in error message ([9d0e1f2](https://github.com/example/app/commit/9d0e1f2))
+
+### ⚡ Performance
+- **db:** add index on orders.created_at ([7c8d9e0](https://github.com/example/app/commit/7c8d9e0))
+
+### ♻️ Refactoring
+- **core:** drop the legacy session store ([5a6b7c8](https://github.com/example/app/commit/5a6b7c8))</pre>
+<h3>Result — Commit classification</h3><pre>Commit | Type | Version impact | Hash
+a1b2c3d feat(auth): add OAuth login with PKCE | feat(auth) | minor | a1b2c3d
+e4f5a6b fix(api): handle empty response from /items (#214) | fix(api) | patch | e4f5a6b
+7c8d9e0 perf(db): add index on orders.created_at | perf(db) | patch | 7c8d9e0
+1f2e3d4 docs: explain deployment steps | docs | no release impact | 1f2e3d4
+5a6b7c8 refactor(core)!: drop the legacy session store | refactor(core) | 💥 breaking → major | 5a6b7c8
+9d0e1f2 fix: typo in error message | fix | patch | 9d0e1f2
+3c4d5e6 chore(deps): bump express to 4.19.2 | chore(deps) | no release impact | 3c4d5e6
+WIP stuff | — | ignored (not Conventional) | 
+8b9c0d1 feat(ui): dark mode toggle (closes #230) | feat(ui) | minor | 8b9c0d1</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Automates reading git log, deciding the version and writing release notes every time you ship. Just paste the commits.</p>
+<ul><li>Version: BREAKING CHANGE / ! → major, feat → minor, fix / perf → patch, docs and chores alone → no release</li><li>Option to treat breaking changes as minor in 0.x, and prerelease (rc, beta) counters</li><li>CHANGELOG grouped as Features / Bug Fixes / Performance / Reverts, or Keep a Changelog (Added / Changed / Fixed)</li><li>With a repository URL it adds issue (#123), commit and version compare links</li><li>Lines that do not follow the format are skipped and reported; git tag and push commands included</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="conventional-commit-builder.html" class="related-card"><span class="related-icon">📝</span><span>Conventional Commits Builder</span></a>
+    <a href="semver-calculator.html" class="related-card"><span class="related-icon">🔢</span><span>SemVer Calculator</span></a>
+    <a href="git-command-builder.html" class="related-card"><span class="related-icon">⌨️</span><span>Git Command Builder</span></a>
+    <a href="git-history-planner.html" class="related-card"><span class="related-icon">🌿</span><span>Git Merge &amp; Rebase Simulator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>You can paste git log --oneline output (hash + message) as it is.</li><li>Generated notes are a draft; polish them into wording users understand before releasing.</li><li>If you squash-merge feature branches, have PR titles follow the Conventional Commits form.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What if commits do not follow the convention?</summary><p>Lines in another form are left out of the version calculation and notes, and listed so you can see them. A team commit convention gives the best results.</p></details><details><summary>What about versions before 1.0.0?</summary><p>SemVer treats 0.x as unstable, and it is common to bump minor for breaking changes there. Choose it with the option.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/release-planner.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

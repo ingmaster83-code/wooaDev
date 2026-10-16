@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AWS EventBridge cron 생성기 — cron()·rate() 검증 | WooaDev</title>
+  <meta name="description" content="EventBridge cron(분 시 일 월 요일 연도)과 rate(5 minutes) 식을 검증하고 다음 실행 시각을 UTC와 원하는 시간대로 계산합니다. 일·요일 ? 규칙, L·W·#, 단수·복수 단위 오류 안내.">
+  <meta name="keywords" content="AWS EventBridge cron, CloudWatch Events cron, rate 식, EventBridge Scheduler, Lambda 스케줄, cron(0 12 * * ? *), aws cron 표현식">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/aws-eventbridge-cron.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/aws-eventbridge-cron.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/aws-eventbridge-cron.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/aws-eventbridge-cron.html">
+  <meta property="og:title" content="AWS EventBridge cron 생성기 — cron()·rate() 검증 | WooaDev">
+  <meta property="og:description" content="EventBridge cron(분 시 일 월 요일 연도)과 rate(5 minutes) 식을 검증하고 다음 실행 시각을 UTC와 원하는 시간대로 계산합니다. 일·요일 ? 규칙, L·W·#, 단수·복수 단위 오류 안내.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/aws-eventbridge-cron.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AWS EventBridge cron 생성기 — cron()·rate() 검증 | WooaDev">
+  <meta name="twitter:description" content="EventBridge cron(분 시 일 월 요일 연도)과 rate(5 minutes) 식을 검증하고 다음 실행 시각을 UTC와 원하는 시간대로 계산합니다. 일·요일 ? 규칙, L·W·#, 단수·복수 단위 오류 안내.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"AWS EventBridge cron 생성기","url":"https://wooadev.wooahouse.com/aws-eventbridge-cron.html","description":"EventBridge cron(분 시 일 월 요일 연도)과 rate(5 minutes) 식을 검증하고 다음 실행 시각을 UTC와 원하는 시간대로 계산합니다. 일·요일 ? 규칙, L·W·#, 단수·복수 단위 오류 안내.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["cron(0 18 ? * MON-FRI *) 처럼 일과 요일 중 하나는 반드시 ? 사용","rate(1 minute), rate(5 minutes) — 값이 1이면 단수(minute), 그 외는 복수(minutes)여야 함","L(마지막), W(평일), #(n번째 요일), 연도 필드(1970~2199) 지원","규칙 자체는 항상 UTC 기준입니다. 한국 시간(KST) 등으로 환산한 실행 시각을 함께 표시","프리셋과 오류 안내로 빠르게 수정"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"왜 항상 ? 를 넣어야 하나요?","acceptedAnswer":{"@type":"Answer","text":"일과 요일을 동시에 지정할 수 없어서 둘 중 하나는 ? 이어야 합니다. 매일 실행은 cron(0 12 * * ? *) 입니다."}},{"@type":"Question","name":"최소 실행 간격은 얼마인가요?","acceptedAnswer":{"@type":"Answer","text":"rate와 cron 모두 1분이 최소입니다. 더 짧은 주기가 필요하면 한 번 실행되는 함수 안에서 반복하거나 Step Functions를 고려하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"AWS EventBridge cron 생성기","item":"https://wooadev.wooahouse.com/aws-eventbridge-cron.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="aws-eventbridge-cron.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/aws-eventbridge-cron.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>AWS EventBridge cron 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">☁️</span>
+    <h1>AWS EventBridge 일정 식 — cron() · rate()</h1>
+    <p>EventBridge(CloudWatch Events)와 EventBridge Scheduler의 cron(...) 및 rate(...) 식을 검증하고, 실제 UTC 실행 시각과 한국 시간 등 다른 시간대의 시각을 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 올바른 EventBridge 표현식입니다</p>
+<h3>입력 — EventBridge 일정 식 — cron(분 시 일 월 요일 연도) 또는 rate(5 minutes)</h3><pre>cron(0 18 ? * MON-FRI *)</pre>
+<h3>결과 — 해석</h3><pre>한 줄 요약: 매주 월–금 18:00
+분: 0
+시: 18
+일: 지정 안 함(?)
+월: 매월
+요일: 월–금
+연도: 매년</pre>
+<h3>결과 — 다음 실행 시각</h3><pre># | UTC | 선택한 시간대
+1 | 2026-10-16T18:00:00Z | 2026-10-16 18:00:00 (UTC+00:00)
+2 | 2026-10-19T18:00:00Z | 2026-10-19 18:00:00 (UTC+00:00)
+3 | 2026-10-20T18:00:00Z | 2026-10-20 18:00:00 (UTC+00:00)
+4 | 2026-10-21T18:00:00Z | 2026-10-21 18:00:00 (UTC+00:00)
+5 | 2026-10-22T18:00:00Z | 2026-10-22 18:00:00 (UTC+00:00)
+6 | 2026-10-23T18:00:00Z | 2026-10-23 18:00:00 (UTC+00:00)
+7 | 2026-10-26T18:00:00Z | 2026-10-26 18:00:00 (UTC+00:00)
+8 | 2026-10-27T18:00:00Z | 2026-10-27 18:00:00 (UTC+00:00)</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>AWS의 예약 규칙은 일반 cron과 다른 6필드(분 시 일 월 요일 연도) 형식이며 cron( ) 으로 감싸 씁니다. Lambda·ECS 작업 예약에서 자주 틀립니다.</p>
+<ul><li>cron(0 18 ? * MON-FRI *) 처럼 일과 요일 중 하나는 반드시 ? 사용</li><li>rate(1 minute), rate(5 minutes) — 값이 1이면 단수(minute), 그 외는 복수(minutes)여야 함</li><li>L(마지막), W(평일), #(n번째 요일), 연도 필드(1970~2199) 지원</li><li>규칙 자체는 항상 UTC 기준입니다. 한국 시간(KST) 등으로 환산한 실행 시각을 함께 표시</li><li>프리셋과 오류 안내로 빠르게 수정</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="cron-generator.html" class="related-card"><span class="related-icon">⏰</span><span>Cron 생성기</span></a>
+    <a href="quartz-cron-generator.html" class="related-card"><span class="related-icon">⏲️</span><span>Quartz cron 생성기</span></a>
+    <a href="timezone-converter.html" class="related-card"><span class="related-icon">🌏</span><span>시간대 변환기</span></a>
+    <a href="iso8601-converter.html" class="related-card"><span class="related-icon">📅</span><span>ISO 8601 / RFC 날짜 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>EventBridge Rules는 UTC만 지원합니다. 한국 시간 오전 9시에 실행하려면 cron(0 0 * * ? *) 처럼 UTC 0시로 써야 합니다.</li><li>EventBridge Scheduler는 시간대를 직접 지정할 수 있고 서머타임도 처리합니다. 가능하면 Scheduler를 쓰세요.</li><li>rate 식은 규칙을 만든 시점부터 간격을 세므로 정시에 맞추려면 cron을 쓰세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>왜 항상 ? 를 넣어야 하나요?</summary><p>일과 요일을 동시에 지정할 수 없어서 둘 중 하나는 ? 이어야 합니다. 매일 실행은 cron(0 12 * * ? *) 입니다.</p></details><details><summary>최소 실행 간격은 얼마인가요?</summary><p>rate와 cron 모두 1분이 최소입니다. 더 짧은 주기가 필요하면 한 번 실행되는 함수 안에서 반복하거나 Step Functions를 고려하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-time.js"></script>
+<script src="js/tk-cron.js"></script>
+<script src="js/tools/aws-eventbridge-cron.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

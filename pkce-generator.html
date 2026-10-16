@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PKCE 생성기 — code_verifier·code_challenge 만들기 | WooaDev</title>
+  <meta name="description" content="OAuth 2.0 PKCE의 code_verifier를 안전한 난수로 만들고 S256 code_challenge를 계산합니다. 인가 요청 URL과 토큰 교환 요청 예시, state·nonce 생성, RFC 7636 검증값 호환.">
+  <meta name="keywords" content="PKCE 생성기, code_verifier, code_challenge, OAuth PKCE, S256 challenge, RFC 7636, PKCE generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/pkce-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/pkce-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/pkce-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/pkce-generator.html">
+  <meta property="og:title" content="PKCE 생성기 — code_verifier·code_challenge 만들기 | WooaDev">
+  <meta property="og:description" content="OAuth 2.0 PKCE의 code_verifier를 안전한 난수로 만들고 S256 code_challenge를 계산합니다. 인가 요청 URL과 토큰 교환 요청 예시, state·nonce 생성, RFC 7636 검증값 호환.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/pkce-generator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PKCE 생성기 — code_verifier·code_challenge 만들기 | WooaDev">
+  <meta name="twitter:description" content="OAuth 2.0 PKCE의 code_verifier를 안전한 난수로 만들고 S256 code_challenge를 계산합니다. 인가 요청 URL과 토큰 교환 요청 예시, state·nonce 생성, RFC 7636 검증값 호환.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"PKCE 생성기","url":"https://wooadev.wooahouse.com/pkce-generator.html","description":"OAuth 2.0 PKCE의 code_verifier를 안전한 난수로 만들고 S256 code_challenge를 계산합니다. 인가 요청 URL과 토큰 교환 요청 예시, state·nonce 생성, RFC 7636 검증값 호환.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["code_verifier: 43~128자의 영문·숫자·-._~ 난수를 브라우저 CSPRNG로 생성 (직접 입력도 가능)","code_challenge: S256 = BASE64URL(SHA-256(verifier)), plain 방식도 지원하며 위험성 안내","인가 요청(authorize) URL과 토큰 교환(token) 요청 예시를 바로 복사","state, nonce 같이 생성 옵션, RFC 7636 부록 B 예제 값과 일치","모든 값은 브라우저에서만 만들어지며 서버로 전송되지 않음"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"PKCE가 정확히 무엇을 막나요?","acceptedAnswer":{"@type":"Answer","text":"인가 코드를 가로챈 공격자가 토큰으로 교환하지 못하게 합니다. 교환 시 처음 만든 verifier를 증명해야 하기 때문입니다."}},{"@type":"Question","name":"client_secret이 있어도 PKCE를 써야 하나요?","acceptedAnswer":{"@type":"Answer","text":"OAuth 2.1은 모든 클라이언트에 PKCE를 권장합니다. 비밀 키를 가진 서버 앱에도 추가 방어선이 됩니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"PKCE 생성기","item":"https://wooadev.wooahouse.com/pkce-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="pkce-generator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/pkce-generator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>PKCE 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔑</span>
+    <h1>PKCE 생성기 — code_verifier · code_challenge</h1>
+    <p>OAuth 2.0 인가 코드 흐름을 보호하는 PKCE 값을 만듭니다. 안전한 난수 code_verifier와 S256 code_challenge, 인가 요청·토큰 교환 예시까지 한 번에 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ PKCE 값을 만들었습니다. verifier는 세션에만 보관하고 challenge만 인가 요청에 보냅니다.</p>
+<h3>입력 — code_verifier (비우면 새로 생성)</h3><pre>dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk</pre>
+<h3>결과 — PKCE 값</h3><pre>항목 | 값
+code_verifier | dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
+code_challenge | E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM
+code_challenge_method | S256
+verifier 길이 | 43</pre>
+<h3>결과 — 요청 예시</h3><pre># 1) 인가 요청 (브라우저 리다이렉트)
+GET https://auth.example.com/authorize?response_type=code&amp;client_id=my-client&amp;redirect_uri=https%3A%2F%2Fapp.example.com%2Fcallback&amp;scope=openid%20profile&amp;code_challenge=E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM&amp;code_challenge_method=S256
+
+# 2) 토큰 교환 (서버/앱에서)
+POST https://auth.example.com/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&amp;code=&lt;AUTH_CODE&gt;&amp;client_id=my-client&amp;redirect_uri=https%3A%2F%2Fapp.example.com%2Fcallback&amp;code_verifier=dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>SPA와 모바일 앱처럼 client_secret을 숨길 수 없는 공개 클라이언트는 PKCE로 인가 코드 탈취를 막습니다. 값 만드는 방법을 눈으로 확인하세요.</p>
+<ul><li>code_verifier: 43~128자의 영문·숫자·-._~ 난수를 브라우저 CSPRNG로 생성 (직접 입력도 가능)</li><li>code_challenge: S256 = BASE64URL(SHA-256(verifier)), plain 방식도 지원하며 위험성 안내</li><li>인가 요청(authorize) URL과 토큰 교환(token) 요청 예시를 바로 복사</li><li>state, nonce 같이 생성 옵션, RFC 7636 부록 B 예제 값과 일치</li><li>모든 값은 브라우저에서만 만들어지며 서버로 전송되지 않음</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="oauth-url-builder.html" class="related-card"><span class="related-icon">🔗</span><span>OAuth 인가 URL 생성기</span></a>
+    <a href="jwt-decoder.html" class="related-card"><span class="related-icon">🎫</span><span>JWT 디코더</span></a>
+    <a href="auth-header-tool.html" class="related-card"><span class="related-icon">🪪</span><span>Authorization 헤더 도구</span></a>
+    <a href="random-generator.html" class="related-card"><span class="related-icon">🎲</span><span>랜덤 문자열·난수 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>verifier는 로그인 시작 시 만들어 세션(또는 메모리)에만 보관하고, challenge만 인가 서버로 보냅니다.</li><li>plain 방식은 verifier가 그대로 노출되어 의미가 약합니다. 가능하면 항상 S256을 쓰세요.</li><li>verifier는 로그인 시도마다 새로 만들고 한 번만 사용하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>PKCE가 정확히 무엇을 막나요?</summary><p>인가 코드를 가로챈 공격자가 토큰으로 교환하지 못하게 합니다. 교환 시 처음 만든 verifier를 증명해야 하기 때문입니다.</p></details><details><summary>client_secret이 있어도 PKCE를 써야 하나요?</summary><p>OAuth 2.1은 모든 클라이언트에 PKCE를 권장합니다. 비밀 키를 가진 서버 앱에도 추가 방어선이 됩니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-bytes.js"></script>
+<script src="js/tk-hash.js"></script>
+<script src="js/tools/pkce-generator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>
