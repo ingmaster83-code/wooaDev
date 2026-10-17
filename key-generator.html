@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>키 쌍 생성기 — RSA·ECDSA·Ed25519를 PEM·JWK·SSH로 | WooaDev</title>
+  <meta name="description" content="RSA 2048~4096, ECDSA P-256·384·521, Ed25519 키 쌍을 브라우저에서 만들어 PKCS#8·SPKI PEM, JWK, SSH 공개키 한 줄과 지문으로 출력합니다. 테스트 키 생성용입니다.">
+  <meta name="keywords" content="RSA 키 생성, EC 키 쌍 생성, Ed25519 키 생성, PEM JWK 출력, SSH 키 생성, key generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/key-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/key-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/key-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/key-generator.html">
+  <meta property="og:title" content="키 쌍 생성기 — RSA·ECDSA·Ed25519를 PEM·JWK·SSH로 | WooaDev">
+  <meta property="og:description" content="RSA 2048~4096, ECDSA P-256·384·521, Ed25519 키 쌍을 브라우저에서 만들어 PKCS#8·SPKI PEM, JWK, SSH 공개키 한 줄과 지문으로 출력합니다. 테스트 키 생성용입니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/key-generator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="키 쌍 생성기 — RSA·ECDSA·Ed25519를 PEM·JWK·SSH로 | WooaDev">
+  <meta name="twitter:description" content="RSA 2048~4096, ECDSA P-256·384·521, Ed25519 키 쌍을 브라우저에서 만들어 PKCS#8·SPKI PEM, JWK, SSH 공개키 한 줄과 지문으로 출력합니다. 테스트 키 생성용입니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"키 쌍 생성기 (RSA·EC·Ed25519)","url":"https://wooadev.wooahouse.com/key-generator.html","description":"RSA 2048~4096, ECDSA P-256·384·521, Ed25519 키 쌍을 브라우저에서 만들어 PKCS#8·SPKI PEM, JWK, SSH 공개키 한 줄과 지문으로 출력합니다. 테스트 키 생성용입니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["키 종류: ECDSA P-256·P-384·P-521, Ed25519, RSA 2048·3072·4096","출력: 개인키(PKCS#8 PEM), 공개키(SPKI PEM), JWK(개인키·공개키 구분), SSH authorized_keys 한 줄","지문: SSH SHA256 지문(ssh-keygen -lf 와 동일), JWK RFC 7638 지문","생성된 공개키는 openssl pkey -pubout 과 일치하는 표준 형식","화면에 나온 키는 운영에 쓰지 말라는 안내와 Ed25519 지원 브라우저 안내"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"여기서 만든 키를 운영에 써도 되나요?","acceptedAnswer":{"@type":"Answer","text":"권장하지 않습니다. 운영 키는 서버나 HSM·KMS 에서 직접 만드세요. 이 도구는 테스트와 학습용입니다."}},{"@type":"Question","name":"개인키는 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 것이 브라우저의 Web Crypto 로 처리되며 페이지를 닫으면 사라집니다. 필요하면 바로 복사해 두세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"키 쌍 생성기 (RSA·EC·Ed25519)","item":"https://wooadev.wooahouse.com/key-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="key-generator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/key-generator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>키 쌍 생성기 (RSA·EC·Ed25519)</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔑</span>
+    <h1>RSA · EC · Ed25519 키 쌍 생성기</h1>
+    <p>Web Crypto 로 RSA(2048~4096), ECDSA(P-256·384·521), Ed25519 키 쌍을 브라우저 안에서 만들고 PKCS#8 개인키 PEM, SPKI 공개키 PEM, JWK, SSH authorized_keys 한 줄과 지문을 한 번에 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ ECDSA P-256 키 쌍을 만들었습니다</p>
+<h3>입력 — SSH 공개키 주석 (선택, 예: you@host)</h3><pre>test@wooadev</pre>
+<h3>결과 — 키 정보</h3><pre>항목 | 값
+종류 | ECDSA P-256
+SSH 지문 | SHA256:ws/d956/pXhZ832xMXnKyyHYD00pa/WTr+bDLg0ZhPs
+JWK 지문 (RFC 7638) | 0OoiuxTc-ST93Ie5jOTGVKwfYXCg8QPEqyfeaftuqWg
+개인키 형식 | PKCS#8 (-----BEGIN PRIVATE KEY-----)
+공개키 형식 | SubjectPublicKeyInfo (-----BEGIN PUBLIC KEY-----)</pre>
+<h3>결과 — SSH 공개키 (authorized_keys 한 줄)</h3><pre>ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIB/RjQIXC4Y19FkBwFKibghnSNIEQqwJOvvbRA1A1epjO6eOVA/QBICgFxg/wpyD9Y87sE9E9i4vo6EoBv/YVE= test@wooadev</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>개발·테스트에 필요한 키 쌍을 설치 없이 만들 때 씁니다. 키는 브라우저 안에서만 만들어지고 전송되지 않습니다.</p>
+<ul><li>키 종류: ECDSA P-256·P-384·P-521, Ed25519, RSA 2048·3072·4096</li><li>출력: 개인키(PKCS#8 PEM), 공개키(SPKI PEM), JWK(개인키·공개키 구분), SSH authorized_keys 한 줄</li><li>지문: SSH SHA256 지문(ssh-keygen -lf 와 동일), JWK RFC 7638 지문</li><li>생성된 공개키는 openssl pkey -pubout 과 일치하는 표준 형식</li><li>화면에 나온 키는 운영에 쓰지 말라는 안내와 Ed25519 지원 브라우저 안내</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="csr-tool.html" class="related-card"><span class="related-icon">📝</span><span>CSR 생성·해석기</span></a>
+    <a href="ssh-key-inspector.html" class="related-card"><span class="related-icon">🗝️</span><span>SSH 공개키 검사기</span></a>
+    <a href="jwk-converter.html" class="related-card"><span class="related-icon">🧷</span><span>JWK ↔ PEM 변환기</span></a>
+    <a href="password-hash.html" class="related-card"><span class="related-icon">🧂</span><span>비밀번호 해시 생성·검증 (bcrypt·Argon2·scrypt)</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>JWT 서명 테스트에는 ECDSA P-256(ES256)이나 Ed25519 가 짧고 빠릅니다.</li><li>SSH 공개키 한 줄은 ~/.ssh/authorized_keys 에 그대로 붙이고, 개인키 PEM 은 chmod 600 으로 저장하세요.</li><li>RSA 4096 은 생성에 몇 초가 걸릴 수 있습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>여기서 만든 키를 운영에 써도 되나요?</summary><p>권장하지 않습니다. 운영 키는 서버나 HSM·KMS 에서 직접 만드세요. 이 도구는 테스트와 학습용입니다.</p></details><details><summary>개인키는 서버로 전송되나요?</summary><p>아니요. 모든 것이 브라우저의 Web Crypto 로 처리되며 페이지를 닫으면 사라집니다. 필요하면 바로 복사해 두세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-hash.js"></script>
+<script src="js/tk-asn1.js"></script>
+<script src="js/tk-x509.js"></script>
+<script src="js/tools/key-generator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

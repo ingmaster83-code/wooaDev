@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protobuf 디코더 — 스키마 없이 필드·wire type 해석 | WooaDev</title>
+  <meta name="description" content=".proto 없이 Protobuf 바이너리를 필드 번호와 wire type으로 해석합니다. varint·fixed 값의 zigzag·float 해석, 중첩 메시지·문자열·packed 추정, gRPC 헤더 건너뛰기를 지원합니다.">
+  <meta name="keywords" content="Protobuf 디코더, protobuf 해석, 스키마 없이 protobuf, varint zigzag, gRPC 메시지 디코딩, protobuf decoder">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/protobuf-decoder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/protobuf-decoder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/protobuf-decoder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/protobuf-decoder.html">
+  <meta property="og:title" content="Protobuf 디코더 — 스키마 없이 필드·wire type 해석 | WooaDev">
+  <meta property="og:description" content=".proto 없이 Protobuf 바이너리를 필드 번호와 wire type으로 해석합니다. varint·fixed 값의 zigzag·float 해석, 중첩 메시지·문자열·packed 추정, gRPC 헤더 건너뛰기를 지원합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/protobuf-decoder.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Protobuf 디코더 — 스키마 없이 필드·wire type 해석 | WooaDev">
+  <meta name="twitter:description" content=".proto 없이 Protobuf 바이너리를 필드 번호와 wire type으로 해석합니다. varint·fixed 값의 zigzag·float 해석, 중첩 메시지·문자열·packed 추정, gRPC 헤더 건너뛰기를 지원합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Protobuf 디코더 (스키마 없이)","url":"https://wooadev.wooahouse.com/protobuf-decoder.html","description":".proto 없이 Protobuf 바이너리를 필드 번호와 wire type으로 해석합니다. varint·fixed 값의 zigzag·float 해석, 중첩 메시지·문자열·packed 추정, gRPC 헤더 건너뛰기를 지원합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: 16진수, Base64, 파일 / 옵션: gRPC 5바이트 헤더(압축 플래그 + 길이) 건너뛰기","필드 표: 바이트 오프셋, 필드 번호(중첩은 3.2.1 형식), wire type, 가능한 해석","varint: 부호 없음 / int64 / zigzag(sint) / bool 후보, fixed32·64: 정수·float·double 후보","길이 구분 필드: 문자열 → 중첩 메시지 → packed varint 후보 → 바이트 순으로 추정 (끌 수 있음)","같은 필드 번호가 반복되면 JSON 배열, 그룹(wire 3·4)·잘린 데이터·잘못된 길이는 오류로 안내"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"스키마 없이도 정확히 해석할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"구조(필드 번호·wire type)는 정확하지만 타입은 추정입니다. 정확한 해석에는 .proto 가 필요합니다."}},{"@type":"Question","name":"필드 번호 3.2 는 무슨 뜻인가요?","acceptedAnswer":{"@type":"Answer","text":"필드 3 이 중첩 메시지이고 그 안의 필드 2 라는 뜻입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"Protobuf 디코더 (스키마 없이)","item":"https://wooadev.wooahouse.com/protobuf-decoder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="protobuf-decoder.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/protobuf-decoder.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Protobuf 디코더 (스키마 없이)</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📡</span>
+    <h1>Protobuf Wire 디코더 (스키마 없이)</h1>
+    <p>.proto 파일이 없어도 Protobuf 바이너리를 필드 번호, wire type, varint·fixed 값의 여러 해석(부호 있음·zigzag·float)과 중첩 메시지·문자열 추정으로 풀어 줍니다. gRPC 5바이트 헤더도 건너뛸 수 있습니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 해석 완료 — 41바이트, 필드 10개</p>
+<h3>입력 — Protobuf 바이너리 (16진수 / Base64)</h3><pre>08 96 01 12 05 57 6f 6f 61 21 1a 06 08 01 12 02 68 69 20 03 28 05 35 00 00 80 3f 39 18 2d 44 54 fb 21 09 40 42 03 01 02 03</pre>
+<h3>결과 — 필드 목록 (바이트 오프셋)</h3><pre>오프셋 | 필드 | wire | 타입 | 값 (가능한 해석)
+0 | 1 | wt 0 | varint | 150  (sint 75)
+3 | 2 | wt 2 | string? | "Wooa!" (5 B)
+10 | 3 | wt 2 | message? | {2 필드} (6 B)
+12 |   3.1 | wt 0 | varint | 1  (sint -1 · bool true)
+14 |   3.2 | wt 2 | string? | "hi" (2 B)
+18 | 4 | wt 0 | varint | 3  (sint -2)
+20 | 5 | wt 0 | varint | 5  (sint -3)
+22 | 6 | wt 5 | fixed32 | 1065353216 · int32 1065353216 · float 1
+27 | 7 | wt 1 | fixed64 | 4614256656552045848 · int64 4614256656552045848 · double 3.141592653589793
+36 | 8 | wt 2 | bytes | h'010203' (3 B) · packed varint 이라면 [1, 2, 3]</pre>
+<h3>결과 — JSON (필드 번호 기준)</h3><pre>{
+  "1": 150,
+  "2": "Wooa!",
+  "3": {
+    "1": 1,
+    "2": "hi"
+  },
+  "4": 3,
+  "5": 5,
+  "6": 1065353216,
+  "7": "4614256656552045848",
+  "8": "010203"
+}</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>로그나 패킷에서 꺼낸 Protobuf 바이트의 구조를 스키마 없이 먼저 파악할 때 씁니다. 데이터는 브라우저 밖으로 나가지 않습니다.</p>
+<ul><li>입력: 16진수, Base64, 파일 / 옵션: gRPC 5바이트 헤더(압축 플래그 + 길이) 건너뛰기</li><li>필드 표: 바이트 오프셋, 필드 번호(중첩은 3.2.1 형식), wire type, 가능한 해석</li><li>varint: 부호 없음 / int64 / zigzag(sint) / bool 후보, fixed32·64: 정수·float·double 후보</li><li>길이 구분 필드: 문자열 → 중첩 메시지 → packed varint 후보 → 바이트 순으로 추정 (끌 수 있음)</li><li>같은 필드 번호가 반복되면 JSON 배열, 그룹(wire 3·4)·잘린 데이터·잘못된 길이는 오류로 안내</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="messagepack-viewer.html" class="related-card"><span class="related-icon">📦</span><span>MessagePack 뷰어·변환기</span></a>
+    <a href="cbor-viewer.html" class="related-card"><span class="related-icon">🧬</span><span>CBOR 뷰어·변환기</span></a>
+    <a href="websocket-frame-decoder.html" class="related-card"><span class="related-icon">🔌</span><span>WebSocket 프레임 디코더</span></a>
+    <a href="asn1-decoder.html" class="related-card"><span class="related-icon">🔐</span><span>ASN.1 DER 디코더</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>스키마가 없으니 int32·uint32·enum·bool 은 구분할 수 없고 모두 숫자로 보입니다. 값의 범위로 짐작하세요.</li><li>음수 int32/int64 는 varint 10바이트로 인코딩되어 보입니다. 표의 int64 후보에서 -1 같은 값을 확인하세요.</li><li>문자열처럼 보이는 필드도 우연히 그렇게 보일 수 있습니다. 중첩 추정을 끄고 바이트로 확인해 보세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>스키마 없이도 정확히 해석할 수 있나요?</summary><p>구조(필드 번호·wire type)는 정확하지만 타입은 추정입니다. 정확한 해석에는 .proto 가 필요합니다.</p></details><details><summary>필드 번호 3.2 는 무슨 뜻인가요?</summary><p>필드 3 이 중첩 메시지이고 그 안의 필드 2 라는 뜻입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-binin.js"></script>
+<script src="js/tools/protobuf-decoder.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

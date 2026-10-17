@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSH Public Key Inspector – Fingerprints, Type &amp; PEM | WooaDev</title>
+  <meta name="description" content="Calculate type, size and SHA256 and MD5 fingerprints of SSH public keys (ssh-ed25519, ssh-rsa, ecdsa, sk-) and read authorized_keys options. Flags weak keys and converts to PEM (SPKI).">
+  <meta name="keywords" content="SSH public key fingerprint, ssh-keygen -l, authorized_keys check, ssh-ed25519, SSH key to PEM, ssh key inspector">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/ssh-key-inspector.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/ssh-key-inspector.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/ssh-key-inspector.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/ssh-key-inspector.html">
+  <meta property="og:title" content="SSH Public Key Inspector – Fingerprints, Type &amp; PEM | WooaDev">
+  <meta property="og:description" content="Calculate type, size and SHA256 and MD5 fingerprints of SSH public keys (ssh-ed25519, ssh-rsa, ecdsa, sk-) and read authorized_keys options. Flags weak keys and converts to PEM (SPKI).">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/ssh-key-inspector.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SSH Public Key Inspector – Fingerprints, Type &amp; PEM | WooaDev">
+  <meta name="twitter:description" content="Calculate type, size and SHA256 and MD5 fingerprints of SSH public keys (ssh-ed25519, ssh-rsa, ecdsa, sk-) and read authorized_keys options. Flags weak keys and converts to PEM (SPKI).">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SSH Public Key Inspector","url":"https://wooadev.wooahouse.com/en/ssh-key-inspector.html","description":"Calculate type, size and SHA256 and MD5 fingerprints of SSH public keys (ssh-ed25519, ssh-rsa, ecdsa, sk-) and read authorized_keys options. Flags weak keys and converts to PEM (SPKI).","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Input: several public-key lines, authorized_keys options (command=, from=, no-pty …), known_hosts host prefixes and RFC 4716 format","Calculates key type and bits, SHA256:… fingerprint (equal to ssh-keygen -lf) and MD5 fingerprint","Checks: RSA below 2048, DSA (ssh-dss) retired, duplicate keys, missing comment, type mismatch; shows certificates (-cert-v01) and security keys (sk-)","Converts RSA, Ed25519 and ECDSA to PEM SubjectPublicKeyInfo","A pasted private key (-----BEGIN OPENSSH PRIVATE KEY-----) is refused with a warning"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"May I paste a private key?","acceptedAnswer":{"@type":"Answer","text":"No. Never paste private keys anywhere; enter only the public key (.pub). The tool refuses a private key."}},{"@type":"Question","name":"Why is there an MD5 fingerprint?","acceptedAnswer":{"@type":"Answer","text":"OpenSSH before 6.7 and some devices show MD5 fingerprints; SHA256 is the current standard."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"SSH Public Key Inspector","item":"https://wooadev.wooahouse.com/en/ssh-key-inspector.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../ssh-key-inspector.html">KO</a>
+        <span>|</span>
+        <a href="ssh-key-inspector.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>SSH Public Key Inspector</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🗝️</span>
+    <h1>SSH Public Key Inspector &amp; Fingerprint Calculator</h1>
+    <p>Paste id_ed25519.pub, authorized_keys or known_hosts lines to get the key type and size, the same SHA256 fingerprint as ssh-keygen -l and the legacy MD5 fingerprint, with warnings for weak keys (RSA 1024, DSA). Keys can be converted to PEM.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ 3 key(s) decoded</p>
+<h3>Input — SSH public keys (id_*.pub, authorized_keys or known_hosts lines)</h3><pre>ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIElPeSFv7v0CTtQdzwG/es+lRGaUdWFrRsMFrne2sch/ wooa@example
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCRU06Ge86huIX1JxZPirz19zmPp8EBdOLxG/1f6UlNLpP72wXWhqewKRAFgk4byH33/dRYnyr/2swr9G40e8rq+AcnR9xDYF/wpwG0VsQJU2YJH9nHDglcXPpt52MuPiID+JiKIPEl3JINn88hrfuczc/8fFlI/X/a1SYP9JYq8iF89z3TJEU/B81ojV4jY7euhc1i2WxjqZY+CoFsF9Cn9SHdWuJQ06EvlnYutmKiy2koiR6JcsIaa6yRu0tlk5Ej3F9i1swMsWLyGrAoyDLdZE85XGWzW/8lptWY+vQ/xqmfvJIcYyyhvmBQVYAMr3Yhg3KT+ymvgIIonBez0hZJ old-laptop
+command="/usr/bin/backup",no-pty ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLPsgfqYQN8KYAyMGi5Y1oNR4ScgLJ7fa1qqmzp4BkNWpFqzScW2MMZVGv9GlelHe3RWWlfGysE+FkbwXxohc9U= backup@host</pre>
+<h3>Result — Keys</h3><pre># | Type | Algorithm / size | SHA256 fingerprint | MD5 fingerprint | Comment
+1 | ssh-ed25519 | Ed25519 256 | SHA256:GtULT6uUnmLQ4JU/aef6C7/+KIfkzdJYUPDNCLvjAMI | MD5:96:72:64:b9:14:bb:a9:9e:07:73:a4:70:b8:58:8a:de | wooa@example
+2 | ssh-rsa | RSA 2048 | SHA256:KfuLjJsJOc5w9pF/t7ykwStNzikFFfJSa+WfK+R1pAM | MD5:4d:df:23:14:a5:ee:32:f5:ac:8d:42:32:75:85:30:fc | old-laptop
+3 | ecdsa-sha2-nistp256 | ECDSA P-256 | SHA256:iB3rYt3mFQMC9QLiW1RCWcx90MXYHFS5WWj/jgQB4QU | MD5:b3:99:3e:94:38:6c:a4:1f:c6:1b:b5:04:8f:13:74:5a | backup@host · options / hosts: command="/usr/bin/backup",no-pty</pre>
+<h3>Result — PEM public keys</h3><pre># ssh-ed25519 SHA256:GtULT6uUnmLQ4JU/aef6C7/+KIfkzdJYUPDNCLvjAMI wooa@example
+-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEASU95IW/u/QJO1B3PAb96z6VEZpR1YWtGwwWud7axyH8=
+-----END PUBLIC KEY-----
+
+# ssh-rsa SHA256:KfuLjJsJOc5w9pF/t7ykwStNzikFFfJSa+WfK+R1pAM old-laptop
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkVNOhnvOobiF9ScWT4q8
+9fc5j6fBAXTi8Rv9X+lJTS6T+9sF1oansCkQBYJOG8h99/3UWJ8q/9rMK/RuNHvK
+6vgHJ0fcQ2Bf8KcBtFbECVNmCR/Zxw4JXFz6bedjLj4iA/iYiiDxJdySDZ/PIa37
+nM3P/HxZSP1/2tUmD/SWKvIhfPc90yRFPwfNaI1eI2O3roXNYtlsY6mWPgqBbBfQ
+p/Uh3VriUNOhL5Z2LrZiostpKIkeiXLCGmuskbtLZZORI9xfYtbMDLFi8hqwKMgy
+3WRPOVxls1v/JabVmPr0P8apn7ySHGMsob5gUFWADK92IYNyk/spr4CCKJwXs9IW
+SQIDAQAB
+-----END PUBLIC KEY-----
+
+# ecdsa-sha2-nistp256 SHA256:iB3rYt3mFQMC9QLiW1RCWcx90MXYHFS5WWj/jgQB4QU backup@host
+-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEs+yB+phA3wpgDIwaLljWg1HhJyAs
+nt9rWqqbOngGQ1akWrNJxbYwxlUa/0aV6Ud7dFZaV8bKwT4WRvBfGiFz1Q==
+-----END PUBLIC KEY-----</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Check which key is registered on a server or GitHub, or which key a fingerprint in a log belongs to. Keys never leave your browser.</p>
+<ul><li>Input: several public-key lines, authorized_keys options (command=, from=, no-pty …), known_hosts host prefixes and RFC 4716 format</li><li>Calculates key type and bits, SHA256:… fingerprint (equal to ssh-keygen -lf) and MD5 fingerprint</li><li>Checks: RSA below 2048, DSA (ssh-dss) retired, duplicate keys, missing comment, type mismatch; shows certificates (-cert-v01) and security keys (sk-)</li><li>Converts RSA, Ed25519 and ECDSA to PEM SubjectPublicKeyInfo</li><li>A pasted private key (-----BEGIN OPENSSH PRIVATE KEY-----) is refused with a warning</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="key-generator.html" class="related-card"><span class="related-icon">🔑</span><span>Key Pair Generator (RSA, EC, Ed25519)</span></a>
+    <a href="jwk-converter.html" class="related-card"><span class="related-icon">🧷</span><span>JWK ↔ PEM Converter</span></a>
+    <a href="certificate-decoder.html" class="related-card"><span class="related-icon">📜</span><span>Certificate Decoder</span></a>
+    <a href="hash-generator.html" class="related-card"><span class="related-icon">🔑</span><span>Hash Generator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Compare the SHA256:… value with a server log or your GitHub settings to identify the key.</li><li>Prefer Ed25519 for new keys; for RSA use 3072 bits or more.</li><li>A command= option in authorized_keys restricts that key to the given command.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>May I paste a private key?</summary><p>No. Never paste private keys anywhere; enter only the public key (.pub). The tool refuses a private key.</p></details><details><summary>Why is there an MD5 fingerprint?</summary><p>OpenSSH before 6.7 and some devices show MD5 fingerprints; SHA256 is the current standard.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-hash.js"></script>
+<script src="../js/tk-asn1.js"></script>
+<script src="../js/tk-x509.js"></script>
+<script src="../js/tools/ssh-key-inspector.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

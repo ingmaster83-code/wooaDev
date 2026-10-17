@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSR 생성·디코더 — 서명 검증과 새 CSR·개인키 만들기 | WooaDev</title>
+  <meta name="description" content="CSR을 해석해 주체, SAN, 공개키, 서명 알고리즘을 보여 주고 서명을 검증합니다. RSA·ECDSA 개인키와 SAN이 든 새 CSR을 브라우저에서 만들어 PEM으로 제공합니다.">
+  <meta name="keywords" content="CSR 생성, CSR 디코더, 인증서 서명 요청, SAN CSR, CSR 서명 검증, csr tool">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/csr-tool.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/csr-tool.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/csr-tool.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/csr-tool.html">
+  <meta property="og:title" content="CSR 생성·디코더 — 서명 검증과 새 CSR·개인키 만들기 | WooaDev">
+  <meta property="og:description" content="CSR을 해석해 주체, SAN, 공개키, 서명 알고리즘을 보여 주고 서명을 검증합니다. RSA·ECDSA 개인키와 SAN이 든 새 CSR을 브라우저에서 만들어 PEM으로 제공합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/csr-tool.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSR 생성·디코더 — 서명 검증과 새 CSR·개인키 만들기 | WooaDev">
+  <meta name="twitter:description" content="CSR을 해석해 주체, SAN, 공개키, 서명 알고리즘을 보여 주고 서명을 검증합니다. RSA·ECDSA 개인키와 SAN이 든 새 CSR을 브라우저에서 만들어 PEM으로 제공합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSR 생성·해석기","url":"https://wooadev.wooahouse.com/csr-tool.html","description":"CSR을 해석해 주체, SAN, 공개키, 서명 알고리즘을 보여 주고 서명을 검증합니다. RSA·ECDSA 개인키와 SAN이 든 새 CSR을 브라우저에서 만들어 PEM으로 제공합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["해석: 주체(CN·O·OU·C·ST·L·이메일), 요청된 SAN·키 용도, 공개키(RSA 비트·EC 곡선), 서명 알고리즘, SHA-256 지문","서명 검증: CSR 의 공개키로 서명을 확인해 변조·손상을 감지","생성: 키 종류(ECDSA P-256·P-384, RSA 2048·3072·4096), CN·조직·국가, SAN(도메인·와일드카드·IPv4·IPv6·이메일)","출력: CSR(PEM), 개인키(PKCS#8 PEM) — openssl req -verify 로 검증되는 표준 PKCS#10","점검: SAN 누락, 짧은 RSA 키, 약한 서명, CN 이 SAN 에 없음"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"여기서 만든 개인키를 운영에 써도 되나요?","acceptedAnswer":{"@type":"Answer","text":"키는 브라우저 안에서만 만들어지지만, 운영 키는 서버나 HSM 에서 직접 만드는 것이 원칙입니다. 테스트·내부용으로 쓰세요."}},{"@type":"Question","name":"CSR 에 CN 만 있고 SAN 이 없어요.","acceptedAnswer":{"@type":"Answer","text":"공개 CA 는 SAN 이 없으면 CN 을 SAN 에 넣어 주기도 하지만 보장되지 않습니다. 도메인을 SAN 에 직접 넣어 다시 만드세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"CSR 생성·해석기","item":"https://wooadev.wooahouse.com/csr-tool.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="csr-tool.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/csr-tool.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CSR 생성·해석기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📝</span>
+    <h1>CSR 생성기 · 디코더</h1>
+    <p>인증서 서명 요청(CSR)을 붙여 넣으면 주체, SAN, 공개키, 서명 알고리즘을 풀고 개인키 소유 증명(서명)이 맞는지 검증합니다. 도메인을 입력해 새 CSR 과 개인키를 브라우저 안에서 만들 수도 있습니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ CSR 해석 완료</p>
+<h3>입력 — CSR (PEM 또는 16진수/Base64 DER)</h3><pre>-----BEGIN CERTIFICATE REQUEST-----
+MIICgjCCAWoCAQAwPTELMAkGA1UEBhMCS1IxFzAVBgNVBAoMDldvb2FIb3VzZSBU
+ZXN0MRUwEwYDVQQDDAx0ZXN0LmV4YW1wbGUwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+DwAwggEKAoIBAQCrecHqmweqRQSUYzWSqAt0yN8JRX06KBbirYnhhcO1aThn4QZ3
+LbTUEEk6c5qm9xbIJprqzRD51X33qEfnZRzR2wwfGIPmKo5pKavxq8+VVJwxn0ls
+zZ/wtgK8nXpfE0HeGU+KX89A5MllI5CUxYREvYBC0hh4ByteLEbpmOmNL0UPtdLR
+8vitA/dfDaJltrFgmf7r2FNiUfpItoepp00J/1UU5XMDG/f86nGykDd3etyk1I0q
+HpNv2hn2/N5W17T6dA9bDUFOe9p6rIEWYL02R90fF0hxHNYn3/6DTe/fIT+txTpp
+cinfR0eJJ4WIeGVT38upkEWqLllJUDe9xL01AgMBAAGgADANBgkqhkiG9w0BAQsF
+AAOCAQEAkEfmIkp7bBPXbBi4SJSr8QuX0QYqt3irDQdWE0XEIcSltW7AzVbd2bVD
+tYO2rXpL6fvb5jBgLK6VkSotULlgdH3GIokOHaox4yrW6W/NWbliut9HC5g3yo3P
+Lr5k8VdsrVur38EdTNjHKxjOoBuMChpdUlbc8ME6GKZGWHqNaLamz7K8pujXoZkZ
+Mjvd8KmNfaZgg+yqqKLhelH3NxOElPYFUi6x/xvb/dR4g0QRK4z7uGp7g/KA8Z9A
+rptDoNlr/dMUvZ8LjFzQz8zsMgfyKx4AOLCXWGmu2mJmSQj2/IVBxGIVQXGk4svT
+…</pre>
+<h3>입력 — SAN (한 줄에 하나: 도메인, *.도메인, IP, 이메일)</h3><pre>example.com
+www.example.com
+*.example.com
+192.0.2.10</pre>
+<h3>결과 — CSR 내용</h3><pre>항목 | 값
+주체 | C=KR, O=WooaHouse Test, CN=test.example
+버전 | v1
+공개키 | RSA 2048 bit (e=65537)
+서명 알고리즘 | sha256WithRSAEncryption
+서명 검증 | ✅ CSR 의 공개키로 검증됨 (개인키 소유 증명)
+SAN | (없음)
+요청 속성 | (없음)
+SHA-256 지문 | C6:2A:65:D2:6D:47:20:6A:5A:4D:56:27:AC:3B:0A:F9:43:C9:13:78:94:53:DA:91:E0:4F:FF:E8:58:CA:B0:9E</pre>
+<h3>결과 — 점검 결과</h3><pre>⚠️ SAN 이 없습니다. 최신 브라우저는 CN 만으로는 호스트를 인정하지 않습니다
+CSR 에 들어 있는 확장은 요청일 뿐이며 CA 가 무시하거나 바꿀 수 있습니다</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>인증서 발급 신청 전에 CSR 내용을 확인하거나 급히 CSR 이 필요할 때 씁니다. 개인키는 브라우저 안에서만 만들어지고 전송되지 않습니다.</p>
+<ul><li>해석: 주체(CN·O·OU·C·ST·L·이메일), 요청된 SAN·키 용도, 공개키(RSA 비트·EC 곡선), 서명 알고리즘, SHA-256 지문</li><li>서명 검증: CSR 의 공개키로 서명을 확인해 변조·손상을 감지</li><li>생성: 키 종류(ECDSA P-256·P-384, RSA 2048·3072·4096), CN·조직·국가, SAN(도메인·와일드카드·IPv4·IPv6·이메일)</li><li>출력: CSR(PEM), 개인키(PKCS#8 PEM) — openssl req -verify 로 검증되는 표준 PKCS#10</li><li>점검: SAN 누락, 짧은 RSA 키, 약한 서명, CN 이 SAN 에 없음</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="certificate-decoder.html" class="related-card"><span class="related-icon">📜</span><span>인증서 디코더</span></a>
+    <a href="key-generator.html" class="related-card"><span class="related-icon">🔑</span><span>키 쌍 생성기 (RSA·EC·Ed25519)</span></a>
+    <a href="certificate-converter.html" class="related-card"><span class="related-icon">🔄</span><span>인증서 변환기·번들 만들기</span></a>
+    <a href="asn1-decoder.html" class="related-card"><span class="related-icon">🔐</span><span>ASN.1 DER 디코더</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>CA 에는 CSR 만 제출하세요. 개인키는 서버에만 보관하고 어디에도 보내지 않습니다.</li><li>요즘 인증서는 SAN 이 필수입니다. 와일드카드와 루트 도메인(example.com)을 따로 넣어야 둘 다 보호됩니다.</li><li>CSR 의 확장은 요청일 뿐이며 CA 가 무시하거나 바꿀 수 있습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>여기서 만든 개인키를 운영에 써도 되나요?</summary><p>키는 브라우저 안에서만 만들어지지만, 운영 키는 서버나 HSM 에서 직접 만드는 것이 원칙입니다. 테스트·내부용으로 쓰세요.</p></details><details><summary>CSR 에 CN 만 있고 SAN 이 없어요.</summary><p>공개 CA 는 SAN 이 없으면 CN 을 SAN 에 넣어 주기도 하지만 보장되지 않습니다. 도메인을 SAN 에 직접 넣어 다시 만드세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-binin.js"></script>
+<script src="js/tk-hash.js"></script>
+<script src="js/tk-asn1.js"></script>
+<script src="js/tk-x509.js"></script>
+<script src="js/tools/csr-tool.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

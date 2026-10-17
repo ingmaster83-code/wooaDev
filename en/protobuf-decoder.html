@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protobuf Decoder – Fields &amp; Wire Types Without a Schema | WooaDev</title>
+  <meta name="description" content="Decode Protobuf binary without a .proto into field numbers and wire types, with zigzag and float readings, nested message, string and packed guesses, and gRPC header skipping.">
+  <meta name="keywords" content="Protobuf decoder, protobuf parse, protobuf without schema, varint zigzag, decode gRPC message, protobuf decoder">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/protobuf-decoder.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/protobuf-decoder.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/protobuf-decoder.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/protobuf-decoder.html">
+  <meta property="og:title" content="Protobuf Decoder – Fields &amp; Wire Types Without a Schema | WooaDev">
+  <meta property="og:description" content="Decode Protobuf binary without a .proto into field numbers and wire types, with zigzag and float readings, nested message, string and packed guesses, and gRPC header skipping.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/protobuf-decoder.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Protobuf Decoder – Fields &amp; Wire Types Without a Schema | WooaDev">
+  <meta name="twitter:description" content="Decode Protobuf binary without a .proto into field numbers and wire types, with zigzag and float readings, nested message, string and packed guesses, and gRPC header skipping.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Protobuf Decoder (No Schema)","url":"https://wooadev.wooahouse.com/en/protobuf-decoder.html","description":"Decode Protobuf binary without a .proto into field numbers and wire types, with zigzag and float readings, nested message, string and packed guesses, and gRPC header skipping.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Input: hex, Base64 or a file; option to skip the 5-byte gRPC header (compression flag + length)","Field table: byte offset, field number (nested as 3.2.1), wire type and possible readings","varint: unsigned / int64 / zigzag (sint) / bool candidates; fixed32 / 64: integer, float and double candidates","Length-delimited fields are guessed as string, nested message, packed varints or bytes (can be turned off)","Repeated field numbers become JSON arrays; groups (wire 3 / 4), truncated data and bad lengths are errors"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can it decode accurately without a schema?","acceptedAnswer":{"@type":"Answer","text":"Structure (field numbers and wire types) is exact, but types are guesses; a .proto is needed for exact decoding."}},{"@type":"Question","name":"What does field 3.2 mean?","acceptedAnswer":{"@type":"Answer","text":"Field 3 is a nested message and 2 is a field inside it."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Protobuf Decoder (No Schema)","item":"https://wooadev.wooahouse.com/en/protobuf-decoder.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../protobuf-decoder.html">KO</a>
+        <span>|</span>
+        <a href="protobuf-decoder.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Protobuf Decoder (No Schema)</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📡</span>
+    <h1>Protobuf Wire Decoder (No Schema)</h1>
+    <p>Decodes Protobuf binary without a .proto file into field numbers, wire types, several readings of varint and fixed values (signed, zigzag, float) and guessed nested messages and strings. The 5-byte gRPC header can be skipped.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Decoded — 41 bytes, 10 fields</p>
+<h3>Input — Protobuf binary (hex / Base64)</h3><pre>08 96 01 12 05 57 6f 6f 61 21 1a 06 08 01 12 02 68 69 20 03 28 05 35 00 00 80 3f 39 18 2d 44 54 fb 21 09 40 42 03 01 02 03</pre>
+<h3>Result — Fields (byte offsets)</h3><pre>Offset | Field | Wire | Type | Value (possible readings)
+0 | 1 | wt 0 | varint | 150  (sint 75)
+3 | 2 | wt 2 | string? | "Wooa!" (5 B)
+10 | 3 | wt 2 | message? | {2 fields} (6 B)
+12 |   3.1 | wt 0 | varint | 1  (sint -1 · bool true)
+14 |   3.2 | wt 2 | string? | "hi" (2 B)
+18 | 4 | wt 0 | varint | 3  (sint -2)
+20 | 5 | wt 0 | varint | 5  (sint -3)
+22 | 6 | wt 5 | fixed32 | 1065353216 · int32 1065353216 · float 1
+27 | 7 | wt 1 | fixed64 | 4614256656552045848 · int64 4614256656552045848 · double 3.141592653589793
+36 | 8 | wt 2 | bytes | h'010203' (3 B) · if packed varints [1, 2, 3]</pre>
+<h3>Result — JSON (by field number)</h3><pre>{
+  "1": 150,
+  "2": "Wooa!",
+  "3": {
+    "1": 1,
+    "2": "hi"
+  },
+  "4": 3,
+  "5": 5,
+  "6": 1065353216,
+  "7": "4614256656552045848",
+  "8": "010203"
+}</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Understand the structure of Protobuf bytes from a log or packet before you have the schema. Data never leaves your browser.</p>
+<ul><li>Input: hex, Base64 or a file; option to skip the 5-byte gRPC header (compression flag + length)</li><li>Field table: byte offset, field number (nested as 3.2.1), wire type and possible readings</li><li>varint: unsigned / int64 / zigzag (sint) / bool candidates; fixed32 / 64: integer, float and double candidates</li><li>Length-delimited fields are guessed as string, nested message, packed varints or bytes (can be turned off)</li><li>Repeated field numbers become JSON arrays; groups (wire 3 / 4), truncated data and bad lengths are errors</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="messagepack-viewer.html" class="related-card"><span class="related-icon">📦</span><span>MessagePack Viewer &amp; Converter</span></a>
+    <a href="cbor-viewer.html" class="related-card"><span class="related-icon">🧬</span><span>CBOR Viewer &amp; Converter</span></a>
+    <a href="websocket-frame-decoder.html" class="related-card"><span class="related-icon">🔌</span><span>WebSocket Frame Decoder</span></a>
+    <a href="asn1-decoder.html" class="related-card"><span class="related-icon">🔐</span><span>ASN.1 DER Decoder</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Without a schema int32, uint32, enum and bool all look like numbers; judge by value range.</li><li>Negative int32 / int64 values are 10-byte varints; check the int64 candidate for values such as -1.</li><li>A field that looks like a string may be a coincidence; turn off nested guessing to see the bytes.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Can it decode accurately without a schema?</summary><p>Structure (field numbers and wire types) is exact, but types are guesses; a .proto is needed for exact decoding.</p></details><details><summary>What does field 3.2 mean?</summary><p>Field 3 is a nested message and 2 is a field inside it.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-binin.js"></script>
+<script src="../js/tools/protobuf-decoder.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

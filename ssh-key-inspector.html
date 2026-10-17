@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSH 공개키 검사기 — 지문·키 종류·PEM 변환 | WooaDev</title>
+  <meta name="description" content="SSH 공개키(ssh-ed25519, ssh-rsa, ecdsa, sk-)의 종류, 크기, SHA256·MD5 지문을 계산하고 authorized_keys 옵션을 해석합니다. 약한 키를 점검하고 PEM(SPKI)으로 변환합니다.">
+  <meta name="keywords" content="SSH 공개키 지문, ssh-keygen -l, authorized_keys 검사, ssh-ed25519, SSH 키 PEM 변환, ssh key inspector">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/ssh-key-inspector.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/ssh-key-inspector.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/ssh-key-inspector.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/ssh-key-inspector.html">
+  <meta property="og:title" content="SSH 공개키 검사기 — 지문·키 종류·PEM 변환 | WooaDev">
+  <meta property="og:description" content="SSH 공개키(ssh-ed25519, ssh-rsa, ecdsa, sk-)의 종류, 크기, SHA256·MD5 지문을 계산하고 authorized_keys 옵션을 해석합니다. 약한 키를 점검하고 PEM(SPKI)으로 변환합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/ssh-key-inspector.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SSH 공개키 검사기 — 지문·키 종류·PEM 변환 | WooaDev">
+  <meta name="twitter:description" content="SSH 공개키(ssh-ed25519, ssh-rsa, ecdsa, sk-)의 종류, 크기, SHA256·MD5 지문을 계산하고 authorized_keys 옵션을 해석합니다. 약한 키를 점검하고 PEM(SPKI)으로 변환합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SSH 공개키 검사기","url":"https://wooadev.wooahouse.com/ssh-key-inspector.html","description":"SSH 공개키(ssh-ed25519, ssh-rsa, ecdsa, sk-)의 종류, 크기, SHA256·MD5 지문을 계산하고 authorized_keys 옵션을 해석합니다. 약한 키를 점검하고 PEM(SPKI)으로 변환합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: 공개키 여러 줄, authorized_keys 옵션(command=, from=, no-pty …), known_hosts 호스트 접두사, RFC 4716 형식","계산: 키 종류·비트 수, SHA256:… 지문(ssh-keygen -lf 와 동일), MD5 지문","점검: RSA 2048 미만, DSA(ssh-dss) 폐기, 중복 키, 주석 누락, 타입 불일치, 인증서(-cert-v01)·보안 키(sk-) 표시","변환: RSA·Ed25519·ECDSA 를 PEM SubjectPublicKeyInfo 로 출력","개인키(-----BEGIN OPENSSH PRIVATE KEY-----)를 붙여 넣으면 거부하고 경고"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"개인키를 붙여 넣어도 되나요?","acceptedAnswer":{"@type":"Answer","text":"안 됩니다. 개인키는 어디에도 붙여 넣지 마세요. 공개키(.pub)만 입력하세요. 개인키를 입력하면 도구가 거부합니다."}},{"@type":"Question","name":"MD5 지문은 왜 따로 있나요?","acceptedAnswer":{"@type":"Answer","text":"OpenSSH 6.7 이전과 일부 장비는 MD5 지문을 보여 줍니다. 현재 표준은 SHA256 입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"SSH 공개키 검사기","item":"https://wooadev.wooahouse.com/ssh-key-inspector.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="ssh-key-inspector.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/ssh-key-inspector.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>SSH 공개키 검사기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🗝️</span>
+    <h1>SSH 공개키 검사기 · 지문 계산기</h1>
+    <p>id_ed25519.pub 나 authorized_keys, known_hosts 줄을 붙여 넣으면 키 종류와 크기, ssh-keygen -l 과 같은 SHA256 지문, 구버전용 MD5 지문을 계산하고 약한 키(RSA 1024, DSA)를 알려 줍니다. PEM 공개키로도 바꿔 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 키 3개 해석 완료</p>
+<h3>입력 — SSH 공개키 (id_*.pub, authorized_keys, known_hosts 줄)</h3><pre>ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIElPeSFv7v0CTtQdzwG/es+lRGaUdWFrRsMFrne2sch/ wooa@example
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCRU06Ge86huIX1JxZPirz19zmPp8EBdOLxG/1f6UlNLpP72wXWhqewKRAFgk4byH33/dRYnyr/2swr9G40e8rq+AcnR9xDYF/wpwG0VsQJU2YJH9nHDglcXPpt52MuPiID+JiKIPEl3JINn88hrfuczc/8fFlI/X/a1SYP9JYq8iF89z3TJEU/B81ojV4jY7euhc1i2WxjqZY+CoFsF9Cn9SHdWuJQ06EvlnYutmKiy2koiR6JcsIaa6yRu0tlk5Ej3F9i1swMsWLyGrAoyDLdZE85XGWzW/8lptWY+vQ/xqmfvJIcYyyhvmBQVYAMr3Yhg3KT+ymvgIIonBez0hZJ old-laptop
+command="/usr/bin/backup",no-pty ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLPsgfqYQN8KYAyMGi5Y1oNR4ScgLJ7fa1qqmzp4BkNWpFqzScW2MMZVGv9GlelHe3RWWlfGysE+FkbwXxohc9U= backup@host</pre>
+<h3>결과 — 키 목록</h3><pre># | 종류 | 알고리즘·크기 | SHA256 지문 | MD5 지문 | 주석
+1 | ssh-ed25519 | Ed25519 256 | SHA256:GtULT6uUnmLQ4JU/aef6C7/+KIfkzdJYUPDNCLvjAMI | MD5:96:72:64:b9:14:bb:a9:9e:07:73:a4:70:b8:58:8a:de | wooa@example
+2 | ssh-rsa | RSA 2048 | SHA256:KfuLjJsJOc5w9pF/t7ykwStNzikFFfJSa+WfK+R1pAM | MD5:4d:df:23:14:a5:ee:32:f5:ac:8d:42:32:75:85:30:fc | old-laptop
+3 | ecdsa-sha2-nistp256 | ECDSA P-256 | SHA256:iB3rYt3mFQMC9QLiW1RCWcx90MXYHFS5WWj/jgQB4QU | MD5:b3:99:3e:94:38:6c:a4:1f:c6:1b:b5:04:8f:13:74:5a | backup@host · 옵션/호스트: command="/usr/bin/backup",no-pty</pre>
+<h3>결과 — PEM 공개키</h3><pre># ssh-ed25519 SHA256:GtULT6uUnmLQ4JU/aef6C7/+KIfkzdJYUPDNCLvjAMI wooa@example
+-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEASU95IW/u/QJO1B3PAb96z6VEZpR1YWtGwwWud7axyH8=
+-----END PUBLIC KEY-----
+
+# ssh-rsa SHA256:KfuLjJsJOc5w9pF/t7ykwStNzikFFfJSa+WfK+R1pAM old-laptop
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkVNOhnvOobiF9ScWT4q8
+9fc5j6fBAXTi8Rv9X+lJTS6T+9sF1oansCkQBYJOG8h99/3UWJ8q/9rMK/RuNHvK
+6vgHJ0fcQ2Bf8KcBtFbECVNmCR/Zxw4JXFz6bedjLj4iA/iYiiDxJdySDZ/PIa37
+nM3P/HxZSP1/2tUmD/SWKvIhfPc90yRFPwfNaI1eI2O3roXNYtlsY6mWPgqBbBfQ
+p/Uh3VriUNOhL5Z2LrZiostpKIkeiXLCGmuskbtLZZORI9xfYtbMDLFi8hqwKMgy
+3WRPOVxls1v/JabVmPr0P8apn7ySHGMsob5gUFWADK92IYNyk/spr4CCKJwXs9IW
+SQIDAQAB
+-----END PUBLIC KEY-----
+
+# ecdsa-sha2-nistp256 SHA256:iB3rYt3mFQMC9QLiW1RCWcx90MXYHFS5WWj/jgQB4QU backup@host
+-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEs+yB+phA3wpgDIwaLljWg1HhJyAs
+nt9rWqqbOngGQ1akWrNJxbYwxlUa/0aV6Ud7dFZaV8bKwT4WRvBfGiFz1Q==
+-----END PUBLIC KEY-----</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>서버나 GitHub 에 등록한 키가 맞는지, 로그에 찍힌 지문이 어떤 키의 것인지 확인할 때 씁니다. 키는 브라우저 밖으로 나가지 않습니다.</p>
+<ul><li>입력: 공개키 여러 줄, authorized_keys 옵션(command=, from=, no-pty …), known_hosts 호스트 접두사, RFC 4716 형식</li><li>계산: 키 종류·비트 수, SHA256:… 지문(ssh-keygen -lf 와 동일), MD5 지문</li><li>점검: RSA 2048 미만, DSA(ssh-dss) 폐기, 중복 키, 주석 누락, 타입 불일치, 인증서(-cert-v01)·보안 키(sk-) 표시</li><li>변환: RSA·Ed25519·ECDSA 를 PEM SubjectPublicKeyInfo 로 출력</li><li>개인키(-----BEGIN OPENSSH PRIVATE KEY-----)를 붙여 넣으면 거부하고 경고</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="key-generator.html" class="related-card"><span class="related-icon">🔑</span><span>키 쌍 생성기 (RSA·EC·Ed25519)</span></a>
+    <a href="jwk-converter.html" class="related-card"><span class="related-icon">🧷</span><span>JWK ↔ PEM 변환기</span></a>
+    <a href="certificate-decoder.html" class="related-card"><span class="related-icon">📜</span><span>인증서 디코더</span></a>
+    <a href="hash-generator.html" class="related-card"><span class="related-icon">🔑</span><span>Hash 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>서버 로그나 GitHub 설정의 SHA256:… 값과 비교하면 어느 키인지 알 수 있습니다.</li><li>새 키는 Ed25519 를 권장합니다. RSA 라면 3072비트 이상이 좋습니다.</li><li>authorized_keys 에 command= 옵션이 있으면 그 키로는 지정한 명령만 실행됩니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>개인키를 붙여 넣어도 되나요?</summary><p>안 됩니다. 개인키는 어디에도 붙여 넣지 마세요. 공개키(.pub)만 입력하세요. 개인키를 입력하면 도구가 거부합니다.</p></details><details><summary>MD5 지문은 왜 따로 있나요?</summary><p>OpenSSH 6.7 이전과 일부 장비는 MD5 지문을 보여 줍니다. 현재 표준은 SHA256 입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-hash.js"></script>
+<script src="js/tk-asn1.js"></script>
+<script src="js/tk-x509.js"></script>
+<script src="js/tools/ssh-key-inspector.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

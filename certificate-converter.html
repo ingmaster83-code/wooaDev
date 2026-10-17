@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>인증서 변환기 — PEM·DER·PKCS#7 변환과 번들 정렬 | WooaDev</title>
+  <meta name="description" content="인증서를 PEM, DER, PKCS#7에서 추출해 PEM이나 DER(Base64·16진수)로 변환합니다. 중복을 제거하고 리프에서 루트 순으로 정렬한 체인 번들을 만들고 루트를 제외할 수 있습니다.">
+  <meta name="keywords" content="인증서 변환, PEM DER 변환, PKCS7 p7b 추출, 인증서 번들 만들기, 체인 파일 정렬, certificate converter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/certificate-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/certificate-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/certificate-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/certificate-converter.html">
+  <meta property="og:title" content="인증서 변환기 — PEM·DER·PKCS#7 변환과 번들 정렬 | WooaDev">
+  <meta property="og:description" content="인증서를 PEM, DER, PKCS#7에서 추출해 PEM이나 DER(Base64·16진수)로 변환합니다. 중복을 제거하고 리프에서 루트 순으로 정렬한 체인 번들을 만들고 루트를 제외할 수 있습니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/certificate-converter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="인증서 변환기 — PEM·DER·PKCS#7 변환과 번들 정렬 | WooaDev">
+  <meta name="twitter:description" content="인증서를 PEM, DER, PKCS#7에서 추출해 PEM이나 DER(Base64·16진수)로 변환합니다. 중복을 제거하고 리프에서 루트 순으로 정렬한 체인 번들을 만들고 루트를 제외할 수 있습니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"인증서 변환기·번들 만들기","url":"https://wooadev.wooahouse.com/certificate-converter.html","description":"인증서를 PEM, DER, PKCS#7에서 추출해 PEM이나 DER(Base64·16진수)로 변환합니다. 중복을 제거하고 리프에서 루트 순으로 정렬한 체인 번들을 만들고 루트를 제외할 수 있습니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: PEM 여러 개(openssl x509 -text 출력에 섞여 있어도 PEM 만 추출), DER 16진수·Base64, PKCS#7(.p7b/.p7c)","변환: PEM(모두 추출), 체인 번들 PEM(중복 제거·리프→루트 정렬), DER(Base64·16진수)","번들 옵션: 자체 서명 루트 제외(서버용), 각 인증서 앞에 주체·발급자·만료일 주석","PKCS#12(.pfx)는 암호화되어 있어 열 수 없다고 안내하고 openssl 변환 명령을 알려 줌","입력에 개인키가 섞여 있으면 결과에서 제외하고 경고"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"DER 파일 자체를 내려받을 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"텍스트 도구라 Base64 로 보여 줍니다. Base64 를 디코드해(base64 -d) 저장하면 .der/.cer 파일이 됩니다."}},{"@type":"Question","name":"PFX 는 왜 안 되나요?","acceptedAnswer":{"@type":"Answer","text":"비밀번호로 암호화된 컨테이너라 브라우저에서 다루지 않습니다. openssl pkcs12 로 PEM 으로 바꾼 뒤 사용하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"인증서 변환기·번들 만들기","item":"https://wooadev.wooahouse.com/certificate-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="certificate-converter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/certificate-converter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>인증서 변환기·번들 만들기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔄</span>
+    <h1>인증서 형식 변환기 · 체인 번들 만들기</h1>
+    <p>PEM, DER(16진수·Base64), PKCS#7(.p7b) 파일에서 인증서를 모두 꺼내 PEM 으로 바꾸거나, 중복을 지우고 리프 → 중간 → 루트 순으로 정렬한 서버용 번들을 만들어 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 인증서 3개 변환</p>
+<h3>입력 — 인증서 (PEM 여러 개 / DER 의 16진수·Base64 / PKCS#7)</h3><pre>-----BEGIN CERTIFICATE-----
+MIIB0zCCAXqgAwIBAgIUCylBsBCKoKZXRNbMAwSyU2E1JG8wCgYIKoZIzj0EAwIw
+RzELMAkGA1UEBhMCS1IxFzAVBgNVBAoMDldvb2FIb3VzZSBUZXN0MR8wHQYDVQQD
+DBZXb29hSG91c2UgVGVzdCBSb290IENBMCAXDTI2MTAxNzAyNDkxMloYDzIxMjYw
+OTIzMDI0OTEyWjBHMQswCQYDVQQGEwJLUjEXMBUGA1UECgwOV29vYUhvdXNlIFRl
+c3QxHzAdBgNVBAMMFldvb2FIb3VzZSBUZXN0IFJvb3QgQ0EwWTATBgcqhkjOPQIB
+BggqhkjOPQMBBwNCAAQlzTSBL3IFUR86ZfmeYHtjEX0wRlLm68dYEPR4/j0Eaowv
+vavtUqSEFFNgxQY4akajZsvax9x0RoO0yByv7TEIo0IwQDAPBgNVHRMBAf8EBTAD
+AQH/MA4GA1UdDwEB/wQEAwIBBjAdBgNVHQ4EFgQUS6aTJ5/r0YwYbubWrtxNcAgE
+ME0wCgYIKoZIzj0EAwIDRwAwRAIgOr/xSlViD4TUxWFs7Ty/hhF2OZoUyOM0CS1K
+PSuLN5gCIHKTBmP9rZOl4z928st2bpeUg/iCUcAnzKliZ9Qj9H8H
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+MIIEJjCCAw6gAwIBAgIULtv0YaivYcewDIxv3/H4E4IucsUwDQYJKoZIhvcNAQEL
+BQAwTzELMAkGA1UEBhMCS1IxFzAVBgNVBAoMDldvb2FIb3VzZSBUZXN0MScwJQYD
+…</pre>
+<h3>결과 — 인증서 목록</h3><pre># | 주체 | 발급자 | 만료일 | 
+1 | C=KR, O=WooaHouse Test, CN=test.example | C=KR, O=WooaHouse Test, CN=WooaHouse Test Intermediate CA | 2122-08-15T02:49:12Z | 
+2 | C=KR, O=WooaHouse Test, CN=WooaHouse Test Intermediate CA | C=KR, O=WooaHouse Test, CN=WooaHouse Test Root CA | 2125-05-11T02:49:12Z | 
+3 | C=KR, O=WooaHouse Test, CN=WooaHouse Test Root CA | C=KR, O=WooaHouse Test, CN=WooaHouse Test Root CA | 2126-09-23T02:49:12Z | 자체 서명</pre>
+<h3>결과 — 변환 결과</h3><pre># C=KR, O=WooaHouse Test, CN=test.example
+# issuer: C=KR, O=WooaHouse Test, CN=WooaHouse Test Intermediate CA
+# expires: 2122-08-15T02:49:12Z
+-----BEGIN CERTIFICATE-----
+MIIEJjCCAw6gAwIBAgIULtv0YaivYcewDIxv3/H4E4IucsUwDQYJKoZIhvcNAQEL
+BQAwTzELMAkGA1UEBhMCS1IxFzAVBgNVBAoMDldvb2FIb3VzZSBUZXN0MScwJQYD
+VQQDDB5Xb29hSG91c2UgVGVzdCBJbnRlcm1lZGlhdGUgQ0EwIBcNMjYxMDE3MDI0
+OTEyWhgPMjEyMjA4MTUwMjQ5MTJaMD0xCzAJBgNVBAYTAktSMRcwFQYDVQQKDA5X
+b29hSG91c2UgVGVzdDEVMBMGA1UEAwwMdGVzdC5leGFtcGxlMIIBIjANBgkqhkiG
+9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq3nB6psHqkUElGM1kqgLdMjfCUV9OigW4q2J
+4YXDtWk4Z+EGdy201BBJOnOapvcWyCaa6s0Q+dV996hH52Uc0dsMHxiD5iqOaSmr
+8avPlVScMZ9JbM2f8LYCvJ16XxNB3hlPil/PQOTJZSOQlMWERL2AQtIYeAcrXixG
+6ZjpjS9FD7XS0fL4rQP3Xw2iZbaxYJn+69hTYlH6SLaHqadNCf9VFOVzAxv3/Opx
+spA3d3rcpNSNKh6Tb9oZ9vzeVte0+nQPWw1BTnvaeqyBFmC9NkfdHxdIcRzWJ9/+
+g03v3yE/rcU6aXIp30dHiSeFiHhlU9/LqZBFqi5ZSVA3vcS9NQIDAQABo4IBCDCC
+AQQwCQYDVR0TBAIwADAOBgNVHQ8BAf8EBAMCB4AwHQYDVR0lBBYwFAYIKwYBBQUH
+AwEGCCsGAQUFBwMCMEEGA1UdEQQ6MDiCDHRlc3QuZXhhbXBsZYIOKi50ZXN0LmV4
+YW1wbGWHBMAAAgqBEmFkbWluQHRlc3QuZXhhbXBsZTAdBgNVHQ4EFgQU89AZxtFa
+ncCM4XL/Me+9e91CKXEwHwYDVR0jBBgwFoAU/ytKoZx3xtnyF1ygCkv6YkYY7Agw
+MAYDVR0fBCkwJzAloCOgIYYfaHR0cDovL2NybC50ZXN0LmV4YW1wbGUvaW50LmNy
+bDATBgNVHSAEDDAKMAgGBmeBDAECATANBgkqhkiG9w0BAQsFAAOCAQEArSHrun0l
+8m3CsM4IHX0WpfCKVMSJPwJv6qkAYVpKpr0WJL/9RMV/KwKZ4EE58xLxqxkaki/U
+…</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>CA 가 준 여러 파일을 서버 설정에 맞는 한 파일로 합치거나 형식을 바꿀 때 씁니다. 인증서는 브라우저 밖으로 나가지 않습니다.</p>
+<ul><li>입력: PEM 여러 개(openssl x509 -text 출력에 섞여 있어도 PEM 만 추출), DER 16진수·Base64, PKCS#7(.p7b/.p7c)</li><li>변환: PEM(모두 추출), 체인 번들 PEM(중복 제거·리프→루트 정렬), DER(Base64·16진수)</li><li>번들 옵션: 자체 서명 루트 제외(서버용), 각 인증서 앞에 주체·발급자·만료일 주석</li><li>PKCS#12(.pfx)는 암호화되어 있어 열 수 없다고 안내하고 openssl 변환 명령을 알려 줌</li><li>입력에 개인키가 섞여 있으면 결과에서 제외하고 경고</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="certificate-decoder.html" class="related-card"><span class="related-icon">📜</span><span>인증서 디코더</span></a>
+    <a href="certificate-chain-checker.html" class="related-card"><span class="related-icon">🔗</span><span>인증서 체인 검증기</span></a>
+    <a href="csr-tool.html" class="related-card"><span class="related-icon">📝</span><span>CSR 생성·해석기</span></a>
+    <a href="base-encoding-converter.html" class="related-card"><span class="related-icon">🔢</span><span>Base 인코딩 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Nginx 는 ssl_certificate 에 리프 + 중간 CA 순서의 번들을 지정합니다. 루트는 보통 뺍니다.</li><li>Windows 에서 내보낸 .cer 는 DER 또는 Base64(PEM) 둘 중 하나입니다. 도구가 자동으로 판별합니다.</li><li>.p7b 는 인증서만 담은 PKCS#7 입니다. 개인키는 들어 있지 않습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>DER 파일 자체를 내려받을 수 있나요?</summary><p>텍스트 도구라 Base64 로 보여 줍니다. Base64 를 디코드해(base64 -d) 저장하면 .der/.cer 파일이 됩니다.</p></details><details><summary>PFX 는 왜 안 되나요?</summary><p>비밀번호로 암호화된 컨테이너라 브라우저에서 다루지 않습니다. openssl pkcs12 로 PEM 으로 바꾼 뒤 사용하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-binin.js"></script>
+<script src="js/tk-hash.js"></script>
+<script src="js/tk-asn1.js"></script>
+<script src="js/tk-x509.js"></script>
+<script src="js/tools/certificate-converter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MessagePack 뷰어 — 디코딩·인코딩과 바이트 구조 | WooaDev</title>
+  <meta name="description" content="MessagePack 바이너리를 16진수·Base64·파일로 받아 fixint, str, map, ext, timestamp 형식과 바이트 오프셋으로 해석하고 JSON으로 변환합니다. JSON 인코딩도 지원합니다.">
+  <meta name="keywords" content="MessagePack 디코더, msgpack 뷰어, msgpack JSON 변환, MessagePack 인코딩, fixmap 해석, messagepack viewer">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/messagepack-viewer.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/messagepack-viewer.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/messagepack-viewer.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/messagepack-viewer.html">
+  <meta property="og:title" content="MessagePack 뷰어 — 디코딩·인코딩과 바이트 구조 | WooaDev">
+  <meta property="og:description" content="MessagePack 바이너리를 16진수·Base64·파일로 받아 fixint, str, map, ext, timestamp 형식과 바이트 오프셋으로 해석하고 JSON으로 변환합니다. JSON 인코딩도 지원합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/messagepack-viewer.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MessagePack 뷰어 — 디코딩·인코딩과 바이트 구조 | WooaDev">
+  <meta name="twitter:description" content="MessagePack 바이너리를 16진수·Base64·파일로 받아 fixint, str, map, ext, timestamp 형식과 바이트 오프셋으로 해석하고 JSON으로 변환합니다. JSON 인코딩도 지원합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"MessagePack 뷰어·변환기","url":"https://wooadev.wooahouse.com/messagepack-viewer.html","description":"MessagePack 바이너리를 16진수·Base64·파일로 받아 fixint, str, map, ext, timestamp 형식과 바이트 오프셋으로 해석하고 JSON으로 변환합니다. JSON 인코딩도 지원합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: 16진수(공백·0x 허용), Base64, 파일 — 형식은 자동 판별","구조 표: 바이트 오프셋, 형식 바이트, 경로($.a.b[0]), 형식 이름(positive fixint, fixstr, map 16 …), 값","지원 형식: 정수 8~64비트, float32/64, str·bin·array·map, ext·fixext, 타임스탬프 확장(-1)","64비트 정수는 정밀도를 잃지 않고 표시, 문자열이 아닌 맵 키·중복 키·잘못된 UTF-8·뒤에 남은 바이트를 알림","인코딩: JSON 을 가장 짧은 정수 형식으로 변환하고 16진수·Base64 로 출력"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"MessagePack 과 JSON 은 무엇이 다른가요?","acceptedAnswer":{"@type":"Answer","text":"MessagePack 은 JSON 과 비슷한 데이터 모델을 바이너리로 압축한 형식입니다. 작고 빠르며 바이너리(bin)와 확장 타입을 지원합니다."}},{"@type":"Question","name":"c1 바이트는 왜 오류인가요?","acceptedAnswer":{"@type":"Answer","text":"0xc1 은 규격에서 사용하지 않기로 한 예약 바이트라서 정상 데이터에는 나올 수 없습니다. 데이터가 손상되었거나 다른 형식일 수 있습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"MessagePack 뷰어·변환기","item":"https://wooadev.wooahouse.com/messagepack-viewer.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="messagepack-viewer.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/messagepack-viewer.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>MessagePack 뷰어·변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📦</span>
+    <h1>MessagePack 디코더 · 인코더</h1>
+    <p>16진수나 Base64, 파일로 받은 MessagePack 바이트를 형식 이름과 바이트 오프셋이 붙은 구조 표와 JSON으로 풀어 줍니다. 반대로 JSON을 가장 짧은 MessagePack 으로 인코딩하는 기능도 있습니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 해석 완료 — 42바이트, 요소 12개</p>
+<h3>입력 — MessagePack (16진수/Base64) 또는 인코딩할 JSON</h3><pre>84 a4 6e 61 6d 65 a5 57 6f 6f 61 21 a3 61 67 65 1e a6 73 63 6f 72 65 73 93 01 cb 40 09 1e b8 51 eb 85 1f d4 02 0a a2 6f 6b c3</pre>
+<h3>결과 — 구조 (바이트 오프셋)</h3><pre>오프셋 | 바이트 | 경로 | 형식 | 값
+0 | 0x84 | $ | fixmap | map(4)
+6 | 0xa5 |   $.name | fixstr | "Wooa!"
+16 | 0x1e |   $.age | positive fixint | 30
+24 | 0x93 |   $.scores | fixarray | array(3)
+25 | 0x01 |     $.scores[0] | positive fixint | 1
+26 | 0xcb |     $.scores[1] | float 64 | 3.14
+35 | 0xd4 |     $.scores[2] | fixext 1 | ext 2 h'0a'
+41 | 0xc3 |   $.ok | true | true</pre>
+<h3>결과 — JSON / 인코딩 결과</h3><pre>{
+  "name": "Wooa!",
+  "age": 30,
+  "scores": [
+    1,
+    3.14,
+    {
+      "$ext": 2,
+      "$data": "0a"
+    }
+  ],
+  "ok": true
+}</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>서버 간 통신이나 캐시에 저장된 msgpack 데이터를 열어 볼 때 씁니다. 데이터는 브라우저 밖으로 나가지 않습니다.</p>
+<ul><li>입력: 16진수(공백·0x 허용), Base64, 파일 — 형식은 자동 판별</li><li>구조 표: 바이트 오프셋, 형식 바이트, 경로($.a.b[0]), 형식 이름(positive fixint, fixstr, map 16 …), 값</li><li>지원 형식: 정수 8~64비트, float32/64, str·bin·array·map, ext·fixext, 타임스탬프 확장(-1)</li><li>64비트 정수는 정밀도를 잃지 않고 표시, 문자열이 아닌 맵 키·중복 키·잘못된 UTF-8·뒤에 남은 바이트를 알림</li><li>인코딩: JSON 을 가장 짧은 정수 형식으로 변환하고 16진수·Base64 로 출력</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="cbor-viewer.html" class="related-card"><span class="related-icon">🧬</span><span>CBOR 뷰어·변환기</span></a>
+    <a href="bson-viewer.html" class="related-card"><span class="related-icon">🍃</span><span>BSON·확장 JSON 뷰어</span></a>
+    <a href="protobuf-decoder.html" class="related-card"><span class="related-icon">📡</span><span>Protobuf 디코더 (스키마 없이)</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>msgpack 은 JSON 과 달리 바이너리와 정수·실수를 구분합니다. 실수 1.0 과 정수 1 은 다른 바이트입니다.</li><li>맵 키가 문자열이 아닌 msgpack 은 JSON 으로 옮길 때 키가 문자열이 되어 충돌할 수 있습니다.</li><li>스트림처럼 값이 이어져 있으면 뒤에 남은 바이트 알림을 보고 값별로 잘라 다시 해석하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>MessagePack 과 JSON 은 무엇이 다른가요?</summary><p>MessagePack 은 JSON 과 비슷한 데이터 모델을 바이너리로 압축한 형식입니다. 작고 빠르며 바이너리(bin)와 확장 타입을 지원합니다.</p></details><details><summary>c1 바이트는 왜 오류인가요?</summary><p>0xc1 은 규격에서 사용하지 않기로 한 예약 바이트라서 정상 데이터에는 나올 수 없습니다. 데이터가 손상되었거나 다른 형식일 수 있습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-binin.js"></script>
+<script src="js/tools/messagepack-viewer.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

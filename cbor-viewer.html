@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CBOR 뷰어 — 디코딩·진단 표기·인코딩 | WooaDev</title>
+  <meta name="description" content="CBOR 바이너리를 주 타입, 바이트 오프셋, 태그(날짜·bignum)와 함께 해석하고 JSON·진단 표기로 변환합니다. 부정 길이, 반정밀도 float, JSON 인코딩을 지원합니다.">
+  <meta name="keywords" content="CBOR 디코더, CBOR 뷰어, CBOR JSON 변환, RFC 8949 진단 표기, CBOR 태그, cbor viewer">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/cbor-viewer.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/cbor-viewer.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/cbor-viewer.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/cbor-viewer.html">
+  <meta property="og:title" content="CBOR 뷰어 — 디코딩·진단 표기·인코딩 | WooaDev">
+  <meta property="og:description" content="CBOR 바이너리를 주 타입, 바이트 오프셋, 태그(날짜·bignum)와 함께 해석하고 JSON·진단 표기로 변환합니다. 부정 길이, 반정밀도 float, JSON 인코딩을 지원합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/cbor-viewer.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CBOR 뷰어 — 디코딩·진단 표기·인코딩 | WooaDev">
+  <meta name="twitter:description" content="CBOR 바이너리를 주 타입, 바이트 오프셋, 태그(날짜·bignum)와 함께 해석하고 JSON·진단 표기로 변환합니다. 부정 길이, 반정밀도 float, JSON 인코딩을 지원합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CBOR 뷰어·변환기","url":"https://wooadev.wooahouse.com/cbor-viewer.html","description":"CBOR 바이너리를 주 타입, 바이트 오프셋, 태그(날짜·bignum)와 함께 해석하고 JSON·진단 표기로 변환합니다. 부정 길이, 반정밀도 float, JSON 인코딩을 지원합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["주 타입 0~7(정수, 바이트·텍스트 문자열, 배열, 맵, 태그, 단순값·실수) 전체","반정밀도(float16)·단정밀도·배정밀도 실수와 Infinity·NaN, 64비트 정수","태그: 날짜 문자열, 에포크 시간(ISO 로 함께 표시), bignum 2·3, 자기 설명 55799 등 이름 표시","부정 길이(indefinite) 문자열·배열·맵과 break 처리, 결정적 인코딩 위반 안내","출력: JSON, 진단 표기(예: {\"a\": 1, \"b\": [2, 3]}), 바이트 오프셋 표 / 인코딩: JSON → CBOR"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"CBOR 과 MessagePack 은 어떻게 다른가요?","acceptedAnswer":{"@type":"Answer","text":"둘 다 JSON 비슷한 바이너리 형식이지만 CBOR 는 IETF 표준(RFC 8949)이며 태그, 반정밀도 실수, 부정 길이를 지원합니다."}},{"@type":"Question","name":"진단 표기란 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"CBOR 데이터를 사람이 읽도록 적는 규격 표기입니다. h'0102' 는 바이트 문자열, 1(1699684224) 는 태그 1 이 붙은 값입니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"CBOR 뷰어·변환기","item":"https://wooadev.wooahouse.com/cbor-viewer.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="cbor-viewer.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/cbor-viewer.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CBOR 뷰어·변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧬</span>
+    <h1>CBOR 디코더 · 인코더 (RFC 8949)</h1>
+    <p>16진수·Base64·파일로 받은 CBOR 바이트를 주 타입, 바이트 오프셋, 태그와 함께 트리로 풀고 JSON 과 RFC 8949 진단 표기도 만들어 줍니다. JSON 을 CBOR 로 인코딩할 수도 있습니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 해석 완료 — 46바이트, 요소 13개</p>
+<h3>입력 — CBOR (16진수/Base64) 또는 인코딩할 JSON</h3><pre>a4 64 6e 61 6d 65 65 57 6f 6f 61 21 63 61 67 65 18 1e 66 73 63 6f 72 65 73 83 01 fb 40 09 1e b8 51 eb 85 1f c1 1a 65 4f 1f 80 62 6f 6b f5</pre>
+<h3>결과 — 타입 트리 (바이트 오프셋)</h3><pre>오프셋 | 바이트 | 경로 | 타입 | 값
+0 | 0xa4 | $ | map | map(4)
+6 | 0x65 |   $.name | text string | "Wooa!"
+16 | 0x18 |   $.age | unsigned int | 30
+25 | 0x83 |   $.scores | array | array(3)
+26 | 0x01 |     $.scores[0] | unsigned int | 1
+27 | 0xfb |     $.scores[1] | float64 | 3.14
+36 | 0xc1 |     $.scores[2] | tag | tag(1) — epoch date/time
+37 | 0x1a |       $.scores[2] | unsigned int | 1699684224
+45 | 0xf5 |   $.ok | simple | true</pre>
+<h3>결과 — JSON / 인코딩 결과</h3><pre>{
+  "name": "Wooa!",
+  "age": 30,
+  "scores": [
+    1,
+    3.14,
+    {
+      "$tag": 1,
+      "$value": 1699684224,
+      "$iso": "2023-11-11T06:30:24.000Z"
+    }
+  ],
+  "ok": true
+}</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>IoT·WebAuthn·COSE 처럼 CBOR 를 쓰는 데이터를 사람이 읽을 수 있게 풀어 줍니다. 데이터는 브라우저 밖으로 나가지 않습니다.</p>
+<ul><li>주 타입 0~7(정수, 바이트·텍스트 문자열, 배열, 맵, 태그, 단순값·실수) 전체</li><li>반정밀도(float16)·단정밀도·배정밀도 실수와 Infinity·NaN, 64비트 정수</li><li>태그: 날짜 문자열, 에포크 시간(ISO 로 함께 표시), bignum 2·3, 자기 설명 55799 등 이름 표시</li><li>부정 길이(indefinite) 문자열·배열·맵과 break 처리, 결정적 인코딩 위반 안내</li><li>출력: JSON, 진단 표기(예: {"a": 1, "b": [2, 3]}), 바이트 오프셋 표 / 인코딩: JSON → CBOR</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="messagepack-viewer.html" class="related-card"><span class="related-icon">📦</span><span>MessagePack 뷰어·변환기</span></a>
+    <a href="bson-viewer.html" class="related-card"><span class="related-icon">🍃</span><span>BSON·확장 JSON 뷰어</span></a>
+    <a href="protobuf-decoder.html" class="related-card"><span class="related-icon">📡</span><span>Protobuf 디코더 (스키마 없이)</span></a>
+    <a href="asn1-decoder.html" class="related-card"><span class="related-icon">🔐</span><span>ASN.1 DER 디코더</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>WebAuthn 의 attestationObject, COSE 키는 CBOR 맵입니다. 정수 키(1, 3, -1 …)가 많아 JSON 에서는 문자열이 됩니다.</li><li>태그 24(내장 CBOR)는 바이트 문자열 안에 또 다른 CBOR 가 들어 있다는 뜻입니다. 안쪽 바이트를 따로 복사해 다시 해석하세요.</li><li>결정적 인코딩이 필요한 서명용 데이터는 부정 길이를 쓰지 않고 키를 정렬해야 합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>CBOR 과 MessagePack 은 어떻게 다른가요?</summary><p>둘 다 JSON 비슷한 바이너리 형식이지만 CBOR 는 IETF 표준(RFC 8949)이며 태그, 반정밀도 실수, 부정 길이를 지원합니다.</p></details><details><summary>진단 표기란 무엇인가요?</summary><p>CBOR 데이터를 사람이 읽도록 적는 규격 표기입니다. h'0102' 는 바이트 문자열, 1(1699684224) 는 태그 1 이 붙은 값입니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-binin.js"></script>
+<script src="js/tools/cbor-viewer.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

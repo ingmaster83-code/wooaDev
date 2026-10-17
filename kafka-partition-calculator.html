@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kafka 파티션 계산기 — murmur2 해시로 키별 파티션 확인 | WooaDev</title>
+  <meta name="description" content="Kafka 기본 파티셔너의 murmur2 해시로 메시지 키의 파티션을 계산합니다. 파티션 수를 바꿔 가며 키 분포와 쏠림을 확인하고 UTF-8·16진수·Base64 키를 지원합니다.">
+  <meta name="keywords" content="Kafka 파티션 계산, murmur2, Kafka 파티셔너, 키 파티션 분포, 핫 파티션, kafka partition calculator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/kafka-partition-calculator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/kafka-partition-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/kafka-partition-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/kafka-partition-calculator.html">
+  <meta property="og:title" content="Kafka 파티션 계산기 — murmur2 해시로 키별 파티션 확인 | WooaDev">
+  <meta property="og:description" content="Kafka 기본 파티셔너의 murmur2 해시로 메시지 키의 파티션을 계산합니다. 파티션 수를 바꿔 가며 키 분포와 쏠림을 확인하고 UTF-8·16진수·Base64 키를 지원합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/kafka-partition-calculator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kafka 파티션 계산기 — murmur2 해시로 키별 파티션 확인 | WooaDev">
+  <meta name="twitter:description" content="Kafka 기본 파티셔너의 murmur2 해시로 메시지 키의 파티션을 계산합니다. 파티션 수를 바꿔 가며 키 분포와 쏠림을 확인하고 UTF-8·16진수·Base64 키를 지원합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Kafka 파티션 계산기","url":"https://wooadev.wooahouse.com/kafka-partition-calculator.html","description":"Kafka 기본 파티셔너의 murmur2 해시로 메시지 키의 파티션을 계산합니다. 파티션 수를 바꿔 가며 키 분포와 쏠림을 확인하고 UTF-8·16진수·Base64 키를 지원합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["계산식: partition = (murmur2(키 바이트) & 0x7fffffff) % 파티션 수 (Java 클라이언트 기본 파티셔너와 동일)","키 해석: UTF-8 문자열, 16진수 바이트, Base64 / 한 줄에 키 하나(최대 20,000개)","결과 표: murmur2 부호 있는 값과 16진수, 양수화한 값, 파티션 번호","파티션 분포 표와 막대, 한쪽으로 쏠릴 때 핫 파티션 경고","Kafka 공식 테스트 벡터(\"21\", \"foobar\" …)와 일치"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"왜 & 0x7fffffff 를 쓰나요?","acceptedAnswer":{"@type":"Answer","text":"murmur2 결과가 음수일 수 있어 부호 비트를 지워 양수로 만든 뒤 나머지를 구합니다."}},{"@type":"Question","name":"특정 키가 한 파티션에 몰려요.","acceptedAnswer":{"@type":"Answer","text":"키 값의 종류가 적거나 특정 키에 트래픽이 몰리면 해시가 고르게 나뉘어도 쏠립니다. 키를 더 세분화하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"Kafka 파티션 계산기","item":"https://wooadev.wooahouse.com/kafka-partition-calculator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="kafka-partition-calculator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/kafka-partition-calculator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Kafka 파티션 계산기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🗂️</span>
+    <h1>Kafka 파티션 계산기 (murmur2)</h1>
+    <p>메시지 키를 한 줄에 하나씩 넣으면 Kafka 자바 클라이언트의 기본 파티셔너와 같은 murmur2 해시와 파티션 번호를 계산하고, 파티션별 분포로 한쪽에 쏠리는지도 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 키 6개 → 파티션 6개</p>
+<h3>입력 — 메시지 키 (한 줄에 하나)</h3><pre>user-1001
+user-1002
+order-77
+21
+foobar
+a-little-bit-long-string</pre>
+<h3>결과 — 키별 파티션</h3><pre># | 키 | murmur2 (부호 있음) | 16진수 | 양수화 | 파티션
+1 | user-1001 | -1052335918 | 0xc146a0d2 | 1095147730 | 4
+2 | user-1002 | 494644997 | 0x1d7baf05 | 494644997 | 5
+3 | order-77 | -436693316 | 0xe5f896bc | 1710790332 | 0
+4 | 21 | -973932308 | 0xc5f2f8ec | 1173551340 | 0
+5 | foobar | -790332482 | 0xd0e47bbe | 1357151166 | 0
+6 | a-little-bit-long-string | -985981536 | 0xc53b1da0 | 1161502112 | 2</pre>
+<h3>결과 — 파티션 분포</h3><pre>파티션 | 키 수 | 비율 | 
+0 | 3 | 50.0% | ████████████████████
+1 | 0 | 0.0% | 
+2 | 1 | 16.7% | ███████
+3 | 0 | 0.0% | 
+4 | 1 | 16.7% | ███████
+5 | 1 | 16.7% | ███████</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>같은 키가 항상 같은 파티션으로 가는지, 파티션 수를 늘리면 어떻게 바뀌는지 미리 확인합니다. 키는 브라우저 밖으로 나가지 않습니다.</p>
+<ul><li>계산식: partition = (murmur2(키 바이트) &amp; 0x7fffffff) % 파티션 수 (Java 클라이언트 기본 파티셔너와 동일)</li><li>키 해석: UTF-8 문자열, 16진수 바이트, Base64 / 한 줄에 키 하나(최대 20,000개)</li><li>결과 표: murmur2 부호 있는 값과 16진수, 양수화한 값, 파티션 번호</li><li>파티션 분포 표와 막대, 한쪽으로 쏠릴 때 핫 파티션 경고</li><li>Kafka 공식 테스트 벡터("21", "foobar" …)와 일치</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="hash-generator.html" class="related-card"><span class="related-icon">🔑</span><span>Hash 생성기</span></a>
+    <a href="checksum-calculator.html" class="related-card"><span class="related-icon">🔢</span><span>CRC·체크섬 계산기</span></a>
+    <a href="mqtt-topic-tester.html" class="related-card"><span class="related-icon">📡</span><span>MQTT 토픽 필터 테스터</span></a>
+    <a href="number-base.html" class="related-card"><span class="related-icon">🔢</span><span>진법 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>파티션 수를 늘리면 같은 키가 다른 파티션으로 옮겨져 키별 순서 보장이 깨집니다.</li><li>키가 null 이면 키 해시 대신 sticky 파티셔닝이 쓰입니다.</li><li>librdkafka 기반(Python confluent-kafka 등) 클라이언트는 기본이 CRC32 라 결과가 다를 수 있습니다. partitioner 를 murmur2_random 으로 맞추세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>왜 &amp; 0x7fffffff 를 쓰나요?</summary><p>murmur2 결과가 음수일 수 있어 부호 비트를 지워 양수로 만든 뒤 나머지를 구합니다.</p></details><details><summary>특정 키가 한 파티션에 몰려요.</summary><p>키 값의 종류가 적거나 특정 키에 트래픽이 몰리면 해시가 고르게 나뉘어도 쏠립니다. 키를 더 세분화하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-binin.js"></script>
+<script src="js/tools/kafka-partition-calculator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

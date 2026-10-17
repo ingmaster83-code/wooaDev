@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSR Generator &amp; Decoder – Verify Signatures, Create CSRs | WooaDev</title>
+  <meta name="description" content="Decode a CSR to subject, SAN, public key and signature algorithm and verify its signature. Generate a new CSR with RSA or ECDSA keys and SAN in the browser, output as PEM.">
+  <meta name="keywords" content="CSR generator, CSR decoder, certificate signing request, SAN CSR, verify CSR signature, csr tool">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/csr-tool.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/csr-tool.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/csr-tool.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/csr-tool.html">
+  <meta property="og:title" content="CSR Generator &amp; Decoder – Verify Signatures, Create CSRs | WooaDev">
+  <meta property="og:description" content="Decode a CSR to subject, SAN, public key and signature algorithm and verify its signature. Generate a new CSR with RSA or ECDSA keys and SAN in the browser, output as PEM.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/csr-tool.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSR Generator &amp; Decoder – Verify Signatures, Create CSRs | WooaDev">
+  <meta name="twitter:description" content="Decode a CSR to subject, SAN, public key and signature algorithm and verify its signature. Generate a new CSR with RSA or ECDSA keys and SAN in the browser, output as PEM.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSR Generator & Decoder","url":"https://wooadev.wooahouse.com/en/csr-tool.html","description":"Decode a CSR to subject, SAN, public key and signature algorithm and verify its signature. Generate a new CSR with RSA or ECDSA keys and SAN in the browser, output as PEM.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Decode: subject (CN, O, OU, C, ST, L, email), requested SAN and key usage, public key (RSA bits, EC curve), signature algorithm, SHA-256 fingerprint","Verify: checks the signature with the CSR's own public key to catch tampering or damage","Generate: key type (ECDSA P-256 / P-384, RSA 2048 / 3072 / 4096), CN, organisation, country and SAN (domain, wildcard, IPv4, IPv6, email)","Output: CSR (PEM) and private key (PKCS#8 PEM); standard PKCS#10 that passes openssl req -verify","Checks: missing SAN, short RSA keys, weak signatures, CN absent from SAN"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can I use a key generated here in production?","acceptedAnswer":{"@type":"Answer","text":"It is generated only in the browser, but production keys should be created on the server or an HSM; use this for tests and internal use."}},{"@type":"Question","name":"My CSR has a CN but no SAN.","acceptedAnswer":{"@type":"Answer","text":"Some public CAs copy the CN into the SAN but it is not guaranteed; recreate the CSR with the domains listed in SAN."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"CSR Generator & Decoder","item":"https://wooadev.wooahouse.com/en/csr-tool.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../csr-tool.html">KO</a>
+        <span>|</span>
+        <a href="csr-tool.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CSR Generator &amp; Decoder</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📝</span>
+    <h1>CSR Generator &amp; Decoder</h1>
+    <p>Paste a certificate signing request to see its subject, SAN, public key and signature algorithm and to verify the proof-of-possession signature. You can also generate a new CSR and private key from your domains inside the browser.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ CSR decoded</p>
+<h3>Input — CSR (PEM, or hex / Base64 DER)</h3><pre>-----BEGIN CERTIFICATE REQUEST-----
+MIICgjCCAWoCAQAwPTELMAkGA1UEBhMCS1IxFzAVBgNVBAoMDldvb2FIb3VzZSBU
+ZXN0MRUwEwYDVQQDDAx0ZXN0LmV4YW1wbGUwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+DwAwggEKAoIBAQCrecHqmweqRQSUYzWSqAt0yN8JRX06KBbirYnhhcO1aThn4QZ3
+LbTUEEk6c5qm9xbIJprqzRD51X33qEfnZRzR2wwfGIPmKo5pKavxq8+VVJwxn0ls
+zZ/wtgK8nXpfE0HeGU+KX89A5MllI5CUxYREvYBC0hh4ByteLEbpmOmNL0UPtdLR
+8vitA/dfDaJltrFgmf7r2FNiUfpItoepp00J/1UU5XMDG/f86nGykDd3etyk1I0q
+HpNv2hn2/N5W17T6dA9bDUFOe9p6rIEWYL02R90fF0hxHNYn3/6DTe/fIT+txTpp
+cinfR0eJJ4WIeGVT38upkEWqLllJUDe9xL01AgMBAAGgADANBgkqhkiG9w0BAQsF
+AAOCAQEAkEfmIkp7bBPXbBi4SJSr8QuX0QYqt3irDQdWE0XEIcSltW7AzVbd2bVD
+tYO2rXpL6fvb5jBgLK6VkSotULlgdH3GIokOHaox4yrW6W/NWbliut9HC5g3yo3P
+Lr5k8VdsrVur38EdTNjHKxjOoBuMChpdUlbc8ME6GKZGWHqNaLamz7K8pujXoZkZ
+Mjvd8KmNfaZgg+yqqKLhelH3NxOElPYFUi6x/xvb/dR4g0QRK4z7uGp7g/KA8Z9A
+rptDoNlr/dMUvZ8LjFzQz8zsMgfyKx4AOLCXWGmu2mJmSQj2/IVBxGIVQXGk4svT
+…</pre>
+<h3>Input — SAN entries (one per line: domain, *.domain, IP, email)</h3><pre>example.com
+www.example.com
+*.example.com
+192.0.2.10</pre>
+<h3>Result — CSR contents</h3><pre>Field | Value
+Subject | C=KR, O=WooaHouse Test, CN=test.example
+Version | v1
+Public key | RSA 2048 bit (e=65537)
+Signature algorithm | sha256WithRSAEncryption
+Signature check | ✅ Verified with the CSR public key (proof of possession)
+SAN | (none)
+Attributes | (none)
+SHA-256 fingerprint | C6:2A:65:D2:6D:47:20:6A:5A:4D:56:27:AC:3B:0A:F9:43:C9:13:78:94:53:DA:91:E0:4F:FF:E8:58:CA:B0:9E</pre>
+<h3>Result — Findings</h3><pre>⚠️ No SAN: modern browsers ignore the CN for hostname matching
+Extensions in a CSR are only requests; the CA may ignore or change them</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Check a CSR before applying for a certificate or create one quickly. The private key is generated only in your browser and never sent.</p>
+<ul><li>Decode: subject (CN, O, OU, C, ST, L, email), requested SAN and key usage, public key (RSA bits, EC curve), signature algorithm, SHA-256 fingerprint</li><li>Verify: checks the signature with the CSR's own public key to catch tampering or damage</li><li>Generate: key type (ECDSA P-256 / P-384, RSA 2048 / 3072 / 4096), CN, organisation, country and SAN (domain, wildcard, IPv4, IPv6, email)</li><li>Output: CSR (PEM) and private key (PKCS#8 PEM); standard PKCS#10 that passes openssl req -verify</li><li>Checks: missing SAN, short RSA keys, weak signatures, CN absent from SAN</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="certificate-decoder.html" class="related-card"><span class="related-icon">📜</span><span>Certificate Decoder</span></a>
+    <a href="key-generator.html" class="related-card"><span class="related-icon">🔑</span><span>Key Pair Generator (RSA, EC, Ed25519)</span></a>
+    <a href="certificate-converter.html" class="related-card"><span class="related-icon">🔄</span><span>Certificate Converter &amp; Bundle Builder</span></a>
+    <a href="asn1-decoder.html" class="related-card"><span class="related-icon">🔐</span><span>ASN.1 DER Decoder</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Submit only the CSR to the CA; keep the private key on your server and send it nowhere.</li><li>SAN is mandatory today; list the wildcard and the bare domain (example.com) separately to cover both.</li><li>Extensions in a CSR are only requests that the CA may ignore or change.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Can I use a key generated here in production?</summary><p>It is generated only in the browser, but production keys should be created on the server or an HSM; use this for tests and internal use.</p></details><details><summary>My CSR has a CN but no SAN.</summary><p>Some public CAs copy the CN into the SAN but it is not guaranteed; recreate the CSR with the domains listed in SAN.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-binin.js"></script>
+<script src="../js/tk-hash.js"></script>
+<script src="../js/tk-asn1.js"></script>
+<script src="../js/tk-x509.js"></script>
+<script src="../js/tools/csr-tool.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

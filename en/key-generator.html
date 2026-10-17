@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Key Pair Generator – RSA, ECDSA &amp; Ed25519 as PEM, JWK, SSH | WooaDev</title>
+  <meta name="description" content="Generate RSA 2048–4096, ECDSA P-256 / 384 / 521 and Ed25519 key pairs in the browser as PKCS#8 and SPKI PEM, JWK, an SSH public key line and fingerprints, for test keys.">
+  <meta name="keywords" content="RSA key generator, EC key pair generator, Ed25519 key generator, PEM JWK output, SSH key generator, key generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/key-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/key-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/key-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/key-generator.html">
+  <meta property="og:title" content="Key Pair Generator – RSA, ECDSA &amp; Ed25519 as PEM, JWK, SSH | WooaDev">
+  <meta property="og:description" content="Generate RSA 2048–4096, ECDSA P-256 / 384 / 521 and Ed25519 key pairs in the browser as PKCS#8 and SPKI PEM, JWK, an SSH public key line and fingerprints, for test keys.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/key-generator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Key Pair Generator – RSA, ECDSA &amp; Ed25519 as PEM, JWK, SSH | WooaDev">
+  <meta name="twitter:description" content="Generate RSA 2048–4096, ECDSA P-256 / 384 / 521 and Ed25519 key pairs in the browser as PKCS#8 and SPKI PEM, JWK, an SSH public key line and fingerprints, for test keys.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Key Pair Generator (RSA, EC, Ed25519)","url":"https://wooadev.wooahouse.com/en/key-generator.html","description":"Generate RSA 2048–4096, ECDSA P-256 / 384 / 521 and Ed25519 key pairs in the browser as PKCS#8 and SPKI PEM, JWK, an SSH public key line and fingerprints, for test keys.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Key types: ECDSA P-256, P-384, P-521, Ed25519, RSA 2048, 3072, 4096","Output: private key (PKCS#8 PEM), public key (SPKI PEM), JWK (private and public separated) and an SSH authorized_keys line","Fingerprints: SSH SHA256 (same as ssh-keygen -lf) and JWK RFC 7638","The public key matches openssl pkey -pubout in standard format","Reminds you not to use on-screen keys in production and which browsers support Ed25519"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can I use a key generated here in production?","acceptedAnswer":{"@type":"Answer","text":"Not recommended; create production keys on a server or in an HSM / KMS. This tool is for testing and learning."}},{"@type":"Question","name":"Is the private key sent to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything runs in the browser's Web Crypto and disappears when the page closes; copy what you need right away."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Key Pair Generator (RSA, EC, Ed25519)","item":"https://wooadev.wooahouse.com/en/key-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../key-generator.html">KO</a>
+        <span>|</span>
+        <a href="key-generator.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Key Pair Generator (RSA, EC, Ed25519)</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔑</span>
+    <h1>RSA / EC / Ed25519 Key Pair Generator</h1>
+    <p>Generates RSA (2048–4096), ECDSA (P-256, P-384, P-521) and Ed25519 key pairs inside your browser with Web Crypto and shows the PKCS#8 private PEM, SPKI public PEM, JWK, SSH authorized_keys line and fingerprints at once.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Generated a ECDSA P-256 key pair</p>
+<h3>Input — SSH public key comment (optional, e.g. you@host)</h3><pre>test@wooadev</pre>
+<h3>Result — Key info</h3><pre>Item | Value
+Type | ECDSA P-256
+SSH fingerprint | SHA256:FHOvzFSxum4GIP5mlkozcV90Z96SC3mcZppjqhT+Ink
+JWK thumbprint (RFC 7638) | gEv5-kcDBZlR5pIZGJvYG99f6SyacF2XCVWiTpUayxw
+Private key format | PKCS#8 (-----BEGIN PRIVATE KEY-----)
+Public key format | SubjectPublicKeyInfo (-----BEGIN PUBLIC KEY-----)</pre>
+<h3>Result — SSH public key (authorized_keys line)</h3><pre>ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPvT1USMjTxG2vGY5tElLWHsGAuK9QdmPI63dt/2JoypoP5Q6+JSKY0v5WgQLJpKdesdzT8n2aaHlqQpkwrltuI= test@wooadev</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Create key pairs for development and tests without installing anything. Keys are generated only in your browser and never sent.</p>
+<ul><li>Key types: ECDSA P-256, P-384, P-521, Ed25519, RSA 2048, 3072, 4096</li><li>Output: private key (PKCS#8 PEM), public key (SPKI PEM), JWK (private and public separated) and an SSH authorized_keys line</li><li>Fingerprints: SSH SHA256 (same as ssh-keygen -lf) and JWK RFC 7638</li><li>The public key matches openssl pkey -pubout in standard format</li><li>Reminds you not to use on-screen keys in production and which browsers support Ed25519</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="csr-tool.html" class="related-card"><span class="related-icon">📝</span><span>CSR Generator &amp; Decoder</span></a>
+    <a href="ssh-key-inspector.html" class="related-card"><span class="related-icon">🗝️</span><span>SSH Public Key Inspector</span></a>
+    <a href="jwk-converter.html" class="related-card"><span class="related-icon">🧷</span><span>JWK ↔ PEM Converter</span></a>
+    <a href="password-hash.html" class="related-card"><span class="related-icon">🧂</span><span>Password Hash Generator &amp; Verifier (bcrypt, Argon2, scrypt)</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>For JWT signing tests ECDSA P-256 (ES256) or Ed25519 is short and fast.</li><li>Paste the SSH line into ~/.ssh/authorized_keys as is and save the private PEM with chmod 600.</li><li>RSA 4096 can take a few seconds to generate.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Can I use a key generated here in production?</summary><p>Not recommended; create production keys on a server or in an HSM / KMS. This tool is for testing and learning.</p></details><details><summary>Is the private key sent to a server?</summary><p>No. Everything runs in the browser's Web Crypto and disappears when the page closes; copy what you need right away.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-hash.js"></script>
+<script src="../js/tk-asn1.js"></script>
+<script src="../js/tk-x509.js"></script>
+<script src="../js/tools/key-generator.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

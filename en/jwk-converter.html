@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JWK PEM Converter – JWKS to PEM and PEM to JWK | WooaDev</title>
+  <meta name="description" content="Convert JWK and JWKS to PEM (SPKI, PKCS#8) and PEM public keys, private keys and certificates to JWK. Supports RSA, EC (P-256, P-384, P-521) and Ed25519 with RFC 7638 thumbprints.">
+  <meta name="keywords" content="JWK to PEM, JWKS PEM, PEM to JWK, RFC 7638 thumbprint, select kid, jwk converter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/jwk-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/jwk-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/jwk-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/jwk-converter.html">
+  <meta property="og:title" content="JWK PEM Converter – JWKS to PEM and PEM to JWK | WooaDev">
+  <meta property="og:description" content="Convert JWK and JWKS to PEM (SPKI, PKCS#8) and PEM public keys, private keys and certificates to JWK. Supports RSA, EC (P-256, P-384, P-521) and Ed25519 with RFC 7638 thumbprints.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/jwk-converter.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JWK PEM Converter – JWKS to PEM and PEM to JWK | WooaDev">
+  <meta name="twitter:description" content="Convert JWK and JWKS to PEM (SPKI, PKCS#8) and PEM public keys, private keys and certificates to JWK. Supports RSA, EC (P-256, P-384, P-521) and Ed25519 with RFC 7638 thumbprints.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JWK ↔ PEM Converter","url":"https://wooadev.wooahouse.com/en/jwk-converter.html","description":"Convert JWK and JWKS to PEM (SPKI, PKCS#8) and PEM public keys, private keys and certificates to JWK. Supports RSA, EC (P-256, P-384, P-521) and Ed25519 with RFC 7638 thumbprints.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["JWK / JWKS → PEM: RSA, EC (P-256, P-384, P-521) and OKP (Ed25519); private keys as PKCS#8, public keys as SPKI","PEM → JWK: SPKI, PKCS#8, PKCS#1 (RSA), SEC1 (EC) and certificates (public key extracted), with kid (thumbprint), use and alg","RFC 7638 thumbprint (SHA-256, Base64URL) from the required members as lexicographic JSON","Select one key from a JWKS by kid; symmetric (oct) keys are noted as having no PEM","Warns about private parameters (d), weak RSA and a missing kid"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What are RSA n and e?","acceptedAnswer":{"@type":"Answer","text":"The modulus and public exponent, Base64URL encoded; they are the same values as in the SPKI public key."}},{"@type":"Question","name":"Ed25519 does not convert.","acceptedAnswer":{"@type":"Answer","text":"The browser must support Ed25519 in Web Crypto (Chrome 137+, Firefox 129+, Safari 17+)."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"JWK ↔ PEM Converter","item":"https://wooadev.wooahouse.com/en/jwk-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../jwk-converter.html">KO</a>
+        <span>|</span>
+        <a href="jwk-converter.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>JWK ↔ PEM Converter</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧷</span>
+    <h1>JWK / JWKS ↔ PEM Converter</h1>
+    <p>Converts the JWK or JWKS used for JWT verification into PEM public or private keys and PEM public keys, private keys and certificates into JWK. It computes RFC 7638 thumbprints to use as kid and can select one key by kid.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Converted 2 key(s) to PEM</p>
+<h3>Input — JWK / JWKS (JSON) or PEM</h3><pre>{
+  "keys": [
+    {
+      "kty": "EC",
+      "crv": "P-256",
+      "x": "f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU",
+      "y": "x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0",
+      "kid": "ec-demo",
+      "use": "sig"
+    },
+    {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo",
+      "kid": "ed-demo"
+    }
+  ]
+}</pre>
+<h3>Result — Key info</h3><pre># | kty | Size | alg | use | kid | Thumbprint (RFC 7638) | State
+1 | EC | EC P-256 | — | sig | ec-demo | oKIywvGUpTVTyxMQ3bwIIeQUudfr_CkLMjCE19ECD-U | public
+2 | OKP | OKP Ed25519 | — | — | ed-demo | kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k | public</pre>
+<h3>Result — Converted</h3><pre># #1 ec-demo (EC P-256)
+-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEf83OJ3D2xF1Bg8vub9tLe1gHMzV7
+6e8Tus9uPHvRVEXH8UTNG72bfocs3+257rn0s2ldbqkLJK2KRiMohYjlrQ==
+-----END PUBLIC KEY-----
+
+# #2 ed-demo (OKP Ed25519)
+-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEA11qYAYKxCrfVS/7TyWQHOg7hcvPapiMlrwIaaPcHURo=
+-----END PUBLIC KEY-----</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Use it when a JWT library accepts only PEM or you must publish a JWKS endpoint. Keys never leave your browser.</p>
+<ul><li>JWK / JWKS → PEM: RSA, EC (P-256, P-384, P-521) and OKP (Ed25519); private keys as PKCS#8, public keys as SPKI</li><li>PEM → JWK: SPKI, PKCS#8, PKCS#1 (RSA), SEC1 (EC) and certificates (public key extracted), with kid (thumbprint), use and alg</li><li>RFC 7638 thumbprint (SHA-256, Base64URL) from the required members as lexicographic JSON</li><li>Select one key from a JWKS by kid; symmetric (oct) keys are noted as having no PEM</li><li>Warns about private parameters (d), weak RSA and a missing kid</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="jwt-decoder.html" class="related-card"><span class="related-icon">🎫</span><span>JWT Decoder</span></a>
+    <a href="key-generator.html" class="related-card"><span class="related-icon">🔑</span><span>Key Pair Generator (RSA, EC, Ed25519)</span></a>
+    <a href="ssh-key-inspector.html" class="related-card"><span class="related-icon">🗝️</span><span>SSH Public Key Inspector</span></a>
+    <a href="certificate-decoder.html" class="related-card"><span class="related-icon">📜</span><span>Certificate Decoder</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Publish only public keys in a JWKS; fields such as d, p and q mean a private key.</li><li>kid tells which key signed during rotation; an RFC 7638 thumbprint as kid maps one-to-one to the key.</li><li>alg is a usage declaration, not part of the key; JWT libraries check it, so set it precisely.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What are RSA n and e?</summary><p>The modulus and public exponent, Base64URL encoded; they are the same values as in the SPKI public key.</p></details><details><summary>Ed25519 does not convert.</summary><p>The browser must support Ed25519 in Web Crypto (Chrome 137+, Firefox 129+, Safari 17+).</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-hash.js"></script>
+<script src="../js/tk-asn1.js"></script>
+<script src="../js/tk-x509.js"></script>
+<script src="../js/tools/jwk-converter.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

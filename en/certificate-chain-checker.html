@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate Chain Checker – Signatures, Order &amp; Missing CA | WooaDev</title>
+  <meta name="description" content="Build the chain of a PEM bundle from leaf to root and verify RSA and ECDSA signatures with issuer keys. Checks order, missing intermediates, expiry, CA constraints and host match.">
+  <meta name="keywords" content="certificate chain checker, missing intermediate certificate, certificate bundle order, signature verification, incomplete chain, certificate chain checker">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/certificate-chain-checker.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/certificate-chain-checker.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/certificate-chain-checker.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/certificate-chain-checker.html">
+  <meta property="og:title" content="Certificate Chain Checker – Signatures, Order &amp; Missing CA | WooaDev">
+  <meta property="og:description" content="Build the chain of a PEM bundle from leaf to root and verify RSA and ECDSA signatures with issuer keys. Checks order, missing intermediates, expiry, CA constraints and host match.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/certificate-chain-checker.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Certificate Chain Checker – Signatures, Order &amp; Missing CA | WooaDev">
+  <meta name="twitter:description" content="Build the chain of a PEM bundle from leaf to root and verify RSA and ECDSA signatures with issuer keys. Checks order, missing intermediates, expiry, CA constraints and host match.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Certificate Chain Checker","url":"https://wooadev.wooahouse.com/en/certificate-chain-checker.html","description":"Build the chain of a PEM bundle from leaf to root and verify RSA and ECDSA signatures with issuer keys. Checks order, missing intermediates, expiry, CA constraints and host match.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Finds the leaf in the bundle and builds the chain from issuer names and key identifiers (duplicates removed, strays flagged)","Signature verification: RSA (PKCS#1 v1.5 SHA-1 / 256 / 384 / 512), ECDSA (P-256 / 384 / 521) and Ed25519 via Web Crypto","Checks: bundle order (leaf → intermediate → root), missing intermediate, expiry, CA flag, keyCertSign and pathlen, weak signatures and short keys","Leaf SAN against a hostname, custom reference time","Does not check whether the root is in a trust store (signature chain only)"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"It says the signature does not match.","acceptedAnswer":{"@type":"Answer","text":"A different CA certificate with the same name was mixed in, or the leaf was signed with another key; check it pairs with the renewed intermediate."}},{"@type":"Question","name":"Does it handle cross-signed roots?","acceptedAnswer":{"@type":"Answer","text":"Candidates with the same subject are chosen by AKI. It does no full path discovery, so check complex cross-signing yourself."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Certificate Chain Checker","item":"https://wooadev.wooahouse.com/en/certificate-chain-checker.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../certificate-chain-checker.html">KO</a>
+        <span>|</span>
+        <a href="certificate-chain-checker.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Certificate Chain Checker</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔗</span>
+    <h1>Certificate Chain Checker</h1>
+    <p>Paste the certificate bundle a server sends and the tool builds the chain from leaf to root and verifies each signature with its issuer's public key. It reports misordering, missing intermediates, expiry and CA constraint violations.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Chain of 2 verified</p>
+<h3>Input — Certificate bundle (several PEM blocks)</h3><pre>-----BEGIN CERTIFICATE-----
+MIIEJjCCAw6gAwIBAgIULtv0YaivYcewDIxv3/H4E4IucsUwDQYJKoZIhvcNAQEL
+BQAwTzELMAkGA1UEBhMCS1IxFzAVBgNVBAoMDldvb2FIb3VzZSBUZXN0MScwJQYD
+VQQDDB5Xb29hSG91c2UgVGVzdCBJbnRlcm1lZGlhdGUgQ0EwIBcNMjYxMDE3MDI0
+OTEyWhgPMjEyMjA4MTUwMjQ5MTJaMD0xCzAJBgNVBAYTAktSMRcwFQYDVQQKDA5X
+b29hSG91c2UgVGVzdDEVMBMGA1UEAwwMdGVzdC5leGFtcGxlMIIBIjANBgkqhkiG
+9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq3nB6psHqkUElGM1kqgLdMjfCUV9OigW4q2J
+4YXDtWk4Z+EGdy201BBJOnOapvcWyCaa6s0Q+dV996hH52Uc0dsMHxiD5iqOaSmr
+8avPlVScMZ9JbM2f8LYCvJ16XxNB3hlPil/PQOTJZSOQlMWERL2AQtIYeAcrXixG
+6ZjpjS9FD7XS0fL4rQP3Xw2iZbaxYJn+69hTYlH6SLaHqadNCf9VFOVzAxv3/Opx
+spA3d3rcpNSNKh6Tb9oZ9vzeVte0+nQPWw1BTnvaeqyBFmC9NkfdHxdIcRzWJ9/+
+g03v3yE/rcU6aXIp30dHiSeFiHhlU9/LqZBFqi5ZSVA3vcS9NQIDAQABo4IBCDCC
+AQQwCQYDVR0TBAIwADAOBgNVHQ8BAf8EBAMCB4AwHQYDVR0lBBYwFAYIKwYBBQUH
+AwEGCCsGAQUFBwMCMEEGA1UdEQQ6MDiCDHRlc3QuZXhhbXBsZYIOKi50ZXN0LmV4
+…</pre>
+<h3>Result — Chain</h3><pre># | Role | Subject | Issuer | Validity | Signature
+1 | Leaf (bundle #1) | C=KR, O=WooaHouse Test, CN=test.example | C=KR, O=WooaHouse Test, CN=WooaHouse Test Intermediate CA | ✅ 34999 days left | ✅ issuer signature OK
+2 | Intermediate (bundle #2) | C=KR, O=WooaHouse Test, CN=WooaHouse Test Intermediate CA | C=KR, O=WooaHouse Test, CN=WooaHouse Test Root CA | ✅ 35999 days left | ❔ Issuer certificate is not in the bundle</pre>
+<h3>Result — Findings</h3><pre>ℹ️ The bundle ends without a root, which is normal for a server bundle. The issuer "C=KR, O=WooaHouse Test, CN=WooaHouse Test Root CA" of the last certificate must be in the client trust store</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Check the server's chain when TLS errors appear only in some clients. Certificates never leave your browser.</p>
+<ul><li>Finds the leaf in the bundle and builds the chain from issuer names and key identifiers (duplicates removed, strays flagged)</li><li>Signature verification: RSA (PKCS#1 v1.5 SHA-1 / 256 / 384 / 512), ECDSA (P-256 / 384 / 521) and Ed25519 via Web Crypto</li><li>Checks: bundle order (leaf → intermediate → root), missing intermediate, expiry, CA flag, keyCertSign and pathlen, weak signatures and short keys</li><li>Leaf SAN against a hostname, custom reference time</li><li>Does not check whether the root is in a trust store (signature chain only)</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="certificate-decoder.html" class="related-card"><span class="related-icon">📜</span><span>Certificate Decoder</span></a>
+    <a href="certificate-converter.html" class="related-card"><span class="related-icon">🔄</span><span>Certificate Converter &amp; Bundle Builder</span></a>
+    <a href="csr-tool.html" class="related-card"><span class="related-icon">📝</span><span>CSR Generator &amp; Decoder</span></a>
+    <a href="san-hostname-matcher.html" class="related-card"><span class="related-icon">📜</span><span>Certificate SAN Hostname Matcher</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>A server should send the leaf and intermediates; clients already have the root.</li><li>Browsers fetch a missing intermediate through AIA, but Android, Java and curl do not and fail.</li><li>A misordered bundle is rejected by some clients: leaf first, then its issuer.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>It says the signature does not match.</summary><p>A different CA certificate with the same name was mixed in, or the leaf was signed with another key; check it pairs with the renewed intermediate.</p></details><details><summary>Does it handle cross-signed roots?</summary><p>Candidates with the same subject are chosen by AKI. It does no full path discovery, so check complex cross-signing yourself.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-binin.js"></script>
+<script src="../js/tk-hash.js"></script>
+<script src="../js/tk-asn1.js"></script>
+<script src="../js/tk-x509.js"></script>
+<script src="../js/tools/certificate-chain-checker.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AES 암호화 도구 — GCM·CBC·CTR 암복호화와 태그 확인 | WooaDev</title>
+  <meta name="description" content="AES-GCM, CBC, CTR로 암호화·복호화하고 키, IV, 인증 태그, AAD를 따로 입력합니다. 16진수·Base64·UTF-8 키, IV 붙이기, 태그 불일치 진단을 지원합니다.">
+  <meta name="keywords" content="AES 암호화, AES-GCM 복호화, AES CBC CTR, 인증 태그 AAD, 키 IV 16진수, aes tool">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/aes-tool.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/aes-tool.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/aes-tool.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/aes-tool.html">
+  <meta property="og:title" content="AES 암호화 도구 — GCM·CBC·CTR 암복호화와 태그 확인 | WooaDev">
+  <meta property="og:description" content="AES-GCM, CBC, CTR로 암호화·복호화하고 키, IV, 인증 태그, AAD를 따로 입력합니다. 16진수·Base64·UTF-8 키, IV 붙이기, 태그 불일치 진단을 지원합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/aes-tool.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AES 암호화 도구 — GCM·CBC·CTR 암복호화와 태그 확인 | WooaDev">
+  <meta name="twitter:description" content="AES-GCM, CBC, CTR로 암호화·복호화하고 키, IV, 인증 태그, AAD를 따로 입력합니다. 16진수·Base64·UTF-8 키, IV 붙이기, 태그 불일치 진단을 지원합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"AES 암호화·복호화 도구","url":"https://wooadev.wooahouse.com/aes-tool.html","description":"AES-GCM, CBC, CTR로 암호화·복호화하고 키, IV, 인증 태그, AAD를 따로 입력합니다. 16진수·Base64·UTF-8 키, IV 붙이기, 태그 불일치 진단을 지원합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["모드: AES-GCM(인증 태그 16바이트, AAD 지원), AES-CBC(PKCS#7 패딩), AES-CTR(64비트 카운터)","키: 16·24·32바이트, 16진수·Base64·UTF-8 / 키·IV 를 비우면 무작위 생성(암호화 때)","결과: 암호문, 분리된 인증 태그, IV‖암호문‖태그 한 덩어리, 16진수 또는 Base64","복호화: 태그가 붙어 있거나 따로 있는 GCM, IV 를 앞에서 떼어내는 옵션, 태그 불일치(변조·키·IV·AAD 오류) 진단","NIST 테스트 벡터와 일치, 모드별 보안 주의사항(nonce 재사용, CBC 무결성)"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"태그가 암호문 뒤에 붙어 있나요, 따로 있나요?","acceptedAnswer":{"@type":"Answer","text":"Web Crypto 와 Java 는 암호문 뒤에 태그를 붙이고, OpenSSL·일부 라이브러리는 따로 줍니다. 도구는 둘 다 지원합니다."}},{"@type":"Question","name":"실제 비밀을 넣어도 되나요?","acceptedAnswer":{"@type":"Answer","text":"입력은 서버로 가지 않지만 이 도구는 테스트와 학습용입니다. 실제 운영 비밀은 서버나 KMS 에서 다루세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"AES 암호화·복호화 도구","item":"https://wooadev.wooahouse.com/aes-tool.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="aes-tool.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/aes-tool.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>AES 암호화·복호화 도구</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔒</span>
+    <h1>AES 암호화 · 복호화 (GCM · CBC · CTR)</h1>
+    <p>AES-128/192/256 의 GCM, CBC, CTR 모드로 텍스트를 암호화하고 복호화합니다. 키, IV, 인증 태그, AAD 를 따로 다룰 수 있어 서버 구현과 결과를 맞춰 볼 때 편합니다. 키와 IV 를 비우면 무작위로 만들어 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 암호화 완료 (47바이트)</p>
+<h3>입력 — 입력 데이터 (암호화: 평문, 복호화: 암호문)</h3><pre>Hello, WooaDev! 안녕하세요</pre>
+<h3>입력 — 키 (비우면 무작위 생성 — 암호화에서만)</h3><pre>000102030405060708090a0b0c0d0e0f</pre>
+<h3>입력 — IV / Nonce / 카운터 (비우면 무작위 — 암호화에서만)</h3><pre>0102030405060708090a0b0c</pre>
+<h3>결과 — 결과 요약</h3><pre>항목 | 값
+AES-128-GCM | 
+키 (hex) | 000102030405060708090a0b0c0d0e0f
+IV | 0102030405060708090a0b0c
+암호문 길이 | 31바이트
+인증 태그 (16바이트) | MsEsyVxiDHg2ewX29M4HIA==
+암호문 (태그 제외) | TmAESlzZf5JXM2wByK5MFS1eb7ZrNAH5xUm/7wgT+A==
+결과 (암호문‖태그) | TmAESlzZf5JXM2wByK5MFS1eb7ZrNAH5xUm/7wgT+DLBLMlcYgx4NnsF9vTOByA=</pre>
+<h3>결과 — 출력</h3><pre>TmAESlzZf5JXM2wByK5MFS1eb7ZrNAH5xUm/7wgT+DLBLMlcYgx4NnsF9vTOByA=</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>다른 언어·서버가 만든 AES 암호문을 직접 풀어 보거나 구현이 같은 결과를 내는지 확인할 때 씁니다. 키와 데이터는 브라우저 밖으로 나가지 않습니다.</p>
+<ul><li>모드: AES-GCM(인증 태그 16바이트, AAD 지원), AES-CBC(PKCS#7 패딩), AES-CTR(64비트 카운터)</li><li>키: 16·24·32바이트, 16진수·Base64·UTF-8 / 키·IV 를 비우면 무작위 생성(암호화 때)</li><li>결과: 암호문, 분리된 인증 태그, IV‖암호문‖태그 한 덩어리, 16진수 또는 Base64</li><li>복호화: 태그가 붙어 있거나 따로 있는 GCM, IV 를 앞에서 떼어내는 옵션, 태그 불일치(변조·키·IV·AAD 오류) 진단</li><li>NIST 테스트 벡터와 일치, 모드별 보안 주의사항(nonce 재사용, CBC 무결성)</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="hmac-generator.html" class="related-card"><span class="related-icon">🔏</span><span>HMAC 생성기</span></a>
+    <a href="hash-generator.html" class="related-card"><span class="related-icon">🔑</span><span>Hash 생성기</span></a>
+    <a href="key-generator.html" class="related-card"><span class="related-icon">🔑</span><span>키 쌍 생성기 (RSA·EC·Ed25519)</span></a>
+    <a href="base-encoding-converter.html" class="related-card"><span class="related-icon">🔢</span><span>Base 인코딩 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>GCM 에서 같은 키로 같은 nonce 를 두 번 쓰면 보안이 완전히 무너집니다. 메시지마다 새로 만드세요.</li><li>복호화 실패는 대부분 키·IV·AAD 중 하나가 다르거나 Base64/16진수 해석이 달라서 생깁니다.</li><li>CBC·CTR 은 변조를 감지하지 못합니다. 무결성이 필요하면 GCM 을 쓰세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>태그가 암호문 뒤에 붙어 있나요, 따로 있나요?</summary><p>Web Crypto 와 Java 는 암호문 뒤에 태그를 붙이고, OpenSSL·일부 라이브러리는 따로 줍니다. 도구는 둘 다 지원합니다.</p></details><details><summary>실제 비밀을 넣어도 되나요?</summary><p>입력은 서버로 가지 않지만 이 도구는 테스트와 학습용입니다. 실제 운영 비밀은 서버나 KMS 에서 다루세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-hash.js"></script>
+<script src="js/tools/aes-tool.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>
