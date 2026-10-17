@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Actions 식 테스터 — if 조건을 컨텍스트로 평가 | WooaDev</title>
+  <meta name="description" content="GitHub Actions 표현식을 github·env·matrix·steps·needs 컨텍스트 JSON으로 평가합니다. contains, format, join, toJSON, fromJSON 함수와 대소문자 무시 비교, 숫자 변환 규칙, 단계별 값을 보여 줍니다.">
+  <meta name="keywords" content="GitHub Actions 표현식, if 조건 테스트, contains format fromJSON, github context, 워크플로우 식 평가, github actions expression tester">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/github-actions-expression-tester.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/github-actions-expression-tester.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/github-actions-expression-tester.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/github-actions-expression-tester.html">
+  <meta property="og:title" content="GitHub Actions 식 테스터 — if 조건을 컨텍스트로 평가 | WooaDev">
+  <meta property="og:description" content="GitHub Actions 표현식을 github·env·matrix·steps·needs 컨텍스트 JSON으로 평가합니다. contains, format, join, toJSON, fromJSON 함수와 대소문자 무시 비교, 숫자 변환 규칙, 단계별 값을 보여 줍니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/github-actions-expression-tester.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GitHub Actions 식 테스터 — if 조건을 컨텍스트로 평가 | WooaDev">
+  <meta name="twitter:description" content="GitHub Actions 표현식을 github·env·matrix·steps·needs 컨텍스트 JSON으로 평가합니다. contains, format, join, toJSON, fromJSON 함수와 대소문자 무시 비교, 숫자 변환 규칙, 단계별 값을 보여 줍니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"GitHub Actions 식 테스터","url":"https://wooadev.wooahouse.com/github-actions-expression-tester.html","description":"GitHub Actions 표현식을 github·env·matrix·steps·needs 컨텍스트 JSON으로 평가합니다. contains, format, join, toJSON, fromJSON 함수와 대소문자 무시 비교, 숫자 변환 규칙, 단계별 값을 보여 줍니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["문법: 리터럴(null, 불리언, 숫자, 0x16진수, '문자열' 과 '' 이스케이프), 프로퍼티 .a.b, ['키'], 인덱스, 객체 필터 .*, ! < <= > >= == != && ||, 괄호","함수: contains, startsWith, endsWith, format({0} 과 {{ }}), join, toJSON, fromJSON, hashFiles(자리표시자), success, failure, always, cancelled","규칙: 문자열 비교는 대소문자 무시, 형이 다르면 숫자로 변환(null→0, true→1, ''→0, 숫자 아닌 문자열→NaN), NaN 비교는 거짓, && 와 || 는 피연산자 값을 반환","${{ }} 가 섞인 문장도 각 조각을 평가해 이어 붙임, 컨텍스트 이름·함수 이름은 대소문자 무시","부분식별 평가 표(값·타입), 잡 상태(success/failure/cancelled) 선택"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"실제 러너와 결과가 다를 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"컨텍스트 값은 직접 넣은 JSON 이라 실제 실행 때의 값과 다를 수 있습니다. 평가 규칙 자체는 GitHub 문서의 규칙을 따릅니다."}},{"@type":"Question","name":"hashFiles 는 왜 값이 안 나오나요?","acceptedAnswer":{"@type":"Answer","text":"러너의 실제 파일이 필요해서 계산할 수 없습니다. 자리표시 문자열을 반환하고 안내를 표시합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"GitHub Actions 식 테스터","item":"https://wooadev.wooahouse.com/github-actions-expression-tester.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="github-actions-expression-tester.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/github-actions-expression-tester.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>GitHub Actions 식 테스터</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧪</span>
+    <h1>GitHub Actions 표현식 평가기</h1>
+    <p>if: 에 쓰는 표현식을 github, env, matrix, steps, needs 같은 컨텍스트 JSON 으로 직접 평가합니다. 부분식마다 값과 타입을 보여 주고 GitHub 규칙(대소문자 무시 비교, 숫자 강제 변환, falsy 값)을 그대로 따릅니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 결과: true (boolean)</p>
+<h3>입력 — 표현식 (${{ … }} 로 감싸도 되고, ${{ }} 가 섞인 문장도 됩니다)</h3><pre>github.ref == 'refs/heads/main' &amp;&amp; contains(github.event.head_commit.message, '[deploy]') &amp;&amp; !cancelled()</pre>
+<h3>입력 — 컨텍스트 (JSON: github, env, vars, steps, needs, matrix, inputs, runner, job, secrets …)</h3><pre>{
+  "github": {
+    "ref": "refs/heads/main",
+    "event_name": "push",
+    "actor": "octocat",
+    "event": { "head_commit": { "message": "Fix bug [deploy]" }, "commits": [ { "message": "a" }, { "message": "b" } ] }
+  },
+  "env": { "NODE_ENV": "production" },
+  "matrix": { "os": "ubuntu-latest", "node": 20 },
+  "steps": { "build": { "outcome": "success", "outputs": { "version": "1.2.3" } } },
+  "needs": { "test": { "result": "success" } }
+}</pre>
+<h3>결과 — 평가 과정</h3><pre>부분식 | 값 | 타입
+github.ref | "refs/heads/main" | string
+github.ref == 'refs/heads/main' | true | boolean
+github.event.head_commit.message | "Fix bug [deploy]" | string
+contains(github.event.head_commit.message, '[deploy]') | true | boolean
+github.ref == 'refs/heads/main' &amp;&amp; contains(github.event.head_commit.m… | true | boolean
+cancelled() | false | boolean
+!cancelled() | true | boolean</pre>
+<h3>결과 — 결과</h3><pre>true</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>커밋해서 돌려 보지 않고도 if 조건이 참이 되는지 확인합니다. 입력은 브라우저 밖으로 나가지 않습니다.</p>
+<ul><li>문법: 리터럴(null, 불리언, 숫자, 0x16진수, '문자열' 과 '' 이스케이프), 프로퍼티 .a.b, ['키'], 인덱스, 객체 필터 .*, ! &lt; &lt;= &gt; &gt;= == != &amp;&amp; ||, 괄호</li><li>함수: contains, startsWith, endsWith, format({0} 과 {{ }}), join, toJSON, fromJSON, hashFiles(자리표시자), success, failure, always, cancelled</li><li>규칙: 문자열 비교는 대소문자 무시, 형이 다르면 숫자로 변환(null→0, true→1, ''→0, 숫자 아닌 문자열→NaN), NaN 비교는 거짓, &amp;&amp; 와 || 는 피연산자 값을 반환</li><li>${{ }} 가 섞인 문장도 각 조각을 평가해 이어 붙임, 컨텍스트 이름·함수 이름은 대소문자 무시</li><li>부분식별 평가 표(값·타입), 잡 상태(success/failure/cancelled) 선택</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="github-actions-editor.html" class="related-card"><span class="related-icon">⚙️</span><span>GitHub Actions 워크플로우 검사기</span></a>
+    <a href="gitlab-ci-editor.html" class="related-card"><span class="related-icon">🦊</span><span>GitLab CI 파이프라인 검사기</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON 포맷터</span></a>
+    <a href="jmespath-tester.html" class="related-card"><span class="related-icon">🧪</span><span>JMESPath 테스트기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>inputs.dry == 'false' 처럼 불리언과 문자열을 == 로 비교하면 둘 다 숫자로 바뀌어 예상과 다를 수 있습니다.</li><li>if: 에서 ${{ }} 뒤에 글자를 붙이면 전체가 문자열이 되어 항상 참입니다.</li><li>github.event.commits.*.message 처럼 .* 를 쓰면 배열 요소의 속성만 모아 join 으로 합칠 수 있습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>실제 러너와 결과가 다를 수 있나요?</summary><p>컨텍스트 값은 직접 넣은 JSON 이라 실제 실행 때의 값과 다를 수 있습니다. 평가 규칙 자체는 GitHub 문서의 규칙을 따릅니다.</p></details><details><summary>hashFiles 는 왜 값이 안 나오나요?</summary><p>러너의 실제 파일이 필요해서 계산할 수 없습니다. 자리표시 문자열을 반환하고 안내를 표시합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/github-actions-expression-tester.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

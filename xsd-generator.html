@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XML 에서 XSD 생성 — 샘플로 스키마 초안 만들기 | WooaDev</title>
+  <meta name="description" content="XML 샘플에서 요소 계층, 자식 순서, minOccurs·maxOccurs, 필수 속성, 값에서 추론한 타입과 enumeration을 담은 XSD를 생성합니다. 중첩형과 이름 있는 타입 스타일을 지원합니다.">
+  <meta name="keywords" content="XML에서 XSD 생성, XSD 자동 생성, 스키마 추론, xml to xsd, minOccurs 추론, xsd generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/xsd-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/xsd-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/xsd-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/xsd-generator.html">
+  <meta property="og:title" content="XML 에서 XSD 생성 — 샘플로 스키마 초안 만들기 | WooaDev">
+  <meta property="og:description" content="XML 샘플에서 요소 계층, 자식 순서, minOccurs·maxOccurs, 필수 속성, 값에서 추론한 타입과 enumeration을 담은 XSD를 생성합니다. 중첩형과 이름 있는 타입 스타일을 지원합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/xsd-generator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="XML 에서 XSD 생성 — 샘플로 스키마 초안 만들기 | WooaDev">
+  <meta name="twitter:description" content="XML 샘플에서 요소 계층, 자식 순서, minOccurs·maxOccurs, 필수 속성, 값에서 추론한 타입과 enumeration을 담은 XSD를 생성합니다. 중첩형과 이름 있는 타입 스타일을 지원합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"XML 에서 XSD 생성기","url":"https://wooadev.wooahouse.com/xsd-generator.html","description":"XML 샘플에서 요소 계층, 자식 순서, minOccurs·maxOccurs, 필수 속성, 값에서 추론한 타입과 enumeration을 담은 XSD를 생성합니다. 중첩형과 이름 있는 타입 스타일을 지원합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["구조 추론: 같은 경로의 요소를 모아 자식 순서가 일관되면 xs:sequence, 순서가 다르면 xs:all, 섞여 나오면 무제한 xs:choice","출현 횟수: 모든 부모에 있으면 필수, 없는 경우가 있으면 minOccurs=0, 여러 번 나오면 maxOccurs=unbounded","타입 추론: boolean, int/long/integer, decimal, date, dateTime, time, anyURI, 그 외 string / 텍스트+속성 요소는 simpleContent 확장","속성: 모든 인스턴스에 있으면 use=required, 값이 몇 가지로 반복되면 enumeration","스타일: 중첩형(Russian Doll), 이름 있는 타입(Venetian Blind), xs/xsd 접두사, 들여쓰기"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"완벽한 스키마를 만들어 주나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 샘플에서 추론한 초안입니다. 보이지 않은 변형(선택 요소, 다른 값)은 반영되지 않으니 검토가 필요합니다."}},{"@type":"Question","name":"여러 XML 샘플을 합칠 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"한 문서 안에서 반복되는 요소를 합쳐 추론합니다. 여러 파일은 공통 루트 아래에 모아 하나의 샘플로 만들어 넣으세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"XML 에서 XSD 생성기","item":"https://wooadev.wooahouse.com/xsd-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="xsd-generator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/xsd-generator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>XML 에서 XSD 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧱</span>
+    <h1>XML 샘플 → XSD 스키마 생성기</h1>
+    <p>XML 샘플을 넣으면 요소 계층, 자식 순서(sequence/choice/all), minOccurs·maxOccurs, 속성의 필수 여부, 값에서 추론한 타입(정수·소수·날짜·불리언·URI)과 enumeration 을 담은 XSD 를 만들어 줍니다. 중첩형과 이름 있는 타입 스타일을 고를 수 있습니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 요소 7종에서 XSD 를 만들었습니다</p>
+<h3>입력 — XML 샘플 (같은 요소가 여러 번 나올수록 정확합니다)</h3><pre>&lt;?xml version="1.0"?&gt;
+&lt;catalog&gt;
+  &lt;book id="b1" lang="en" inStock="true"&gt;
+    &lt;title&gt;XML Basics&lt;/title&gt;
+    &lt;author&gt;Kim&lt;/author&gt;
+    &lt;price currency="USD"&gt;29.99&lt;/price&gt;
+    &lt;pages&gt;320&lt;/pages&gt;
+    &lt;published&gt;2024-03-01&lt;/published&gt;
+  &lt;/book&gt;
+  &lt;book id="b2" lang="ko" inStock="false"&gt;
+    &lt;title&gt;XPath 입문&lt;/title&gt;
+    &lt;author&gt;Lee&lt;/author&gt;
+    &lt;author&gt;Park&lt;/author&gt;
+    &lt;price currency="KRW"&gt;18000&lt;/price&gt;
+    &lt;pages&gt;256&lt;/pages&gt;
+  &lt;/book&gt;
+  &lt;book id="b3" lang="en" inStock="true"&gt;
+    &lt;title&gt;Advanced XSLT&lt;/title&gt;
+    &lt;author&gt;Kim&lt;/author&gt;
+    &lt;price currency="USD"&gt;45.00&lt;/price&gt;
+    &lt;pages&gt;512&lt;/pages&gt;
+    &lt;published&gt;2023-11-20&lt;/published&gt;
+  &lt;/book&gt;
+&lt;/catalog&gt;
+</pre>
+<h3>결과 — 생성된 XSD</h3><pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"&gt;
+  &lt;xs:element name="catalog"&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:sequence&gt;
+        &lt;xs:element name="book" maxOccurs="unbounded"&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name="title" type="xs:string"/&gt;
+              &lt;xs:element name="author" type="xs:string" maxOccurs="unbounded"/&gt;
+              &lt;xs:element name="price"&gt;
+                &lt;xs:complexType&gt;
+                  &lt;xs:simpleContent&gt;
+                    &lt;xs:extension base="xs:decimal"&gt;
+                      &lt;xs:attribute name="currency" use="required"&gt;
+                        &lt;xs:simpleType&gt;
+                          &lt;xs:restriction base="xs:string"&gt;
+                            &lt;xs:enumeration value="USD"/&gt;
+                            &lt;xs:enumeration value="KRW"/&gt;
+                          &lt;/xs:restriction&gt;
+                        &lt;/xs:simpleType&gt;
+                      &lt;/xs:attribute&gt;
+                    &lt;/xs:extension&gt;
+                  &lt;/xs:simpleContent&gt;
+                &lt;/xs:complexType&gt;
+              &lt;/xs:element&gt;
+              &lt;xs:element name="pages" type="xs:int"/&gt;
+              &lt;xs:element name="published" type="xs:date" minOccurs="0"/&gt;
+            &lt;/xs:sequence&gt;
+            &lt;xs:attribute name="id" type="xs:string" use="required"/&gt;
+…</pre>
+<h3>결과 — 추론 요약</h3><pre>경로 | 등장 수 | 자식 | 속성 | 타입/구성
+/catalog/book/title | 3 | — | — | string
+/catalog/book/author | 4 | — | — | string
+/catalog/book/price | 3 | — | currency | simpleContent decimal
+/catalog/book/pages | 3 | — | — | int
+/catalog/book/published | 2 | — | — | date
+/catalog/book | 3 | title, author, price, pages, published | id, lang, inStock | sequence
+/catalog | 1 | book | — | sequence</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>연동 문서의 스키마가 없을 때 샘플 XML 로 초안을 만들고 검증 도구로 확인합니다. 데이터는 브라우저 밖으로 나가지 않습니다.</p>
+<ul><li>구조 추론: 같은 경로의 요소를 모아 자식 순서가 일관되면 xs:sequence, 순서가 다르면 xs:all, 섞여 나오면 무제한 xs:choice</li><li>출현 횟수: 모든 부모에 있으면 필수, 없는 경우가 있으면 minOccurs=0, 여러 번 나오면 maxOccurs=unbounded</li><li>타입 추론: boolean, int/long/integer, decimal, date, dateTime, time, anyURI, 그 외 string / 텍스트+속성 요소는 simpleContent 확장</li><li>속성: 모든 인스턴스에 있으면 use=required, 값이 몇 가지로 반복되면 enumeration</li><li>스타일: 중첩형(Russian Doll), 이름 있는 타입(Venetian Blind), xs/xsd 접두사, 들여쓰기</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="xsd-validator.html" class="related-card"><span class="related-icon">✅</span><span>XSD 검증기</span></a>
+    <a href="xsd-to-json-schema.html" class="related-card"><span class="related-icon">🔁</span><span>XSD → JSON Schema 변환기</span></a>
+    <a href="xml-formatter.html" class="related-card"><span class="related-icon">📄</span><span>XML 포맷터</span></a>
+    <a href="json-schema-generator.html" class="related-card"><span class="related-icon">📘</span><span>JSON 스키마 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>같은 요소가 여러 번 나오는 샘플일수록 minOccurs/maxOccurs 가 정확해집니다.</li><li>생성된 XSD 는 "XSD 검증" 도구에서 원본 XML 을 검증해 왕복 확인할 수 있습니다.</li><li>추론은 샘플에 보이는 값만 기준이므로 날짜·숫자 타입과 enumeration 은 사람이 검토해 다듬으세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>완벽한 스키마를 만들어 주나요?</summary><p>아니요. 샘플에서 추론한 초안입니다. 보이지 않은 변형(선택 요소, 다른 값)은 반영되지 않으니 검토가 필요합니다.</p></details><details><summary>여러 XML 샘플을 합칠 수 있나요?</summary><p>한 문서 안에서 반복되는 요소를 합쳐 추론합니다. 여러 파일은 공통 루트 아래에 모아 하나의 샘플로 만들어 넣으세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-xml.js"></script>
+<script src="js/tk-xpath.js"></script>
+<script src="js/tk-xsd.js"></script>
+<script src="js/tools/xsd-generator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

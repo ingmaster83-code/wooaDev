@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XML to XSD Generator – Draft a Schema from a Sample | WooaDev</title>
+  <meta name="description" content="Generate an XSD from an XML sample with element hierarchy, child order, minOccurs and maxOccurs, required attributes, inferred types and enumerations, in nested or named-type style.">
+  <meta name="keywords" content="XML to XSD, generate XSD, schema inference, xml to xsd, minOccurs inference, xsd generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/xsd-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/xsd-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/xsd-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/xsd-generator.html">
+  <meta property="og:title" content="XML to XSD Generator – Draft a Schema from a Sample | WooaDev">
+  <meta property="og:description" content="Generate an XSD from an XML sample with element hierarchy, child order, minOccurs and maxOccurs, required attributes, inferred types and enumerations, in nested or named-type style.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/xsd-generator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="XML to XSD Generator – Draft a Schema from a Sample | WooaDev">
+  <meta name="twitter:description" content="Generate an XSD from an XML sample with element hierarchy, child order, minOccurs and maxOccurs, required attributes, inferred types and enumerations, in nested or named-type style.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"XML to XSD Generator","url":"https://wooadev.wooahouse.com/en/xsd-generator.html","description":"Generate an XSD from an XML sample with element hierarchy, child order, minOccurs and maxOccurs, required attributes, inferred types and enumerations, in nested or named-type style.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Structure: elements on the same path are merged; xs:sequence when the child order is consistent, xs:all when order varies, an unbounded xs:choice when children interleave","Occurrences: required if present under every parent, minOccurs=0 otherwise and maxOccurs=unbounded when repeated","Types: boolean, int / long / integer, decimal, date, dateTime, time, anyURI, otherwise string; elements with text and attributes use a simpleContent extension","Attributes: use=required when present in every instance and an enumeration when values repeat among few options","Style: nested (Russian Doll) or named types (Venetian Blind), xs / xsd prefix and indentation"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does it produce a perfect schema?","acceptedAnswer":{"@type":"Answer","text":"No, it is a draft inferred from a sample; variations that are not present (optional elements, other values) are not reflected, so review it."}},{"@type":"Question","name":"Can I merge several XML samples?","acceptedAnswer":{"@type":"Answer","text":"It merges repeated elements within one document; put several files under a common root to make one sample."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"XML to XSD Generator","item":"https://wooadev.wooahouse.com/en/xsd-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../xsd-generator.html">KO</a>
+        <span>|</span>
+        <a href="xsd-generator.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>XML to XSD Generator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧱</span>
+    <h1>XML Sample → XSD Schema Generator</h1>
+    <p>Give an XML sample to get an XSD with the element hierarchy, child order (sequence / choice / all), minOccurs and maxOccurs, attribute required-ness, types inferred from values (integer, decimal, date, boolean, URI) and enumerations. Choose nested or named-type style.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Built an XSD from 7 element path(s)</p>
+<h3>Input — XML sample (more repeats of an element give a better schema)</h3><pre>&lt;?xml version="1.0"?&gt;
+&lt;catalog&gt;
+  &lt;book id="b1" lang="en" inStock="true"&gt;
+    &lt;title&gt;XML Basics&lt;/title&gt;
+    &lt;author&gt;Kim&lt;/author&gt;
+    &lt;price currency="USD"&gt;29.99&lt;/price&gt;
+    &lt;pages&gt;320&lt;/pages&gt;
+    &lt;published&gt;2024-03-01&lt;/published&gt;
+  &lt;/book&gt;
+  &lt;book id="b2" lang="ko" inStock="false"&gt;
+    &lt;title&gt;XPath 입문&lt;/title&gt;
+    &lt;author&gt;Lee&lt;/author&gt;
+    &lt;author&gt;Park&lt;/author&gt;
+    &lt;price currency="KRW"&gt;18000&lt;/price&gt;
+    &lt;pages&gt;256&lt;/pages&gt;
+  &lt;/book&gt;
+  &lt;book id="b3" lang="en" inStock="true"&gt;
+    &lt;title&gt;Advanced XSLT&lt;/title&gt;
+    &lt;author&gt;Kim&lt;/author&gt;
+    &lt;price currency="USD"&gt;45.00&lt;/price&gt;
+    &lt;pages&gt;512&lt;/pages&gt;
+    &lt;published&gt;2023-11-20&lt;/published&gt;
+  &lt;/book&gt;
+&lt;/catalog&gt;
+</pre>
+<h3>Result — Generated XSD</h3><pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"&gt;
+  &lt;xs:element name="catalog"&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:sequence&gt;
+        &lt;xs:element name="book" maxOccurs="unbounded"&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name="title" type="xs:string"/&gt;
+              &lt;xs:element name="author" type="xs:string" maxOccurs="unbounded"/&gt;
+              &lt;xs:element name="price"&gt;
+                &lt;xs:complexType&gt;
+                  &lt;xs:simpleContent&gt;
+                    &lt;xs:extension base="xs:decimal"&gt;
+                      &lt;xs:attribute name="currency" use="required"&gt;
+                        &lt;xs:simpleType&gt;
+                          &lt;xs:restriction base="xs:string"&gt;
+                            &lt;xs:enumeration value="USD"/&gt;
+                            &lt;xs:enumeration value="KRW"/&gt;
+                          &lt;/xs:restriction&gt;
+                        &lt;/xs:simpleType&gt;
+                      &lt;/xs:attribute&gt;
+                    &lt;/xs:extension&gt;
+                  &lt;/xs:simpleContent&gt;
+                &lt;/xs:complexType&gt;
+              &lt;/xs:element&gt;
+              &lt;xs:element name="pages" type="xs:int"/&gt;
+              &lt;xs:element name="published" type="xs:date" minOccurs="0"/&gt;
+            &lt;/xs:sequence&gt;
+            &lt;xs:attribute name="id" type="xs:string" use="required"/&gt;
+…</pre>
+<h3>Result — Inference summary</h3><pre>Path | Count | Children | Attributes | Type / model
+/catalog/book/title | 3 | — | — | string
+/catalog/book/author | 4 | — | — | string
+/catalog/book/price | 3 | — | currency | simpleContent decimal
+/catalog/book/pages | 3 | — | — | int
+/catalog/book/published | 2 | — | — | date
+/catalog/book | 3 | title, author, price, pages, published | id, lang, inStock | sequence
+/catalog | 1 | book | — | sequence</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>When an integration has no schema, draft one from sample XML and check it with the validator. Data never leaves your browser.</p>
+<ul><li>Structure: elements on the same path are merged; xs:sequence when the child order is consistent, xs:all when order varies, an unbounded xs:choice when children interleave</li><li>Occurrences: required if present under every parent, minOccurs=0 otherwise and maxOccurs=unbounded when repeated</li><li>Types: boolean, int / long / integer, decimal, date, dateTime, time, anyURI, otherwise string; elements with text and attributes use a simpleContent extension</li><li>Attributes: use=required when present in every instance and an enumeration when values repeat among few options</li><li>Style: nested (Russian Doll) or named types (Venetian Blind), xs / xsd prefix and indentation</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="xsd-validator.html" class="related-card"><span class="related-icon">✅</span><span>XSD Validator</span></a>
+    <a href="xsd-to-json-schema.html" class="related-card"><span class="related-icon">🔁</span><span>XSD to JSON Schema Converter</span></a>
+    <a href="xml-formatter.html" class="related-card"><span class="related-icon">📄</span><span>XML Formatter</span></a>
+    <a href="json-schema-generator.html" class="related-card"><span class="related-icon">📘</span><span>JSON Schema Generator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>The more repeats of an element the sample has, the better minOccurs and maxOccurs come out.</li><li>Validate the original XML with the XSD validator to round-trip check the generated schema.</li><li>Inference reflects only the sample's values, so review date and number types and enumerations.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Does it produce a perfect schema?</summary><p>No, it is a draft inferred from a sample; variations that are not present (optional elements, other values) are not reflected, so review it.</p></details><details><summary>Can I merge several XML samples?</summary><p>It merges repeated elements within one document; put several files under a common root to make one sample.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-xml.js"></script>
+<script src="../js/tk-xpath.js"></script>
+<script src="../js/tk-xsd.js"></script>
+<script src="../js/tools/xsd-generator.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kubernetes RBAC Analyzer – Permissions &amp; Risky Grants | WooaDev</title>
+  <meta name="description" content="Summarise Roles, ClusterRoles and Bindings per subject and find risky grants such as cluster-admin, Secret reads, pods/exec and escalate. Supports kubectl auth can-i style queries.">
+  <meta name="keywords" content="Kubernetes RBAC analyzer, can-i check, cluster-admin binding, ClusterRole permissions, ServiceAccount permissions, kubernetes rbac viewer">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/kubernetes-rbac-viewer.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/kubernetes-rbac-viewer.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/kubernetes-rbac-viewer.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/kubernetes-rbac-viewer.html">
+  <meta property="og:title" content="Kubernetes RBAC Analyzer – Permissions &amp; Risky Grants | WooaDev">
+  <meta property="og:description" content="Summarise Roles, ClusterRoles and Bindings per subject and find risky grants such as cluster-admin, Secret reads, pods/exec and escalate. Supports kubectl auth can-i style queries.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/kubernetes-rbac-viewer.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kubernetes RBAC Analyzer – Permissions &amp; Risky Grants | WooaDev">
+  <meta name="twitter:description" content="Summarise Roles, ClusterRoles and Bindings per subject and find risky grants such as cluster-admin, Secret reads, pods/exec and escalate. Supports kubectl auth can-i style queries.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Kubernetes RBAC Analyzer","url":"https://wooadev.wooahouse.com/en/kubernetes-rbac-viewer.html","description":"Summarise Roles, ClusterRoles and Bindings per subject and find risky grants such as cluster-admin, Secret reads, pods/exec and escalate. Supports kubectl auth can-i style queries.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Permission table: subject (User, Group, ServiceAccount:namespace:name), scope (namespace or cluster), binding, role and rules (apiGroup/resource: verbs)","Built-in roles: cluster-admin, admin, edit and view are modelled; a ClusterRole with aggregationRule gathers matching-label roles","Queries: give subject, verb, resource (including subresources such as pods/log), namespace and resourceNames to see whether it is allowed and by which binding","Risk checks: cluster-admin bindings, * on everything, reading Secrets, pods/exec and attach, creating pods, escalate / bind / impersonate, editing Roles and Bindings, nodes/proxy, token minting, broad groups such as system:authenticated and the default ServiceAccount","Warns about roleRef targets missing from the file"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Are permissions from group membership computed?","acceptedAnswer":{"@type":"Answer","text":"A subject's groups are unknown, so they are not; query the group itself (Group:name)."}},{"@type":"Question","name":"Are there deny rules?","acceptedAnswer":{"@type":"Answer","text":"RBAC only allows; permissions from all bindings add up, so one allow is enough."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Kubernetes RBAC Analyzer","item":"https://wooadev.wooahouse.com/en/kubernetes-rbac-viewer.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../kubernetes-rbac-viewer.html">KO</a>
+        <span>|</span>
+        <a href="kubernetes-rbac-viewer.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Kubernetes RBAC Analyzer</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🛡️</span>
+    <h1>Kubernetes RBAC Analyzer</h1>
+    <p>Paste Role, ClusterRole, RoleBinding and ClusterRoleBinding manifests to get a table of which verbs on which resources each user, group or ServiceAccount has and in what scope, with risky grants such as cluster-admin, reading Secrets, pods/exec and escalate flagged.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>⛔ 1 risky grant(s) — 3 binding(s), 4 subject(s)</p>
+<h3>Input — RBAC manifests (Role, ClusterRole, RoleBinding, ClusterRoleBinding)</h3><pre>apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: { name: pod-reader, namespace: dev }
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/log"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: { name: read-pods, namespace: dev }
+subjects:
+  - kind: User
+    name: alice
+    apiGroup: rbac.authorization.k8s.io
+  - kind: ServiceAccount
+    name: ci
+    namespace: dev
+roleRef: { kind: Role, name: pod-reader, apiGroup: rbac.authorization.k8s.io }
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata: { name: secret-admin }
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["*"]
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata: { name: ops }
+subjects:
+  - kind: Group
+…</pre>
+<h3>Input — Subject to check (e.g. User:alice, Group:ops-team, ServiceAccount:dev:ci)</h3><pre>ServiceAccount:dev:ci</pre>
+<h3>Input — Action to check: verb resource[/subresource] [namespace] (e.g. get pods dev, create pods/exec, list secrets)</h3><pre>list pods dev</pre>
+<h3>Result — Permissions per subject</h3><pre>Subject | Scope | Binding | Role | Rules (apiGroup/resource: verbs)
+User:alice | namespace dev | RoleBinding/read-pods | Role/pod-reader | core/pods,pods/log: get,list,watch
+ServiceAccount:dev:ci | namespace dev | RoleBinding/read-pods | Role/pod-reader | core/pods,pods/log: get,list,watch
+Group:ops-team | cluster-wide | ClusterRoleBinding/ops | ClusterRole/secret-admin | core/secrets: * ; core/pods/exec: create
+ServiceAccount:kube-system:deployer | cluster-wide | ClusterRoleBinding/root-ci | ClusterRole/cluster-admin | */*: * ; URL *: *</pre>
+<h3>Result — Permission check</h3><pre>Subject | Action | Result | Granted by
+ServiceAccount:dev:ci | list pods (ns dev) | ✅ allowed | RoleBinding/read-pods → Role/pod-reader</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Check who can do what, and whether any grant is excessive, from manifests alone. Your files are not uploaded.</p>
+<ul><li>Permission table: subject (User, Group, ServiceAccount:namespace:name), scope (namespace or cluster), binding, role and rules (apiGroup/resource: verbs)</li><li>Built-in roles: cluster-admin, admin, edit and view are modelled; a ClusterRole with aggregationRule gathers matching-label roles</li><li>Queries: give subject, verb, resource (including subresources such as pods/log), namespace and resourceNames to see whether it is allowed and by which binding</li><li>Risk checks: cluster-admin bindings, * on everything, reading Secrets, pods/exec and attach, creating pods, escalate / bind / impersonate, editing Roles and Bindings, nodes/proxy, token minting, broad groups such as system:authenticated and the default ServiceAccount</li><li>Warns about roleRef targets missing from the file</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="kubernetes-yaml-validator.html" class="related-card"><span class="related-icon">☸️</span><span>Kubernetes YAML Validator</span></a>
+    <a href="kubernetes-routing-tester.html" class="related-card"><span class="related-icon">🛣️</span><span>Ingress Routing Tester</span></a>
+    <a href="kubernetes-label-selector.html" class="related-card"><span class="related-icon">🏷️</span><span>Kubernetes Label Selector Tester</span></a>
+    <a href="jwt-decoder.html" class="related-card"><span class="related-icon">🎫</span><span>JWT Decoder</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Create a dedicated ServiceAccount per application and bind a Role with only the verbs it needs.</li><li>list or watch on secrets exposes every value even without get.</li><li>Permission to create pods is effectively high privilege, since hostPath or privileged pods can reach the node.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Are permissions from group membership computed?</summary><p>A subject's groups are unknown, so they are not; query the group itself (Group:name).</p></details><details><summary>Are there deny rules?</summary><p>RBAC only allows; permissions from all bindings add up, so one allow is enough.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-yamlx.js"></script>
+<script src="../js/lib/yaml.min.js"></script>
+<script src="../js/tools/kubernetes-rbac-viewer.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

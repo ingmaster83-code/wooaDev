@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingress 라우팅 테스터 — 요청이 어느 Service 로 가는지 | WooaDev</title>
+  <meta name="description" content="Ingress 규칙의 호스트와 pathType(Exact, Prefix)에 따라 요청 URL이 어느 Service와 포트로 가는지 추적합니다. 와일드카드 호스트, 가장 긴 경로 우선, rewrite-target, TLS 리다이렉트를 확인합니다.">
+  <meta name="keywords" content="Ingress 라우팅 테스트, pathType Prefix Exact, ingress 경로 우선순위, rewrite-target, 와일드카드 호스트, kubernetes routing tester">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/kubernetes-routing-tester.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/kubernetes-routing-tester.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/kubernetes-routing-tester.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/kubernetes-routing-tester.html">
+  <meta property="og:title" content="Ingress 라우팅 테스터 — 요청이 어느 Service 로 가는지 | WooaDev">
+  <meta property="og:description" content="Ingress 규칙의 호스트와 pathType(Exact, Prefix)에 따라 요청 URL이 어느 Service와 포트로 가는지 추적합니다. 와일드카드 호스트, 가장 긴 경로 우선, rewrite-target, TLS 리다이렉트를 확인합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/kubernetes-routing-tester.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ingress 라우팅 테스터 — 요청이 어느 Service 로 가는지 | WooaDev">
+  <meta name="twitter:description" content="Ingress 규칙의 호스트와 pathType(Exact, Prefix)에 따라 요청 URL이 어느 Service와 포트로 가는지 추적합니다. 와일드카드 호스트, 가장 긴 경로 우선, rewrite-target, TLS 리다이렉트를 확인합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Ingress 라우팅 테스터","url":"https://wooadev.wooahouse.com/kubernetes-routing-tester.html","description":"Ingress 규칙의 호스트와 pathType(Exact, Prefix)에 따라 요청 URL이 어느 Service와 포트로 가는지 추적합니다. 와일드카드 호스트, 가장 긴 경로 우선, rewrite-target, TLS 리다이렉트를 확인합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["호스트: 정확 일치 > 와일드카드(*.example.com 은 한 단계) > 호스트 없는 규칙, 대소문자 무시","경로: Exact 는 완전 일치, Prefix 는 경로 요소 단위 접두사(/foo 는 /foo/bar 와 일치하고 /foobar 와는 불일치), / 는 전체, 가장 긴 규칙 우선","ImplementationSpecific: nginx 동작 기준으로 접두사 또는 정규식(use-regex)으로 해석하고 컨트롤러마다 다르다고 안내","백엔드: Service 이름·포트(이름 또는 번호), Service 포트 → targetPort, selector 와 일치하는 파드, defaultBackend","부가 정보: nginx rewrite-target 결과 경로, TLS 호스트의 http → https 리다이렉트, 중복 규칙, ingressClassName 누락"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"모든 Ingress 컨트롤러와 같은 결과인가요?","acceptedAnswer":{"@type":"Answer","text":"표준 규칙(호스트, pathType 우선순위)은 같지만 ImplementationSpecific 과 어노테이션은 컨트롤러마다 다릅니다. 이 도구는 ingress-nginx 동작을 따릅니다."}},{"@type":"Question","name":"Service 가 파일에 없으면요?","acceptedAnswer":{"@type":"Answer","text":"백엔드 이름과 포트만 표시하고 'Service 가 이 파일에 없음' 이라고 알려 줍니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"Ingress 라우팅 테스터","item":"https://wooadev.wooahouse.com/kubernetes-routing-tester.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="kubernetes-routing-tester.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/kubernetes-routing-tester.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Ingress 라우팅 테스터</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🛣️</span>
+    <h1>Ingress · Service 라우팅 테스터</h1>
+    <p>Ingress 와 Service 매니페스트를 붙여 넣고 요청 URL 을 한 줄에 하나씩 입력하면 호스트(정확·와일드카드), 경로(Exact·Prefix·정규식), 가장 긴 일치 규칙, 대상 Service 포트와 파드 targetPort 까지 어떻게 라우팅되는지 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>⛔ 라우팅 실패 1건 — 요청 8개</p>
+<h3>입력 — Ingress · Service · Deployment 매니페스트 (YAML)</h3><pre>apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: main
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts: [app.example.com]
+      secretName: app-tls
+  rules:
+    - host: app.example.com
+      http:
+        paths:
+          - path: /api(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend: { service: { name: api, port: { number: 8080 } } }
+          - path: /static
+            pathType: Prefix
+            backend: { service: { name: static, port: { name: http } } }
+          - path: /static/private
+            pathType: Exact
+            backend: { service: { name: admin, port: { number: 80 } } }
+          - path: /
+            pathType: Prefix
+            backend: { service: { name: web, port: { number: 80 } } }
+    - host: "*.example.com"
+      http:
+        paths:
+…</pre>
+<h3>입력 — 테스트할 요청 (한 줄에 URL 하나)</h3><pre>https://app.example.com/
+https://app.example.com/api/users
+https://app.example.com/static/logo.png
+https://app.example.com/static/private
+https://app.example.com/static/private/x
+http://app.example.com/staticfile
+https://other.example.com/anything
+https://unknown.org/</pre>
+<h3>결과 — 라우팅 결과</h3><pre>요청 | 일치한 규칙 | 백엔드 | 비고 | 클래스
+https://app.example.com/ | main · app.example.com / (Prefix) | web:80 → pod:http | rewrite → / | nginx
+https://app.example.com/api/users | main · app.example.com /api(/|$)(.*) (ImplementationSpecific) | api:8080 → pod:3000 | rewrite → /users | nginx
+https://app.example.com/static/logo.png | main · app.example.com /static (Prefix) | static:http → pod:80 | rewrite → / | nginx
+https://app.example.com/static/private | main · app.example.com /static/private (Exact) | admin:80 | Service "admin" 이 이 파일에 없음 · rewrite → / | nginx
+https://app.example.com/static/private/x | main · app.example.com /static (Prefix) | static:http → pod:80 | rewrite → / | nginx
+http://app.example.com/staticfile | main · app.example.com / (Prefix) | web:80 → pod:http | rewrite → / · TLS 호스트라 https 로 리다이렉트(308)될 수 있음 | nginx
+https://other.example.com/anything | main · *.example.com / (Prefix) | wildcard:80 | Service "wildcard" 이 이 파일에 없음 · rewrite → / | nginx
+https://unknown.org/ | — | — | ⛔ 일치하는 규칙 없음 → 404 (default backend 가 있으면 그쪽) | </pre>
+<h3>결과 — 점검 결과</h3><pre>ℹ️ ImplementationSpecific 경로 "/api(/|$)(.*)" 의 해석은 Ingress 컨트롤러마다 다릅니다 (nginx 는 접두사, use-regex 면 정규식). 이 도구는 nginx 동작을 따릅니다
+우선순위: 정확한 호스트 &gt; 와일드카드 호스트 &gt; 호스트 없음, 같은 호스트 안에서는 Exact &gt; 가장 긴 Prefix 순서입니다. Prefix 는 경로 요소 단위로 비교해 /static 은 /staticfile 과 일치하지 않습니다</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>Ingress 를 클러스터에 적용하기 전에 어떤 요청이 어느 서비스로 갈지 미리 확인합니다. 매니페스트는 서버로 전송되지 않습니다.</p>
+<ul><li>호스트: 정확 일치 &gt; 와일드카드(*.example.com 은 한 단계) &gt; 호스트 없는 규칙, 대소문자 무시</li><li>경로: Exact 는 완전 일치, Prefix 는 경로 요소 단위 접두사(/foo 는 /foo/bar 와 일치하고 /foobar 와는 불일치), / 는 전체, 가장 긴 규칙 우선</li><li>ImplementationSpecific: nginx 동작 기준으로 접두사 또는 정규식(use-regex)으로 해석하고 컨트롤러마다 다르다고 안내</li><li>백엔드: Service 이름·포트(이름 또는 번호), Service 포트 → targetPort, selector 와 일치하는 파드, defaultBackend</li><li>부가 정보: nginx rewrite-target 결과 경로, TLS 호스트의 http → https 리다이렉트, 중복 규칙, ingressClassName 누락</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="kubernetes-yaml-validator.html" class="related-card"><span class="related-icon">☸️</span><span>쿠버네티스 YAML 검증기</span></a>
+    <a href="kubernetes-manifest-generator.html" class="related-card"><span class="related-icon">🛠️</span><span>쿠버네티스 매니페스트 생성기</span></a>
+    <a href="url-pattern-tester.html" class="related-card"><span class="related-icon">🧭</span><span>URLPattern 테스터</span></a>
+    <a href="kubernetes-label-selector.html" class="related-card"><span class="related-icon">🏷️</span><span>Kubernetes 레이블 셀렉터 테스터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>같은 경로에 Exact 와 Prefix 가 있으면 Exact 가 우선입니다.</li><li>ImplementationSpecific 은 컨트롤러 구현에 맡기는 값입니다. 정규식이 필요하면 컨트롤러 문서의 어노테이션을 확인하세요.</li><li>와일드카드 호스트는 *.example.com 이 a.example.com 과는 일치하지만 example.com 이나 a.b.example.com 과는 일치하지 않습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>모든 Ingress 컨트롤러와 같은 결과인가요?</summary><p>표준 규칙(호스트, pathType 우선순위)은 같지만 ImplementationSpecific 과 어노테이션은 컨트롤러마다 다릅니다. 이 도구는 ingress-nginx 동작을 따릅니다.</p></details><details><summary>Service 가 파일에 없으면요?</summary><p>백엔드 이름과 포트만 표시하고 'Service 가 이 파일에 없음' 이라고 알려 줍니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-yamlx.js"></script>
+<script src="js/lib/yaml.min.js"></script>
+<script src="js/tools/kubernetes-routing-tester.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XSD를 JSON Schema로 변환 — 타입·패싯·속성·배열 매핑 | WooaDev</title>
+  <meta name="description" content="XSD의 element, complexType, simpleType, 패싯, 속성을 JSON Schema 2020-12 또는 draft-07로 변환합니다. maxOccurs는 array, choice는 oneOf, 이름 있는 타입은 $defs로 옮기고 변환 규칙을 안내합니다.">
+  <meta name="keywords" content="XSD를 JSON Schema로, XSD 변환, xsd to json schema, 패싯 enum pattern 변환, choice oneOf, xml schema json 변환">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/xsd-to-json-schema.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/xsd-to-json-schema.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/xsd-to-json-schema.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/xsd-to-json-schema.html">
+  <meta property="og:title" content="XSD를 JSON Schema로 변환 — 타입·패싯·속성·배열 매핑 | WooaDev">
+  <meta property="og:description" content="XSD의 element, complexType, simpleType, 패싯, 속성을 JSON Schema 2020-12 또는 draft-07로 변환합니다. maxOccurs는 array, choice는 oneOf, 이름 있는 타입은 $defs로 옮기고 변환 규칙을 안내합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/xsd-to-json-schema.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="XSD를 JSON Schema로 변환 — 타입·패싯·속성·배열 매핑 | WooaDev">
+  <meta name="twitter:description" content="XSD의 element, complexType, simpleType, 패싯, 속성을 JSON Schema 2020-12 또는 draft-07로 변환합니다. maxOccurs는 array, choice는 oneOf, 이름 있는 타입은 $defs로 옮기고 변환 규칙을 안내합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"XSD → JSON Schema 변환기","url":"https://wooadev.wooahouse.com/xsd-to-json-schema.html","description":"XSD의 element, complexType, simpleType, 패싯, 속성을 JSON Schema 2020-12 또는 draft-07로 변환합니다. maxOccurs는 array, choice는 oneOf, 이름 있는 타입은 $defs로 옮기고 변환 규칙을 안내합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["구조: element → 속성, 필수 여부(minOccurs) → required, maxOccurs>1 → array(minItems·maxItems), complexType → object, additionalProperties 옵션","타입: 정수군(범위 → minimum/maximum), decimal/float/double → number, boolean, date·dateTime·time·duration·anyURI → format, hexBinary·base64Binary","패싯: enumeration → enum, pattern, length·minLength·maxLength, min/maxInclusive·Exclusive, fractionDigits → multipleOf, list → array, union → anyOf","특수: simpleContent+속성은 \"#text\" 키, 속성 접두사(@ 기본) 지정, choice → oneOf(필수 조합), nillable → null 허용, mixed","이름 있는 simpleType/complexType 은 $defs(draft-07 은 definitions) 와 $ref, 루트 요소 선택과 요소 이름으로 한 단계 감싸기"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"xs:choice 는 정확히 변환되나요?","acceptedAnswer":{"@type":"Answer","text":"근사입니다. 모든 선택지를 속성으로 나열하고 oneOf 로 필수 조합만 구분하므로 선택지끼리 동시에 있으면 안 되는 제약은 완전히 표현되지 않을 수 있습니다."}},{"@type":"Question","name":"import 한 스키마는요?","acceptedAnswer":{"@type":"Answer","text":"import/include 는 지원하지 않으며 해당 타입 참조는 빈 스키마가 됩니다. 필요한 정의를 한 파일로 합쳐 넣으세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"XSD → JSON Schema 변환기","item":"https://wooadev.wooahouse.com/xsd-to-json-schema.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="xsd-to-json-schema.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/xsd-to-json-schema.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>XSD → JSON Schema 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔁</span>
+    <h1>XSD → JSON Schema 변환기</h1>
+    <p>XSD 의 최상위 요소를 JSON Schema 로 바꿉니다. complexType 은 object, maxOccurs&gt;1 은 array, 속성은 "@이름" 속성, 단순 타입은 type/format, 패싯은 enum·pattern·minimum·maxLength 로 옮기고 이름 있는 타입은 $defs 로 분리합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ "library" 을(를) JSON Schema 로 변환했습니다</p>
+<h3>입력 — XSD 스키마</h3><pre>&lt;?xml version="1.0"?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;xs:simpleType name="IsbnType"&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:pattern value="\d{3}-\d{10}"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+  &lt;xs:complexType name="PersonType"&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="name" type="xs:string"/&gt;
+      &lt;xs:element name="email" type="xs:string" minOccurs="0"/&gt;
+    &lt;/xs:sequence&gt;
+    &lt;xs:attribute name="id" type="xs:ID" use="required"/&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="library"&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:sequence&gt;
+        &lt;xs:element name="book" maxOccurs="unbounded"&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name="isbn" type="IsbnType"/&gt;
+              &lt;xs:element name="title" type="xs:string"/&gt;
+              &lt;xs:element name="author" type="PersonType" maxOccurs="3"/&gt;
+              &lt;xs:choice&gt;
+…</pre>
+<h3>결과 — JSON Schema</h3><pre>{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "library",
+  "type": "object",
+  "properties": {
+    "library": {
+      "type": "object",
+      "properties": {
+        "book": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "isbn": {
+                "$ref": "#/$defs/IsbnType"
+              },
+              "title": {
+                "type": "string"
+              },
+              "author": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/PersonType"
+                },
+                "minItems": 1,
+                "maxItems": 3
+              },
+              "price": {
+                "type": "number"
+              },
+              "free": {
+                "type": "boolean"
+              },
+              "rating": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "@lang": {
+                "type": "string",
+                "default": "en"
+              }
+            },
+            "required": [
+              "isbn",
+              "title",
+              "author",
+              "rating"
+            ],
+            "oneOf": [
+              {
+                "required": [
+                  "price"
+                ]
+              },
+              {
+…</pre>
+<h3>결과 — 변환 규칙·참고</h3><pre>xs:choice 는 속성을 모두 나열한 뒤 oneOf/anyOf 로 필수 조합만 구분합니다 (근사)
+XML 의 속성은 "@이름" 속성으로, 반복 요소(maxOccurs&gt;1)는 배열로 옮겼습니다. XML→JSON 변환기마다 규칙이 다르니(속성 접두사, 단일 요소의 배열 여부) 실제 변환 결과와 맞는지 확인하세요
+XML 요소의 순서(sequence)와 key/unique 제약은 JSON Schema 로 표현할 수 없어 생략했습니다</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>XML 기반 API 를 JSON 으로 옮기면서 스키마도 함께 변환할 때 씁니다. 스키마는 브라우저 밖으로 나가지 않습니다.</p>
+<ul><li>구조: element → 속성, 필수 여부(minOccurs) → required, maxOccurs&gt;1 → array(minItems·maxItems), complexType → object, additionalProperties 옵션</li><li>타입: 정수군(범위 → minimum/maximum), decimal/float/double → number, boolean, date·dateTime·time·duration·anyURI → format, hexBinary·base64Binary</li><li>패싯: enumeration → enum, pattern, length·minLength·maxLength, min/maxInclusive·Exclusive, fractionDigits → multipleOf, list → array, union → anyOf</li><li>특수: simpleContent+속성은 "#text" 키, 속성 접두사(@ 기본) 지정, choice → oneOf(필수 조합), nillable → null 허용, mixed</li><li>이름 있는 simpleType/complexType 은 $defs(draft-07 은 definitions) 와 $ref, 루트 요소 선택과 요소 이름으로 한 단계 감싸기</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="xsd-validator.html" class="related-card"><span class="related-icon">✅</span><span>XSD 검증기</span></a>
+    <a href="xsd-generator.html" class="related-card"><span class="related-icon">🧱</span><span>XML 에서 XSD 생성기</span></a>
+    <a href="json-schema-generator.html" class="related-card"><span class="related-icon">📘</span><span>JSON 스키마 생성기</span></a>
+    <a href="json-schema-validator.html" class="related-card"><span class="related-icon">🛡️</span><span>JSON 스키마 검증기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>XML→JSON 변환기마다 규칙이 다릅니다. 속성 접두사와 단일 요소가 배열인지 여부를 실제 변환 결과에 맞게 옵션으로 조정하세요.</li><li>XML 의 요소 순서(sequence)는 JSON 객체에서 의미가 없어 JSON Schema 로 표현하지 않습니다.</li><li>64비트 정수(long)는 JSON 숫자의 안전 범위를 넘을 수 있으니 문자열 처리가 필요한지 확인하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>xs:choice 는 정확히 변환되나요?</summary><p>근사입니다. 모든 선택지를 속성으로 나열하고 oneOf 로 필수 조합만 구분하므로 선택지끼리 동시에 있으면 안 되는 제약은 완전히 표현되지 않을 수 있습니다.</p></details><details><summary>import 한 스키마는요?</summary><p>import/include 는 지원하지 않으며 해당 타입 참조는 빈 스키마가 됩니다. 필요한 정의를 한 파일로 합쳐 넣으세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-xml.js"></script>
+<script src="js/tk-xpath.js"></script>
+<script src="js/tk-xsd.js"></script>
+<script src="js/tools/xsd-to-json-schema.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

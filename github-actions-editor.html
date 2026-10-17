@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Actions 검사기 — needs·uses·스크립트 인젝션 점검 | WooaDev</title>
+  <meta name="description" content="GitHub Actions 워크플로우의 이벤트, needs 순환, uses 형식과 오래된 버전, 폐지된 러너, github.event 스크립트 인젝션, pull_request_target 체크아웃, 권한을 줄 번호로 점검합니다.">
+  <meta name="keywords" content="GitHub Actions 검증, 워크플로우 린트, actionlint, 스크립트 인젝션, needs 순환, github actions editor">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/github-actions-editor.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/github-actions-editor.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/github-actions-editor.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/github-actions-editor.html">
+  <meta property="og:title" content="GitHub Actions 검사기 — needs·uses·스크립트 인젝션 점검 | WooaDev">
+  <meta property="og:description" content="GitHub Actions 워크플로우의 이벤트, needs 순환, uses 형식과 오래된 버전, 폐지된 러너, github.event 스크립트 인젝션, pull_request_target 체크아웃, 권한을 줄 번호로 점검합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/github-actions-editor.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GitHub Actions 검사기 — needs·uses·스크립트 인젝션 점검 | WooaDev">
+  <meta name="twitter:description" content="GitHub Actions 워크플로우의 이벤트, needs 순환, uses 형식과 오래된 버전, 폐지된 러너, github.event 스크립트 인젝션, pull_request_target 체크아웃, 권한을 줄 번호로 점검합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"GitHub Actions 워크플로우 검사기","url":"https://wooadev.wooahouse.com/github-actions-editor.html","description":"GitHub Actions 워크플로우의 이벤트, needs 순환, uses 형식과 오래된 버전, 폐지된 러너, github.event 스크립트 인젝션, pull_request_target 체크아웃, 권한을 줄 번호로 점검합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["구조: 최상위 키, on 이벤트 이름, cron 5필드, workflow_dispatch choice 입력, 잡 id·키, runs-on 필수, steps 의 uses/run 배타성, 스텝 id 중복","참조: needs 의 없는 잡·자기 참조·순환, steps.<id> 와 needs.<잡> 가 실제로 있는지, matrix 키","uses: owner/repo@ref 형식, 오래된 주요 액션(checkout, setup-*, cache, upload-artifact …)의 버전, 브랜치 참조(@main), 서드파티 액션 SHA 고정 권고","보안: run 안의 github.event.*.title/body/head_ref 등 신뢰할 수 없는 입력, pull_request_target + PR head 체크아웃, 하드코딩된 토큰, write-all 권한","폐지된 러너(ubuntu-20.04 등), timeout-minutes 없음, permissions 없음 권고"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"actionlint 를 대체하나요?","acceptedAnswer":{"@type":"Answer","text":"actionlint 만큼 모든 표현식 타입을 검사하지는 않지만 자주 만나는 구조·참조·보안 문제를 설치 없이 확인합니다."}},{"@type":"Question","name":"on 키가 true 로 읽히는 문제는요?","acceptedAnswer":{"@type":"Answer","text":"이 도구는 YAML 1.2 규칙으로 읽어 on 을 문자열 키로 유지합니다. 일부 구형 YAML 1.1 파서는 on 을 true 로 바꿀 수 있습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"GitHub Actions 워크플로우 검사기","item":"https://wooadev.wooahouse.com/github-actions-editor.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="github-actions-editor.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/github-actions-editor.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>GitHub Actions 워크플로우 검사기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">⚙️</span>
+    <h1>GitHub Actions 워크플로우 검증기</h1>
+    <p>워크플로우 YAML 을 붙여 넣으면 이벤트 이름, 잡 키, needs 참조와 순환, uses 형식, 오래된 액션 버전, 폐지된 러너, 스크립트 인젝션 위험, pull_request_target 의 위험한 체크아웃, 권한 누락을 줄 번호로 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>⛔ 오류 6건 · 경고 2건 — 잡 2개, 스텝 5개</p>
+<h3>입력 — 워크플로우 (.github/workflows/*.yml)</h3><pre>name: CI
+on:
+  push:
+    branches: [main]
+  pull_request_target:
+    types: [opened]
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Greet
+        run: echo "${{ github.event.pull_request.title }}"
+      - id: build
+        run: npm ci &amp;&amp; npm test
+      - uses: actions/upload-artifact@main
+        with:
+          name: out
+          path: dist
+  deploy:
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ steps.deploy.outputs.url }}
+        uses: ./scripts/deploy
+</pre>
+<h3>결과 — 잡·스텝 구조</h3><pre>잡 | # | 스텝 | 종류 | id | 줄
+build | 1 | actions/checkout@v3 | uses |  | 11
+build | 2 | Greet | run |  | 14
+build | 3 | run | run | build | 16
+build | 4 | actions/upload-artifact@main | uses |  | 18
+deploy | 1 | ./scripts/deploy | uses |  | 26</pre>
+<h3>결과 — 점검 결과</h3><pre>ℹ️ 줄 1: permissions 가 없어 GITHUB_TOKEN 이 저장소 기본 권한을 갖습니다. permissions: contents: read 로 최소화하세요
+ℹ️ 줄 8: 잡 "build" 에 timeout-minutes 가 없어 멈춘 잡이 최대 6시간 실행됩니다
+⛔ 줄 9: 러너 "ubuntu-20.04" 는 2025-04 폐지 되어 잡이 실행되지 않습니다. ubuntu-latest 또는 최신 버전을 쓰세요
+⚠️ 줄 11: actions/checkout@v3 는 오래된 버전입니다 (Node 런타임 폐기·기능 종료). v4 이상으로 올리세요
+⛔ 줄 11: pull_request_target 은 비밀 값과 쓰기 권한으로 실행되는데 PR 의 head 를 체크아웃하면 외부 코드가 그 권한으로 실행됩니다
+⛔ 줄 15: run 스크립트에 신뢰할 수 없는 입력(github.event.pull_request.title)이 직접 들어가 스크립트 인젝션 위험이 있습니다. env 로 넘긴 뒤 "$VAR" 로 쓰세요
+⚠️ 줄 18: actions/upload-artifact@main 는 브랜치를 가리켜 내용이 바뀔 수 있습니다. 태그나 커밋 SHA 로 고정하세요
+ℹ️ 줄 22: 잡 "deploy" 에 timeout-minutes 가 없어 멈춘 잡이 최대 6시간 실행됩니다
+⛔ 줄 23: needs 의 "test" 잡이 없습니다
+⛔ 줄 26: 스텝에 uses 와 run 을 함께 쓸 수 없습니다
+⛔ 줄 26: steps.deploy 에 해당하는 id 를 가진 스텝이 이 잡에 없습니다</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>푸시해서 Actions 탭에서 실패를 확인하기 전에 구조와 보안 문제를 미리 찾습니다. 파일은 서버로 전송되지 않습니다.</p>
+<ul><li>구조: 최상위 키, on 이벤트 이름, cron 5필드, workflow_dispatch choice 입력, 잡 id·키, runs-on 필수, steps 의 uses/run 배타성, 스텝 id 중복</li><li>참조: needs 의 없는 잡·자기 참조·순환, steps.&lt;id&gt; 와 needs.&lt;잡&gt; 가 실제로 있는지, matrix 키</li><li>uses: owner/repo@ref 형식, 오래된 주요 액션(checkout, setup-*, cache, upload-artifact …)의 버전, 브랜치 참조(@main), 서드파티 액션 SHA 고정 권고</li><li>보안: run 안의 github.event.*.title/body/head_ref 등 신뢰할 수 없는 입력, pull_request_target + PR head 체크아웃, 하드코딩된 토큰, write-all 권한</li><li>폐지된 러너(ubuntu-20.04 등), timeout-minutes 없음, permissions 없음 권고</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="github-actions-expression-tester.html" class="related-card"><span class="related-icon">🧪</span><span>GitHub Actions 식 테스터</span></a>
+    <a href="gitlab-ci-editor.html" class="related-card"><span class="related-icon">🦊</span><span>GitLab CI 파이프라인 검사기</span></a>
+    <a href="yaml-formatter.html" class="related-card"><span class="related-icon">🧹</span><span>YAML 포맷터</span></a>
+    <a href="cron-generator.html" class="related-card"><span class="related-icon">⏰</span><span>Cron 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>run 에 ${{ github.event.issue.title }} 를 직접 넣지 말고 env 로 넘긴 뒤 "$TITLE" 로 쓰세요. 따옴표를 닫고 명령을 주입하는 공격을 막습니다.</li><li>서드파티 액션은 태그 대신 커밋 SHA 로 고정하면 태그가 바뀌는 공급망 공격을 피할 수 있습니다.</li><li>permissions: contents: read 처럼 최소 권한으로 시작하고 필요한 잡에만 쓰기 권한을 주세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>actionlint 를 대체하나요?</summary><p>actionlint 만큼 모든 표현식 타입을 검사하지는 않지만 자주 만나는 구조·참조·보안 문제를 설치 없이 확인합니다.</p></details><details><summary>on 키가 true 로 읽히는 문제는요?</summary><p>이 도구는 YAML 1.2 규칙으로 읽어 on 을 문자열 키로 유지합니다. 일부 구형 YAML 1.1 파서는 on 을 true 로 바꿀 수 있습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-yamlx.js"></script>
+<script src="js/lib/yaml.min.js"></script>
+<script src="js/tools/github-actions-editor.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

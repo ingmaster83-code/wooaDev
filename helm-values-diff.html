@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Helm values 비교 — 변경 경로와 --set 인자 만들기 | WooaDev</title>
+  <meta name="description" content="두 Helm values.yaml을 경로별로 비교해 추가·삭제·변경·타입 변경을 표시하고 helm --set 인자를 만듭니다. 키 순서와 주석은 무시하며 리스트 통째 교체, 비밀 값, 삭제된 키를 안내합니다.">
+  <meta name="keywords" content="helm values 비교, values.yaml diff, helm --set 생성, 차트 업그레이드 변경, YAML 경로 비교, helm values diff">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/helm-values-diff.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/helm-values-diff.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/helm-values-diff.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/helm-values-diff.html">
+  <meta property="og:title" content="Helm values 비교 — 변경 경로와 --set 인자 만들기 | WooaDev">
+  <meta property="og:description" content="두 Helm values.yaml을 경로별로 비교해 추가·삭제·변경·타입 변경을 표시하고 helm --set 인자를 만듭니다. 키 순서와 주석은 무시하며 리스트 통째 교체, 비밀 값, 삭제된 키를 안내합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/helm-values-diff.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Helm values 비교 — 변경 경로와 --set 인자 만들기 | WooaDev">
+  <meta name="twitter:description" content="두 Helm values.yaml을 경로별로 비교해 추가·삭제·변경·타입 변경을 표시하고 helm --set 인자를 만듭니다. 키 순서와 주석은 무시하며 리스트 통째 교체, 비밀 값, 삭제된 키를 안내합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Helm values 비교기","url":"https://wooadev.wooahouse.com/helm-values-diff.html","description":"두 Helm values.yaml을 경로별로 비교해 추가·삭제·변경·타입 변경을 표시하고 helm --set 인자를 만듭니다. 키 순서와 주석은 무시하며 리스트 통째 교체, 비밀 값, 삭제된 키를 안내합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["비교: 중첩 매핑을 a.b.c 경로로 펼쳐 추가(➕), 삭제(➖), 변경(✏️), 타입 변경(⚠️)을 표시, 같은 값 포함 보기 선택","타입 변경: \"80\" 과 80 처럼 텍스트는 같고 타입만 다른 경우도 표시(끌 수 있음)","리스트: Helm 은 values 병합 때 리스트를 합치지 않고 통째로 바꾸므로 안내하고 인덱스 변경은 --set 에서 제외","--set 인자: 변경·추가된 스칼라 값을 helm --set 또는 --set-string(숫자처럼 보이는 문자열)으로 생성","점검: 삭제된 키는 차트 기본값으로 돌아감, 값에 평문 비밀(password, token …)이 바뀐 경우 경고, 중복 키"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"키 순서가 달라도 같은 파일로 보나요?","acceptedAnswer":{"@type":"Answer","text":"네. 매핑은 키 순서를 무시하고 값만 비교합니다. 리스트는 순서가 의미 있으므로 순서가 바뀌면 변경으로 봅니다."}},{"@type":"Question","name":"주석이나 앵커는요?","acceptedAnswer":{"@type":"Answer","text":"주석은 무시하고 앵커와 병합 키는 풀어서 비교합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"Helm values 비교기","item":"https://wooadev.wooahouse.com/helm-values-diff.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="helm-values-diff.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/helm-values-diff.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Helm values 비교기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔀</span>
+    <h1>Helm values.yaml 비교기</h1>
+    <p>이전과 새 values.yaml 을 붙여 넣으면 키 순서와 주석을 무시하고 경로(a.b.c)별로 추가, 삭제, 변경, 타입 변경을 보여 줍니다. 스칼라 변경은 helm --set 인자로도 만들어 주고 리스트 병합과 비밀 값 같은 주의점을 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>➕ 3 · ➖ 2 · ✏️ 5 · ⚠️ 타입 1</p>
+<h3>입력 — 이전 values.yaml</h3><pre>replicaCount: 2
+image:
+  repository: nginx
+  tag: "1.25"
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 80
+ingress:
+  enabled: false
+  hosts:
+    - host: a.example.com
+resources:
+  limits:
+    cpu: 500m
+    memory: 256Mi
+nodeSelector: {}
+</pre>
+<h3>입력 — 새 values.yaml</h3><pre>replicaCount: 3
+image:
+  repository: nginx
+  tag: "1.27"
+  pullPolicy: IfNotPresent
+service:
+  type: LoadBalancer
+  port: "80"
+ingress:
+  enabled: true
+  hosts:
+    - host: a.example.com
+    - host: b.example.com
+resources:
+  limits:
+    memory: 512Mi
+autoscaling:
+  enabled: true
+  maxReplicas: 10
+</pre>
+<h3>결과 — 차이</h3><pre> | 경로 | 이전 | 새 값 | 비고
+➕ | autoscaling.enabled |  | true | 
+➕ | autoscaling.maxReplicas |  | 10 | 
+✏️ | image.tag | "1.25" | "1.27" | 
+✏️ | ingress.enabled | false | true | 
+➕ | ingress.hosts[1].host |  | "b.example.com" | 
+➖ | nodeSelector | {} |  | 
+✏️ | replicaCount | 2 | 3 | 
+➖ | resources.limits.cpu | "500m" |  | 
+✏️ | resources.limits.memory | "256Mi" | "512Mi" | 
+⚠️ | service.port | 80 | "80" | number → string
+✏️ | service.type | "ClusterIP" | "LoadBalancer" | </pre>
+<h3>결과 — helm --set 인자 (스칼라 변경·추가)</h3><pre>--set autoscaling.enabled=true \
+  --set autoscaling.maxReplicas=10 \
+  --set-string image.tag=1.27 \
+  --set ingress.enabled=true \
+  --set replicaCount=3 \
+  --set resources.limits.memory=512Mi \
+  --set service.type=LoadBalancer</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>차트를 올리기 전에 values 파일의 무엇이 달라졌는지 한눈에 확인합니다. 파일은 서버로 전송되지 않습니다.</p>
+<ul><li>비교: 중첩 매핑을 a.b.c 경로로 펼쳐 추가(➕), 삭제(➖), 변경(✏️), 타입 변경(⚠️)을 표시, 같은 값 포함 보기 선택</li><li>타입 변경: "80" 과 80 처럼 텍스트는 같고 타입만 다른 경우도 표시(끌 수 있음)</li><li>리스트: Helm 은 values 병합 때 리스트를 합치지 않고 통째로 바꾸므로 안내하고 인덱스 변경은 --set 에서 제외</li><li>--set 인자: 변경·추가된 스칼라 값을 helm --set 또는 --set-string(숫자처럼 보이는 문자열)으로 생성</li><li>점검: 삭제된 키는 차트 기본값으로 돌아감, 값에 평문 비밀(password, token …)이 바뀐 경우 경고, 중복 키</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="yaml-anchor-resolver.html" class="related-card"><span class="related-icon">⚓</span><span>YAML 앵커·별칭 펼치기</span></a>
+    <a href="kubernetes-yaml-validator.html" class="related-card"><span class="related-icon">☸️</span><span>쿠버네티스 YAML 검증기</span></a>
+    <a href="yaml-formatter.html" class="related-card"><span class="related-icon">🧹</span><span>YAML 포맷터</span></a>
+    <a href="config-diff.html" class="related-card"><span class="related-icon">🔍</span><span>설정 파일 비교 도구</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>image.tag: "1.27" 처럼 숫자로 보이는 태그는 따옴표를 유지해야 1.270 같은 변환을 피합니다.</li><li>helm get values RELEASE -o yaml 의 출력과 새 파일을 비교하면 실제 릴리스와의 차이를 알 수 있습니다.</li><li>리스트 항목을 바꿀 때는 --set 이 아니라 -f values.yaml 로 전체 리스트를 전달하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>키 순서가 달라도 같은 파일로 보나요?</summary><p>네. 매핑은 키 순서를 무시하고 값만 비교합니다. 리스트는 순서가 의미 있으므로 순서가 바뀌면 변경으로 봅니다.</p></details><details><summary>주석이나 앵커는요?</summary><p>주석은 무시하고 앵커와 병합 키는 풀어서 비교합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-yamlx.js"></script>
+<script src="js/lib/yaml.min.js"></script>
+<script src="js/tools/helm-values-diff.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

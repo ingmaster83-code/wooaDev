@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudFormation Validator – References, Cycles &amp; Security | WooaDev</title>
+  <meta name="description" content="Validate CloudFormation templates for Ref, GetAtt and Sub references, circular dependencies, condition and mapping references, required properties, duplicate Exports and public S3.">
+  <meta name="keywords" content="CloudFormation validator, cfn-lint, Ref GetAtt reference error, circular dependency, CFN template security, cloudformation validator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/cloudformation-validator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/cloudformation-validator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/cloudformation-validator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/cloudformation-validator.html">
+  <meta property="og:title" content="CloudFormation Validator – References, Cycles &amp; Security | WooaDev">
+  <meta property="og:description" content="Validate CloudFormation templates for Ref, GetAtt and Sub references, circular dependencies, condition and mapping references, required properties, duplicate Exports and public S3.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/cloudformation-validator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CloudFormation Validator – References, Cycles &amp; Security | WooaDev">
+  <meta name="twitter:description" content="Validate CloudFormation templates for Ref, GetAtt and Sub references, circular dependencies, condition and mapping references, required properties, duplicate Exports and public S3.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CloudFormation Template Validator","url":"https://wooadev.wooahouse.com/en/cloudformation-validator.html","description":"Validate CloudFormation templates for Ref, GetAtt and Sub references, circular dependencies, condition and mapping references, required properties, duplicate Exports and public S3.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Format: YAML / JSON, short-form functions such as !Ref, !GetAtt, !Sub and !If, section names, logical ID rules, resource type format and unknown attributes","References: whether Ref, Fn::GetAtt and Fn::Sub (${}) targets exist among resources, parameters and pseudo parameters, DependsOn, Fn::FindInMap mappings and Condition / Fn::If conditions","Cycles: circular dependencies in the Ref / GetAtt / DependsOn graph","Properties: parameter Type, Default vs AllowedValues and NoEcho, and required properties of common resources (Lambda, IAM Role, EC2, RDS, SQS / SNS policies …)","Security and operations: public S3, SSH / RDP open to the world, IAM Action:* on Resource:*, plain-text DB passwords, end-of-life Lambda runtimes, DeletionPolicy on stateful resources and duplicate Export names"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does it replace cfn-lint?","acceptedAnswer":{"@type":"Answer","text":"No. It does not check the full schema of each resource type, only structure, references and common properties; also run cfn-lint and a change set before deploying."}},{"@type":"Question","name":"Does it handle SAM templates?","acceptedAnswer":{"@type":"Answer","text":"SAM templates with Transform get basic structure and reference checks only, since AWS::Serverless::* properties are expanded by SAM."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"CloudFormation Template Validator","item":"https://wooadev.wooahouse.com/en/cloudformation-validator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../cloudformation-validator.html">KO</a>
+        <span>|</span>
+        <a href="cloudformation-validator.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CloudFormation Template Validator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">☁️</span>
+    <h1>CloudFormation Template Validator</h1>
+    <p>Paste a YAML or JSON template (short-form functions like !Ref supported) to get line-numbered findings on missing resource and parameter references, circular dependencies, condition and mapping references, missing required properties, duplicate Exports, open security groups, public S3, plain-text passwords and end-of-life Lambda runtimes.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>⛔ 9 error(s), 2 warning(s) — 5 resource(s)</p>
+<h3>Input — CloudFormation template (YAML or JSON; short-form functions like !Ref supported)</h3><pre>AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  Env:
+    Type: String
+    Default: staging
+    AllowedValues: [dev, prod]
+  DbPassword:
+    Type: String
+Conditions:
+  IsProd: !Equals [!Ref Env, prod]
+  Unused: !Equals [!Ref Env, test]
+Resources:
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      BucketName: !Sub "${Env}-${AWS::Region}-${Missing}"
+  Function:
+    Type: AWS::Lambda::Function
+    DependsOn: Role
+    Properties:
+      Runtime: python3.8
+      Handler: index.handler
+      Role: !GetAtt Role.Arn
+  Role:
+    Type: AWS::IAM::Role
+    DependsOn: Function
+    Properties:
+      ManagedPolicyArns: [!Ref Policy2]
+  Sg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: web
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+  Db:
+…</pre>
+<h3>Result — Resources</h3><pre>Logical ID | Type | Line | Depends on | Condition
+Bucket | AWS::S3::Bucket | 13 | — | 
+Function | AWS::Lambda::Function | 18 | Role | 
+Role | AWS::IAM::Role | 25 | Function | 
+Sg | AWS::EC2::SecurityGroup | 30 | — | 
+Db | AWS::RDS::DBInstance | 39 | — | </pre>
+<h3>Result — Findings</h3><pre>ℹ️ Line 1: No Description
+⛔ Line 5: Default (staging) of parameter "Env" is not in AllowedValues
+⚠️ Line 7: Parameter "DbPassword" looks secret but lacks NoEcho: true, so its value is shown in the console and API
+ℹ️ Line 10: Condition "IsProd" is never used
+ℹ️ Line 11: Condition "Unused" is never used
+ℹ️ Line 13: Bucket "Bucket" has no PublicAccessBlockConfiguration
+ℹ️ Line 13: Bucket "Bucket" has no BucketEncryption (default SSE-S3 still applies)
+⛔ Line 16: Bucket "Bucket" is public through AccessControl PublicRead
+⛔ Line 17: ${Missing} in Fn::Sub is not a resource or parameter
+⛔ Line 18: Circular dependency between resources: Function → Role → Function (stack creation fails)
+⛔ Line 21: Resource "Function" (AWS::Lambda::Function) is missing required property Code
+⚠️ Line 22: Lambda runtime python3.8 is deprecated or end-of-life; upgrade it
+⛔ Line 28: Resource "Role" (AWS::IAM::Role) is missing required property AssumeRolePolicyDocument
+⛔ Line 29: Ref "Policy2" is not a resource or parameter
+⛔ Line 32: Security group "Sg" opens SSH / RDP to the world (0.0.0.0/0)
+ℹ️ Line 39: DB "Db" lacks StorageEncrypted: true
+ℹ️ Line 39: Stateful resource "Db" has no DeletionPolicy (Snapshot / Retain), so stack deletion destroys the data
+⛔ Line 50: Export name "shared" duplicates line 46 (must be unique per region)
+…</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Find structure, reference and common security problems before a stack rolls back. Your template is not uploaded.</p>
+<ul><li>Format: YAML / JSON, short-form functions such as !Ref, !GetAtt, !Sub and !If, section names, logical ID rules, resource type format and unknown attributes</li><li>References: whether Ref, Fn::GetAtt and Fn::Sub (${}) targets exist among resources, parameters and pseudo parameters, DependsOn, Fn::FindInMap mappings and Condition / Fn::If conditions</li><li>Cycles: circular dependencies in the Ref / GetAtt / DependsOn graph</li><li>Properties: parameter Type, Default vs AllowedValues and NoEcho, and required properties of common resources (Lambda, IAM Role, EC2, RDS, SQS / SNS policies …)</li><li>Security and operations: public S3, SSH / RDP open to the world, IAM Action:* on Resource:*, plain-text DB passwords, end-of-life Lambda runtimes, DeletionPolicy on stateful resources and duplicate Export names</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="aws-arn-parser.html" class="related-card"><span class="related-icon">☁️</span><span>AWS ARN Parser &amp; Builder</span></a>
+    <a href="s3-url-converter.html" class="related-card"><span class="related-icon">🪣</span><span>S3 URL Converter</span></a>
+    <a href="yaml-anchor-resolver.html" class="related-card"><span class="related-icon">⚓</span><span>YAML Anchor &amp; Alias Resolver</span></a>
+    <a href="kubernetes-yaml-validator.html" class="related-card"><span class="related-icon">☸️</span><span>Kubernetes YAML Validator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Take passwords through a NoEcho parameter or a Secrets Manager dynamic reference {{resolve:secretsmanager:...}}.</li><li>Logical IDs cannot contain hyphens or underscores; only letters and digits are allowed.</li><li>Circular dependencies often come from security groups referring to each other through Ref; split the rules into separate resources.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Does it replace cfn-lint?</summary><p>No. It does not check the full schema of each resource type, only structure, references and common properties; also run cfn-lint and a change set before deploying.</p></details><details><summary>Does it handle SAM templates?</summary><p>SAM templates with Transform get basic structure and reference checks only, since AWS::Serverless::* properties are expanded by SAM.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-yamlx.js"></script>
+<script src="../js/lib/yaml.min.js"></script>
+<script src="../js/tools/cloudformation-validator.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

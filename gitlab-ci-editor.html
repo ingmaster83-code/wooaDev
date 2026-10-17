@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitLab CI 검사기 — stages·needs·extends·rules 점검 | WooaDev</title>
+  <meta name="description" content=".gitlab-ci.yml에서 stages 누락, script 누락, needs 순환·뒤 스테이지, extends 대상, rules·only 혼용, 불리언 변수, retry·when 오류, latest 이미지를 줄 번호로 점검하고 실행 순서를 보여 줍니다.">
+  <meta name="keywords" content="GitLab CI 검증, gitlab-ci.yml 린트, needs stages, extends rules, 파이프라인 순서, gitlab ci editor">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/gitlab-ci-editor.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/gitlab-ci-editor.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/gitlab-ci-editor.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/gitlab-ci-editor.html">
+  <meta property="og:title" content="GitLab CI 검사기 — stages·needs·extends·rules 점검 | WooaDev">
+  <meta property="og:description" content=".gitlab-ci.yml에서 stages 누락, script 누락, needs 순환·뒤 스테이지, extends 대상, rules·only 혼용, 불리언 변수, retry·when 오류, latest 이미지를 줄 번호로 점검하고 실행 순서를 보여 줍니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/gitlab-ci-editor.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GitLab CI 검사기 — stages·needs·extends·rules 점검 | WooaDev">
+  <meta name="twitter:description" content=".gitlab-ci.yml에서 stages 누락, script 누락, needs 순환·뒤 스테이지, extends 대상, rules·only 혼용, 불리언 변수, retry·when 오류, latest 이미지를 줄 번호로 점검하고 실행 순서를 보여 줍니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"GitLab CI 파이프라인 검사기","url":"https://wooadev.wooahouse.com/gitlab-ci-editor.html","description":".gitlab-ci.yml에서 stages 누락, script 누락, needs 순환·뒤 스테이지, extends 대상, rules·only 혼용, 불리언 변수, retry·when 오류, latest 이미지를 줄 번호로 점검하고 실행 순서를 보여 줍니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["잡 표: 스테이지(기본 .pre·build·test·deploy·.post), 이미지, script 줄 수, needs, 실행 조건, 줄 번호","상속: extends 체인을 해석해 template(.이름) 의 script·image 를 반영, 순환·없는 대상 감지","참조: stage 정의, needs 대상 존재·뒤 스테이지·순환, dependencies 는 앞 스테이지 잡","규칙: rules 키·when 값, rules 와 only/except 혼용 금지, rules:if 의 따옴표·정규식(/패턴/), when: delayed 의 start_in, retry 0~2","변수·보안: 변수 이름, 불리언 값(문자열이어야 함), 평문 비밀, latest 이미지, artifacts 의 paths·expire_in"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"YAML 앵커와 !reference 도 되나요?","acceptedAnswer":{"@type":"Answer","text":"앵커와 병합 키(<<)는 해석합니다. !reference 는 값 해석 없이 통과시키며 참조 대상은 확인하지 않습니다."}},{"@type":"Question","name":"실제 GitLab 의 CI Lint 와 같은가요?","acceptedAnswer":{"@type":"Answer","text":"서버 쪽 전체 검증은 아니며 흔한 구조 오류를 빠르게 찾는 용도입니다. 최종 확인은 프로젝트의 CI Lint 로 하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"GitLab CI 파이프라인 검사기","item":"https://wooadev.wooahouse.com/gitlab-ci-editor.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="gitlab-ci-editor.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/gitlab-ci-editor.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>GitLab CI 파이프라인 검사기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🦊</span>
+    <h1>GitLab CI 파이프라인 검증기</h1>
+    <p>.gitlab-ci.yml 을 붙여 넣으면 잡 표와 스테이지 실행 순서를 보여 주고, 없는 스테이지, script 누락, needs 의 뒤 스테이지·순환, extends 대상, rules 와 only 혼용, 불리언 변수, retry·when 오류를 줄 번호로 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>⛔ 오류 6건 · 경고 1건 — 잡 3개</p>
+<h3>입력 — .gitlab-ci.yml</h3><pre>stages: [build, test, deploy]
+
+variables:
+  NODE_ENV: production
+  DEBUG: true
+
+.node:
+  image: node:latest
+  before_script:
+    - npm ci
+
+build:
+  extends: .node
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    paths: [dist/]
+
+test:
+  extends: .nodejs
+  stage: test
+  script: npm test
+  needs: [build, deploy]
+  only: [main]
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+
+deploy:
+  stage: deploy
+  retry: 5
+  when: delayed
+  script:
+    - ./deploy.sh
+  environment: production
+</pre>
+<h3>결과 — 잡 목록 (스테이지 순)</h3><pre>잡 | 스테이지 | 이미지 | script 줄 | needs | 실행 조건 | 줄
+build | build | node:latest | 1 | — | on_success | 12
+test | test | — | 1 | build, deploy | rules | 20
+deploy | deploy | — | 1 | — | delayed | 29</pre>
+<h3>결과 — 점검 결과</h3><pre>⛔ 줄 5: 변수 DEBUG 의 값이 불리언입니다. GitLab 변수 값은 문자열이어야 하므로 따옴표로 감싸세요 ("true")
+⚠️ 줄 13: 이미지 "node:latest" 는 태그가 없거나 latest 입니다. 버전을 고정하세요
+ℹ️ 줄 17: artifacts 에 expire_in 이 없으면 기본 만료(30일, 인스턴스 설정)만큼 저장 공간을 차지합니다
+⛔ 줄 21: extends 의 ".nodejs" 잡(템플릿)이 없습니다
+⛔ 줄 24: needs "deploy"(deploy)는 뒤 스테이지(test)보다 늦어서 기다릴 수 없습니다
+⛔ 줄 26: 잡 "test" 에 rules 와 only/except 를 함께 쓸 수 없습니다
+⛔ 줄 31: retry 는 0~2 사이여야 합니다 (현재 5)
+⛔ 줄 32: when: delayed 에는 start_in 이 필요합니다 (예: 30 minutes)</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>push 해서 파이프라인이 만들어지지 않는 오류를 보기 전에 구조를 점검합니다. 파일은 서버로 전송되지 않습니다.</p>
+<ul><li>잡 표: 스테이지(기본 .pre·build·test·deploy·.post), 이미지, script 줄 수, needs, 실행 조건, 줄 번호</li><li>상속: extends 체인을 해석해 template(.이름) 의 script·image 를 반영, 순환·없는 대상 감지</li><li>참조: stage 정의, needs 대상 존재·뒤 스테이지·순환, dependencies 는 앞 스테이지 잡</li><li>규칙: rules 키·when 값, rules 와 only/except 혼용 금지, rules:if 의 따옴표·정규식(/패턴/), when: delayed 의 start_in, retry 0~2</li><li>변수·보안: 변수 이름, 불리언 값(문자열이어야 함), 평문 비밀, latest 이미지, artifacts 의 paths·expire_in</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="github-actions-editor.html" class="related-card"><span class="related-icon">⚙️</span><span>GitHub Actions 워크플로우 검사기</span></a>
+    <a href="yaml-formatter.html" class="related-card"><span class="related-icon">🧹</span><span>YAML 포맷터</span></a>
+    <a href="yaml-anchor-resolver.html" class="related-card"><span class="related-icon">⚓</span><span>YAML 앵커·별칭 펼치기</span></a>
+    <a href="cron-generator.html" class="related-card"><span class="related-icon">⏰</span><span>Cron 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>변수 값은 문자열이어야 합니다. DEBUG: true 대신 DEBUG: "true" 로 쓰세요.</li><li>needs 를 쓰면 스테이지를 기다리지 않고 DAG 로 실행되어 파이프라인이 빨라집니다. 단 앞쪽 스테이지의 잡만 지정할 수 있습니다.</li><li>include 로 가져온 템플릿은 이 도구가 볼 수 없어 해당 참조는 경고로만 표시합니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>YAML 앵커와 !reference 도 되나요?</summary><p>앵커와 병합 키(&lt;&lt;)는 해석합니다. !reference 는 값 해석 없이 통과시키며 참조 대상은 확인하지 않습니다.</p></details><details><summary>실제 GitLab 의 CI Lint 와 같은가요?</summary><p>서버 쪽 전체 검증은 아니며 흔한 구조 오류를 빠르게 찾는 용도입니다. 최종 확인은 프로젝트의 CI Lint 로 하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-yamlx.js"></script>
+<script src="js/lib/yaml.min.js"></script>
+<script src="js/tools/gitlab-ci-editor.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

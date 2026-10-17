@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitLab CI Checker – stages, needs, extends &amp; rules | WooaDev</title>
+  <meta name="description" content="Check .gitlab-ci.yml for undefined stages, missing script, needs cycles, extends targets, rules mixed with only, boolean variables, retry and when errors and latest images, with the run order.">
+  <meta name="keywords" content="GitLab CI validator, gitlab-ci.yml lint, needs stages, extends rules, pipeline order, gitlab ci editor">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/gitlab-ci-editor.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/gitlab-ci-editor.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/gitlab-ci-editor.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/gitlab-ci-editor.html">
+  <meta property="og:title" content="GitLab CI Checker – stages, needs, extends &amp; rules | WooaDev">
+  <meta property="og:description" content="Check .gitlab-ci.yml for undefined stages, missing script, needs cycles, extends targets, rules mixed with only, boolean variables, retry and when errors and latest images, with the run order.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/gitlab-ci-editor.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GitLab CI Checker – stages, needs, extends &amp; rules | WooaDev">
+  <meta name="twitter:description" content="Check .gitlab-ci.yml for undefined stages, missing script, needs cycles, extends targets, rules mixed with only, boolean variables, retry and when errors and latest images, with the run order.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"GitLab CI Pipeline Checker","url":"https://wooadev.wooahouse.com/en/gitlab-ci-editor.html","description":"Check .gitlab-ci.yml for undefined stages, missing script, needs cycles, extends targets, rules mixed with only, boolean variables, retry and when errors and latest images, with the run order.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Job table: stage (default .pre, build, test, deploy, .post), image, script lines, needs, when and line number","Inheritance: resolves extends chains so a template's script and image apply; detects cycles and missing targets","References: stage definitions, needs targets (existence, later stage, cycles) and dependencies on earlier stages","Rules: rules keys and when values, no mixing rules with only / except, quotes and regex (/pattern/) in rules:if, start_in for when: delayed, retry 0–2","Variables and security: names, boolean values (must be strings), plain-text secrets, latest images, artifacts paths and expire_in"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Are anchors and !reference supported?","acceptedAnswer":{"@type":"Answer","text":"Anchors and merge keys (<<) are resolved. !reference passes through without resolving its target."}},{"@type":"Question","name":"Is it the same as GitLab's CI Lint?","acceptedAnswer":{"@type":"Answer","text":"It is not a full server-side validation but a quick way to find common structural errors; confirm with your project's CI Lint."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"GitLab CI Pipeline Checker","item":"https://wooadev.wooahouse.com/en/gitlab-ci-editor.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../gitlab-ci-editor.html">KO</a>
+        <span>|</span>
+        <a href="gitlab-ci-editor.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>GitLab CI Pipeline Checker</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🦊</span>
+    <h1>GitLab CI Pipeline Validator</h1>
+    <p>Paste .gitlab-ci.yml to see a job table and stage order, with line-numbered findings on undefined stages, missing script, needs to later stages or cycles, extends targets, rules mixed with only, boolean variables and retry / when errors.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>⛔ 6 error(s), 1 warning(s) — 3 job(s)</p>
+<h3>Input — .gitlab-ci.yml</h3><pre>stages: [build, test, deploy]
+
+variables:
+  NODE_ENV: production
+  DEBUG: true
+
+.node:
+  image: node:latest
+  before_script:
+    - npm ci
+
+build:
+  extends: .node
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    paths: [dist/]
+
+test:
+  extends: .nodejs
+  stage: test
+  script: npm test
+  needs: [build, deploy]
+  only: [main]
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+
+deploy:
+  stage: deploy
+  retry: 5
+  when: delayed
+  script:
+    - ./deploy.sh
+  environment: production
+</pre>
+<h3>Result — Jobs (stage order)</h3><pre>Job | Stage | Image | Script lines | needs | When | Line
+build | build | node:latest | 1 | — | on_success | 12
+test | test | — | 1 | build, deploy | rules | 20
+deploy | deploy | — | 1 | — | delayed | 29</pre>
+<h3>Result — Findings</h3><pre>⛔ Line 5: Variable DEBUG is a boolean; GitLab variable values must be strings, so quote it ("true")
+⚠️ Line 13: Image "node:latest" has no tag or uses latest; pin a version
+ℹ️ Line 17: Without expire_in, artifacts use the instance default expiry (30 days) of storage
+⛔ Line 21: extends refers to missing job (template) ".nodejs"
+⛔ Line 24: needs "deploy" (deploy) is in a later stage than "test" (test) and cannot be waited for
+⛔ Line 26: Job "test" cannot combine rules with only / except
+⛔ Line 31: retry must be 0–2 (got 5)
+⛔ Line 32: when: delayed needs start_in (e.g. 30 minutes)</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Check the structure before pushing and finding that no pipeline is created. Your file is not uploaded.</p>
+<ul><li>Job table: stage (default .pre, build, test, deploy, .post), image, script lines, needs, when and line number</li><li>Inheritance: resolves extends chains so a template's script and image apply; detects cycles and missing targets</li><li>References: stage definitions, needs targets (existence, later stage, cycles) and dependencies on earlier stages</li><li>Rules: rules keys and when values, no mixing rules with only / except, quotes and regex (/pattern/) in rules:if, start_in for when: delayed, retry 0–2</li><li>Variables and security: names, boolean values (must be strings), plain-text secrets, latest images, artifacts paths and expire_in</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="github-actions-editor.html" class="related-card"><span class="related-icon">⚙️</span><span>GitHub Actions Workflow Checker</span></a>
+    <a href="yaml-formatter.html" class="related-card"><span class="related-icon">🧹</span><span>YAML Formatter</span></a>
+    <a href="yaml-anchor-resolver.html" class="related-card"><span class="related-icon">⚓</span><span>YAML Anchor &amp; Alias Resolver</span></a>
+    <a href="cron-generator.html" class="related-card"><span class="related-icon">⏰</span><span>Cron Generator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Variable values must be strings: write DEBUG: "true" instead of DEBUG: true.</li><li>needs runs jobs as a DAG without waiting for stages, which speeds up pipelines, but only jobs from earlier stages can be listed.</li><li>Templates pulled in with include are invisible to this tool, so references to them are only warnings.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Are anchors and !reference supported?</summary><p>Anchors and merge keys (&lt;&lt;) are resolved. !reference passes through without resolving its target.</p></details><details><summary>Is it the same as GitLab's CI Lint?</summary><p>It is not a full server-side validation but a quick way to find common structural errors; confirm with your project's CI Lint.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-yamlx.js"></script>
+<script src="../js/lib/yaml.min.js"></script>
+<script src="../js/tools/gitlab-ci-editor.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>쿠버네티스 YAML 생성기 — Deployment·Service·Ingress 만들기 | WooaDev</title>
+  <meta name="description" content="앱 이름, 이미지, 포트, 리소스, 프로브, Ingress 호스트로 Deployment, Service, Ingress, HPA, PDB YAML을 생성합니다. non-root, 읽기 전용 파일시스템 같은 보안 기본값과 권고를 제공합니다.">
+  <meta name="keywords" content="쿠버네티스 YAML 생성, Deployment YAML 만들기, Ingress YAML, HPA PDB 생성, 매니페스트 템플릿, kubernetes manifest generator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/kubernetes-manifest-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/kubernetes-manifest-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/kubernetes-manifest-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/kubernetes-manifest-generator.html">
+  <meta property="og:title" content="쿠버네티스 YAML 생성기 — Deployment·Service·Ingress 만들기 | WooaDev">
+  <meta property="og:description" content="앱 이름, 이미지, 포트, 리소스, 프로브, Ingress 호스트로 Deployment, Service, Ingress, HPA, PDB YAML을 생성합니다. non-root, 읽기 전용 파일시스템 같은 보안 기본값과 권고를 제공합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/kubernetes-manifest-generator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="쿠버네티스 YAML 생성기 — Deployment·Service·Ingress 만들기 | WooaDev">
+  <meta name="twitter:description" content="앱 이름, 이미지, 포트, 리소스, 프로브, Ingress 호스트로 Deployment, Service, Ingress, HPA, PDB YAML을 생성합니다. non-root, 읽기 전용 파일시스템 같은 보안 기본값과 권고를 제공합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"쿠버네티스 매니페스트 생성기","url":"https://wooadev.wooahouse.com/kubernetes-manifest-generator.html","description":"앱 이름, 이미지, 포트, 리소스, 프로브, Ingress 호스트로 Deployment, Service, Ingress, HPA, PDB YAML을 생성합니다. non-root, 읽기 전용 파일시스템 같은 보안 기본값과 권고를 제공합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["리소스: Deployment(필수), Service(ClusterIP·NodePort·LoadBalancer), Ingress(호스트·TLS·ingressClassName), HorizontalPodAutoscaler(v2), PodDisruptionBudget","설정: 레이블(app.kubernetes.io/*), 네임스페이스, 환경 변수 목록, cpu/memory requests·limits, readiness·liveness 프로브","보안 강화 옵션: runAsNonRoot, seccomp RuntimeDefault, allowPrivilegeEscalation: false, 읽기 전용 루트 FS, capabilities drop ALL","입력 검증: DNS 이름, 호스트 형식, limit ≥ request, HPA 최대 ≥ replicas, 비밀 값 환경 변수 경고, latest 이미지 경고","결과를 검증기 도구로 바로 점검 가능한 표준 YAML(--- 구분)"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"생성된 YAML 을 바로 운영에 써도 되나요?","acceptedAnswer":{"@type":"Answer","text":"출발점입니다. 이미지 태그, 리소스 값, 프로브 경로, 네트워크 정책 등은 앱에 맞게 조정하고 kubectl apply --dry-run=server 로 확인하세요."}},{"@type":"Question","name":"Helm 차트도 만들어 주나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 순수 매니페스트만 만듭니다. Helm 이나 Kustomize 로 옮길 때 출력 YAML 을 템플릿의 기반으로 쓰세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"쿠버네티스 매니페스트 생성기","item":"https://wooadev.wooahouse.com/kubernetes-manifest-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="kubernetes-manifest-generator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/kubernetes-manifest-generator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>쿠버네티스 매니페스트 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🛠️</span>
+    <h1>Kubernetes 매니페스트 생성기</h1>
+    <p>앱 이름, 이미지, 포트, replicas, 리소스, 헬스 체크 경로, Ingress 호스트를 입력하면 Deployment, Service, Ingress, HPA, PodDisruptionBudget YAML 을 만들어 줍니다. non-root, 읽기 전용 루트 FS 같은 보안 기본값과 프로브가 포함됩니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 리소스 4개를 만들었습니다</p>
+<h3>입력 — 환경 변수 (한 줄에 KEY=값)</h3><pre>LOG_LEVEL=info
+APP_MODE=production</pre>
+<h3>결과 — YAML</h3><pre>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+  namespace: production
+  labels:
+    app.kubernetes.io/name: myapp
+    app.kubernetes.io/managed-by: manifest
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: myapp
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: myapp
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: myapp
+          image: ghcr.io/example/myapp:1.0.0
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: LOG_LEVEL
+              value: "info"
+            - name: APP_MODE
+              value: "production"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+…</pre>
+<h3>결과 — 만들어진 리소스</h3><pre>종류 | 이름 | 요약
+Deployment | myapp | 2 replicas
+Service | myapp | ClusterIP :80 → http(8080)
+Ingress | myapp | myapp.example.com (TLS)
+PodDisruptionBudget | myapp | minAvailable 1</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>새 앱의 첫 매니페스트를 빠르게 만들고 필수 설정을 빠뜨리지 않도록 돕습니다. 입력은 브라우저 밖으로 나가지 않습니다.</p>
+<ul><li>리소스: Deployment(필수), Service(ClusterIP·NodePort·LoadBalancer), Ingress(호스트·TLS·ingressClassName), HorizontalPodAutoscaler(v2), PodDisruptionBudget</li><li>설정: 레이블(app.kubernetes.io/*), 네임스페이스, 환경 변수 목록, cpu/memory requests·limits, readiness·liveness 프로브</li><li>보안 강화 옵션: runAsNonRoot, seccomp RuntimeDefault, allowPrivilegeEscalation: false, 읽기 전용 루트 FS, capabilities drop ALL</li><li>입력 검증: DNS 이름, 호스트 형식, limit ≥ request, HPA 최대 ≥ replicas, 비밀 값 환경 변수 경고, latest 이미지 경고</li><li>결과를 검증기 도구로 바로 점검 가능한 표준 YAML(--- 구분)</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="kubernetes-yaml-validator.html" class="related-card"><span class="related-icon">☸️</span><span>쿠버네티스 YAML 검증기</span></a>
+    <a href="kubernetes-resource-calculator.html" class="related-card"><span class="related-icon">☸️</span><span>Kubernetes 리소스 계산기</span></a>
+    <a href="kubernetes-label-selector.html" class="related-card"><span class="related-icon">🏷️</span><span>Kubernetes 레이블 셀렉터 테스터</span></a>
+    <a href="docker-image-parser.html" class="related-card"><span class="related-icon">🐳</span><span>Docker 이미지 이름 분석기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>비밀 값은 환경 변수에 직접 넣지 말고 Secret 을 만든 뒤 valueFrom.secretKeyRef 로 참조하세요.</li><li>HPA 를 쓰면 replicas 는 HPA 가 관리하므로 Deployment 매니페스트에서 빼는 것이 좋습니다.</li><li>읽기 전용 루트 FS 를 켜면 앱이 /tmp 에 쓸 수 없습니다. emptyDir 볼륨을 마운트하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>생성된 YAML 을 바로 운영에 써도 되나요?</summary><p>출발점입니다. 이미지 태그, 리소스 값, 프로브 경로, 네트워크 정책 등은 앱에 맞게 조정하고 kubectl apply --dry-run=server 로 확인하세요.</p></details><details><summary>Helm 차트도 만들어 주나요?</summary><p>아니요. 순수 매니페스트만 만듭니다. Helm 이나 Kustomize 로 옮길 때 출력 YAML 을 템플릿의 기반으로 쓰세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/kubernetes-manifest-generator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

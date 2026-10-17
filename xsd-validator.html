@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XSD 검증기 — XML 이 스키마에 유효한지 위치와 이유로 | WooaDev</title>
+  <meta name="description" content="XML이 XSD 스키마에 유효한지 요소 순서·출현 횟수·필수 속성·내장 타입·enumeration·pattern·범위 패싯·ID/IDREF를 검사하고 오류 위치를 XPath 경로로 보여 줍니다.">
+  <meta name="keywords" content="XSD 검증, XML 스키마 검증, xsd validator, enumeration pattern 패싯, minOccurs maxOccurs, ID IDREF">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/xsd-validator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/xsd-validator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/xsd-validator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/xsd-validator.html">
+  <meta property="og:title" content="XSD 검증기 — XML 이 스키마에 유효한지 위치와 이유로 | WooaDev">
+  <meta property="og:description" content="XML이 XSD 스키마에 유효한지 요소 순서·출현 횟수·필수 속성·내장 타입·enumeration·pattern·범위 패싯·ID/IDREF를 검사하고 오류 위치를 XPath 경로로 보여 줍니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/xsd-validator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="XSD 검증기 — XML 이 스키마에 유효한지 위치와 이유로 | WooaDev">
+  <meta name="twitter:description" content="XML이 XSD 스키마에 유효한지 요소 순서·출현 횟수·필수 속성·내장 타입·enumeration·pattern·범위 패싯·ID/IDREF를 검사하고 오류 위치를 XPath 경로로 보여 줍니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"XSD 검증기","url":"https://wooadev.wooahouse.com/xsd-validator.html","description":"XML이 XSD 스키마에 유효한지 요소 순서·출현 횟수·필수 속성·내장 타입·enumeration·pattern·범위 패싯·ID/IDREF를 검사하고 오류 위치를 XPath 경로로 보여 줍니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["구조: sequence·choice·all·group, minOccurs/maxOccurs, mixed, 빈 요소, 확장·제한(complexContent·simpleContent), 이름 있는 타입과 element ref","오류 위치: /catalog/book[2]/price 같은 XPath 경로와 \"자식 요소 순서가 다릅니다: <price> 위치에 <author> 가 와야 합니다\" 같은 이유","속성: required·prohibited·fixed·default, 선언되지 않은 속성 오류, anyAttribute","타입: string, 정수군(범위 포함), decimal, boolean, date·dateTime·time·duration, anyURI, hexBinary, base64Binary, NMTOKEN, language, ID/IDREF 등 내장 타입","패싯: enumeration, pattern, length·minLength·maxLength, min/maxInclusive·Exclusive, totalDigits, fractionDigits, list, union"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"네임스페이스가 있는 XML 도 되나요?","acceptedAnswer":{"@type":"Answer","text":"접두사를 무시하고 이름으로만 비교합니다. targetNamespace 가 다른 요소 구분이 필요하면 정확한 결과가 아닐 수 있습니다."}},{"@type":"Question","name":"XSD 1.1 의 assert 도 되나요?","acceptedAnswer":{"@type":"Answer","text":"지원하지 않습니다. XSD 1.0 의 핵심 기능을 대상으로 합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"XSD 검증기","item":"https://wooadev.wooahouse.com/xsd-validator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="xsd-validator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/xsd-validator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>XSD 검증기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">✅</span>
+    <h1>XML Schema (XSD) 검증기</h1>
+    <p>XML 과 XSD 를 붙여 넣으면 요소 순서와 출현 횟수, 필수 속성, 단순 타입(정수·날짜·불리언 등)과 패싯(enumeration, pattern, 길이, 범위), ID/IDREF 를 검사해 위치(XPath 경로)와 이유를 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>⛔ 오류 5개</p>
+<h3>입력 — 검증할 XML</h3><pre>&lt;?xml version="1.0"?&gt;
+&lt;catalog&gt;
+  &lt;book id="b1" pages="320"&gt;
+    &lt;title&gt;XML Basics&lt;/title&gt;
+    &lt;author&gt;Kim&lt;/author&gt;
+    &lt;price currency="USD"&gt;29.99&lt;/price&gt;
+    &lt;published&gt;2024-02-30&lt;/published&gt;
+  &lt;/book&gt;
+  &lt;book id="b1" pages="0"&gt;
+    &lt;title&gt;XPath 입문&lt;/title&gt;
+    &lt;price currency="EUR"&gt;18000&lt;/price&gt;
+    &lt;isbn&gt;123&lt;/isbn&gt;
+  &lt;/book&gt;
+&lt;/catalog&gt;
+</pre>
+<h3>입력 — XSD 스키마</h3><pre>&lt;?xml version="1.0"?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;xs:element name="catalog"&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:sequence&gt;
+        &lt;xs:element name="book" maxOccurs="unbounded"&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name="title" type="xs:string"/&gt;
+              &lt;xs:element name="author" type="xs:string" maxOccurs="3"/&gt;
+              &lt;xs:element name="price"&gt;
+                &lt;xs:complexType&gt;
+                  &lt;xs:simpleContent&gt;
+                    &lt;xs:extension base="xs:decimal"&gt;
+                      &lt;xs:attribute name="currency" use="required"&gt;
+                        &lt;xs:simpleType&gt;
+                          &lt;xs:restriction base="xs:string"&gt;
+                            &lt;xs:enumeration value="USD"/&gt;
+                            &lt;xs:enumeration value="KRW"/&gt;
+                          &lt;/xs:restriction&gt;
+…</pre>
+<h3>결과 — 검증 오류</h3><pre># | 위치 | 오류
+1 | /catalog/book[1]/published | 값 "2024-02-30" 이(가) 존재하지 않는 날짜입니다
+2 | /catalog/book[2] | ID "b1" 가 중복됩니다
+3 | /catalog/book[2] | 속성 pages 값 "0" 이(가) positiveInteger 범위(1 ~ ∞)를 벗어납니다
+4 | /catalog/book[2] | 자식 요소 순서·구성이 스키마와 다릅니다: &lt;price&gt; 위치에 &lt;author&gt; 가 와야 합니다
+5 | /catalog/book[2]/price | 속성 currency 값 "EUR" 이(가) 허용된 값(USD, KRW)이 아닙니다</pre>
+<h3>결과 — 참고</h3><pre>지원 범위: 요소·속성·complexType(sequence, choice, all, group, 확장/제한)·simpleType(패싯, list, union)·내장 타입·출현 횟수·ID/IDREF. 네임스페이스는 접두사를 무시하고 이름으로만 비교하며 key/unique/keyref, import/include, substitutionGroup 은 검사하지 않습니다</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>연동용 XML 이 스키마에 맞는지 xmllint 없이 브라우저에서 확인합니다. 파일은 서버로 전송되지 않습니다.</p>
+<ul><li>구조: sequence·choice·all·group, minOccurs/maxOccurs, mixed, 빈 요소, 확장·제한(complexContent·simpleContent), 이름 있는 타입과 element ref</li><li>오류 위치: /catalog/book[2]/price 같은 XPath 경로와 "자식 요소 순서가 다릅니다: &lt;price&gt; 위치에 &lt;author&gt; 가 와야 합니다" 같은 이유</li><li>속성: required·prohibited·fixed·default, 선언되지 않은 속성 오류, anyAttribute</li><li>타입: string, 정수군(범위 포함), decimal, boolean, date·dateTime·time·duration, anyURI, hexBinary, base64Binary, NMTOKEN, language, ID/IDREF 등 내장 타입</li><li>패싯: enumeration, pattern, length·minLength·maxLength, min/maxInclusive·Exclusive, totalDigits, fractionDigits, list, union</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="xsd-generator.html" class="related-card"><span class="related-icon">🧱</span><span>XML 에서 XSD 생성기</span></a>
+    <a href="xsd-to-json-schema.html" class="related-card"><span class="related-icon">🔁</span><span>XSD → JSON Schema 변환기</span></a>
+    <a href="xpath-tester.html" class="related-card"><span class="related-icon">🔎</span><span>XPath 테스터</span></a>
+    <a href="xml-escape.html" class="related-card"><span class="related-icon">🏷️</span><span>XML 이스케이프 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>가장 먼저 나오는 순서 오류가 뒤의 연쇄 오류를 만들 수 있습니다. 위에서부터 고치세요.</li><li>날짜는 형식뿐 아니라 존재하는 날짜인지(2월 30일 불가)도 확인합니다.</li><li>key/unique/keyref, substitutionGroup, import/include 는 지원하지 않습니다. 필요한 경우 전용 도구로 확인하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>네임스페이스가 있는 XML 도 되나요?</summary><p>접두사를 무시하고 이름으로만 비교합니다. targetNamespace 가 다른 요소 구분이 필요하면 정확한 결과가 아닐 수 있습니다.</p></details><details><summary>XSD 1.1 의 assert 도 되나요?</summary><p>지원하지 않습니다. XSD 1.0 의 핵심 기능을 대상으로 합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-xml.js"></script>
+<script src="js/tk-xpath.js"></script>
+<script src="js/tk-xsd.js"></script>
+<script src="js/tools/xsd-validator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

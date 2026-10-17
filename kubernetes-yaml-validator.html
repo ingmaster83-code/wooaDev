@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>쿠버네티스 YAML 검증기 — selector·리소스·참조 오류 찾기 | WooaDev</title>
+  <meta name="description" content="쿠버네티스 매니페스트의 제거된 apiVersion, selector와 레이블 불일치, limit&lt;request, Service targetPort·Ingress backend 참조, Secret 키, 프로브·보안 설정을 줄 번호로 검증합니다.">
+  <meta name="keywords" content="쿠버네티스 YAML 검증, kubectl dry-run, selector 레이블 불일치, apiVersion 제거, Ingress backend, kubernetes yaml validator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/kubernetes-yaml-validator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/kubernetes-yaml-validator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/kubernetes-yaml-validator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/kubernetes-yaml-validator.html">
+  <meta property="og:title" content="쿠버네티스 YAML 검증기 — selector·리소스·참조 오류 찾기 | WooaDev">
+  <meta property="og:description" content="쿠버네티스 매니페스트의 제거된 apiVersion, selector와 레이블 불일치, limit&lt;request, Service targetPort·Ingress backend 참조, Secret 키, 프로브·보안 설정을 줄 번호로 검증합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/kubernetes-yaml-validator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="쿠버네티스 YAML 검증기 — selector·리소스·참조 오류 찾기 | WooaDev">
+  <meta name="twitter:description" content="쿠버네티스 매니페스트의 제거된 apiVersion, selector와 레이블 불일치, limit&lt;request, Service targetPort·Ingress backend 참조, Secret 키, 프로브·보안 설정을 줄 번호로 검증합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"쿠버네티스 YAML 검증기","url":"https://wooadev.wooahouse.com/kubernetes-yaml-validator.html","description":"쿠버네티스 매니페스트의 제거된 apiVersion, selector와 레이블 불일치, limit<request, Service targetPort·Ingress backend 참조, Secret 키, 프로브·보안 설정을 줄 번호로 검증합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["공통: apiVersion·kind 일치, 제거된 API(extensions/v1beta1, batch/v1beta1, autoscaling/v2beta2 …), 이름 DNS 규칙, 중복 리소스, 레이블 값 규칙","워크로드: selector.matchLabels ↔ 템플릿 레이블, StatefulSet serviceName, CronJob 스케줄, 컨테이너 이름·이미지(latest), 포트·프로브 포트 이름, env value/valueFrom, volumeMounts ↔ volumes","리소스: cpu/memory 수량 형식, limit < request 오류, requests 누락(권고)","참조: Service selector ↔ 파드, targetPort 이름·번호, Ingress v1 의 pathType·backend.service 형식과 대상 Service 포트, Secret/ConfigMap 키 존재, HPA 대상","보안(권고 끌 수 있음): privileged, hostNetwork/hostPID, hostPath, 위험한 capabilities, runAsNonRoot, 평문 시크릿 env, Secret 은 암호화가 아님 안내"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"kubectl --dry-run=server 와 같은가요?","acceptedAnswer":{"@type":"Answer","text":"서버의 전체 스키마 검증은 아닙니다. 자주 발생하는 구조·참조·운영 문제를 설치 없이 확인하며, 최종 확인은 dry-run 으로 하세요."}},{"@type":"Question","name":"CRD 는 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"내장 리소스가 아닌 kind 는 기본 필드(apiVersion, kind, metadata.name)만 확인하고 안내를 표시합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"쿠버네티스 YAML 검증기","item":"https://wooadev.wooahouse.com/kubernetes-yaml-validator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="kubernetes-yaml-validator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/kubernetes-yaml-validator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>쿠버네티스 YAML 검증기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">☸️</span>
+    <h1>Kubernetes YAML 검증기</h1>
+    <p>여러 문서(---)의 매니페스트를 붙여 넣으면 제거된 apiVersion, Deployment selector 와 파드 레이블 불일치, request/limit 오류, Service·Ingress 가 가리키는 포트와 이름, Secret·ConfigMap 키 참조, 보안 설정을 줄 번호와 함께 검사합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>⛔ 오류 3건 · 경고 2건 — 리소스 3개</p>
+<h3>입력 — 쿠버네티스 매니페스트 (YAML, --- 로 여러 개)</h3><pre>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+        - name: web
+          image: nginx
+          ports:
+            - containerPort: 80
+              name: http
+          env:
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: password
+          resources:
+            limits:
+              memory: 128Mi
+            requests:
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  selector:
+    app: web
+  ports:
+    - port: 80
+      targetPort: https
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: web
+spec:
+  rules:
+    - host: example.com
+      http:
+…</pre>
+<h3>결과 — 리소스 목록</h3><pre>종류 | 이름 | 네임스페이스 | apiVersion | 줄
+Deployment | web | default | apps/v1 | 1
+Service | web | default | v1 | 35
+Ingress | web | default | extensions/v1beta1 | 46</pre>
+<h3>결과 — 점검 결과</h3><pre>⛔ 줄 10: selector.matchLabels 가 파드 템플릿 레이블과 맞지 않습니다 (app=web ↔ webapp). 배포가 거부됩니다
+ℹ️ 줄 18: 컨테이너 "web" 에 cpu/memory requests 를 모두 지정하세요
+ℹ️ 줄 18: 컨테이너 "web" 에 readiness/liveness 프로브가 없습니다
+ℹ️ 줄 18: 컨테이너 "web" 에 securityContext(runAsNonRoot, allowPrivilegeEscalation: false, readOnlyRootFilesystem)를 지정하는 것이 좋습니다
+⚠️ 줄 19: 이미지 "nginx" 에 태그가 없어 latest 가 쓰입니다 (imagePullPolicy 도 Always 가 됨). 버전을 고정하세요
+ℹ️ 줄 24: Secret "db-secret" 이 이 파일에 없습니다 (클러스터에 따로 있어야 함)
+⛔ 줄 29: memory limit(128Mi)이 request(256Mi)보다 작습니다. 파드가 생성되지 않습니다
+⚠️ 줄 40: Service selector {"app":"web"} 와 일치하는 파드 템플릿이 이 파일에 없습니다
+⛔ 줄 46: extensions/v1beta1 는 쿠버네티스 1.22 에서 제거되었습니다. networking.k8s.io/v1 로 바꾸세요
+ℹ️ 줄 50: ingressClassName 이 없어 기본 IngressClass 에 의존합니다</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>kubectl apply 에서 거부되거나 배포 후에야 알게 되는 오류를 미리 찾습니다. 매니페스트는 서버로 전송되지 않습니다.</p>
+<ul><li>공통: apiVersion·kind 일치, 제거된 API(extensions/v1beta1, batch/v1beta1, autoscaling/v2beta2 …), 이름 DNS 규칙, 중복 리소스, 레이블 값 규칙</li><li>워크로드: selector.matchLabels ↔ 템플릿 레이블, StatefulSet serviceName, CronJob 스케줄, 컨테이너 이름·이미지(latest), 포트·프로브 포트 이름, env value/valueFrom, volumeMounts ↔ volumes</li><li>리소스: cpu/memory 수량 형식, limit &lt; request 오류, requests 누락(권고)</li><li>참조: Service selector ↔ 파드, targetPort 이름·번호, Ingress v1 의 pathType·backend.service 형식과 대상 Service 포트, Secret/ConfigMap 키 존재, HPA 대상</li><li>보안(권고 끌 수 있음): privileged, hostNetwork/hostPID, hostPath, 위험한 capabilities, runAsNonRoot, 평문 시크릿 env, Secret 은 암호화가 아님 안내</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="kubernetes-manifest-generator.html" class="related-card"><span class="related-icon">🛠️</span><span>쿠버네티스 매니페스트 생성기</span></a>
+    <a href="kubernetes-routing-tester.html" class="related-card"><span class="related-icon">🛣️</span><span>Ingress 라우팅 테스터</span></a>
+    <a href="kubernetes-rbac-viewer.html" class="related-card"><span class="related-icon">🛡️</span><span>쿠버네티스 RBAC 권한 분석기</span></a>
+    <a href="kubernetes-resource-calculator.html" class="related-card"><span class="related-icon">☸️</span><span>Kubernetes 리소스 계산기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Deployment 의 selector 는 생성 후 바꿀 수 없습니다. 레이블을 처음부터 템플릿과 일치시키세요.</li><li>limit 이 request 보다 작으면 파드가 만들어지지 않습니다. 단위(m, Mi, Gi)를 확인하세요.</li><li>이 도구는 파일 안의 리소스끼리의 참조만 확인합니다. 클러스터에 이미 있는 Secret 이나 Service 는 정보로만 알려 줍니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>kubectl --dry-run=server 와 같은가요?</summary><p>서버의 전체 스키마 검증은 아닙니다. 자주 발생하는 구조·참조·운영 문제를 설치 없이 확인하며, 최종 확인은 dry-run 으로 하세요.</p></details><details><summary>CRD 는 어떻게 되나요?</summary><p>내장 리소스가 아닌 kind 는 기본 필드(apiVersion, kind, metadata.name)만 확인하고 안내를 표시합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-yamlx.js"></script>
+<script src="js/lib/yaml.min.js"></script>
+<script src="js/tools/kubernetes-yaml-validator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

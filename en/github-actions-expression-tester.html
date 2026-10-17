@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Actions Expression Tester – Evaluate if Conditions | WooaDev</title>
+  <meta name="description" content="Evaluate GitHub Actions expressions against github, env, matrix, steps and needs context JSON. Supports contains, format, join, toJSON and fromJSON with GitHub coercion rules, step by step.">
+  <meta name="keywords" content="GitHub Actions expression, test if condition, contains format fromJSON, github context, workflow expression evaluator, github actions expression tester">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/github-actions-expression-tester.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/github-actions-expression-tester.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/github-actions-expression-tester.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/github-actions-expression-tester.html">
+  <meta property="og:title" content="GitHub Actions Expression Tester – Evaluate if Conditions | WooaDev">
+  <meta property="og:description" content="Evaluate GitHub Actions expressions against github, env, matrix, steps and needs context JSON. Supports contains, format, join, toJSON and fromJSON with GitHub coercion rules, step by step.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/github-actions-expression-tester.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GitHub Actions Expression Tester – Evaluate if Conditions | WooaDev">
+  <meta name="twitter:description" content="Evaluate GitHub Actions expressions against github, env, matrix, steps and needs context JSON. Supports contains, format, join, toJSON and fromJSON with GitHub coercion rules, step by step.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"GitHub Actions Expression Tester","url":"https://wooadev.wooahouse.com/en/github-actions-expression-tester.html","description":"Evaluate GitHub Actions expressions against github, env, matrix, steps and needs context JSON. Supports contains, format, join, toJSON and fromJSON with GitHub coercion rules, step by step.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Syntax: literals (null, booleans, numbers, 0x hex, 'strings' with '' escape), .a.b properties, ['key'], indexes, the object filter .*, ! < <= > >= == != && ||, parentheses","Functions: contains, startsWith, endsWith, format ({0} and {{ }}), join, toJSON, fromJSON, hashFiles (placeholder), success, failure, always and cancelled","Rules: string comparison ignores case, different types are compared as numbers (null→0, true→1, ''→0, non-numeric strings→NaN), NaN comparisons are false, && and || return operand values","Text mixing ${{ }} segments is evaluated per segment and joined; context and function names are case-insensitive","A per-sub-expression table (value and type) and a job status selector (success / failure / cancelled)"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can results differ from a real runner?","acceptedAnswer":{"@type":"Answer","text":"The context values are JSON you provide and may differ from a real run; the evaluation rules follow GitHub's documentation."}},{"@type":"Question","name":"Why does hashFiles give no value?","acceptedAnswer":{"@type":"Answer","text":"It needs the runner's actual files, so a placeholder string is returned with a note."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"GitHub Actions Expression Tester","item":"https://wooadev.wooahouse.com/en/github-actions-expression-tester.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../github-actions-expression-tester.html">KO</a>
+        <span>|</span>
+        <a href="github-actions-expression-tester.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>GitHub Actions Expression Tester</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧪</span>
+    <h1>GitHub Actions Expression Evaluator</h1>
+    <p>Evaluate expressions used in if: against context JSON such as github, env, matrix, steps and needs. Every sub-expression shows its value and type, following GitHub's rules for case-insensitive comparison, number coercion and falsy values.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Result: true (boolean)</p>
+<h3>Input — Expression (with or without ${{ … }}; text containing ${{ }} segments works too)</h3><pre>github.ref == 'refs/heads/main' &amp;&amp; contains(github.event.head_commit.message, '[deploy]') &amp;&amp; !cancelled()</pre>
+<h3>Input — Contexts (JSON: github, env, vars, steps, needs, matrix, inputs, runner, job, secrets …)</h3><pre>{
+  "github": {
+    "ref": "refs/heads/main",
+    "event_name": "push",
+    "actor": "octocat",
+    "event": { "head_commit": { "message": "Fix bug [deploy]" }, "commits": [ { "message": "a" }, { "message": "b" } ] }
+  },
+  "env": { "NODE_ENV": "production" },
+  "matrix": { "os": "ubuntu-latest", "node": 20 },
+  "steps": { "build": { "outcome": "success", "outputs": { "version": "1.2.3" } } },
+  "needs": { "test": { "result": "success" } }
+}</pre>
+<h3>Result — Evaluation steps</h3><pre>Sub-expression | Value | Type
+github.ref | "refs/heads/main" | string
+github.ref == 'refs/heads/main' | true | boolean
+github.event.head_commit.message | "Fix bug [deploy]" | string
+contains(github.event.head_commit.message, '[deploy]') | true | boolean
+github.ref == 'refs/heads/main' &amp;&amp; contains(github.event.head_commit.m… | true | boolean
+cancelled() | false | boolean
+!cancelled() | true | boolean</pre>
+<h3>Result — Result</h3><pre>true</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Check whether an if condition is true without committing and running it. Input never leaves your browser.</p>
+<ul><li>Syntax: literals (null, booleans, numbers, 0x hex, 'strings' with '' escape), .a.b properties, ['key'], indexes, the object filter .*, ! &lt; &lt;= &gt; &gt;= == != &amp;&amp; ||, parentheses</li><li>Functions: contains, startsWith, endsWith, format ({0} and {{ }}), join, toJSON, fromJSON, hashFiles (placeholder), success, failure, always and cancelled</li><li>Rules: string comparison ignores case, different types are compared as numbers (null→0, true→1, ''→0, non-numeric strings→NaN), NaN comparisons are false, &amp;&amp; and || return operand values</li><li>Text mixing ${{ }} segments is evaluated per segment and joined; context and function names are case-insensitive</li><li>A per-sub-expression table (value and type) and a job status selector (success / failure / cancelled)</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="github-actions-editor.html" class="related-card"><span class="related-icon">⚙️</span><span>GitHub Actions Workflow Checker</span></a>
+    <a href="gitlab-ci-editor.html" class="related-card"><span class="related-icon">🦊</span><span>GitLab CI Pipeline Checker</span></a>
+    <a href="json-formatter.html" class="related-card"><span class="related-icon">📋</span><span>JSON Formatter</span></a>
+    <a href="jmespath-tester.html" class="related-card"><span class="related-icon">🧪</span><span>JMESPath Tester</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Comparing a boolean with a string using == such as inputs.dry == 'false' coerces both to numbers and can surprise you.</li><li>In if:, text after ${{ }} makes the whole value a string that is always true.</li><li>github.event.commits.*.message gathers a property across array elements, which join can combine.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Can results differ from a real runner?</summary><p>The context values are JSON you provide and may differ from a real run; the evaluation rules follow GitHub's documentation.</p></details><details><summary>Why does hashFiles give no value?</summary><p>It needs the runner's actual files, so a placeholder string is returned with a note.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/github-actions-expression-tester.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

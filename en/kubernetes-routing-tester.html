@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingress Routing Tester – Which Service Gets the Request | WooaDev</title>
+  <meta name="description" content="Trace which Service and port a request URL reaches from Ingress host and pathType (Exact, Prefix) rules. Checks wildcard hosts, longest-path precedence, rewrite-target and TLS redirects.">
+  <meta name="keywords" content="Ingress routing test, pathType Prefix Exact, ingress path precedence, rewrite-target, wildcard host, kubernetes routing tester">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/kubernetes-routing-tester.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/kubernetes-routing-tester.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/kubernetes-routing-tester.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/kubernetes-routing-tester.html">
+  <meta property="og:title" content="Ingress Routing Tester – Which Service Gets the Request | WooaDev">
+  <meta property="og:description" content="Trace which Service and port a request URL reaches from Ingress host and pathType (Exact, Prefix) rules. Checks wildcard hosts, longest-path precedence, rewrite-target and TLS redirects.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/kubernetes-routing-tester.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ingress Routing Tester – Which Service Gets the Request | WooaDev">
+  <meta name="twitter:description" content="Trace which Service and port a request URL reaches from Ingress host and pathType (Exact, Prefix) rules. Checks wildcard hosts, longest-path precedence, rewrite-target and TLS redirects.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Ingress Routing Tester","url":"https://wooadev.wooahouse.com/en/kubernetes-routing-tester.html","description":"Trace which Service and port a request URL reaches from Ingress host and pathType (Exact, Prefix) rules. Checks wildcard hosts, longest-path precedence, rewrite-target and TLS redirects.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Host: exact > wildcard (*.example.com covers one label) > rules without a host, case-insensitive","Path: Exact is a full match, Prefix matches by path element (/foo matches /foo/bar but not /foobar), / matches everything and the longest rule wins","ImplementationSpecific: interpreted as nginx does (prefix, or regex with use-regex) with a note that controllers differ","Backend: Service name and port (name or number), Service port → targetPort, pods matching the selector and defaultBackend","Extras: the nginx rewrite-target result, http → https redirect for TLS hosts, duplicate rules and a missing ingressClassName"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is it identical to every Ingress controller?","acceptedAnswer":{"@type":"Answer","text":"Standard rules (host and pathType precedence) match, but ImplementationSpecific and annotations vary by controller; this tool follows ingress-nginx."}},{"@type":"Question","name":"What if the Service is not in the file?","acceptedAnswer":{"@type":"Answer","text":"Only the backend name and port are shown, with a note that the Service is not in the file."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Ingress Routing Tester","item":"https://wooadev.wooahouse.com/en/kubernetes-routing-tester.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../kubernetes-routing-tester.html">KO</a>
+        <span>|</span>
+        <a href="kubernetes-routing-tester.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Ingress Routing Tester</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🛣️</span>
+    <h1>Ingress &amp; Service Routing Tester</h1>
+    <p>Paste Ingress and Service manifests and enter request URLs, one per line, to see how each is routed: host (exact and wildcard), path (Exact, Prefix, regex), the longest matching rule, the target Service port and the pod targetPort.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>⛔ 1 routing failure(s) — 8 request(s)</p>
+<h3>Input — Ingress / Service / Deployment manifests (YAML)</h3><pre>apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: main
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts: [app.example.com]
+      secretName: app-tls
+  rules:
+    - host: app.example.com
+      http:
+        paths:
+          - path: /api(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend: { service: { name: api, port: { number: 8080 } } }
+          - path: /static
+            pathType: Prefix
+            backend: { service: { name: static, port: { name: http } } }
+          - path: /static/private
+            pathType: Exact
+            backend: { service: { name: admin, port: { number: 80 } } }
+          - path: /
+            pathType: Prefix
+            backend: { service: { name: web, port: { number: 80 } } }
+    - host: "*.example.com"
+      http:
+        paths:
+…</pre>
+<h3>Input — Requests to test (one URL per line)</h3><pre>https://app.example.com/
+https://app.example.com/api/users
+https://app.example.com/static/logo.png
+https://app.example.com/static/private
+https://app.example.com/static/private/x
+http://app.example.com/staticfile
+https://other.example.com/anything
+https://unknown.org/</pre>
+<h3>Result — Routing result</h3><pre>Request | Matched rule | Backend | Notes | Class
+https://app.example.com/ | main · app.example.com / (Prefix) | web:80 → pod:http | rewrite → / | nginx
+https://app.example.com/api/users | main · app.example.com /api(/|$)(.*) (ImplementationSpecific) | api:8080 → pod:3000 | rewrite → /users | nginx
+https://app.example.com/static/logo.png | main · app.example.com /static (Prefix) | static:http → pod:80 | rewrite → / | nginx
+https://app.example.com/static/private | main · app.example.com /static/private (Exact) | admin:80 | Service "admin" is not in this file · rewrite → / | nginx
+https://app.example.com/static/private/x | main · app.example.com /static (Prefix) | static:http → pod:80 | rewrite → / | nginx
+http://app.example.com/staticfile | main · app.example.com / (Prefix) | web:80 → pod:http | rewrite → / · a TLS host, so a redirect (308) to https is likely | nginx
+https://other.example.com/anything | main · *.example.com / (Prefix) | wildcard:80 | Service "wildcard" is not in this file · rewrite → / | nginx
+https://unknown.org/ | — | — | ⛔ No rule matches → 404 (or the default backend) | </pre>
+<h3>Result — Findings</h3><pre>ℹ️ The meaning of the ImplementationSpecific path "/api(/|$)(.*)" depends on the controller (nginx: prefix, or regex with use-regex); this tool follows nginx
+Precedence: exact host &gt; wildcard host &gt; no host; within a host Exact beats the longest Prefix. Prefix matches by path element, so /static does not match /staticfile</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>See before applying an Ingress which requests go to which service. Your manifests are not uploaded.</p>
+<ul><li>Host: exact &gt; wildcard (*.example.com covers one label) &gt; rules without a host, case-insensitive</li><li>Path: Exact is a full match, Prefix matches by path element (/foo matches /foo/bar but not /foobar), / matches everything and the longest rule wins</li><li>ImplementationSpecific: interpreted as nginx does (prefix, or regex with use-regex) with a note that controllers differ</li><li>Backend: Service name and port (name or number), Service port → targetPort, pods matching the selector and defaultBackend</li><li>Extras: the nginx rewrite-target result, http → https redirect for TLS hosts, duplicate rules and a missing ingressClassName</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="kubernetes-yaml-validator.html" class="related-card"><span class="related-icon">☸️</span><span>Kubernetes YAML Validator</span></a>
+    <a href="kubernetes-manifest-generator.html" class="related-card"><span class="related-icon">🛠️</span><span>Kubernetes Manifest Generator</span></a>
+    <a href="url-pattern-tester.html" class="related-card"><span class="related-icon">🧭</span><span>URLPattern Tester</span></a>
+    <a href="kubernetes-label-selector.html" class="related-card"><span class="related-icon">🏷️</span><span>Kubernetes Label Selector Tester</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>When Exact and Prefix share a path, Exact wins.</li><li>ImplementationSpecific is left to the controller; check its annotations if you need regex.</li><li>A wildcard host *.example.com matches a.example.com but neither example.com nor a.b.example.com.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Is it identical to every Ingress controller?</summary><p>Standard rules (host and pathType precedence) match, but ImplementationSpecific and annotations vary by controller; this tool follows ingress-nginx.</p></details><details><summary>What if the Service is not in the file?</summary><p>Only the backend name and port are shown, with a note that the Service is not in the file.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-yamlx.js"></script>
+<script src="../js/lib/yaml.min.js"></script>
+<script src="../js/tools/kubernetes-routing-tester.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

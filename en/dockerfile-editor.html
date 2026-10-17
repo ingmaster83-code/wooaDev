@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dockerfile Linter – Syntax Errors &amp; Best Practices by Line | WooaDev</title>
+  <meta name="description" content="Check a Dockerfile for syntax errors (FROM order, stage references, EXPOSE range) and best practices such as latest tags, apt-get -y, running as root, ENV secrets and shell-form CMD.">
+  <meta name="keywords" content="Dockerfile linter, Dockerfile check, Dockerfile best practices, multi-stage build validation, hadolint, dockerfile editor">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/dockerfile-editor.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/dockerfile-editor.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/dockerfile-editor.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/dockerfile-editor.html">
+  <meta property="og:title" content="Dockerfile Linter – Syntax Errors &amp; Best Practices by Line | WooaDev">
+  <meta property="og:description" content="Check a Dockerfile for syntax errors (FROM order, stage references, EXPOSE range) and best practices such as latest tags, apt-get -y, running as root, ENV secrets and shell-form CMD.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/dockerfile-editor.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Dockerfile Linter – Syntax Errors &amp; Best Practices by Line | WooaDev">
+  <meta name="twitter:description" content="Check a Dockerfile for syntax errors (FROM order, stage references, EXPOSE range) and best practices such as latest tags, apt-get -y, running as root, ENV secrets and shell-form CMD.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Dockerfile Linter","url":"https://wooadev.wooahouse.com/en/dockerfile-editor.html","description":"Check a Dockerfile for syntax errors (FROM order, stage references, EXPOSE range) and best practices such as latest tags, apt-get -y, running as root, ENV secrets and shell-form CMD.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Parsing: line continuations (\\ or `), comments, parser directives (# escape=), here-docs and mixed-case instructions","Errors: instructions before FROM, unknown instructions, duplicate stage names, undefined --from stages, EXPOSE range, missing COPY arguments, invalid exec-form JSON, apt-get install without -y","Warnings: latest or untagged images, a separate RUN apt-get update, curl | sh, sudo, chmod 777, secrets in ENV / ARG, relative WORKDIR, final stage running as root","Hints (can be hidden): COPY instead of ADD, npm ci, --no-install-recommends, cache cleanup, HEALTHCHECK, COPY . . before dependency install, exec-form CMD","Output of a normalised Dockerfile with continuations joined and upper-case instructions"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is it the same as hadolint?","acceptedAnswer":{"@type":"Answer","text":"It covers similar rules but not all of them; it is a quick browser check for core errors and common best practices."}},{"@type":"Question","name":"How are multi-stage builds checked?","acceptedAnswer":{"@type":"Answer","text":"Each FROM starts a stage; AS names, COPY --from references, unused stages and the final stage's USER and HEALTHCHECK are checked."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Dockerfile Linter","item":"https://wooadev.wooahouse.com/en/dockerfile-editor.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../dockerfile-editor.html">KO</a>
+        <span>|</span>
+        <a href="dockerfile-editor.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Dockerfile Linter</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🐳</span>
+    <h1>Dockerfile Linter &amp; Formatter</h1>
+    <p>Paste a Dockerfile to get an instruction table (continuations and here-docs handled) plus line-numbered errors such as FROM order, stage names, COPY --from references and EXPOSE ranges, and best-practice problems like latest tags, apt-get usage, running as root and secrets.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>⛔ 3 error(s), 5 warning(s) — 2 stage(s), 12 instruction(s)</p>
+<h3>Input — Dockerfile</h3><pre># syntax=docker/dockerfile:1
+FROM node:latest AS build
+WORKDIR /app
+COPY . .
+RUN npm install &amp;&amp; npm run build
+RUN apt-get update
+RUN apt-get install curl
+
+FROM nginx
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=builder /app/conf /etc/nginx
+ENV API_TOKEN=abc123
+EXPOSE 80 99999
+CMD nginx -g "daemon off;"
+</pre>
+<h3>Result — Instructions</h3><pre>Line | Instruction | Arguments
+2 | FROM | node:latest AS build
+3 | WORKDIR | /app
+4 | COPY | . .
+5 | RUN | npm install &amp;&amp; npm run build
+6 | RUN | apt-get update
+7 | RUN | apt-get install curl
+9 | FROM | nginx
+10 | COPY | --from=build /app/dist /usr/share/nginx/html
+11 | COPY | --from=builder /app/conf /etc/nginx
+12 | ENV | API_TOKEN=abc123
+13 | EXPOSE | 80 99999
+14 | CMD | nginx -g "daemon off;"</pre>
+<h3>Result — Findings</h3><pre>⚠️ Line 2: Image "node:latest" uses latest, so builds are not reproducible; pin a version
+ℹ️ Line 4: COPY . . before installing dependencies busts the cache on every source change; copy only dependency manifests (package.json …) and install first
+ℹ️ Line 5: Use npm ci instead of npm install for reproducible builds
+⚠️ Line 6: A separate RUN apt-get update can leave a stale cached list; chain it with &amp;&amp; apt-get install in the same RUN
+⛔ Line 7: apt-get install without -y waits for input and fails the build
+ℹ️ Line 7: Use --no-install-recommends to avoid extra packages
+ℹ️ Line 7: End the same RUN with rm -rf /var/lib/apt/lists/* to shrink the image
+⚠️ Line 9: Image "nginx" has no tag, so latest is used; pin a version
+⚠️ Line 9: The final stage runs as root; set a non-root USER
+ℹ️ Line 9: No HEALTHCHECK; consider adding one so orchestrators can see health
+⛔ Line 11: --from=builder matches no earlier stage (needs FROM … AS builder)
+⚠️ Line 12: A secret in ENV API_TOKEN stays in image layers and history; use build secrets (--mount=type=secret) or runtime env
+⛔ Line 13: EXPOSE port 99999 is outside 1–65535
+ℹ️ Line 14: CMD shell form makes sh PID 1 and SIGTERM is not forwarded; use exec form ["bin", "arg"]</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Catch common mistakes in the browser before building the image. Your Dockerfile is not uploaded.</p>
+<ul><li>Parsing: line continuations (\ or `), comments, parser directives (# escape=), here-docs and mixed-case instructions</li><li>Errors: instructions before FROM, unknown instructions, duplicate stage names, undefined --from stages, EXPOSE range, missing COPY arguments, invalid exec-form JSON, apt-get install without -y</li><li>Warnings: latest or untagged images, a separate RUN apt-get update, curl | sh, sudo, chmod 777, secrets in ENV / ARG, relative WORKDIR, final stage running as root</li><li>Hints (can be hidden): COPY instead of ADD, npm ci, --no-install-recommends, cache cleanup, HEALTHCHECK, COPY . . before dependency install, exec-form CMD</li><li>Output of a normalised Dockerfile with continuations joined and upper-case instructions</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="docker-compose-editor.html" class="related-card"><span class="related-icon">🧩</span><span>Docker Compose Checker</span></a>
+    <a href="docker-image-parser.html" class="related-card"><span class="related-icon">🐳</span><span>Docker Image Name Parser</span></a>
+    <a href="docker-run-builder.html" class="related-card"><span class="related-icon">🐋</span><span>docker run Command Builder</span></a>
+    <a href="kubernetes-yaml-validator.html" class="related-card"><span class="related-icon">☸️</span><span>Kubernetes YAML Validator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Copy only dependency manifests (package.json …) first and install, then copy the source, to keep the build cache effective.</li><li>Pass secrets with RUN --mount=type=secret instead of ENV / ARG so they stay out of the image history.</li><li>Use exec-form CMD (a JSON array) so the termination signal (SIGTERM) reaches your app directly.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Is it the same as hadolint?</summary><p>It covers similar rules but not all of them; it is a quick browser check for core errors and common best practices.</p></details><details><summary>How are multi-stage builds checked?</summary><p>Each FROM starts a stage; AS names, COPY --from references, unused stages and the final stage's USER and HEALTHCHECK are checked.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/dockerfile-editor.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

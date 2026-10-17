@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docker Compose 검사기 — 포트 충돌·depends_on·볼륨 점검 | WooaDev</title>
+  <meta name="description" content="docker-compose.yml에서 호스트 포트 충돌, depends_on 순환과 누락, 미정의 네트워크·볼륨, 중복 container_name, 오타 키, latest 이미지, privileged, 평문 시크릿을 줄 번호로 점검합니다.">
+  <meta name="keywords" content="docker compose 검사, compose 포트 충돌, depends_on 순환, compose 파일 검증, compose 린트, docker compose editor">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/docker-compose-editor.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/docker-compose-editor.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/docker-compose-editor.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/docker-compose-editor.html">
+  <meta property="og:title" content="Docker Compose 검사기 — 포트 충돌·depends_on·볼륨 점검 | WooaDev">
+  <meta property="og:description" content="docker-compose.yml에서 호스트 포트 충돌, depends_on 순환과 누락, 미정의 네트워크·볼륨, 중복 container_name, 오타 키, latest 이미지, privileged, 평문 시크릿을 줄 번호로 점검합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/docker-compose-editor.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Docker Compose 검사기 — 포트 충돌·depends_on·볼륨 점검 | WooaDev">
+  <meta name="twitter:description" content="docker-compose.yml에서 호스트 포트 충돌, depends_on 순환과 누락, 미정의 네트워크·볼륨, 중복 container_name, 오타 키, latest 이미지, privileged, 평문 시크릿을 줄 번호로 점검합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Docker Compose 검사기","url":"https://wooadev.wooahouse.com/docker-compose-editor.html","description":"docker-compose.yml에서 호스트 포트 충돌, depends_on 순환과 누락, 미정의 네트워크·볼륨, 중복 container_name, 오타 키, latest 이미지, privileged, 평문 시크릿을 줄 번호로 점검합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["서비스 표: 이미지/빌드, 포트, depends_on, 네트워크, 줄 번호","포트: 짧은·긴 문법 해석, 호스트 IP 가 다르면 충돌 아님, 범위 확인, 따옴표 없는 NN:NN 경고","참조: depends_on 대상과 조건(service_healthy 에 healthcheck 필요), 네트워크·볼륨 정의, 사용하지 않는 네트워크·볼륨, 순환 감지와 위상 정렬한 시작 순서","서비스 키 오타, version 폐기 안내, container_name 중복·scale 불가, restart 값, 환경 변수 보간(${VAR:-기본}) 목록","보안: latest·태그 없는 이미지, privileged, network_mode: host, 환경 변수의 평문 비밀"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"version 필드를 지워도 되나요?","acceptedAnswer":{"@type":"Answer","text":"Compose v2 이상에서는 version 이 폐기되어 무시됩니다. 지워도 동작은 같습니다."}},{"@type":"Question","name":"같은 호스트 포트를 두 서비스가 쓰면 항상 오류인가요?","acceptedAnswer":{"@type":"Answer","text":"같은 호스트 IP(또는 IP 미지정)에서 같은 프로토콜의 같은 포트를 쓰면 충돌입니다. 서로 다른 호스트 IP 에 바인딩하면 가능합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"Docker Compose 검사기","item":"https://wooadev.wooahouse.com/docker-compose-editor.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="docker-compose-editor.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/docker-compose-editor.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Docker Compose 검사기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧩</span>
+    <h1>Docker Compose 작업대 · 검사기</h1>
+    <p>docker-compose.yml 을 붙여 넣으면 서비스 표와 함께 호스트 포트 충돌, depends_on 의 없는 서비스·순환, 정의되지 않은 네트워크·볼륨, 중복 container_name, 오타 난 키, latest 이미지, privileged, 평문 비밀 값을 줄 번호로 알려 주고 시작 순서를 계산합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>⛔ 오류 5건 · 경고 2건 — 서비스 3개</p>
+<h3>입력 — docker-compose.yml</h3><pre>version: "3.8"
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+      - "127.0.0.1:9000:9000"
+    depends_on:
+      - api
+      - cache
+    networks: [front]
+  api:
+    build: ./api
+    container_name: api
+    ports:
+      - "8080:3000"
+    environment:
+      DB_URL: postgres://${DB_USER}:${DB_PASS:-secret}@db/app
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - data:/var/lib/app
+      - ./conf:/etc/app:ro
+    networks: [front, back]
+  db:
+    image: postgres:16
+    privileged: true
+    networks: [back]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+networks:
+  front: {}
+volumes:
+  pgdata:
+  unused:
+</pre>
+<h3>결과 — 서비스</h3><pre>서비스 | 이미지/빌드 | 포트 | depends_on | 네트워크 | 줄
+web | nginx:latest | 8080:80, 127.0.0.1:9000:9000 | api, cache | front | 3
+api | build: ./api | 8080:3000 | db | front, back | 12
+db | postgres:16 | — | — | back | 26</pre>
+<h3>결과 — 점검 결과</h3><pre>ℹ️ 줄 1: version 필드는 Compose v2+ 에서 폐기(obsolete)되었으며 무시됩니다
+ℹ️ 줄 1: 기본값 없는 환경 변수 DB_USER 는 .env 파일이나 셸에 정의돼 있어야 합니다 (없으면 빈 문자열 경고)
+⚠️ 줄 4: 이미지 "nginx:latest" 는 latest 태그입니다. 버전을 고정하세요
+⛔ 줄 8: depends_on 의 "cache" 서비스가 없습니다
+⛔ 줄 16: 호스트 포트 tcp 8080 가 서비스 "web"(줄 6)와 "api" 에서 충돌합니다
+ℹ️ 줄 19: "db" 의 이미지에 healthcheck 가 내장되어 있지 않다면 service_healthy 가 영원히 대기합니다. compose 에 healthcheck 를 정의하세요
+⛔ 줄 22: 서비스 "api" 가 정의되지 않은 볼륨 "data" 를 씁니다 (최상위 volumes 에 선언 필요)
+⛔ 줄 25: 서비스 "api" 가 정의되지 않은 네트워크 "back" 를 씁니다
+⚠️ 줄 28: 서비스 "db" 가 privileged: true 입니다. 호스트 전체 권한을 가지므로 꼭 필요한 경우만 쓰세요
+⛔ 줄 29: 서비스 "db" 가 정의되지 않은 네트워크 "back" 를 씁니다
+ℹ️ 줄 36: 볼륨 "unused" 를 쓰는 서비스가 없습니다</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>compose 파일을 올리기 전에 실행 단계에서야 드러나는 오류를 미리 찾습니다. 파일은 서버로 전송되지 않습니다.</p>
+<ul><li>서비스 표: 이미지/빌드, 포트, depends_on, 네트워크, 줄 번호</li><li>포트: 짧은·긴 문법 해석, 호스트 IP 가 다르면 충돌 아님, 범위 확인, 따옴표 없는 NN:NN 경고</li><li>참조: depends_on 대상과 조건(service_healthy 에 healthcheck 필요), 네트워크·볼륨 정의, 사용하지 않는 네트워크·볼륨, 순환 감지와 위상 정렬한 시작 순서</li><li>서비스 키 오타, version 폐기 안내, container_name 중복·scale 불가, restart 값, 환경 변수 보간(${VAR:-기본}) 목록</li><li>보안: latest·태그 없는 이미지, privileged, network_mode: host, 환경 변수의 평문 비밀</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="dockerfile-editor.html" class="related-card"><span class="related-icon">🐳</span><span>Dockerfile 검사기</span></a>
+    <a href="docker-run-builder.html" class="related-card"><span class="related-icon">🐋</span><span>docker run 명령어 생성기</span></a>
+    <a href="yaml-formatter.html" class="related-card"><span class="related-icon">🧹</span><span>YAML 포맷터</span></a>
+    <a href="kubernetes-yaml-validator.html" class="related-card"><span class="related-icon">☸️</span><span>쿠버네티스 YAML 검증기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>포트는 "8080:80" 처럼 따옴표로 감싸세요. YAML 1.1 파서는 NN:NN 을 60진수로 읽을 수 있습니다.</li><li>depends_on 만으로는 서비스가 준비될 때까지 기다리지 않습니다. condition: service_healthy 와 healthcheck 를 함께 쓰세요.</li><li>비밀 값은 .env 파일이나 secrets 로 분리하고 .gitignore 에 추가하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>version 필드를 지워도 되나요?</summary><p>Compose v2 이상에서는 version 이 폐기되어 무시됩니다. 지워도 동작은 같습니다.</p></details><details><summary>같은 호스트 포트를 두 서비스가 쓰면 항상 오류인가요?</summary><p>같은 호스트 IP(또는 IP 미지정)에서 같은 프로토콜의 같은 포트를 쓰면 충돌입니다. 서로 다른 호스트 IP 에 바인딩하면 가능합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-yamlx.js"></script>
+<script src="js/lib/yaml.min.js"></script>
+<script src="js/tools/docker-compose-editor.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

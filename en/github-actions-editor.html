@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Actions Checker – needs, uses &amp; Script Injection | WooaDev</title>
+  <meta name="description" content="Check GitHub Actions workflows for events, needs cycles, uses format and outdated versions, retired runners, github.event script injection, pull_request_target checkouts and permissions by line.">
+  <meta name="keywords" content="GitHub Actions validator, workflow lint, actionlint, script injection, needs cycle, github actions editor">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/github-actions-editor.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/github-actions-editor.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/github-actions-editor.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/github-actions-editor.html">
+  <meta property="og:title" content="GitHub Actions Checker – needs, uses &amp; Script Injection | WooaDev">
+  <meta property="og:description" content="Check GitHub Actions workflows for events, needs cycles, uses format and outdated versions, retired runners, github.event script injection, pull_request_target checkouts and permissions by line.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/github-actions-editor.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GitHub Actions Checker – needs, uses &amp; Script Injection | WooaDev">
+  <meta name="twitter:description" content="Check GitHub Actions workflows for events, needs cycles, uses format and outdated versions, retired runners, github.event script injection, pull_request_target checkouts and permissions by line.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"GitHub Actions Workflow Checker","url":"https://wooadev.wooahouse.com/en/github-actions-editor.html","description":"Check GitHub Actions workflows for events, needs cycles, uses format and outdated versions, retired runners, github.event script injection, pull_request_target checkouts and permissions by line.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Structure: top-level keys, on event names, 5-field cron, workflow_dispatch choice inputs, job ids and keys, runs-on, uses / run exclusivity and duplicate step ids","References: missing, self and cyclic needs, whether steps.<id> and needs.<job> exist, matrix keys","uses: owner/repo@ref format, outdated major actions (checkout, setup-*, cache, upload-artifact …), branch refs (@main) and SHA pinning advice for third-party actions","Security: untrusted input such as github.event.*.title / body / head_ref in run, pull_request_target with a PR head checkout, hard-coded tokens and write-all permissions","Hints: retired runners (ubuntu-20.04 …), missing timeout-minutes and permissions"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does it replace actionlint?","acceptedAnswer":{"@type":"Answer","text":"It does not type-check every expression like actionlint, but it checks the structure, reference and security problems you meet most often with no install."}},{"@type":"Question","name":"What about the on key reading as true?","acceptedAnswer":{"@type":"Answer","text":"This tool reads YAML 1.2 and keeps on as a string key; some old YAML 1.1 parsers turn on into true."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"GitHub Actions Workflow Checker","item":"https://wooadev.wooahouse.com/en/github-actions-editor.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../github-actions-editor.html">KO</a>
+        <span>|</span>
+        <a href="github-actions-editor.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>GitHub Actions Workflow Checker</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">⚙️</span>
+    <h1>GitHub Actions Workflow Validator</h1>
+    <p>Paste a workflow YAML to get line-numbered findings on event names, job keys, needs references and cycles, uses formats, outdated action versions, retired runners, script-injection risks, dangerous pull_request_target checkouts and missing permissions.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>⛔ 6 error(s), 2 warning(s) — 2 job(s), 5 step(s)</p>
+<h3>Input — Workflow (.github/workflows/*.yml)</h3><pre>name: CI
+on:
+  push:
+    branches: [main]
+  pull_request_target:
+    types: [opened]
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Greet
+        run: echo "${{ github.event.pull_request.title }}"
+      - id: build
+        run: npm ci &amp;&amp; npm test
+      - uses: actions/upload-artifact@main
+        with:
+          name: out
+          path: dist
+  deploy:
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ steps.deploy.outputs.url }}
+        uses: ./scripts/deploy
+</pre>
+<h3>Result — Jobs and steps</h3><pre>Job | # | Step | Kind | id | Line
+build | 1 | actions/checkout@v3 | uses |  | 11
+build | 2 | Greet | run |  | 14
+build | 3 | run | run | build | 16
+build | 4 | actions/upload-artifact@main | uses |  | 18
+deploy | 1 | ./scripts/deploy | uses |  | 26</pre>
+<h3>Result — Findings</h3><pre>ℹ️ Line 1: No permissions block, so GITHUB_TOKEN gets the repository default; reduce it with permissions: contents: read
+ℹ️ Line 8: Job "build" has no timeout-minutes, so a hung job can run up to 6 hours
+⛔ Line 9: Runner "ubuntu-20.04" is retired and jobs will not start; use ubuntu-latest or a current version
+⚠️ Line 11: actions/checkout@v3 is outdated (deprecated Node runtime or shut down); upgrade to v4 or later
+⛔ Line 11: pull_request_target runs with secrets and write access; checking out the PR head runs outside code with those privileges
+⛔ Line 15: Untrusted input (github.event.pull_request.title) is interpolated into the run script, a script-injection risk; pass it through env and use "$VAR"
+⚠️ Line 18: actions/upload-artifact@main points to a branch whose content can change; pin a tag or commit SHA
+ℹ️ Line 22: Job "deploy" has no timeout-minutes, so a hung job can run up to 6 hours
+⛔ Line 23: needs refers to missing job "test"
+⛔ Line 26: A step cannot have both uses and run
+⛔ Line 26: No step in this job has the id used in steps.deploy</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Find structure and security problems before pushing and watching the Actions tab fail. Your file is not uploaded.</p>
+<ul><li>Structure: top-level keys, on event names, 5-field cron, workflow_dispatch choice inputs, job ids and keys, runs-on, uses / run exclusivity and duplicate step ids</li><li>References: missing, self and cyclic needs, whether steps.&lt;id&gt; and needs.&lt;job&gt; exist, matrix keys</li><li>uses: owner/repo@ref format, outdated major actions (checkout, setup-*, cache, upload-artifact …), branch refs (@main) and SHA pinning advice for third-party actions</li><li>Security: untrusted input such as github.event.*.title / body / head_ref in run, pull_request_target with a PR head checkout, hard-coded tokens and write-all permissions</li><li>Hints: retired runners (ubuntu-20.04 …), missing timeout-minutes and permissions</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="github-actions-expression-tester.html" class="related-card"><span class="related-icon">🧪</span><span>GitHub Actions Expression Tester</span></a>
+    <a href="gitlab-ci-editor.html" class="related-card"><span class="related-icon">🦊</span><span>GitLab CI Pipeline Checker</span></a>
+    <a href="yaml-formatter.html" class="related-card"><span class="related-icon">🧹</span><span>YAML Formatter</span></a>
+    <a href="cron-generator.html" class="related-card"><span class="related-icon">⏰</span><span>Cron Generator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Do not put ${{ github.event.issue.title }} directly in run; pass it through env and use "$TITLE" to stop quote-breaking command injection.</li><li>Pin third-party actions to a commit SHA rather than a tag to avoid supply-chain attacks through moved tags.</li><li>Start from least privilege such as permissions: contents: read and grant write only to the jobs that need it.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Does it replace actionlint?</summary><p>It does not type-check every expression like actionlint, but it checks the structure, reference and security problems you meet most often with no install.</p></details><details><summary>What about the on key reading as true?</summary><p>This tool reads YAML 1.2 and keeps on as a string key; some old YAML 1.1 parsers turn on into true.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-yamlx.js"></script>
+<script src="../js/lib/yaml.min.js"></script>
+<script src="../js/tools/github-actions-editor.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

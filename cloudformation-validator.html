@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudFormation 검증기 — 참조·순환·필수 속성·보안 점검 | WooaDev</title>
+  <meta name="description" content="CloudFormation 템플릿의 Ref·GetAtt·Sub 참조, 순환 의존성, 조건·매핑 참조, 필수 속성, 중복 Export, 공개 S3·열린 보안 그룹·평문 비밀번호·종료된 런타임을 줄 번호로 점검합니다.">
+  <meta name="keywords" content="CloudFormation 검증, cfn-lint, Ref GetAtt 참조 오류, 순환 의존성, CFN 템플릿 보안, cloudformation validator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/cloudformation-validator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/cloudformation-validator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/cloudformation-validator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/cloudformation-validator.html">
+  <meta property="og:title" content="CloudFormation 검증기 — 참조·순환·필수 속성·보안 점검 | WooaDev">
+  <meta property="og:description" content="CloudFormation 템플릿의 Ref·GetAtt·Sub 참조, 순환 의존성, 조건·매핑 참조, 필수 속성, 중복 Export, 공개 S3·열린 보안 그룹·평문 비밀번호·종료된 런타임을 줄 번호로 점검합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/cloudformation-validator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CloudFormation 검증기 — 참조·순환·필수 속성·보안 점검 | WooaDev">
+  <meta name="twitter:description" content="CloudFormation 템플릿의 Ref·GetAtt·Sub 참조, 순환 의존성, 조건·매핑 참조, 필수 속성, 중복 Export, 공개 S3·열린 보안 그룹·평문 비밀번호·종료된 런타임을 줄 번호로 점검합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CloudFormation 템플릿 검증기","url":"https://wooadev.wooahouse.com/cloudformation-validator.html","description":"CloudFormation 템플릿의 Ref·GetAtt·Sub 참조, 순환 의존성, 조건·매핑 참조, 필수 속성, 중복 Export, 공개 S3·열린 보안 그룹·평문 비밀번호·종료된 런타임을 줄 번호로 점검합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["형식: YAML/JSON, !Ref·!GetAtt·!Sub·!If 같은 단축 함수 지원, 섹션 이름, 논리 ID 규칙, 리소스 타입 형식, 알 수 없는 속성","참조: Ref·Fn::GetAtt·Fn::Sub(${}) 대상이 리소스·파라미터·의사 파라미터에 있는지, DependsOn, Fn::FindInMap 의 매핑, Condition·Fn::If 조건","순환: Ref/GetAtt/DependsOn 그래프의 순환 의존성 감지","속성: 파라미터 Type·Default↔AllowedValues·NoEcho, 자주 쓰는 리소스(Lambda, IAM Role, EC2, RDS, SQS/SNS 정책 등)의 필수 속성","보안·운영: 공개 S3, SSH/RDP 전세계 오픈, IAM Action:*·Resource:*, 평문 DB 비밀번호, 종료된 Lambda 런타임, 상태 있는 리소스의 DeletionPolicy, Export 이름 중복"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"cfn-lint 를 대체하나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 리소스 타입별 전체 스키마를 검사하지 않고 구조·참조·흔한 속성만 봅니다. 배포 전에는 cfn-lint 와 변경 세트로 한 번 더 확인하세요."}},{"@type":"Question","name":"SAM 템플릿도 되나요?","acceptedAnswer":{"@type":"Answer","text":"Transform 이 있는 SAM 템플릿은 기본 구조와 참조만 확인하고 AWS::Serverless::* 속성은 SAM 이 변환하므로 상세 검사를 하지 않습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"CloudFormation 템플릿 검증기","item":"https://wooadev.wooahouse.com/cloudformation-validator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="cloudformation-validator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/cloudformation-validator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>CloudFormation 템플릿 검증기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">☁️</span>
+    <h1>CloudFormation 템플릿 검증기</h1>
+    <p>YAML 또는 JSON 템플릿(!Ref 같은 단축 함수 지원)을 붙여 넣으면 없는 리소스·파라미터 참조, 순환 의존성, 조건·매핑 참조, 필수 속성 누락, 중복 Export, 열린 보안 그룹, 공개 S3, 평문 비밀번호, 지원이 끝난 Lambda 런타임을 줄 번호로 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>⛔ 오류 9건 · 경고 2건 — 리소스 5개</p>
+<h3>입력 — CloudFormation 템플릿 (YAML 또는 JSON, !Ref 같은 단축 함수 지원)</h3><pre>AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  Env:
+    Type: String
+    Default: staging
+    AllowedValues: [dev, prod]
+  DbPassword:
+    Type: String
+Conditions:
+  IsProd: !Equals [!Ref Env, prod]
+  Unused: !Equals [!Ref Env, test]
+Resources:
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      BucketName: !Sub "${Env}-${AWS::Region}-${Missing}"
+  Function:
+    Type: AWS::Lambda::Function
+    DependsOn: Role
+    Properties:
+      Runtime: python3.8
+      Handler: index.handler
+      Role: !GetAtt Role.Arn
+  Role:
+    Type: AWS::IAM::Role
+    DependsOn: Function
+    Properties:
+      ManagedPolicyArns: [!Ref Policy2]
+  Sg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: web
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+  Db:
+…</pre>
+<h3>결과 — 리소스</h3><pre>논리 ID | 타입 | 줄 | 의존 리소스 | Condition
+Bucket | AWS::S3::Bucket | 13 | — | 
+Function | AWS::Lambda::Function | 18 | Role | 
+Role | AWS::IAM::Role | 25 | Function | 
+Sg | AWS::EC2::SecurityGroup | 30 | — | 
+Db | AWS::RDS::DBInstance | 39 | — | </pre>
+<h3>결과 — 점검 결과</h3><pre>ℹ️ 줄 1: Description 이 없습니다
+⛔ 줄 5: 파라미터 "Env" 의 Default(staging)가 AllowedValues 에 없습니다
+⚠️ 줄 7: 파라미터 "DbPassword" 는 비밀 값처럼 보이는데 NoEcho: true 가 없어 콘솔·API 에 값이 노출됩니다
+ℹ️ 줄 10: 조건 "IsProd" 을 쓰는 곳이 없습니다
+ℹ️ 줄 11: 조건 "Unused" 을 쓰는 곳이 없습니다
+ℹ️ 줄 13: 버킷 "Bucket" 에 PublicAccessBlockConfiguration 이 없습니다
+ℹ️ 줄 13: 버킷 "Bucket" 에 BucketEncryption 이 없습니다 (기본 SSE-S3 는 적용됨)
+⛔ 줄 16: 버킷 "Bucket" 의 AccessControl 이 PublicRead 라 공개됩니다
+⛔ 줄 17: Fn::Sub 안의 ${Missing} 가 리소스·파라미터에 없습니다
+⛔ 줄 18: 리소스 순환 의존성: Function → Role → Function (스택 생성이 실패합니다)
+⛔ 줄 21: 리소스 "Function" (AWS::Lambda::Function) 에 필수 속성 Code 가 없습니다
+⚠️ 줄 22: Lambda 런타임 python3.8 은(는) 지원이 종료되었거나 종료 예정입니다. 최신 런타임으로 올리세요
+⛔ 줄 28: 리소스 "Role" (AWS::IAM::Role) 에 필수 속성 AssumeRolePolicyDocument 가 없습니다
+⛔ 줄 29: Ref "Policy2" 가 리소스·파라미터에 없습니다
+⛔ 줄 32: 보안 그룹 "Sg" 이 SSH/RDP 를 전 세계(0.0.0.0/0)에 엽니다
+ℹ️ 줄 39: DB "Db" 에 StorageEncrypted: true 가 없습니다
+ℹ️ 줄 39: 상태가 있는 리소스 "Db" 에 DeletionPolicy(Snapshot/Retain)가 없어 스택 삭제 시 데이터가 사라집니다
+⛔ 줄 50: Export 이름 "shared" 이 줄 46 와 중복됩니다 (리전 안에서 고유해야 함)
+이 검사는 구조·참조·흔한 속성만 확인합니다. 실제 배포 전에는 cfn-lint 와 aws cloudformation validate-template, 변경 세트로 한 번 더 확인하세요</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>스택을 만들다 롤백되기 전에 템플릿의 구조·참조 오류와 흔한 보안 문제를 찾습니다. 템플릿은 서버로 전송되지 않습니다.</p>
+<ul><li>형식: YAML/JSON, !Ref·!GetAtt·!Sub·!If 같은 단축 함수 지원, 섹션 이름, 논리 ID 규칙, 리소스 타입 형식, 알 수 없는 속성</li><li>참조: Ref·Fn::GetAtt·Fn::Sub(${}) 대상이 리소스·파라미터·의사 파라미터에 있는지, DependsOn, Fn::FindInMap 의 매핑, Condition·Fn::If 조건</li><li>순환: Ref/GetAtt/DependsOn 그래프의 순환 의존성 감지</li><li>속성: 파라미터 Type·Default↔AllowedValues·NoEcho, 자주 쓰는 리소스(Lambda, IAM Role, EC2, RDS, SQS/SNS 정책 등)의 필수 속성</li><li>보안·운영: 공개 S3, SSH/RDP 전세계 오픈, IAM Action:*·Resource:*, 평문 DB 비밀번호, 종료된 Lambda 런타임, 상태 있는 리소스의 DeletionPolicy, Export 이름 중복</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="aws-arn-parser.html" class="related-card"><span class="related-icon">☁️</span><span>AWS ARN 분석·생성기</span></a>
+    <a href="s3-url-converter.html" class="related-card"><span class="related-icon">🪣</span><span>S3 URL 변환기</span></a>
+    <a href="yaml-anchor-resolver.html" class="related-card"><span class="related-icon">⚓</span><span>YAML 앵커·별칭 펼치기</span></a>
+    <a href="kubernetes-yaml-validator.html" class="related-card"><span class="related-icon">☸️</span><span>쿠버네티스 YAML 검증기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>비밀번호는 NoEcho 파라미터나 Secrets Manager 동적 참조 {{resolve:secretsmanager:...}} 로 받으세요.</li><li>논리 ID 에는 하이픈과 밑줄을 쓸 수 없습니다. 영문자와 숫자만 허용됩니다.</li><li>순환 의존성은 Ref 로 서로를 가리키는 보안 그룹 규칙에서 자주 생깁니다. 규칙을 별도 리소스로 분리하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>cfn-lint 를 대체하나요?</summary><p>아닙니다. 리소스 타입별 전체 스키마를 검사하지 않고 구조·참조·흔한 속성만 봅니다. 배포 전에는 cfn-lint 와 변경 세트로 한 번 더 확인하세요.</p></details><details><summary>SAM 템플릿도 되나요?</summary><p>Transform 이 있는 SAM 템플릿은 기본 구조와 참조만 확인하고 AWS::Serverless::* 속성은 SAM 이 변환하므로 상세 검사를 하지 않습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-yamlx.js"></script>
+<script src="js/lib/yaml.min.js"></script>
+<script src="js/tools/cloudformation-validator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>
