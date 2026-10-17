@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jq Playground – Online jq Runner, Test Filters Without Installing | WooaDev</title>
+  <meta name="description" content="Run jq filters in your browser. Supports select, map, reduce, regex, path updates, the -r -c -s -n -S options, --argjson variables and multiple JSON inputs; your data is never uploaded.">
+  <meta name="keywords" content="jq online, jq playground, jq runner, test jq filter, jq examples, JSON filtering, jq select map, jq tutorial">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/jq-playground.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/jq-playground.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/jq-playground.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/jq-playground.html">
+  <meta property="og:title" content="jq Playground – Online jq Runner, Test Filters Without Installing | WooaDev">
+  <meta property="og:description" content="Run jq filters in your browser. Supports select, map, reduce, regex, path updates, the -r -c -s -n -S options, --argjson variables and multiple JSON inputs; your data is never uploaded.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/jq-playground.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="jq Playground – Online jq Runner, Test Filters Without Installing | WooaDev">
+  <meta name="twitter:description" content="Run jq filters in your browser. Supports select, map, reduce, regex, path updates, the -r -c -s -n -S options, --argjson variables and multiple JSON inputs; your data is never uploaded.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"jq Playground","url":"https://wooadev.wooahouse.com/en/jq-playground.html","description":"Run jq filters in your browser. Supports select, map, reduce, regex, path updates, the -r -c -s -n -S options, --argjson variables and multiple JSON inputs; your data is never uploaded.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Syntax: pipes, commas, alternative (//), paths (.a.b[0], .[1:3], .[]?, ..), object and array construction, string interpolation \"\\(…)\", formats (@csv @tsv @json @html @uri @sh @base64 @base32)","Control: if / elif / else, try / catch, reduce, foreach, label / break, as-variables with destructuring (including ?//), def functions (recursion, closure arguments)","200+ builtins: map, select, sort_by, group_by, unique_by, to_entries, with_entries, paths, walk, limit, first / last, range, test / match / capture / sub / gsub, split / join, tojson, todate and more","Updates: =, |=, +=, -=, *=, /=, //=, del, delpaths, setpath, pick","Options: -c -r -j -S -n -s -R --tab --indent, --argjson variables and consecutive JSON values as input"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is the output identical to real jq?","acceptedAnswer":{"@type":"Answer","text":"It implements jq 1.7 syntax and the main builtins and is verified against the manual's examples, but it is not 100% identical. As JavaScript objects, integer-like keys always sort first, and big integers are limited to JavaScript number precision."}},{"@type":"Question","name":"What happens with an infinite loop?","acceptedAnswer":{"@type":"Answer","text":"There are limits on execution steps and output count; going past them stops the run with an error, so the browser does not freeze."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"jq Playground","item":"https://wooadev.wooahouse.com/en/jq-playground.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../jq-playground.html">KO</a>
+        <span>|</span>
+        <a href="jq-playground.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>jq Playground</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧪</span>
+    <h1>jq Playground (Online jq Runner)</h1>
+    <p>Paste JSON and a jq filter to see the result immediately. A jq 1.7-compatible interpreter with pipes, select, map, group_by, reduce / foreach, variables and destructuring, def functions, regex (test, match, sub), formats such as @csv and @base64, path updates (|=, +=), multiple inputs and the -n -s -r -c -S options.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ 1 output(s)</p>
+<h3>Input — jq filter</h3><pre>.users | map(select(.age &gt;= 30) | {name, city: .address.city}) | sort_by(.name)</pre>
+<h3>Input — JSON input (several concatenated values are allowed)</h3><pre>{"users":[{"name":"Mina","age":34,"address":{"city":"Seoul"}},{"name":"Joon","age":28,"address":{"city":"Busan"}},{"name":"Ara","age":41,"address":{"city":"Daegu"}}]}</pre>
+<h3>Result — Output</h3><pre>[
+  {
+    "name": "Ara",
+    "city": "Daegu"
+  },
+  {
+    "name": "Mina",
+    "city": "Seoul"
+  }
+]</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Build and test jq filters without installing jq. Your JSON and filter are not uploaded.</p>
+<ul><li>Syntax: pipes, commas, alternative (//), paths (.a.b[0], .[1:3], .[]?, ..), object and array construction, string interpolation "\(…)", formats (@csv @tsv @json @html @uri @sh @base64 @base32)</li><li>Control: if / elif / else, try / catch, reduce, foreach, label / break, as-variables with destructuring (including ?//), def functions (recursion, closure arguments)</li><li>200+ builtins: map, select, sort_by, group_by, unique_by, to_entries, with_entries, paths, walk, limit, first / last, range, test / match / capture / sub / gsub, split / join, tojson, todate and more</li><li>Updates: =, |=, +=, -=, *=, /=, //=, del, delpaths, setpath, pick</li><li>Options: -c -r -j -S -n -s -R --tab --indent, --argjson variables and consecutive JSON values as input</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="jmespath-tester.html" class="related-card"><span class="related-icon">🧪</span><span>JMESPath Tester</span></a>
+    <a href="jsonpath-tester.html" class="related-card"><span class="related-icon">🧭</span><span>JSONPath Tester</span></a>
+    <a href="json-validator.html" class="related-card"><span class="related-icon">✅</span><span>JSON Validator</span></a>
+    <a href="json-diff.html" class="related-card"><span class="related-icon">🔍</span><span>JSON Diff Tool</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>For long filters, add one | step at a time and check the result as you go. Error messages follow real jq's wording.</li><li>Choose -r to print strings without quotes, which is handy when piping one value per line.</li><li>For objects with many keys, to_entries / with_entries lets you handle keys and values together.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Is the output identical to real jq?</summary><p>It implements jq 1.7 syntax and the main builtins and is verified against the manual's examples, but it is not 100% identical. As JavaScript objects, integer-like keys always sort first, and big integers are limited to JavaScript number precision.</p></details><details><summary>What happens with an infinite loop?</summary><p>There are limits on execution steps and output count; going past them stops the run with an error, so the browser does not freeze.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-jq.js"></script>
+<script src="../js/tools/jq-playground.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

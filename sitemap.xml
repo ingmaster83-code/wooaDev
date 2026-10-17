@@ -113,6 +113,7 @@
   <url><loc>https://wooadev.wooahouse.com/iso8601-converter.html</loc><lastmod>2026-10-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/jenkins-cron-generator.html</loc><lastmod>2026-10-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/jmespath-tester.html</loc><lastmod>2026-10-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/jq-playground.html</loc><lastmod>2026-10-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/json-diff.html</loc><lastmod>2026-10-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/json-flatten.html</loc><lastmod>2026-10-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/json-formatter.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
@@ -182,6 +183,7 @@
   <url><loc>https://wooadev.wooahouse.com/pkce-generator.html</loc><lastmod>2026-10-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/postgresql-data-parser.html</loc><lastmod>2026-10-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/postman-converter.html</loc><lastmod>2026-10-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/promql-tools.html</loc><lastmod>2026-10-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/protobuf-decoder.html</loc><lastmod>2026-10-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/protocol-uri-parser.html</loc><lastmod>2026-10-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/punycode-converter.html</loc><lastmod>2026-10-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -364,6 +366,7 @@
   <url><loc>https://wooadev.wooahouse.com/en/iso8601-converter.html</loc><lastmod>2026-10-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/en/jenkins-cron-generator.html</loc><lastmod>2026-10-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/en/jmespath-tester.html</loc><lastmod>2026-10-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/en/jq-playground.html</loc><lastmod>2026-10-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/en/json-diff.html</loc><lastmod>2026-10-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/en/json-flatten.html</loc><lastmod>2026-10-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/en/json-formatter.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
@@ -433,6 +436,7 @@
   <url><loc>https://wooadev.wooahouse.com/en/pkce-generator.html</loc><lastmod>2026-10-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/en/postgresql-data-parser.html</loc><lastmod>2026-10-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/en/postman-converter.html</loc><lastmod>2026-10-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://wooadev.wooahouse.com/en/promql-tools.html</loc><lastmod>2026-10-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/en/protobuf-decoder.html</loc><lastmod>2026-10-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/en/protocol-uri-parser.html</loc><lastmod>2026-10-17</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://wooadev.wooahouse.com/en/punycode-converter.html</loc><lastmod>2026-10-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>

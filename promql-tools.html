@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromQL 검사·정리·설명기 — 타입 오류와 모범 사례 점검 | WooaDev</title>
+  <meta name="description" content="PromQL 식의 구문과 타입 오류를 찾고 줄바꿈으로 정리하며 단계별로 설명합니다. rate 범위, histogram_quantile le 누락, 카운터·게이지 혼동 등 흔한 실수를 점검합니다.">
+  <meta name="keywords" content="PromQL 검사, PromQL 포매터, PromQL 설명, prometheus 쿼리 오류, histogram_quantile, rate 범위, promql formatter, promql linter">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/promql-tools.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/promql-tools.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/promql-tools.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/promql-tools.html">
+  <meta property="og:title" content="PromQL 검사·정리·설명기 — 타입 오류와 모범 사례 점검 | WooaDev">
+  <meta property="og:description" content="PromQL 식의 구문과 타입 오류를 찾고 줄바꿈으로 정리하며 단계별로 설명합니다. rate 범위, histogram_quantile le 누락, 카운터·게이지 혼동 등 흔한 실수를 점검합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/promql-tools.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PromQL 검사·정리·설명기 — 타입 오류와 모범 사례 점검 | WooaDev">
+  <meta name="twitter:description" content="PromQL 식의 구문과 타입 오류를 찾고 줄바꿈으로 정리하며 단계별로 설명합니다. rate 범위, histogram_quantile le 누락, 카운터·게이지 혼동 등 흔한 실수를 점검합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"PromQL 도구","url":"https://wooadev.wooahouse.com/promql-tools.html","description":"PromQL 식의 구문과 타입 오류를 찾고 줄바꿈으로 정리하며 단계별로 설명합니다. rate 범위, histogram_quantile le 누락, 카운터·게이지 혼동 등 흔한 실수를 점검합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["파서: 선택자(매처 4종, offset, @), 범위·서브쿼리, 집계(by/without 앞뒤 위치), 이항 연산(bool, on/ignoring, group_left/right), 단항, 80여 개 함수, 기간(1h30m)","타입 검사: 함수 인자 타입·개수, 집계 파라미터, 집합 연산과 스칼라, bool 사용처, 최종 결과가 레인지 벡터인 경우","정리: 지정한 너비를 넘는 식만 함수·집계·연산자 단위로 줄바꿈","설명: 안쪽 식부터 번호를 매겨 타입과 의미(초 단위 변환 포함)를 표로 정리, 구문 트리 출력","점검: rate 범위가 너무 짧음, irate 긴 범위, histogram_quantile 의 le·rate·_bucket, 카운터/게이지, avg 의 avg, count()==0, 불필요한 정규식"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"쿼리를 실제로 실행하나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 문법과 타입만 검사하고 설명합니다. 메트릭 이름이 실제로 존재하는지, 결과 값이 무엇인지는 알 수 없습니다."}},{"@type":"Question","name":"Prometheus 3.x 의 새 기능도 되나요?","acceptedAnswer":{"@type":"Answer","text":"histogram_avg·mad_over_time·limitk 등 널리 쓰이는 최신 함수는 포함했지만 모든 실험 기능을 지원하지는 않습니다. 알 수 없는 함수는 오류로 표시됩니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"PromQL 도구","item":"https://wooadev.wooahouse.com/promql-tools.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="promql-tools.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/promql-tools.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>PromQL 도구</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📈</span>
+    <h1>PromQL 검사 · 정리 · 설명기</h1>
+    <p>PromQL 식을 붙여 넣으면 구문과 타입(인스턴트/레인지 벡터, 스칼라, 문자열)을 Prometheus 규칙으로 검사하고, 긴 식을 줄바꿈해 정리하며, 안쪽 식부터 단계별로 의미를 설명합니다. rate 의 범위, histogram_quantile 의 le 누락, 카운터와 게이지 혼동 같은 흔한 실수도 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>⛔ 오류 1건 · 경고 1건 — 결과 타입 인스턴트 벡터</p>
+<h3>입력 — PromQL 식</h3><pre>histogram_quantile(0.95, sum by (job) (rate(http_request_duration_seconds_bucket{job=~"api.*", status!~"5.."}[5m]))) &gt; 0.5
+and on(job) sum by (job) (rate(http_requests_total[30s])) &gt; 100</pre>
+<h3>결과 — 정리된 PromQL</h3><pre>histogram_quantile(
+  0.95,
+  sum by (job) (
+    rate(http_request_duration_seconds_bucket{job=~"api.*", status!~"5.."}[5m])
+  )
+)
+&gt;
+0.5
+and on (job)
+sum by (job) (rate(http_requests_total[30s])) &gt; 100</pre>
+<h3>결과 — 단계별 설명 (안쪽부터)</h3><pre># | 식 | 타입 | 의미
+1 | http_request_duration_seconds_bucket{job=~"api.*", status!~"5.."}[5m] | 레인지 벡터 | 최근 5m 구간의 모든 샘플 (300초)
+2 | rate(http_request_duration_seconds_bucket{job=~"api.*", status!~"5.… | 인스턴트 벡터 | 구간 안에서 초당 평균 증가율 (카운터 리셋 보정)
+3 | sum by (job) (rate(http_request_duration_seconds_bucket{job=~"api.*… | 인스턴트 벡터 | 합계 — job 별로 그룹
+4 | histogram_quantile(0.95, sum by (job) (rate(http_request_duration_s… | 인스턴트 벡터 | 히스토그램 버킷에서 분위수 추정
+5 | histogram_quantile(0.95, sum by (job) (rate(http_request_duration_s… | 인스턴트 벡터 | 큰 것만 남김
+6 | http_requests_total[30s] | 레인지 벡터 | 최근 30s 구간의 모든 샘플 (30초)
+7 | rate(http_requests_total[30s]) | 인스턴트 벡터 | 구간 안에서 초당 평균 증가율 (카운터 리셋 보정)
+8 | sum by (job) (rate(http_requests_total[30s])) | 인스턴트 벡터 | 합계 — job 별로 그룹
+9 | sum by (job) (rate(http_requests_total[30s])) &gt; 100 | 인스턴트 벡터 | 큰 것만 남김
+10 | histogram_quantile(0.95, sum by (job) (rate(http_request_duration_s… | 인스턴트 벡터 | 양쪽에 모두 있는 시계열 (교집합) — 라벨 매칭: on (job)</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>Prometheus 에 보내기 전에 쿼리를 브라우저에서 검증하고 이해합니다. 쿼리는 서버로 전송되지 않으며 Prometheus 에 연결하지도 않습니다.</p>
+<ul><li>파서: 선택자(매처 4종, offset, @), 범위·서브쿼리, 집계(by/without 앞뒤 위치), 이항 연산(bool, on/ignoring, group_left/right), 단항, 80여 개 함수, 기간(1h30m)</li><li>타입 검사: 함수 인자 타입·개수, 집계 파라미터, 집합 연산과 스칼라, bool 사용처, 최종 결과가 레인지 벡터인 경우</li><li>정리: 지정한 너비를 넘는 식만 함수·집계·연산자 단위로 줄바꿈</li><li>설명: 안쪽 식부터 번호를 매겨 타입과 의미(초 단위 변환 포함)를 표로 정리, 구문 트리 출력</li><li>점검: rate 범위가 너무 짧음, irate 긴 범위, histogram_quantile 의 le·rate·_bucket, 카운터/게이지, avg 의 avg, count()==0, 불필요한 정규식</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="aws-eventbridge-cron.html" class="related-card"><span class="related-icon">☁️</span><span>AWS EventBridge cron 생성기</span></a>
+    <a href="kubernetes-resource-calculator.html" class="related-card"><span class="related-icon">☸️</span><span>Kubernetes 리소스 계산기</span></a>
+    <a href="access-log-parser.html" class="related-card"><span class="related-icon">📜</span><span>액세스 로그 분석기</span></a>
+    <a href="json-validator.html" class="related-card"><span class="related-icon">✅</span><span>JSON 유효성 검사기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>rate() 범위는 수집 주기(scrape_interval)의 최소 4배로 잡으세요. 30초 수집이면 2m 이상입니다.</li><li>히스토그램 분위수는 histogram_quantile(0.95, sum by (le, job) (rate(x_bucket[5m]))) 처럼 by 에 le 를 반드시 포함해야 합니다.</li><li>라벨 매처의 정규식은 자동으로 전체 일치입니다. ^ 와 $ 를 붙일 필요가 없습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>쿼리를 실제로 실행하나요?</summary><p>아니요. 문법과 타입만 검사하고 설명합니다. 메트릭 이름이 실제로 존재하는지, 결과 값이 무엇인지는 알 수 없습니다.</p></details><details><summary>Prometheus 3.x 의 새 기능도 되나요?</summary><p>histogram_avg·mad_over_time·limitk 등 널리 쓰이는 최신 함수는 포함했지만 모든 실험 기능을 지원하지는 않습니다. 알 수 없는 함수는 오류로 표시됩니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-promql.js"></script>
+<script src="js/tools/promql-tools.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>
