@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AndroidManifest Viewer – AXML Decoder &amp; Permission Audit | WooaDev</title>
+  <meta name="description" content="Restore AndroidManifest.xml and APK binary AXML to XML and tabulate permissions, components and intent filters. Checks missing exported, debuggable, cleartext traffic and dangerous permissions.">
+  <meta name="keywords" content="AndroidManifest viewer, AXML decoder, APK manifest viewer, android exported error, debuggable check, android permission audit">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/android-manifest-viewer.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/android-manifest-viewer.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/android-manifest-viewer.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/android-manifest-viewer.html">
+  <meta property="og:title" content="AndroidManifest Viewer – AXML Decoder &amp; Permission Audit | WooaDev">
+  <meta property="og:description" content="Restore AndroidManifest.xml and APK binary AXML to XML and tabulate permissions, components and intent filters. Checks missing exported, debuggable, cleartext traffic and dangerous permissions.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/android-manifest-viewer.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AndroidManifest Viewer – AXML Decoder &amp; Permission Audit | WooaDev">
+  <meta name="twitter:description" content="Restore AndroidManifest.xml and APK binary AXML to XML and tabulate permissions, components and intent filters. Checks missing exported, debuggable, cleartext traffic and dangerous permissions.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Android Manifest Viewer","url":"https://wooadev.wooahouse.com/en/android-manifest-viewer.html","description":"Restore AndroidManifest.xml and APK binary AXML to XML and tabulate permissions, components and intent filters. Checks missing exported, debuggable, cleartext traffic and dangerous permissions.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Input: text XML, the binary AXML from an APK (UTF-8 / UTF-16 string pools), hex, Base64 or a file","Info: package, versionName / Code, minSdk, targetSdk and compileSdk, app label, Application class","Permissions: normal / dangerous (runtime) / sensitive classification, duplicates, protection level of custom permissions","Components: type, name, exported, protecting permission, intent filters (action, category, data) and deep-link autoVerify","Checks: missing exported with targetSdk 31+ (install failure), debuggable, allowBackup, cleartext, exported providers and services, low targetSdk"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Are resource references (@0x7f…) resolved to names?","acceptedAnswer":{"@type":"Answer","text":"resources.arsc is not read, so they stay as @0x7f… numbers and string resource values such as labels are unknown."}},{"@type":"Question","name":"Can I upload a whole APK or AAB?","acceptedAnswer":{"@type":"Answer","text":"No. An APK is a zip: extract AndroidManifest.xml first. This tool does not unzip archives."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Android Manifest Viewer","item":"https://wooadev.wooahouse.com/en/android-manifest-viewer.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../android-manifest-viewer.html">KO</a>
+        <span>|</span>
+        <a href="android-manifest-viewer.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Android Manifest Viewer</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🤖</span>
+    <h1>AndroidManifest.xml Viewer &amp; Security Audit</h1>
+    <p>Provide AndroidManifest.xml text or the binary manifest (AXML) extracted from an APK as hex, Base64 or a file to restore the XML and tabulate the package, SDK versions, permissions, activities, services, receivers, providers and intent filters. Missing exported, debuggable builds and cleartext HTTP are flagged.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>⛔ 2 error(s), 6 warning(s) — com.wooahouse.demo</p>
+<h3>Input — AndroidManifest.xml (text) or the binary manifest from an APK (hex / Base64)</h3><pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wooahouse.demo"
+    android:versionCode="12"
+    android:versionName="1.2.0"&gt;
+
+    &lt;uses-sdk android:minSdkVersion="24" android:targetSdkVersion="34" /&gt;
+
+    &lt;uses-permission android:name="android.permission.INTERNET" /&gt;
+    &lt;uses-permission android:name="android.permission.CAMERA" /&gt;
+    &lt;uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /&gt;
+    &lt;uses-permission android:name="android.permission.READ_SMS" /&gt;
+    &lt;uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /&gt;
+
+    &lt;application
+        android:name=".App"
+        android:label="Wooa Demo"
+        android:debuggable="true"
+        android:usesCleartextTraffic="true"&gt;
+
+        &lt;activity android:name=".MainActivity"&gt;
+            &lt;intent-filter&gt;
+…</pre>
+<h3>Result — App info</h3><pre>Field | Value
+Package | com.wooahouse.demo
+versionName | 1.2.0
+versionCode | 12
+minSdkVersion | 24
+targetSdkVersion | 34
+compileSdkVersion | —
+App label | Wooa Demo
+Application class | .App
+Source | Text XML</pre>
+<h3>Result — Permissions</h3><pre>Permission | Level
+android.permission.INTERNET | normal
+android.permission.CAMERA | dangerous (runtime)
+android.permission.ACCESS_BACKGROUND_LOCATION | dangerous (runtime)
+android.permission.READ_SMS | dangerous (runtime)
+android.permission.READ_EXTERNAL_STORAGE | dangerous (runtime)</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Read the manifest and audit its security settings without decompiling the APK. Your file is not uploaded.</p>
+<ul><li>Input: text XML, the binary AXML from an APK (UTF-8 / UTF-16 string pools), hex, Base64 or a file</li><li>Info: package, versionName / Code, minSdk, targetSdk and compileSdk, app label, Application class</li><li>Permissions: normal / dangerous (runtime) / sensitive classification, duplicates, protection level of custom permissions</li><li>Components: type, name, exported, protecting permission, intent filters (action, category, data) and deep-link autoVerify</li><li>Checks: missing exported with targetSdk 31+ (install failure), debuggable, allowBackup, cleartext, exported providers and services, low targetSdk</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="mobileprovision-viewer.html" class="related-card"><span class="related-icon">📱</span><span>Provisioning Profile Viewer</span></a>
+    <a href="adb-command-builder.html" class="related-card"><span class="related-icon">🤖</span><span>ADB Command Builder</span></a>
+    <a href="deep-link-builder.html" class="related-card"><span class="related-icon">🔗</span><span>Deep Link &amp; Intent URI Builder</span></a>
+    <a href="mobile-unit-converter.html" class="related-card"><span class="related-icon">📱</span><span>Mobile Unit &amp; Colour Converter</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>With targetSdk 31 or higher, every component with an intent-filter must declare android:exported or the install fails.</li><li>If a release APK has debuggable true, anyone can access the app's data; check your build variant.</li><li>The final merged manifest is under app/build/intermediates, or open the APK in Android Studio's APK Analyzer.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Are resource references (@0x7f…) resolved to names?</summary><p>resources.arsc is not read, so they stay as @0x7f… numbers and string resource values such as labels are unknown.</p></details><details><summary>Can I upload a whole APK or AAB?</summary><p>No. An APK is a zip: extract AndroidManifest.xml first. This tool does not unzip archives.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-xml.js"></script>
+<script src="../js/tk-binin.js"></script>
+<script src="../js/tools/android-manifest-viewer.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

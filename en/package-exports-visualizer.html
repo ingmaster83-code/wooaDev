@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>package.json exports Visualizer – Conditions &amp; Dual Packages | WooaDev</title>
+  <meta name="description" content="Resolve package.json exports for Node import and require, bundlers and TypeScript in one table, and check types ordering, default position, folder mappings and the dual package hazard.">
+  <meta name="keywords" content="package.json exports, conditional exports, dual package hazard, ERR_PACKAGE_PATH_NOT_EXPORTED, types condition order, node exports resolution">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/package-exports-visualizer.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/package-exports-visualizer.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/package-exports-visualizer.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/package-exports-visualizer.html">
+  <meta property="og:title" content="package.json exports Visualizer – Conditions &amp; Dual Packages | WooaDev">
+  <meta property="og:description" content="Resolve package.json exports for Node import and require, bundlers and TypeScript in one table, and check types ordering, default position, folder mappings and the dual package hazard.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/package-exports-visualizer.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="package.json exports Visualizer – Conditions &amp; Dual Packages | WooaDev">
+  <meta name="twitter:description" content="Resolve package.json exports for Node import and require, bundlers and TypeScript in one table, and check types ordering, default position, folder mappings and the dual package hazard.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"package.json exports Visualizer","url":"https://wooadev.wooahouse.com/en/package-exports-visualizer.html","description":"Resolve package.json exports for Node import and require, bundlers and TypeScript in one table, and check types ordering, default position, folder mappings and the dual package hazard.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Table: subpath × Node import / Node require / bundler & browser / TypeScript results","Resolver: computes Node.js PACKAGE_EXPORTS_RESOLVE for a specifier, environment and extra conditions (patterns, longest prefix, null blocking, array fallbacks)","Errors: targets not starting with ./, subpath keys mixed with conditions, folder mappings (./lib/), several * in one key, require pointing to .mjs","Warnings & hints: types placed late, default not last, type vs extension mismatch, ./* exposing everything, targets missing from files","Dual package hazard and ESM / CJS sharing one types file"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does it check that the files exist?","acceptedAnswer":{"@type":"Answer","text":"It only reads package.json, so it cannot confirm existence. It compares targets with the files field to flag ones that may be left out of the publish."}},{"@type":"Question","name":"Does it resolve the imports (#internal) field?","acceptedAnswer":{"@type":"Answer","text":"It only checks that keys start with #. The tool focuses on exports resolution."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"package.json exports Visualizer","item":"https://wooadev.wooahouse.com/en/package-exports-visualizer.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../package-exports-visualizer.html">KO</a>
+        <span>|</span>
+        <a href="package-exports-visualizer.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>package.json exports Visualizer</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📦</span>
+    <h1>package.json exports Visualizer &amp; Resolver</h1>
+    <p>Paste a package.json to expand exports subpaths and conditions (import, require, types, browser, default) into a table and see which file each subpath resolves to for Node import, Node require, bundlers and TypeScript. Enter a specifier to compute the result by Node.js rules, with checks for types ordering, default position and the dual package hazard.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>⛔ 1 error(s), 0 warning(s) — demo-lib</p>
+<h3>Input — package.json</h3><pre>{
+  "name": "demo-lib",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./feature": {
+      "import": "./dist/feature.js",
+      "require": "./dist/feature.cjs"
+    },
+    "./utils/*": "./dist/utils/*.js",
+    "./internal/*": null,
+    "./legacy/": "./legacy/"
+  }
+}</pre>
+<h3>Result — Resolution matrix</h3><pre>Subpath | Node import | Node require | Bundler / browser | TypeScript
+. | ./dist/index.js | ./dist/index.cjs | ./dist/index.js | ./dist/index.d.ts
+./feature | ./dist/feature.js | ./dist/feature.cjs | ./dist/feature.js | ./dist/feature.js
+./utils/* | (pattern) |  |  | 
+./internal/* | (pattern) |  |  | 
+./legacy/ | ./legacy/ | ./legacy/ | ./legacy/ | ./legacy/</pre>
+<h3>Result — exports entries (condition paths)</h3><pre>Subpath | Condition path | Target
+. | types | ./dist/index.d.ts
+. | import | ./dist/index.js
+. | require | ./dist/index.cjs
+. | default | ./dist/index.js
+./feature | import | ./dist/feature.js
+./feature | require | ./dist/feature.cjs
+./utils/* | — | ./dist/utils/*.js
+./internal/* | — | null (blocked)
+./legacy/ | — | ./legacy/</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Confirm that exports resolves as intended before publishing a library. Your package.json is not uploaded.</p>
+<ul><li>Table: subpath × Node import / Node require / bundler &amp; browser / TypeScript results</li><li>Resolver: computes Node.js PACKAGE_EXPORTS_RESOLVE for a specifier, environment and extra conditions (patterns, longest prefix, null blocking, array fallbacks)</li><li>Errors: targets not starting with ./, subpath keys mixed with conditions, folder mappings (./lib/), several * in one key, require pointing to .mjs</li><li>Warnings &amp; hints: types placed late, default not last, type vs extension mismatch, ./* exposing everything, targets missing from files</li><li>Dual package hazard and ESM / CJS sharing one types file</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="package-json-editor.html" class="related-card"><span class="related-icon">🧰</span><span>package.json Checker &amp; Tidier</span></a>
+    <a href="package-version-tools.html" class="related-card"><span class="related-icon">📦</span><span>Package Version Constraint Explainer</span></a>
+    <a href="maven-gradle-converter.html" class="related-card"><span class="related-icon">☕</span><span>Maven ↔ Gradle Dependency Converter</span></a>
+    <a href="json-schema-validator.html" class="related-card"><span class="related-icon">🛡️</span><span>JSON Schema Validator</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>The first matching condition wins: keep 'types' first and 'default' last.</li><li>For TypeScript users it is safest to nest .d.mts / .d.cts types under import and require separately.</li><li>Adding exports blocks every deep import you do not list; make sure existing users' paths are kept.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Does it check that the files exist?</summary><p>It only reads package.json, so it cannot confirm existence. It compares targets with the files field to flag ones that may be left out of the publish.</p></details><details><summary>Does it resolve the imports (#internal) field?</summary><p>It only checks that keys start with #. The tool focuses on exports resolution.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/package-exports-visualizer.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

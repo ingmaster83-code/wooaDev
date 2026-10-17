@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Source Map Viewer – Translate Bundle Positions to Original Lines | WooaDev</title>
+  <meta name="description" content="Decode source map (.map) VLQ mappings and turn a minified bundle&#x27;s line:column into the original file and line. Supports data URIs and index maps and flags exposed sourcesContent.">
+  <meta name="keywords" content="source map viewer, sourcemap decoder, VLQ decoder, stack trace original position, open .map file, sourcemap debugging">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/source-map-viewer.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/source-map-viewer.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/source-map-viewer.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/source-map-viewer.html">
+  <meta property="og:title" content="Source Map Viewer – Translate Bundle Positions to Original Lines | WooaDev">
+  <meta property="og:description" content="Decode source map (.map) VLQ mappings and turn a minified bundle&#x27;s line:column into the original file and line. Supports data URIs and index maps and flags exposed sourcesContent.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/source-map-viewer.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Source Map Viewer – Translate Bundle Positions to Original Lines | WooaDev">
+  <meta name="twitter:description" content="Decode source map (.map) VLQ mappings and turn a minified bundle&#x27;s line:column into the original file and line. Supports data URIs and index maps and flags exposed sourcesContent.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Source Map Viewer","url":"https://wooadev.wooahouse.com/en/source-map-viewer.html","description":"Decode source map (.map) VLQ mappings and turn a minified bundle's line:column into the original file and line. Supports data URIs and index maps and flags exposed sourcesContent.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Input: .map JSON, data:application/json URI, //# sourceMappingURL=data:… comments, )]}' prefix and index maps (sections)","Translate: a stack-trace line:column (1-based) to original file, line, column and name, with the nearest earlier mapping and 5 lines of context","Reverse: 'file:line' to the list of bundle positions it produced","Tables: mappings and content size per source file, and the mapping list (generated to original)","Checks: version, out-of-range source / name indexes, missing or exposed sourcesContent"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What if the source map has no original code?","acceptedAnswer":{"@type":"Answer","text":"Without sourcesContent you get the file name, line and column only; open the original file separately to read that line."}},{"@type":"Question","name":"What if I only have a path to an external .map file?","acceptedAnswer":{"@type":"Answer","text":"Open that file yourself and paste its contents; this tool does not fetch files from the network."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"Source Map Viewer","item":"https://wooadev.wooahouse.com/en/source-map-viewer.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../source-map-viewer.html">KO</a>
+        <span>|</span>
+        <a href="source-map-viewer.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Source Map Viewer</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🗺️</span>
+    <h1>Source Map (.map) Viewer &amp; Position Translator</h1>
+    <p>Paste a source map JSON, data URI or sourceMappingURL comment to see the source file list and decoded VLQ mappings. Enter a line:column from a minified bundle to get the original file, line, column, symbol name and surrounding code, or look up where an original line ended up in the bundle.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ Source map — 2 source(s), 14 mapping(s)</p>
+<h3>Input — Source map (.map JSON, data: URI or sourceMappingURL comment)</h3><pre>{
+ "version": 3,
+ "file": "bundle.js",
+ "sourceRoot": "",
+ "sources": [
+  "src/util.ts",
+  "src/app.ts"
+ ],
+ "sourcesContent": [
+  "export function add(a: number, b: number) {\n  return a + b;\n}\n",
+  "import { add } from './util';\nconst n = add(1, 2);\nconsole.log(n);\n"
+ ],
+ "names": [
+  "add",
+  "a",
+  "b",
+  "n",
+  "console"
+ ],
+ "mappings": "AAAO,SAASA,IAAIC,EAAWC,GAC7B,OAAOD,CAAE,CAAEC,CACb;ACDA,IAAMC,EAAIH,SACVI,QAAQ"
+}</pre>
+<h3>Result — Summary</h3><pre>Version: 3
+File: bundle.js
+sourceRoot: —
+Source files: 2
+Names: 5
+Mappings: 14
+Generated lines (by mappings): 2
+Map size: 432 B</pre>
+<h3>Result — Position lookup</h3><pre>Generated 1:15 → src/util.ts:1:21  (a)   [nearest earlier mapping: column 14]
+
+&gt;     1 | export function add(a: number, b: number) {
+        |                     ^
+      2 |   return a + b;
+      3 | }</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Find the original location of an error from minified production code in the browser. Your source map is not uploaded.</p>
+<ul><li>Input: .map JSON, data:application/json URI, //# sourceMappingURL=data:… comments, )]}' prefix and index maps (sections)</li><li>Translate: a stack-trace line:column (1-based) to original file, line, column and name, with the nearest earlier mapping and 5 lines of context</li><li>Reverse: 'file:line' to the list of bundle positions it produced</li><li>Tables: mappings and content size per source file, and the mapping list (generated to original)</li><li>Checks: version, out-of-range source / name indexes, missing or exposed sourcesContent</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="stack-trace-formatter.html" class="related-card"><span class="related-icon">🐞</span><span>Stack Trace Formatter</span></a>
+    <a href="json-validator.html" class="related-card"><span class="related-icon">✅</span><span>JSON Validator</span></a>
+    <a href="css-formatter.html" class="related-card"><span class="related-icon">🎨</span><span>CSS Formatter &amp; Linter</span></a>
+    <a href="html-formatter.html" class="related-card"><span class="related-icon">🧱</span><span>HTML Formatter &amp; Checker</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Paste the line:column from a console stack trace such as 'bundle.js:1:15234'. Both numbers are 1-based.</li><li>Publishing a .map with sourcesContent exposes your original source; upload it only to your error-tracking service.</li><li>If the column does not match a mapping exactly, the previous mapping is used, as the specification says.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>What if the source map has no original code?</summary><p>Without sourcesContent you get the file name, line and column only; open the original file separately to read that line.</p></details><details><summary>What if I only have a path to an external .map file?</summary><p>Open that file yourself and paste its contents; this tool does not fetch files from the network.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/source-map-viewer.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

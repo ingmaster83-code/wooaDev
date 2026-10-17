@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>바이너리 비교기 — 두 파일의 바이트 차이와 Hex Diff | WooaDev</title>
+  <meta name="description" content="두 바이너리를 바이트 단위로 비교해 차이 구간(오프셋·길이·값)과 16진수 diff 를 보여 줍니다. 16진수·Base64·파일 입력, 가까운 차이 합치기, 길이 차이와 CRC-32 를 지원합니다.">
+  <meta name="keywords" content="바이너리 비교, hex diff, 16진수 비교, 파일 바이트 비교, binary diff online, 펌웨어 비교, 파일 차이 오프셋">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/binary-diff.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/binary-diff.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/binary-diff.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/binary-diff.html">
+  <meta property="og:title" content="바이너리 비교기 — 두 파일의 바이트 차이와 Hex Diff | WooaDev">
+  <meta property="og:description" content="두 바이너리를 바이트 단위로 비교해 차이 구간(오프셋·길이·값)과 16진수 diff 를 보여 줍니다. 16진수·Base64·파일 입력, 가까운 차이 합치기, 길이 차이와 CRC-32 를 지원합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/binary-diff.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="바이너리 비교기 — 두 파일의 바이트 차이와 Hex Diff | WooaDev">
+  <meta name="twitter:description" content="두 바이너리를 바이트 단위로 비교해 차이 구간(오프셋·길이·값)과 16진수 diff 를 보여 줍니다. 16진수·Base64·파일 입력, 가까운 차이 합치기, 길이 차이와 CRC-32 를 지원합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"바이너리 비교기","url":"https://wooadev.wooahouse.com/binary-diff.html","description":"두 바이너리를 바이트 단위로 비교해 차이 구간(오프셋·길이·값)과 16진수 diff 를 보여 줍니다. 16진수·Base64·파일 입력, 가까운 차이 합치기, 길이 차이와 CRC-32 를 지원합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["입력: 16진수(공백·0x·콜론 허용), Base64, 파일 두 개","차이 구간: 오프셋 범위, 길이, A 와 B 의 값, '가까운 차이 합치기' 간격 조절","16진수 diff: 변경된 구간 주변만 16바이트 줄로 표시하고 다른 바이트에 *, 같은 구간은 생략","요약: 다른 바이트 수와 비율, 첫 차이 위치, 길이 차이, 양쪽 CRC-32","한 곳만 다르거나 절반 이상 다른 경우 해석 힌트"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"큰 파일도 비교할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"브라우저 메모리가 허용하는 범위까지 가능합니다. 수십 MB 는 보통 문제없지만 차이가 아주 많으면 표시 구간 수를 제한합니다."}},{"@type":"Question","name":"텍스트 diff 와 무엇이 다른가요?","acceptedAnswer":{"@type":"Answer","text":"줄이 아니라 바이트 위치로 비교합니다. 중간에 바이트가 삽입되면 그 뒤가 모두 다르다고 나오므로 삽입·삭제 정렬은 하지 않습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"바이너리 비교기","item":"https://wooadev.wooahouse.com/binary-diff.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="binary-diff.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/binary-diff.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>바이너리 비교기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔬</span>
+    <h1>바이너리 비교 (Hex Diff)</h1>
+    <p>두 바이너리를 16진수나 Base64 로 붙여 넣거나 파일로 선택하면 달라진 바이트를 구간별로 묶어 오프셋·길이·양쪽 값을 표로 보여 주고, 16바이트 줄 단위 16진수 diff 에 다른 바이트를 * 로 표시합니다. 길이가 다른 꼬리 부분과 CRC-32 도 함께 알려 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>차이 5바이트, 3개 구간</p>
+<h3>입력 — A (16진수 / Base64)</h3><pre>7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 03 00 3e 00 01 00 00 00 40 10 00 00 00 00 00 00 48 65 6c 6c 6f 2c 20 57 6f 6f 61 21 00 00 00 00</pre>
+<h3>입력 — B (16진수 / Base64)</h3><pre>7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 03 00 b7 00 01 00 00 00 40 10 00 00 00 00 00 00 48 65 6c 6c 6f 2c 20 57 6f 72 6c 64 21 00 00 00 00 de ad</pre>
+<h3>결과 — 요약</h3><pre>A 크기: 48 B (CRC-32 46ff32ca)
+B 크기: 51 B (CRC-32 1d8546ab)
+다른 바이트: 5 / 48 (10.42%)
+차이 구간: 3
+첫 차이 위치: 0x12
+길이 차이: B가 3 바이트 더 김</pre>
+<h3>결과 — 차이 구간</h3><pre>오프셋 구간 | 길이 | A | B
+0x12 – 0x12 | 1 | 3e | b7
+0x29 – 0x2c | 4 | 6f 61 21 00 | 72 6c 64 21
+0x30 – 0x32 | 3 | (없음) | 00 de ad</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>빌드 결과나 펌웨어, 설정 파일이 어디서 달라졌는지 브라우저에서 찾습니다. 데이터는 서버로 전송되지 않습니다.</p>
+<ul><li>입력: 16진수(공백·0x·콜론 허용), Base64, 파일 두 개</li><li>차이 구간: 오프셋 범위, 길이, A 와 B 의 값, '가까운 차이 합치기' 간격 조절</li><li>16진수 diff: 변경된 구간 주변만 16바이트 줄로 표시하고 다른 바이트에 *, 같은 구간은 생략</li><li>요약: 다른 바이트 수와 비율, 첫 차이 위치, 길이 차이, 양쪽 CRC-32</li><li>한 곳만 다르거나 절반 이상 다른 경우 해석 힌트</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="binary-header-viewer.html" class="related-card"><span class="related-icon">🧬</span><span>실행 파일 헤더 뷰어</span></a>
+    <a href="file-checksum.html" class="related-card"><span class="related-icon">🧾</span><span>파일 체크섬 계산기</span></a>
+    <a href="git-diff-viewer.html" class="related-card"><span class="related-icon">🧩</span><span>Git diff 뷰어</span></a>
+    <a href="json-diff.html" class="related-card"><span class="related-icon">🔍</span><span>JSON 비교 도구</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>타임스탬프나 빌드 ID 만 다른 재현 가능 빌드 비교에서는 차이 구간이 적고 짧게 나옵니다.</li><li>컨텍스트 값을 키우면 변경 주변의 바이트를 더 넓게 볼 수 있습니다.</li><li>헤더 구조를 알고 싶으면 '실행 파일 헤더 뷰어'로 같은 오프셋의 의미를 확인하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>큰 파일도 비교할 수 있나요?</summary><p>브라우저 메모리가 허용하는 범위까지 가능합니다. 수십 MB 는 보통 문제없지만 차이가 아주 많으면 표시 구간 수를 제한합니다.</p></details><details><summary>텍스트 diff 와 무엇이 다른가요?</summary><p>줄이 아니라 바이트 위치로 비교합니다. 중간에 바이트가 삽입되면 그 뒤가 모두 다르다고 나오므로 삽입·삭제 정렬은 하지 않습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-binin.js"></script>
+<script src="js/tools/binary-diff.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

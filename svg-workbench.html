@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG 최적화·점검 도구 — 용량 줄이기, XSS 제거, Data URI | WooaDev</title>
+  <meta name="description" content="SVG 의 Inkscape 메타데이터·주석·미사용 id 를 정리하고 좌표 자릿수와 색상을 줄여 용량을 줄입니다. script·on* 이벤트 등 XSS 요소를 제거하고 안전한 미리보기와 CSS Data URI 를 만듭니다.">
+  <meta name="keywords" content="SVG 최적화, SVG 용량 줄이기, svgo 온라인, SVG XSS 제거, SVG data URI, SVG 정리, SVG 압축">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/svg-workbench.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/svg-workbench.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/svg-workbench.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/svg-workbench.html">
+  <meta property="og:title" content="SVG 최적화·점검 도구 — 용량 줄이기, XSS 제거, Data URI | WooaDev">
+  <meta property="og:description" content="SVG 의 Inkscape 메타데이터·주석·미사용 id 를 정리하고 좌표 자릿수와 색상을 줄여 용량을 줄입니다. script·on* 이벤트 등 XSS 요소를 제거하고 안전한 미리보기와 CSS Data URI 를 만듭니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/svg-workbench.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SVG 최적화·점검 도구 — 용량 줄이기, XSS 제거, Data URI | WooaDev">
+  <meta name="twitter:description" content="SVG 의 Inkscape 메타데이터·주석·미사용 id 를 정리하고 좌표 자릿수와 색상을 줄여 용량을 줄입니다. script·on* 이벤트 등 XSS 요소를 제거하고 안전한 미리보기와 CSS Data URI 를 만듭니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SVG 작업대","url":"https://wooadev.wooahouse.com/svg-workbench.html","description":"SVG 의 Inkscape 메타데이터·주석·미사용 id 를 정리하고 좌표 자릿수와 색상을 줄여 용량을 줄입니다. script·on* 이벤트 등 XSS 요소를 제거하고 안전한 미리보기와 CSS Data URI 를 만듭니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["정리: 주석·메타데이터·Inkscape/Sodipodi 속성, 빈 그룹, 미사용 id, 기본값 속성 제거, 좌표 자릿수 조절","경로 최소화: path 데이터 재작성(아크 플래그, 음수·소수 구분자 절약), 색상 이름·rgb()·#aabbcc 단축","점검: viewBox·xmlns 누락, script, on* 핸들러, foreignObject, 외부/javascript: 링크, 내장 래스터, 접근성 title","출력: 정리된 SVG(최소화/들여쓰기), 용량 변화와 gzip 추정, 스크립트 차단 미리보기, URL 인코딩·Base64 CSS Data URI","옵션: 소수 자릿수, title/desc 유지, width/height 제거, 위험 요소 제거"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"모양이 바뀔 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"좌표 자릿수를 낮추면 미세한 차이가 생길 수 있습니다. 미리보기로 확인하고 필요하면 자릿수를 올리세요. 스타일 시트(<style>) 규칙은 건드리지 않습니다."}},{"@type":"Question","name":"svgo 와 같은가요?","acceptedAnswer":{"@type":"Answer","text":"자주 쓰는 정리 규칙만 구현했습니다. path 병합이나 변환 적용 같은 고급 최적화는 하지 않으므로 대형 일러스트는 svgo 를 사용하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"SVG 작업대","item":"https://wooadev.wooahouse.com/svg-workbench.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="svg-workbench.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/svg-workbench.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>SVG 작업대</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🖼️</span>
+    <h1>SVG 최적화 · 점검 · Data URI</h1>
+    <p>SVG 코드를 붙여 넣으면 편집기 메타데이터, 주석, 사용하지 않는 id, 기본값 속성을 지우고 좌표 자릿수와 색상 표기를 줄여 용량을 줄입니다. script, on* 이벤트, foreignObject, 외부 링크 같은 XSS 위험을 찾아 제거하고, 스크립트가 실행되지 않는 미리보기와 CSS 용 Data URI 도 만들어 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>⛔ 문제 2건 — 정리 후 496 B (−64.3%)</p>
+<h3>입력 — SVG 코드</h3><pre>&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!-- Created with Inkscape (http://www.inkscape.org/) --&gt;
+&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" version="1.1" id="svg8" width="48mm" height="48mm" viewBox="0 0 48 48" onload="alert(1)"&gt;
+  &lt;metadata id="metadata5"&gt;&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"&gt;&lt;cc:Work xmlns:cc="http://creativecommons.org/ns#"/&gt;&lt;/rdf:RDF&gt;&lt;/metadata&gt;
+  &lt;sodipodi:namedview id="base" pagecolor="#ffffff" inkscape:zoom="1.4"/&gt;
+  &lt;title id="title1"&gt;Wooa icon&lt;/title&gt;
+  &lt;defs id="defs2"&gt;
+    &lt;linearGradient id="grad" x1="0" y1="0" x2="1" y2="1"&gt;
+      &lt;stop offset="0" stop-color="rgb(255, 0, 0)"/&gt;
+      &lt;stop offset="1" stop-color="#0000ff"/&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+…</pre>
+<h3>결과 — 요약</h3><pre>원본 크기: 1,388 B
+정리 후 크기: 496 B (−64.3%)
+viewBox: 0 0 48 48
+width × height: 48mm × 48mm
+요소 수: 16
+path 수 / 명령 수: 2 / 8
+제거됨: 주석 0 · 메타데이터 2 · 속성 7 · id 8 · 빈 그룹 1 · 위험 요소 2
+gzip 전송 크기 추정: 315 B</pre>
+<h3>결과 — 점검 결과</h3><pre>⛔ &lt;script&gt; 가 포함되어 있습니다. 웹페이지에 인라인으로 넣으면 XSS 위험입니다 (&lt;img&gt; 로 불러오면 실행되지 않음)
+⛔ on* 이벤트 핸들러 속성이 1개 있습니다 (XSS 위험)
+ℹ️ 편집기(Inkscape 등) 메타데이터가 있습니다. 정리하면 크기가 줄어듭니다
+ℹ️ 소수점 4자리 이상 숫자가 10개 있습니다. 자릿수를 줄이면 용량이 크게 줄어듭니다</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>svgo 설치 없이 브라우저에서 SVG 를 정리합니다. 코드는 서버로 전송되지 않습니다.</p>
+<ul><li>정리: 주석·메타데이터·Inkscape/Sodipodi 속성, 빈 그룹, 미사용 id, 기본값 속성 제거, 좌표 자릿수 조절</li><li>경로 최소화: path 데이터 재작성(아크 플래그, 음수·소수 구분자 절약), 색상 이름·rgb()·#aabbcc 단축</li><li>점검: viewBox·xmlns 누락, script, on* 핸들러, foreignObject, 외부/javascript: 링크, 내장 래스터, 접근성 title</li><li>출력: 정리된 SVG(최소화/들여쓰기), 용량 변화와 gzip 추정, 스크립트 차단 미리보기, URL 인코딩·Base64 CSS Data URI</li><li>옵션: 소수 자릿수, title/desc 유지, width/height 제거, 위험 요소 제거</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="data-uri-converter.html" class="related-card"><span class="related-icon">🧩</span><span>Data URI 변환기</span></a>
+    <a href="css-clip-path-generator.html" class="related-card"><span class="related-icon">✂️</span><span>CSS clip-path 생성기</span></a>
+    <a href="css-formatter.html" class="related-card"><span class="related-icon">🎨</span><span>CSS 정리·검사기</span></a>
+    <a href="html-formatter.html" class="related-card"><span class="related-icon">🧱</span><span>HTML 포맷터·검사기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>아이콘은 소수 자릿수 1~2 면 충분한 경우가 많습니다. 줄이면 크기가 크게 줄지만 큰 도형에서는 어긋나 보일 수 있습니다.</li><li>신뢰할 수 없는 SVG 는 인라인(&lt;svg&gt;)으로 삽입하지 말고 &lt;img&gt; 로 불러오세요. &lt;img&gt; 안에서는 스크립트가 실행되지 않습니다.</li><li>CSS 배경 용 SVG 는 URL 인코딩 Data URI 가 Base64 보다 보통 작습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>모양이 바뀔 수 있나요?</summary><p>좌표 자릿수를 낮추면 미세한 차이가 생길 수 있습니다. 미리보기로 확인하고 필요하면 자릿수를 올리세요. 스타일 시트(&lt;style&gt;) 규칙은 건드리지 않습니다.</p></details><details><summary>svgo 와 같은가요?</summary><p>자주 쓰는 정리 규칙만 구현했습니다. path 병합이나 변환 적용 같은 고급 최적화는 하지 않으므로 대형 일러스트는 svgo 를 사용하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-xml.js"></script>
+<script src="js/tools/svg-workbench.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

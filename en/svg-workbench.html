@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Optimiser &amp; Checker – Shrink Size, Remove XSS, Data URI | WooaDev</title>
+  <meta name="description" content="Clean Inkscape metadata, comments and unused ids from SVG, shorten coordinates and colours, remove XSS vectors such as script and on* handlers, and get a safe preview and CSS data URI.">
+  <meta name="keywords" content="SVG optimizer, reduce SVG size, svgo online, SVG XSS remove, SVG data URI, clean SVG, minify SVG">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/svg-workbench.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/svg-workbench.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/svg-workbench.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/svg-workbench.html">
+  <meta property="og:title" content="SVG Optimiser &amp; Checker – Shrink Size, Remove XSS, Data URI | WooaDev">
+  <meta property="og:description" content="Clean Inkscape metadata, comments and unused ids from SVG, shorten coordinates and colours, remove XSS vectors such as script and on* handlers, and get a safe preview and CSS data URI.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/svg-workbench.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SVG Optimiser &amp; Checker – Shrink Size, Remove XSS, Data URI | WooaDev">
+  <meta name="twitter:description" content="Clean Inkscape metadata, comments and unused ids from SVG, shorten coordinates and colours, remove XSS vectors such as script and on* handlers, and get a safe preview and CSS data URI.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SVG Workbench","url":"https://wooadev.wooahouse.com/en/svg-workbench.html","description":"Clean Inkscape metadata, comments and unused ids from SVG, shorten coordinates and colours, remove XSS vectors such as script and on* handlers, and get a safe preview and CSS data URI.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Cleaning: comments, metadata, Inkscape / Sodipodi attributes, empty groups, unused ids, default attributes and coordinate precision","Path minifying: rewrites path data (arc flags, saving separators for negatives and decimals) and shortens colour names, rgb() and #aabbcc","Checks: missing viewBox or xmlns, script, on* handlers, foreignObject, external or javascript: links, embedded rasters, accessibility title","Output: cleaned SVG (minified or indented), size change with gzip estimate, script-blocked preview, URL-encoded and Base64 CSS data URIs","Options: decimal places, keep title / desc, drop width / height, strip risky content"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can the shape change?","acceptedAnswer":{"@type":"Answer","text":"Lower precision can cause tiny differences. Check the preview and raise the decimals if needed. Rules inside <style> are left untouched."}},{"@type":"Question","name":"Is it the same as svgo?","acceptedAnswer":{"@type":"Answer","text":"Only the common cleanup rules are implemented. Advanced steps such as merging paths or applying transforms are not done, so use svgo for large illustrations."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"SVG Workbench","item":"https://wooadev.wooahouse.com/en/svg-workbench.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../svg-workbench.html">KO</a>
+        <span>|</span>
+        <a href="svg-workbench.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>SVG Workbench</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🖼️</span>
+    <h1>SVG Optimiser, Checker &amp; Data URI</h1>
+    <p>Paste SVG code to strip editor metadata, comments, unused ids and default attributes and to shorten coordinate precision and colours. Script, on* handlers, foreignObject and external links are found and removed, and you get a preview where scripts cannot run plus a CSS data URI.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>⛔ 2 problem(s) - 496 B after cleaning (−64.3%)</p>
+<h3>Input — SVG code</h3><pre>&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!-- Created with Inkscape (http://www.inkscape.org/) --&gt;
+&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" version="1.1" id="svg8" width="48mm" height="48mm" viewBox="0 0 48 48" onload="alert(1)"&gt;
+  &lt;metadata id="metadata5"&gt;&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"&gt;&lt;cc:Work xmlns:cc="http://creativecommons.org/ns#"/&gt;&lt;/rdf:RDF&gt;&lt;/metadata&gt;
+  &lt;sodipodi:namedview id="base" pagecolor="#ffffff" inkscape:zoom="1.4"/&gt;
+  &lt;title id="title1"&gt;Wooa icon&lt;/title&gt;
+  &lt;defs id="defs2"&gt;
+    &lt;linearGradient id="grad" x1="0" y1="0" x2="1" y2="1"&gt;
+      &lt;stop offset="0" stop-color="rgb(255, 0, 0)"/&gt;
+      &lt;stop offset="1" stop-color="#0000ff"/&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+…</pre>
+<h3>Result — Summary</h3><pre>Original size: 1,388 B
+Optimised size: 496 B (−64.3%)
+viewBox: 0 0 48 48
+width × height: 48mm × 48mm
+Elements: 16
+Paths / commands: 2 / 8
+Removed: comments 0 · metadata 2 · attributes 7 · ids 8 · empty groups 1 · risky 2
+Approx. gzip size: 315 B</pre>
+<h3>Result — Findings</h3><pre>⛔ A &lt;script&gt; is included: inlining it into a page is an XSS risk (loading through &lt;img&gt; does not run it)
+⛔ 1 on* event handler attribute(s) found (XSS risk)
+ℹ️ Editor (Inkscape etc.) metadata is present; cleaning it reduces the size
+ℹ️ 10 numbers have 4+ decimals; lowering precision shrinks the file a lot</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Tidy SVGs in the browser without installing svgo. Your code is not uploaded.</p>
+<ul><li>Cleaning: comments, metadata, Inkscape / Sodipodi attributes, empty groups, unused ids, default attributes and coordinate precision</li><li>Path minifying: rewrites path data (arc flags, saving separators for negatives and decimals) and shortens colour names, rgb() and #aabbcc</li><li>Checks: missing viewBox or xmlns, script, on* handlers, foreignObject, external or javascript: links, embedded rasters, accessibility title</li><li>Output: cleaned SVG (minified or indented), size change with gzip estimate, script-blocked preview, URL-encoded and Base64 CSS data URIs</li><li>Options: decimal places, keep title / desc, drop width / height, strip risky content</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="data-uri-converter.html" class="related-card"><span class="related-icon">🧩</span><span>Data URI Converter</span></a>
+    <a href="css-clip-path-generator.html" class="related-card"><span class="related-icon">✂️</span><span>CSS clip-path Generator</span></a>
+    <a href="css-formatter.html" class="related-card"><span class="related-icon">🎨</span><span>CSS Formatter &amp; Linter</span></a>
+    <a href="html-formatter.html" class="related-card"><span class="related-icon">🧱</span><span>HTML Formatter &amp; Checker</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>One or two decimals is often enough for icons; fewer digits shrink the file a lot but large shapes may drift.</li><li>Do not inline untrusted SVG as &lt;svg&gt;; load it with &lt;img&gt;, where scripts do not run.</li><li>For CSS backgrounds a URL-encoded data URI is usually smaller than Base64.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Can the shape change?</summary><p>Lower precision can cause tiny differences. Check the preview and raise the decimals if needed. Rules inside &lt;style&gt; are left untouched.</p></details><details><summary>Is it the same as svgo?</summary><p>Only the common cleanup rules are implemented. Advanced steps such as merging paths or applying transforms are not done, so use svgo for large illustrations.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-xml.js"></script>
+<script src="../js/tools/svg-workbench.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ELF PE Mach-O 헤더 뷰어 — 섹션·임포트와 보안 설정 점검 | WooaDev</title>
+  <meta name="description" content="ELF, PE(EXE/DLL), Mach-O 실행 파일의 아키텍처, 섹션, 임포트, 의존 라이브러리를 해석하고 PIE·ASLR·DEP·RELRO·CFG·코드 서명 같은 보안 설정을 점검합니다.">
+  <meta name="keywords" content="ELF 헤더 보기, PE 헤더 분석, Mach-O 분석, readelf 온라인, 실행 파일 섹션, ASLR DEP 확인, 임포트 테이블">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/binary-header-viewer.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/binary-header-viewer.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/binary-header-viewer.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/binary-header-viewer.html">
+  <meta property="og:title" content="ELF PE Mach-O 헤더 뷰어 — 섹션·임포트와 보안 설정 점검 | WooaDev">
+  <meta property="og:description" content="ELF, PE(EXE/DLL), Mach-O 실행 파일의 아키텍처, 섹션, 임포트, 의존 라이브러리를 해석하고 PIE·ASLR·DEP·RELRO·CFG·코드 서명 같은 보안 설정을 점검합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/binary-header-viewer.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ELF PE Mach-O 헤더 뷰어 — 섹션·임포트와 보안 설정 점검 | WooaDev">
+  <meta name="twitter:description" content="ELF, PE(EXE/DLL), Mach-O 실행 파일의 아키텍처, 섹션, 임포트, 의존 라이브러리를 해석하고 PIE·ASLR·DEP·RELRO·CFG·코드 서명 같은 보안 설정을 점검합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"실행 파일 헤더 뷰어","url":"https://wooadev.wooahouse.com/binary-header-viewer.html","description":"ELF, PE(EXE/DLL), Mach-O 실행 파일의 아키텍처, 섹션, 임포트, 의존 라이브러리를 해석하고 PIE·ASLR·DEP·RELRO·CFG·코드 서명 같은 보안 설정을 점검합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["ELF: 32/64비트, 엔디언, 종류, 머신, 프로그램 헤더, 섹션, NEEDED·SONAME·RUNPATH, 인터프리터","PE: PE32/PE32+, 컴파일 시각, 서브시스템, 섹션(권한·엔트로피), 데이터 디렉터리, 임포트·익스포트, PDB 경로, .NET·서명 여부","Mach-O: 단일·fat(universal), CPU, 파일 종류, 세그먼트·섹션, 로드 명령(dylib, rpath, UUID, 빌드 버전, 코드 서명)","보안: PIE/ASLR, NX/DEP, RELRO, CFG, W^X 위반, 스택 실행, 패킹이 의심되는 높은 엔트로피","Java class 버전과 WebAssembly 섹션도 식별"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"악성코드 분석에 쓸 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"헤더 구조를 읽기만 하며 파일을 실행하지 않습니다. 다만 서명 검증이나 백신 판정은 하지 않으므로 보조 정보로만 쓰세요."}},{"@type":"Question","name":"서명이 유효한지도 확인하나요?","acceptedAnswer":{"@type":"Answer","text":"서명 테이블이나 로드 명령의 존재만 알려 주고 유효성은 검증하지 않습니다. 검증은 signtool·codesign 을 사용하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"실행 파일 헤더 뷰어","item":"https://wooadev.wooahouse.com/binary-header-viewer.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="binary-header-viewer.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/binary-header-viewer.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>실행 파일 헤더 뷰어</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧬</span>
+    <h1>ELF · PE · Mach-O 헤더 뷰어</h1>
+    <p>리눅스 ELF, 윈도 PE(EXE·DLL), macOS Mach-O 실행 파일의 앞부분을 16진수·Base64 로 붙여 넣거나 파일을 선택하면 아키텍처, 진입점, 세그먼트와 섹션, 의존 라이브러리·임포트를 표로 보여 주고 PIE·ASLR·DEP·RELRO·코드 서명 같은 보안 설정을 점검합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ ELF 헤더를 해석했습니다</p>
+<h3>입력 — 실행 파일 앞부분 (16진수 / Base64) — 또는 아래에서 파일 선택</h3><pre>7f 45 4c 46 02 01 01 03 00 00 00 00 00 00 00 00 03 00 3e 00 01 00 00 00 48 02 40 00 00 00 00 00 40 00 00 00 00 00 00 00 80 02 00 00 00 00 00 00 00 00 00 00 40 00 38 00 06 00 40 00 07 00 05 00 06 00 00 00 04 00 00 00 40 00 00 00 00 00 00 00 40 00 40 00 00 00 00 00 40 00 40 00 00 00 00 00 50 01 00 00 00 00 00 00 50 01 00 00 00 00 00 00 08 00 00 00 00 00 00 00 03 00 00 00 04 00 00 00 90 01 00 00 00 00 00 00 90 01 40 00 00 00 00 00 90 01 40 00 00 00 00 00 1c 00 00 00 00 00 00 00 1c 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 01 00 00 00 05 00 00 00 00 00 00 00 00 00 00 00 00 00 40 00 00 00 00 00 00 00 40 00 00 00 00 00 4b 02 00 00 00 00 00 00 4b 02 00 00 00 00 00 00 00 10 00 00 00 00 00 00 02 00 00 00 06 00 00 00 d8 01 00 00 00 00 00 00 d8 01 40 00 00 00 00 00 d8 01 40 00 00 00 00 00 70 00 00 00 00 00 00 00 70 00 00 00 00 00 00 00 08 00 00 00 00 00 00 00 51 e5 74 64 06 00 00 00 00 00 00 00 
+…</pre>
+<h3>결과 — 헤더 정보</h3><pre>형식: ELF 64-bit LSB (little-endian)
+종류: DYN (shared object / PIE)
+아키텍처: x86-64 (62)
+OS ABI: GNU/Linux
+진입점: 0x400248
+플래그: 0x0
+프로그램 헤더: 6 × 56 B @ 0x40
+섹션 헤더: 7 × 64 B @ 0x280
+파일 크기(입력): 1088 B
+인터프리터: /lib64/ld-linux-x86-64.so.2</pre>
+<h3>결과 — 세그먼트 · 프로그램 헤더 · 데이터 디렉터리</h3><pre>종류 | 플래그 | 오프셋 | 가상 주소 | 파일 크기 | 메모리 크기 | 정렬
+PHDR | R-- | 0x40 | 0x400040 | 0x150 | 0x150 | 0x8
+INTERP | R-- | 0x190 | 0x400190 | 0x1c | 0x1c | 0x1
+LOAD | R-X | 0x0 | 0x400000 | 0x24b | 0x24b | 0x1000
+DYNAMIC | RW- | 0x1d8 | 0x4001d8 | 0x70 | 0x70 | 0x8
+GNU_STACK | RW- | 0x0 | 0x0 | 0x0 | 0x0 | 0x10
+GNU_RELRO | R-- | 0x1d8 | 0x4001d8 | 0x70 | 0x70 | 0x1</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>readelf·dumpbin·otool 없이 브라우저에서 실행 파일 구조를 봅니다. 파일은 서버로 전송되지 않으며 실행되지도 않습니다.</p>
+<ul><li>ELF: 32/64비트, 엔디언, 종류, 머신, 프로그램 헤더, 섹션, NEEDED·SONAME·RUNPATH, 인터프리터</li><li>PE: PE32/PE32+, 컴파일 시각, 서브시스템, 섹션(권한·엔트로피), 데이터 디렉터리, 임포트·익스포트, PDB 경로, .NET·서명 여부</li><li>Mach-O: 단일·fat(universal), CPU, 파일 종류, 세그먼트·섹션, 로드 명령(dylib, rpath, UUID, 빌드 버전, 코드 서명)</li><li>보안: PIE/ASLR, NX/DEP, RELRO, CFG, W^X 위반, 스택 실행, 패킹이 의심되는 높은 엔트로피</li><li>Java class 버전과 WebAssembly 섹션도 식별</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="file-type-detector.html" class="related-card"><span class="related-icon">🔎</span><span>파일 형식 판별기</span></a>
+    <a href="binary-diff.html" class="related-card"><span class="related-icon">🔬</span><span>바이너리 비교기</span></a>
+    <a href="linux-capability-decoder.html" class="related-card"><span class="related-icon">🛡️</span><span>Linux capability 디코더</span></a>
+    <a href="file-checksum.html" class="related-card"><span class="related-icon">🧾</span><span>파일 체크섬 계산기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>헤더는 보통 처음 수 KB 안에 있습니다. 임포트와 섹션까지 보려면 파일 전체를 선택하는 것이 좋습니다.</li><li>섹션의 엔트로피가 7.2 이상이면 압축·암호화(패킹)된 코드일 가능성이 있습니다.</li><li>Mach-O fat 파일은 아키텍처별 오프셋부터 잘라 넣으면 슬라이스의 상세 헤더를 볼 수 있습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>악성코드 분석에 쓸 수 있나요?</summary><p>헤더 구조를 읽기만 하며 파일을 실행하지 않습니다. 다만 서명 검증이나 백신 판정은 하지 않으므로 보조 정보로만 쓰세요.</p></details><details><summary>서명이 유효한지도 확인하나요?</summary><p>서명 테이블이나 로드 명령의 존재만 알려 주고 유효성은 검증하지 않습니다. 검증은 signtool·codesign 을 사용하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-binin.js"></script>
+<script src="js/tools/binary-header-viewer.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>
