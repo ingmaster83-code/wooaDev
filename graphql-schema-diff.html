@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GraphQL 스키마 비교 — 깨지는 변경과 위험 변경 찾기 | WooaDev</title>
+  <meta name="description" content="두 GraphQL SDL 을 비교해 필드·타입 제거, 필수 인자 추가 같은 깨지는 변경과 enum 값 추가 같은 위험 변경, 안전한 변경을 분류해 보여 줍니다.">
+  <meta name="keywords" content="GraphQL 스키마 비교, graphql schema diff, graphql breaking change, graphql-inspector, GraphQL 호환성, 스키마 변경 감지">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/graphql-schema-diff.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/graphql-schema-diff.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/graphql-schema-diff.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/graphql-schema-diff.html">
+  <meta property="og:title" content="GraphQL 스키마 비교 — 깨지는 변경과 위험 변경 찾기 | WooaDev">
+  <meta property="og:description" content="두 GraphQL SDL 을 비교해 필드·타입 제거, 필수 인자 추가 같은 깨지는 변경과 enum 값 추가 같은 위험 변경, 안전한 변경을 분류해 보여 줍니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/graphql-schema-diff.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GraphQL 스키마 비교 — 깨지는 변경과 위험 변경 찾기 | WooaDev">
+  <meta name="twitter:description" content="두 GraphQL SDL 을 비교해 필드·타입 제거, 필수 인자 추가 같은 깨지는 변경과 enum 값 추가 같은 위험 변경, 안전한 변경을 분류해 보여 줍니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"GraphQL 스키마 비교기","url":"https://wooadev.wooahouse.com/graphql-schema-diff.html","description":"두 GraphQL SDL 을 비교해 필드·타입 제거, 필수 인자 추가 같은 깨지는 변경과 enum 값 추가 같은 위험 변경, 안전한 변경을 분류해 보여 줍니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["깨짐: 타입·필드·인자·enum 값 제거, 필수 인자·입력 필드 추가, 출력 타입 약화(T! → T), 입력 타입 강화","위험: enum 값 추가, 유니언 멤버·인터페이스 추가, 기본값 변경","안전: 필드·타입 추가, 선택 인자 추가, 출력 타입 강화(T → T!)","graphql-inspector 와 같은 분류 기준","'깨짐·위험만' 보기"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"실제 사용 중인 필드인지 알 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 스키마만 비교하므로 실제 클라이언트가 쓰는 필드인지는 알 수 없습니다. 쿼리 사용 통계와 함께 판단하세요."}},{"@type":"Question","name":"연합(federation) 지시어도 비교하나요?","acceptedAnswer":{"@type":"Answer","text":"지시어 정의와 사용 변경은 감지하지만 연합 합성 규칙은 검증하지 않습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"GraphQL 스키마 비교기","item":"https://wooadev.wooahouse.com/graphql-schema-diff.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="graphql-schema-diff.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/graphql-schema-diff.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>GraphQL 스키마 비교기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧮</span>
+    <h1>GraphQL 스키마 비교 · 호환성 검사</h1>
+    <p>이전과 새 GraphQL SDL 을 비교해 타입·필드·인자·enum 값·유니언·인터페이스 변경을 깨짐, 위험, 안전으로 분류합니다. 응답 필드와 입력 인자는 타입 강화 방향이 반대라는 점까지 반영해 판정합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>⛔ 깨지는 변경 8건 · 위험 4건</p>
+<h3>입력 — 이전 스키마 (SDL)</h3><pre>type Query {
+  user(id: ID!): User
+  users(role: Role, limit: Int = 10): [User!]!
+  legacy: String
+}
+type User {
+  id: ID!
+  name: String
+  email: String!
+  role: Role!
+  age: Int
+}
+enum Role { ADMIN EDITOR VIEWER }
+input Filter { text: String, active: Boolean }
+union Result = User | Post
+type Post { id: ID! }
+interface Entity { id: ID! }
+</pre>
+<h3>입력 — 새 스키마 (SDL)</h3><pre>type Query {
+  user(id: String!, expand: Boolean!): User
+  users(role: Role, limit: Int = 25): [User]
+  version: String
+}
+type User implements Entity {
+  id: ID!
+  name: String!
+  email: String
+  role: Role!
+  nickname: String
+}
+enum Role { ADMIN EDITOR GUEST }
+input Filter { text: String!, active: Boolean, tag: String }
+union Result = User | Post | Comment
+type Post { id: ID! }
+type Comment { id: ID! }
+interface Entity { id: ID! }
+</pre>
+<h3>결과 — 변경 사항</h3><pre>판정 | 위치 | 변경
+⛔ 깨짐 | Query.user(id) | 인자 타입 ID! → String!
+⛔ 깨짐 | Query.user(expand) | 인자 추가 (필수)
+⛔ 깨짐 | Query.users | 타입 [User!]! → [User]
+⛔ 깨짐 | Query.legacy | 필드 제거
+⛔ 깨짐 | User.email | 타입 String! → String
+⛔ 깨짐 | User.age | 필드 제거
+⛔ 깨짐 | Role.VIEWER | enum 값 제거
+⛔ 깨짐 | Filter.text | 타입 String → String!
+⚠️ 위험 | Query.users(limit) | 기본값 10 → 25 (인자를 생략한 호출의 결과가 달라짐)
+⚠️ 위험 | User | 인터페이스 Entity 구현 추가 (… on Entity 쿼리의 결과가 달라질 수 있음)
+⚠️ 위험 | Role.GUEST | enum 값 추가 (클라이언트의 switch 가 처리하지 못할 수 있음)
+⚠️ 위험 | Result | union 멤버 Comment 추가 (클라이언트가 새 타입을 처리해야 함)
+✅ 안전 | Query.version | 필드 추가
+✅ 안전 | User.name | 타입 String → String! (더 엄격한 보장)
+✅ 안전 | User.nickname | 필드 추가
+✅ 안전 | Filter.tag | 입력 필드 추가 (선택)
+✅ 안전 | Comment | type 타입 추가</pre>
+<h3>결과 — 요약</h3><pre>⛔ 깨짐 8건 · 위험 4건 · 안전 5건
+판정 기준: 응답 필드는 타입이 더 엄격해지면(T → T!) 안전하고 느슨해지면(T! → T) 깨지며, 입력(인자·입력 필드)은 반대입니다. 필수 인자·입력 필드 추가와 필드·값 제거는 깨짐, enum 값·union 멤버·인터페이스 추가는 클라이언트 처리에 따라 위험으로 분류합니다 (graphql-inspector 와 같은 분류)</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>스키마 변경이 기존 클라이언트를 깨뜨리는지 배포 전에 확인합니다. 입력은 서버로 전송되지 않습니다.</p>
+<ul><li>깨짐: 타입·필드·인자·enum 값 제거, 필수 인자·입력 필드 추가, 출력 타입 약화(T! → T), 입력 타입 강화</li><li>위험: enum 값 추가, 유니언 멤버·인터페이스 추가, 기본값 변경</li><li>안전: 필드·타입 추가, 선택 인자 추가, 출력 타입 강화(T → T!)</li><li>graphql-inspector 와 같은 분류 기준</li><li>'깨짐·위험만' 보기</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="graphql-workbench.html" class="related-card"><span class="related-icon">🧬</span><span>GraphQL 작업대</span></a>
+    <a href="openapi-diff.html" class="related-card"><span class="related-icon">🔀</span><span>OpenAPI 비교기</span></a>
+    <a href="json-schema-diff.html" class="related-card"><span class="related-icon">⚖️</span><span>JSON 스키마 비교 도구</span></a>
+    <a href="protobuf-decoder.html" class="related-card"><span class="related-icon">📡</span><span>Protobuf 디코더 (스키마 없이)</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>응답 필드는 String → String! 로 강화하면 안전하지만 반대로 느슨해지면 깨집니다. 입력은 정반대입니다.</li><li>enum 값 추가는 클라이언트의 switch 가 모르는 값을 만날 수 있어 위험으로 분류합니다.</li><li>필드를 바로 지우지 말고 @deprecated 로 표시한 뒤 사용이 사라지면 제거하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>실제 사용 중인 필드인지 알 수 있나요?</summary><p>아니요. 스키마만 비교하므로 실제 클라이언트가 쓰는 필드인지는 알 수 없습니다. 쿼리 사용 통계와 함께 판단하세요.</p></details><details><summary>연합(federation) 지시어도 비교하나요?</summary><p>지시어 정의와 사용 변경은 감지하지만 연합 합성 규칙은 검증하지 않습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-graphql.js"></script>
+<script src="js/tools/graphql-schema-diff.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

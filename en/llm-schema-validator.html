@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Schema Validator – OpenAI Strict &amp; Gemini Compatibility | WooaDev</title>
+  <meta name="description" content="Check whether a JSON Schema works with OpenAI Structured Outputs strict mode and Gemini responseSchema, and convert it automatically with additionalProperties, required and nullable fixes.">
+  <meta name="keywords" content="OpenAI structured outputs schema, LLM JSON schema validator, strict mode converter, Gemini responseSchema, function calling schema, json schema openai">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/llm-schema-validator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/llm-schema-validator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/llm-schema-validator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/llm-schema-validator.html">
+  <meta property="og:title" content="LLM Schema Validator – OpenAI Strict &amp; Gemini Compatibility | WooaDev">
+  <meta property="og:description" content="Check whether a JSON Schema works with OpenAI Structured Outputs strict mode and Gemini responseSchema, and convert it automatically with additionalProperties, required and nullable fixes.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/llm-schema-validator.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LLM Schema Validator – OpenAI Strict &amp; Gemini Compatibility | WooaDev">
+  <meta name="twitter:description" content="Check whether a JSON Schema works with OpenAI Structured Outputs strict mode and Gemini responseSchema, and convert it automatically with additionalProperties, required and nullable fixes.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LLM Schema Validator","url":"https://wooadev.wooahouse.com/en/llm-schema-validator.html","description":"Check whether a JSON Schema works with OpenAI Structured Outputs strict mode and Gemini responseSchema, and convert it automatically with additionalProperties, required and nullable fixes.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Targets: OpenAI Structured Outputs (strict), Google Gemini responseSchema and a generic check","OpenAI strict: additionalProperties: false on every object, all properties required, unsupported keywords, nesting depth and property-count limits","Gemini: keywords outside the supported subset, additionalProperties, $ref differences","Auto-convert: optional properties become required + [type, null]; output as a ready-to-use response_format","The converted result is re-checked, with object / property / depth statistics"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Are the rules up to date?","acceptedAnswer":{"@type":"Answer","text":"They follow the public documentation, and support may widen with models and over time. Confirm with a real API call."}},{"@type":"Question","name":"What about constraints like minimum or pattern?","acceptedAnswer":{"@type":"Answer","text":"Depending on provider and model they may be ignored or rejected. If a warning appears, validate values in your application after receiving the response."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"LLM Schema Validator","item":"https://wooadev.wooahouse.com/en/llm-schema-validator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../llm-schema-validator.html">KO</a>
+        <span>|</span>
+        <a href="llm-schema-validator.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>LLM Schema Validator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🤖</span>
+    <h1>LLM Structured Output Schema Validator</h1>
+    <p>Paste a JSON Schema to find what OpenAI Structured Outputs (strict) or Gemini responseSchema do not support, and optionally convert it with additionalProperties: false, every property required and optional values made nullable, producing a ready-to-send request JSON.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>⛔ 11 incompatibility(ies), 1 warning(s)</p>
+<h3>Input — JSON Schema (or a whole response_format / tool definition)</h3><pre>{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "age": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "user"
+      ]
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+        "city": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string",
+          "pattern": "^\\d{5}$"
+        }
+      },
+      "required": [
+        "city"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "payment": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "card": {
+              "type": "string"
+            }
+…</pre>
+<h3>Result — Findings</h3><pre>⛔ Every object needs additionalProperties: false
+⛔ Strict mode requires every property in required; missing: email, role, address, tags, payment (express optional values as ["type","null"])
+⛔ #.properties.name.minLength: OpenAI strict mode does not support the "minLength" keyword
+⛔ #.properties.address: Every object needs additionalProperties: false
+⛔ #.properties.address: Strict mode requires every property in required; missing: zip (express optional values as ["type","null"])
+⛔ #.properties.tags.uniqueItems: OpenAI strict mode does not support the "uniqueItems" keyword
+⛔ #.properties.payment.oneOf: OpenAI strict mode does not support the "oneOf" keyword
+⛔ #.properties.payment.oneOf[0]: Every object needs additionalProperties: false
+⛔ #.properties.payment.oneOf[0]: Strict mode requires every property in required; missing: card (express optional values as ["type","null"])
+⛔ #.properties.payment.oneOf[1]: Every object needs additionalProperties: false
+⛔ #.properties.payment.oneOf[1]: Strict mode requires every property in required; missing: iban (express optional values as ["type","null"])
+⚠️ #.properties.payment: No type; give every schema a type (or anyOf / enum)
+ℹ️ 8 properties have no description; models fill values from descriptions, so adding them improves accuracy
+…</pre>
+<h3>Result — Converted schema</h3><pre>{
+  "type": "json_schema",
+  "json_schema": {
+    "name": "response",
+    "strict": true,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "email": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "email"
+        },
+        "role": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "admin",
+            "user",
+            null
+          ]
+        },
+        "address": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "city": {
+              "type": "string"
+            },
+            "zip": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^\\d{5}$"
+            }
+          },
+          "required": [
+            "city",
+            "zip"
+          ],
+          "additionalProperties": false
+        },
+        "tags": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "payment": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+…</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Make sure a schema will not be rejected before you send it to a model API. The schema is not uploaded.</p>
+<ul><li>Targets: OpenAI Structured Outputs (strict), Google Gemini responseSchema and a generic check</li><li>OpenAI strict: additionalProperties: false on every object, all properties required, unsupported keywords, nesting depth and property-count limits</li><li>Gemini: keywords outside the supported subset, additionalProperties, $ref differences</li><li>Auto-convert: optional properties become required + [type, null]; output as a ready-to-use response_format</li><li>The converted result is re-checked, with object / property / depth statistics</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="json-schema-validator.html" class="related-card"><span class="related-icon">🛡️</span><span>JSON Schema Validator</span></a>
+    <a href="json-schema-generator.html" class="related-card"><span class="related-icon">📘</span><span>JSON Schema Generator</span></a>
+    <a href="schema-mock-data.html" class="related-card"><span class="related-icon">🎲</span><span>JSON Mock Data Generator</span></a>
+    <a href="text-chunker.html" class="related-card"><span class="related-icon">✂️</span><span>Text Chunker (RAG)</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Strict mode has no optional properties. Express a possibly missing value as type: ["string", "null"].</li><li>Deep schemas with many properties slow responses and may hit limits, so keep only the fields you need.</li><li>Clear enums and descriptions make the model more likely to fill values correctly.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Are the rules up to date?</summary><p>They follow the public documentation, and support may widen with models and over time. Confirm with a real API call.</p></details><details><summary>What about constraints like minimum or pattern?</summary><p>Depending on provider and model they may be ignored or rejected. If a warning appears, validate values in your application after receiving the response.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/llm-schema-validator.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

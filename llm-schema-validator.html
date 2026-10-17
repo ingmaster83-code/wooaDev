@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM 스키마 검사기 — OpenAI strict·Gemini 호환 변환 | WooaDev</title>
+  <meta name="description" content="JSON Schema 가 OpenAI Structured Outputs strict 모드와 Gemini responseSchema 에서 쓸 수 있는지 검사하고, additionalProperties·required·null 허용을 맞춘 형식으로 자동 변환합니다.">
+  <meta name="keywords" content="OpenAI structured outputs 스키마, LLM JSON schema 검증, strict 모드 변환, Gemini responseSchema, 함수 호출 스키마, json schema openai">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/llm-schema-validator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/llm-schema-validator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/llm-schema-validator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/llm-schema-validator.html">
+  <meta property="og:title" content="LLM 스키마 검사기 — OpenAI strict·Gemini 호환 변환 | WooaDev">
+  <meta property="og:description" content="JSON Schema 가 OpenAI Structured Outputs strict 모드와 Gemini responseSchema 에서 쓸 수 있는지 검사하고, additionalProperties·required·null 허용을 맞춘 형식으로 자동 변환합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/llm-schema-validator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LLM 스키마 검사기 — OpenAI strict·Gemini 호환 변환 | WooaDev">
+  <meta name="twitter:description" content="JSON Schema 가 OpenAI Structured Outputs strict 모드와 Gemini responseSchema 에서 쓸 수 있는지 검사하고, additionalProperties·required·null 허용을 맞춘 형식으로 자동 변환합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LLM 스키마 검사기","url":"https://wooadev.wooahouse.com/llm-schema-validator.html","description":"JSON Schema 가 OpenAI Structured Outputs strict 모드와 Gemini responseSchema 에서 쓸 수 있는지 검사하고, additionalProperties·required·null 허용을 맞춘 형식으로 자동 변환합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["대상: OpenAI Structured Outputs(strict), Google Gemini responseSchema, 일반 점검","OpenAI strict: 모든 object 의 additionalProperties: false, 모든 속성 required, 지원되지 않는 키워드, 중첩 깊이와 속성 수 한도","Gemini: 지원 키워드 외의 항목, additionalProperties, $ref 처리 차이","자동 변환: 선택 속성을 필수 + [타입, null] 로 바꾸고 요청에 바로 쓰는 response_format 형태로 출력","변환 결과를 다시 검사해 호환 여부 확인, 객체·속성·깊이 통계"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"규칙이 최신인가요?","acceptedAnswer":{"@type":"Answer","text":"공개 문서를 기준으로 하며 모델과 시기에 따라 지원 범위가 넓어질 수 있습니다. 최종 확인은 실제 API 호출로 하세요."}},{"@type":"Question","name":"minimum·pattern 같은 제약은요?","acceptedAnswer":{"@type":"Answer","text":"공급자와 모델에 따라 무시되거나 거부될 수 있습니다. 경고가 나오면 값 검증은 응답을 받은 뒤 애플리케이션에서 하는 것이 안전합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"LLM 스키마 검사기","item":"https://wooadev.wooahouse.com/llm-schema-validator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="llm-schema-validator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/llm-schema-validator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>LLM 스키마 검사기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🤖</span>
+    <h1>LLM 구조화 출력 스키마 검사기</h1>
+    <p>JSON Schema 를 붙여 넣으면 OpenAI Structured Outputs(strict)나 Gemini responseSchema 가 지원하지 않는 부분을 찾고, 필요하면 additionalProperties: false, 모든 속성 required, 선택 값의 null 허용 같은 변환을 적용한 요청용 JSON 을 만들어 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>⛔ 호환되지 않는 부분 11건 · 경고 1건</p>
+<h3>입력 — JSON Schema (또는 response_format / 도구 정의 전체)</h3><pre>{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "age": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "user"
+      ]
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+        "city": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string",
+          "pattern": "^\\d{5}$"
+        }
+      },
+      "required": [
+        "city"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "payment": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "card": {
+              "type": "string"
+            }
+…</pre>
+<h3>결과 — 점검 결과</h3><pre>⛔ 모든 object 에 additionalProperties: false 가 필요합니다
+⛔ strict 모드는 모든 속성을 required 에 넣어야 합니다. 빠진 속성: email, role, address, tags, payment (선택 값은 ["타입","null"] 로 표현)
+⛔ #.properties.name.minLength: OpenAI strict 모드는 "minLength" 키워드를 지원하지 않습니다
+⛔ #.properties.address: 모든 object 에 additionalProperties: false 가 필요합니다
+⛔ #.properties.address: strict 모드는 모든 속성을 required 에 넣어야 합니다. 빠진 속성: zip (선택 값은 ["타입","null"] 로 표현)
+⛔ #.properties.tags.uniqueItems: OpenAI strict 모드는 "uniqueItems" 키워드를 지원하지 않습니다
+⛔ #.properties.payment.oneOf: OpenAI strict 모드는 "oneOf" 키워드를 지원하지 않습니다
+⛔ #.properties.payment.oneOf[0]: 모든 object 에 additionalProperties: false 가 필요합니다
+⛔ #.properties.payment.oneOf[0]: strict 모드는 모든 속성을 required 에 넣어야 합니다. 빠진 속성: card (선택 값은 ["타입","null"] 로 표현)
+⛔ #.properties.payment.oneOf[1]: 모든 object 에 additionalProperties: false 가 필요합니다
+⛔ #.properties.payment.oneOf[1]: strict 모드는 모든 속성을 required 에 넣어야 합니다. 빠진 속성: iban (선택 값은 ["타입","null"] 로 표현)
+⚠️ #.properties.payment: type 이 없습니다. 모든 스키마에 type(또는 anyOf/enum)을 명시하세요
+ℹ️ description 이 없는 속성이 8개 있습니다. 모델은 설명을 보고 값을 채우므로 속성마다 description 을 쓰면 정확도가 올라갑니다
+ℹ️ 변환에서 지원하지 않는 키워드를 제거했습니다: minLength, uniqueItems, oneOf — 제약은 프롬프트의 description 이나 후처리 검증으로 옮기세요
+ℹ️ 선택 속성은 필수로 바꾸고 ["타입","null"] 로 null 을 허용했습니다. 모델이 값을 모르면 null 을 채웁니다
+ℹ️ 규칙은 공개 문서를 기준으로 하며 모델·시기에 따라 지원 범위가 넓어질 수 있습니다. 최종 확인은 실제 API 호출로 하세요</pre>
+<h3>결과 — 자동 변환된 스키마</h3><pre>{
+  "type": "json_schema",
+  "json_schema": {
+    "name": "response",
+    "strict": true,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "email": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "email"
+        },
+        "role": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "admin",
+            "user",
+            null
+          ]
+        },
+        "address": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "city": {
+              "type": "string"
+            },
+            "zip": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^\\d{5}$"
+            }
+          },
+          "required": [
+            "city",
+            "zip"
+          ],
+          "additionalProperties": false
+        },
+        "tags": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "payment": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+…</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>모델 API 에 보내기 전에 스키마가 거부되지 않는지 확인합니다. 스키마는 서버로 전송되지 않습니다.</p>
+<ul><li>대상: OpenAI Structured Outputs(strict), Google Gemini responseSchema, 일반 점검</li><li>OpenAI strict: 모든 object 의 additionalProperties: false, 모든 속성 required, 지원되지 않는 키워드, 중첩 깊이와 속성 수 한도</li><li>Gemini: 지원 키워드 외의 항목, additionalProperties, $ref 처리 차이</li><li>자동 변환: 선택 속성을 필수 + [타입, null] 로 바꾸고 요청에 바로 쓰는 response_format 형태로 출력</li><li>변환 결과를 다시 검사해 호환 여부 확인, 객체·속성·깊이 통계</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="json-schema-validator.html" class="related-card"><span class="related-icon">🛡️</span><span>JSON 스키마 검증기</span></a>
+    <a href="json-schema-generator.html" class="related-card"><span class="related-icon">📘</span><span>JSON 스키마 생성기</span></a>
+    <a href="schema-mock-data.html" class="related-card"><span class="related-icon">🎲</span><span>JSON 모의 데이터 생성기</span></a>
+    <a href="text-chunker.html" class="related-card"><span class="related-icon">✂️</span><span>텍스트 청킹 도구 (RAG)</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>strict 모드에서는 선택 속성이 없습니다. 값이 없을 수 있으면 type: ["string", "null"] 로 표현합니다.</li><li>스키마가 깊거나 속성이 많으면 응답이 느려지고 한도에 걸릴 수 있으니 필요한 필드만 남기세요.</li><li>enum 과 description 을 명확히 적으면 모델이 값을 정확히 채울 가능성이 높아집니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>규칙이 최신인가요?</summary><p>공개 문서를 기준으로 하며 모델과 시기에 따라 지원 범위가 넓어질 수 있습니다. 최종 확인은 실제 API 호출로 하세요.</p></details><details><summary>minimum·pattern 같은 제약은요?</summary><p>공급자와 모델에 따라 무시되거나 거부될 수 있습니다. 경고가 나오면 값 검증은 응답을 받은 뒤 애플리케이션에서 하는 것이 안전합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/llm-schema-validator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

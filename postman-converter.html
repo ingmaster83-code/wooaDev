@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Postman OpenAPI 변환기 — 컬렉션 v2.1 양방향 변환 | WooaDev</title>
+  <meta name="description" content="Postman 컬렉션 v2.1 을 OpenAPI 3.0 YAML·JSON 으로, OpenAPI 를 Postman 컬렉션으로 양방향 변환합니다. 경로·쿼리·헤더·본문과 응답 예시를 함께 옮깁니다.">
+  <meta name="keywords" content="Postman OpenAPI 변환, postman to openapi, openapi to postman, 포스트맨 컬렉션 변환, swagger postman, 컬렉션 v2.1">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/postman-converter.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/postman-converter.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/postman-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/postman-converter.html">
+  <meta property="og:title" content="Postman OpenAPI 변환기 — 컬렉션 v2.1 양방향 변환 | WooaDev">
+  <meta property="og:description" content="Postman 컬렉션 v2.1 을 OpenAPI 3.0 YAML·JSON 으로, OpenAPI 를 Postman 컬렉션으로 양방향 변환합니다. 경로·쿼리·헤더·본문과 응답 예시를 함께 옮깁니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/postman-converter.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Postman OpenAPI 변환기 — 컬렉션 v2.1 양방향 변환 | WooaDev">
+  <meta name="twitter:description" content="Postman 컬렉션 v2.1 을 OpenAPI 3.0 YAML·JSON 으로, OpenAPI 를 Postman 컬렉션으로 양방향 변환합니다. 경로·쿼리·헤더·본문과 응답 예시를 함께 옮깁니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Postman 변환기","url":"https://wooadev.wooahouse.com/postman-converter.html","description":"Postman 컬렉션 v2.1 을 OpenAPI 3.0 YAML·JSON 으로, OpenAPI 를 Postman 컬렉션으로 양방향 변환합니다. 경로·쿼리·헤더·본문과 응답 예시를 함께 옮깁니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["Postman → OpenAPI: 경로 변수(:id), 쿼리, 헤더, JSON 본문 스키마 추론, 응답 예시, 폴더 → 태그","OpenAPI → Postman: baseUrl 변수, 경로·쿼리 파라미터(선택은 비활성), 요청 본문 예시, 응답 예시","출력 형식 YAML 또는 JSON, 변환 방향 자동 판별","변환 결과는 OpenAPI 검사기를 통과하도록 구성","변환 요약 표와 주의 사항"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"인증 설정도 변환되나요?","acceptedAnswer":{"@type":"Answer","text":"OAuth2 같은 복잡한 인증은 변환하지 않습니다. 필요한 보안 스킴은 변환 후 직접 추가하세요."}},{"@type":"Question","name":"Postman v2.0 도 되나요?","acceptedAnswer":{"@type":"Answer","text":"v2.1 컬렉션을 기준으로 합니다. v2.0 은 대부분 읽히지만 일부 필드는 무시될 수 있습니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"Postman 변환기","item":"https://wooadev.wooahouse.com/postman-converter.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="postman-converter.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/postman-converter.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>Postman 변환기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📮</span>
+    <h1>Postman ↔ OpenAPI 변환기</h1>
+    <p>Postman 컬렉션(v2.1)을 OpenAPI 3.0 문서로, 또는 OpenAPI 문서를 Postman 컬렉션으로 변환합니다. 경로·쿼리·헤더·본문·응답 예시를 옮기고 폴더는 태그로, baseUrl 은 컬렉션 변수로 매핑합니다. 변환 방향은 자동 판별됩니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 요청 3개를 OpenAPI 3.0 으로 변환했습니다</p>
+<h3>입력 — Postman 컬렉션(v2.x JSON) 또는 OpenAPI 문서</h3><pre>{
+  "info": {
+    "name": "Pet API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.example.com/v1"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Pets",
+      "item": [
+        {
+          "name": "List pets",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/pets?limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pets"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Max items"
+…</pre>
+<h3>결과 — 변환 결과</h3><pre>openapi: 3.0.3
+info:
+  title: Pet API
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      summary: List pets
+      operationId: listPets
+      tags:
+        - Pets
+      description: Returns pets
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          description: Max items
+          example: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    tags:
+                      type: array
+                      items:
+                        type: string
+                  required:
+                    - id
+                    - name
+                    - tags
+              example:
+                - id: 1
+                  name: Rex
+                  tags:
+                    - dog
+    post:
+      summary: Add pet
+      operationId: addPet
+      tags:
+        - Pets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                age:
+                  type: integer
+…</pre>
+<h3>결과 — 요청 목록</h3><pre>메서드 | 경로 | 이름 | 폴더 | 응답
+GET | /pets | List pets | Pets | 200
+GET | /pets/{petId} | Get pet | Pets | 200
+POST | /pets | Add pet | Pets | 201</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>API 문서와 테스트 컬렉션을 한 곳에서 서로 바꿔 줍니다. 파일은 서버로 전송되지 않습니다.</p>
+<ul><li>Postman → OpenAPI: 경로 변수(:id), 쿼리, 헤더, JSON 본문 스키마 추론, 응답 예시, 폴더 → 태그</li><li>OpenAPI → Postman: baseUrl 변수, 경로·쿼리 파라미터(선택은 비활성), 요청 본문 예시, 응답 예시</li><li>출력 형식 YAML 또는 JSON, 변환 방향 자동 판별</li><li>변환 결과는 OpenAPI 검사기를 통과하도록 구성</li><li>변환 요약 표와 주의 사항</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="openapi-editor.html" class="related-card"><span class="related-icon">📘</span><span>OpenAPI 검사기</span></a>
+    <a href="openapi-mock-generator.html" class="related-card"><span class="related-icon">🎭</span><span>OpenAPI Mock 생성기</span></a>
+    <a href="json-validator.html" class="related-card"><span class="related-icon">✅</span><span>JSON 유효성 검사기</span></a>
+    <a href="query-string-builder.html" class="related-card"><span class="related-icon">❓</span><span>쿼리 문자열 파서·빌더</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Postman 의 {{변수}} 는 OpenAPI 서버 URL 이나 값 자리표시자로 옮겨집니다. 변환 후 servers 를 확인하세요.</li><li>스키마는 예시 본문에서 추론하므로 required·format 은 변환 후 직접 다듬는 것이 좋습니다.</li><li>변환한 OpenAPI 는 OpenAPI 검사기에 붙여 넣어 바로 오류를 확인하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>인증 설정도 변환되나요?</summary><p>OAuth2 같은 복잡한 인증은 변환하지 않습니다. 필요한 보안 스킴은 변환 후 직접 추가하세요.</p></details><details><summary>Postman v2.0 도 되나요?</summary><p>v2.1 컬렉션을 기준으로 합니다. v2.0 은 대부분 읽히지만 일부 필드는 무시될 수 있습니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-yamlx.js"></script>
+<script src="js/tk-openapi.js"></script>
+<script src="js/lib/yaml.min.js"></script>
+<script src="js/tools/postman-converter.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL DDL Viewer – ERD and Mermaid from CREATE TABLE | WooaDev</title>
+  <meta name="description" content="Extract tables, keys and foreign-key relationships from CREATE TABLE, INDEX and ALTER TABLE statements, draw an ERD and Mermaid erDiagram, and check for missing references and type mismatches.">
+  <meta name="keywords" content="SQL DDL viewer, ERD generator, CREATE TABLE to ERD, Mermaid erDiagram, foreign key diagram, SQL schema visualizer, ddl to erd">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/sql-ddl-viewer.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/sql-ddl-viewer.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/sql-ddl-viewer.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/sql-ddl-viewer.html">
+  <meta property="og:title" content="SQL DDL Viewer – ERD and Mermaid from CREATE TABLE | WooaDev">
+  <meta property="og:description" content="Extract tables, keys and foreign-key relationships from CREATE TABLE, INDEX and ALTER TABLE statements, draw an ERD and Mermaid erDiagram, and check for missing references and type mismatches.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/sql-ddl-viewer.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SQL DDL Viewer – ERD and Mermaid from CREATE TABLE | WooaDev">
+  <meta name="twitter:description" content="Extract tables, keys and foreign-key relationships from CREATE TABLE, INDEX and ALTER TABLE statements, draw an ERD and Mermaid erDiagram, and check for missing references and type mismatches.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SQL DDL Viewer","url":"https://wooadev.wooahouse.com/en/sql-ddl-viewer.html","description":"Extract tables, keys and foreign-key relationships from CREATE TABLE, INDEX and ALTER TABLE statements, draw an ERD and Mermaid erDiagram, and check for missing references and type mismatches.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Parsing: CREATE TABLE (inline and table constraints), CREATE [UNIQUE] INDEX, ALTER TABLE ADD FOREIGN KEY / PRIMARY KEY / UNIQUE / COLUMN","Dialects: MySQL backticks, PostgreSQL double quotes, SQL Server brackets, comments and semicolons inside strings","Output: ERD (SVG), table / column list (type, NULL, key, default, comment), relationship table (ON DELETE / UPDATE, required / optional), Mermaid erDiagram","Checks: missing tables or columns, FK type mismatch, no primary key, unindexed FK, ON DELETE SET NULL on a NOT NULL column","Hints that can be turned off"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does it support every SQL dialect?","acceptedAnswer":{"@type":"Answer","text":"Common CREATE / ALTER statements from MySQL, PostgreSQL, SQLite and SQL Server are parsed. Views, triggers and functions are skipped, and some dialect-specific syntax may not be understood."}},{"@type":"Question","name":"Does it connect to a database?","acceptedAnswer":{"@type":"Answer","text":"No. It only parses the DDL text you paste and never connects to a database."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"SQL DDL Viewer","item":"https://wooadev.wooahouse.com/en/sql-ddl-viewer.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../sql-ddl-viewer.html">KO</a>
+        <span>|</span>
+        <a href="sql-ddl-viewer.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>SQL DDL Viewer</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🗺️</span>
+    <h1>SQL DDL Viewer &amp; ERD Generator</h1>
+    <p>Paste CREATE TABLE, CREATE INDEX and ALTER TABLE statements to get tables, columns and keys in a table, plus foreign-key relationships as an ERD diagram and Mermaid erDiagram code. Design problems such as missing tables, type mismatches and unindexed foreign keys are listed with line numbers.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>⛔ 1 error(s), 1 warning(s) — 4 table(s)</p>
+<h3>Input — SQL DDL (CREATE TABLE, CREATE INDEX, ALTER TABLE)</h3><pre>CREATE TABLE users (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  name VARCHAR(100),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE posts (
+  id BIGINT NOT NULL,
+  user_id INT NOT NULL,
+  title VARCHAR(200) NOT NULL,
+  body TEXT,
+  category_id BIGINT,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_posts_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+);
+
+CREATE TABLE tags (id INT PRIMARY KEY, label TEXT NOT NULL);
+CREATE TABLE post_tags (post_id BIGINT NOT NULL REFERENCES posts(id), tag_id INT NOT NULL REFERENCES tags(id), PRIMARY KEY (post_id, tag_id));
+CREATE INDEX idx_posts_title ON posts (title);
+ALTER TABLE posts ADD CONSTRAINT fk_posts_cat FOREIGN KEY (category_id) REFERENCES categories(id);
+</pre>
+<h3>Result — Tables and columns</h3><pre>Table | Column | Type | Null | Key | Default | Comment
+users | id | BIGINT | NOT NULL | PK | AUTO | 
+users | email | VARCHAR(255) | NOT NULL | UQ | — | 
+users | name | VARCHAR(100) | NULL | — | — | 
+users | created_at | TIMESTAMP | NULL | — | DEFAULT CURRENT_TIMESTAMP | 
+posts | id | BIGINT | NOT NULL | PK | — | 
+posts | user_id | INT | NOT NULL | FK | — | 
+posts | title | VARCHAR(200) | NOT NULL | — | — | 
+posts | body | TEXT | NULL | — | — | 
+posts | category_id | BIGINT | NULL | FK | — | 
+tags | id | INT | NOT NULL | PK | — | 
+tags | label | TEXT | NOT NULL | — | — | 
+post_tags | post_id | BIGINT | NOT NULL | PK FK | — | 
+post_tags | tag_id | INT | NOT NULL | PK FK | — | </pre>
+<h3>Result — Relationships (foreign keys)</h3><pre>Column | References | ON DELETE | ON UPDATE | Name | Cardinality
+posts.user_id | users.id | CASCADE | — | fk_posts_user | required (1:N)
+posts.category_id | categories.id | — | — | fk_posts_cat | optional (0..N)
+post_tags.post_id | posts.id | — | — | — | required (1:N)
+post_tags.tag_id | tags.id | — | — | — | required (1:N)</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>See a database structure at a glance from the DDL script alone. Your SQL is not uploaded.</p>
+<ul><li>Parsing: CREATE TABLE (inline and table constraints), CREATE [UNIQUE] INDEX, ALTER TABLE ADD FOREIGN KEY / PRIMARY KEY / UNIQUE / COLUMN</li><li>Dialects: MySQL backticks, PostgreSQL double quotes, SQL Server brackets, comments and semicolons inside strings</li><li>Output: ERD (SVG), table / column list (type, NULL, key, default, comment), relationship table (ON DELETE / UPDATE, required / optional), Mermaid erDiagram</li><li>Checks: missing tables or columns, FK type mismatch, no primary key, unindexed FK, ON DELETE SET NULL on a NOT NULL column</li><li>Hints that can be turned off</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="sql-insert-converter.html" class="related-card"><span class="related-icon">🗃️</span><span>SQL INSERT Converter</span></a>
+    <a href="sqlite-viewer.html" class="related-card"><span class="related-icon">🗃️</span><span>SQLite Viewer</span></a>
+    <a href="json-to-model.html" class="related-card"><span class="related-icon">🧬</span><span>JSON to Rust, C#, Dart &amp; Kotlin Converter</span></a>
+    <a href="postgresql-data-parser.html" class="related-card"><span class="related-icon">🐘</span><span>PostgreSQL Array &amp; Interval Parser</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Index foreign-key columns to speed up joins and parent-row deletes; PostgreSQL does not create these indexes automatically.</li><li>Keep referencing and referenced column types identical, especially integer size and signedness.</li><li>Paste the Mermaid code into a Markdown file or GitHub README to render the ERD.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Does it support every SQL dialect?</summary><p>Common CREATE / ALTER statements from MySQL, PostgreSQL, SQLite and SQL Server are parsed. Views, triggers and functions are skipped, and some dialect-specific syntax may not be understood.</p></details><details><summary>Does it connect to a database?</summary><p>No. It only parses the DDL text you paste and never connects to a database.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-xml.js"></script>
+<script src="../js/tools/sql-ddl-viewer.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

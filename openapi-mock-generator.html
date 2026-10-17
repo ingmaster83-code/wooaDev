@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenAPI Mock 생성기 — 스키마로 응답 JSON 과 curl 만들기 | WooaDev</title>
+  <meta name="description" content="OpenAPI 엔드포인트를 골라 스키마와 example 로 응답·요청 Mock JSON 과 curl 명령을 만듭니다. 상태 코드와 배열 길이를 고를 수 있고 결과는 항상 같습니다.">
+  <meta name="keywords" content="OpenAPI mock, 목 데이터 생성, 스웨거 예시 응답, mock JSON 생성기, openapi example generator, curl 생성">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/openapi-mock-generator.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/openapi-mock-generator.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/openapi-mock-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/openapi-mock-generator.html">
+  <meta property="og:title" content="OpenAPI Mock 생성기 — 스키마로 응답 JSON 과 curl 만들기 | WooaDev">
+  <meta property="og:description" content="OpenAPI 엔드포인트를 골라 스키마와 example 로 응답·요청 Mock JSON 과 curl 명령을 만듭니다. 상태 코드와 배열 길이를 고를 수 있고 결과는 항상 같습니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/openapi-mock-generator.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="OpenAPI Mock 생성기 — 스키마로 응답 JSON 과 curl 만들기 | WooaDev">
+  <meta name="twitter:description" content="OpenAPI 엔드포인트를 골라 스키마와 example 로 응답·요청 Mock JSON 과 curl 명령을 만듭니다. 상태 코드와 배열 길이를 고를 수 있고 결과는 항상 같습니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"OpenAPI Mock 생성기","url":"https://wooadev.wooahouse.com/openapi-mock-generator.html","description":"OpenAPI 엔드포인트를 골라 스키마와 example 로 응답·요청 Mock JSON 과 curl 명령을 만듭니다. 상태 코드와 배열 길이를 고를 수 있고 결과는 항상 같습니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["대상: 'GET /pets/{id}' 처럼 메서드와 경로를 적거나 operationId 로 선택","값 생성: example · default · enum 우선, string format(date-time, email, uuid, uri 등)과 숫자 범위를 반영","스키마: $ref, allOf 병합, oneOf/anyOf(첫 항목), additionalProperties 맵","readOnly 는 응답에만, writeOnly 는 요청에만 포함","상태 코드·배열 길이 선택, 경로 변수를 채운 curl 명령 출력"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"랜덤 값인가요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 스키마의 이름과 위치에서 결정적으로 계산하므로 같은 입력이면 같은 결과가 나옵니다."}},{"@type":"Question","name":"oneOf 는 어떻게 처리하나요?","acceptedAnswer":{"@type":"Answer","text":"첫 번째 항목을 기준으로 만듭니다. 다른 항목이 필요하면 해당 스키마에 example 을 지정하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"OpenAPI Mock 생성기","item":"https://wooadev.wooahouse.com/openapi-mock-generator.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="openapi-mock-generator.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/openapi-mock-generator.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>OpenAPI Mock 생성기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🎭</span>
+    <h1>OpenAPI Mock 데이터 생성기</h1>
+    <p>OpenAPI 문서에서 엔드포인트를 골라 응답 또는 요청 본문 Mock JSON 을 만듭니다. example 이 있으면 우선 쓰고, 없으면 스키마(type·format·enum·min/max)에서 결정적으로 값을 만들며 같은 입력이면 항상 같은 결과가 나옵니다. curl 명령도 함께 제공합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ GET /pets → 200 의 Mock 데이터를 만들었습니다</p>
+<h3>입력 — OpenAPI 문서 (YAML 또는 JSON)</h3><pre>openapi: 3.0.3
+info: { title: Pets, version: 1.0.0 }
+servers: [{ url: https://api.example.com/v1 }]
+paths:
+  /pets:
+    get:
+      summary: List pets
+      parameters: [{ name: limit, in: query, schema: { type: integer } }]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: "#/components/schemas/Pet" } }
+    post:
+      summary: Add a pet
+      requestBody:
+        content: { application/json: { schema: { $ref: "#/components/schemas/NewPet" } } }
+      responses:
+        "201":
+          description: Created
+          content: { application/json: { schema: { $ref: "#/components/schemas/Pet" } } }
+        "400": { description: Bad request, content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+components:
+  schemas:
+    Pet:
+      type: object
+…</pre>
+<h3>결과 — Mock 데이터 (JSON)</h3><pre>[
+  {
+    "id": 54,
+    "name": "Rex",
+    "status": "available",
+    "birthday": "2026-10-17",
+    "owner": {
+      "email": "user@example.com",
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    },
+    "tags": [
+      "tags-gamma",
+      "tags-gamma"
+    ]
+  },
+  {
+    "id": 54,
+    "name": "Rex",
+    "status": "available",
+    "birthday": "2026-10-17",
+    "owner": {
+      "email": "user@example.com",
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    },
+    "tags": [
+      "tags-gamma",
+      "tags-gamma"
+    ]
+  }
+]</pre>
+<h3>결과 — 엔드포인트 목록</h3><pre>메서드 | 경로 | operationId | 응답 코드 | 
+GET | /pets | — | 200 | ◀
+POST | /pets | — | 201, 400 | </pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>API 서버가 없어도 프런트엔드와 테스트에 쓸 응답 데이터를 바로 만듭니다. 문서는 서버로 전송되지 않습니다.</p>
+<ul><li>대상: 'GET /pets/{id}' 처럼 메서드와 경로를 적거나 operationId 로 선택</li><li>값 생성: example · default · enum 우선, string format(date-time, email, uuid, uri 등)과 숫자 범위를 반영</li><li>스키마: $ref, allOf 병합, oneOf/anyOf(첫 항목), additionalProperties 맵</li><li>readOnly 는 응답에만, writeOnly 는 요청에만 포함</li><li>상태 코드·배열 길이 선택, 경로 변수를 채운 curl 명령 출력</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="openapi-editor.html" class="related-card"><span class="related-icon">📘</span><span>OpenAPI 검사기</span></a>
+    <a href="schema-mock-data.html" class="related-card"><span class="related-icon">🎲</span><span>JSON 모의 데이터 생성기</span></a>
+    <a href="postman-converter.html" class="related-card"><span class="related-icon">📮</span><span>Postman 변환기</span></a>
+    <a href="json-schema-generator.html" class="related-card"><span class="related-icon">📘</span><span>JSON 스키마 생성기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>같은 문서면 항상 같은 값이 나오므로 스냅샷 테스트와 문서 예시에 그대로 쓸 수 있습니다.</li><li>스키마에 example 을 적어 두면 Mock 값이 그 예시로 고정됩니다.</li><li>요청 본문 Mock 은 POST·PUT 테스트 데이터로, 응답 Mock 은 프런트엔드 개발용 목 서버 응답으로 쓰세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>랜덤 값인가요?</summary><p>아니요. 스키마의 이름과 위치에서 결정적으로 계산하므로 같은 입력이면 같은 결과가 나옵니다.</p></details><details><summary>oneOf 는 어떻게 처리하나요?</summary><p>첫 번째 항목을 기준으로 만듭니다. 다른 항목이 필요하면 해당 스키마에 example 을 지정하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-yamlx.js"></script>
+<script src="js/tk-openapi.js"></script>
+<script src="js/lib/yaml.min.js"></script>
+<script src="js/tools/openapi-mock-generator.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

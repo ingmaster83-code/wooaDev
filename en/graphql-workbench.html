@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GraphQL Workbench – Schema Check, Query Validation &amp; Formatter | WooaDev</title>
+  <meta name="description" content="Check GraphQL SDL for undefined types, missing interface fields and unused types, validate query fields, arguments and variables against the schema, and format both SDL and queries.">
+  <meta name="keywords" content="GraphQL schema validator, GraphQL query validator, SDL formatter, graphql formatter online, graphql linter, graphql playground alternative">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/graphql-workbench.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/graphql-workbench.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/graphql-workbench.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/graphql-workbench.html">
+  <meta property="og:title" content="GraphQL Workbench – Schema Check, Query Validation &amp; Formatter | WooaDev">
+  <meta property="og:description" content="Check GraphQL SDL for undefined types, missing interface fields and unused types, validate query fields, arguments and variables against the schema, and format both SDL and queries.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/graphql-workbench.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GraphQL Workbench – Schema Check, Query Validation &amp; Formatter | WooaDev">
+  <meta name="twitter:description" content="Check GraphQL SDL for undefined types, missing interface fields and unused types, validate query fields, arguments and variables against the schema, and format both SDL and queries.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"GraphQL Workbench","url":"https://wooadev.wooahouse.com/en/graphql-workbench.html","description":"Check GraphQL SDL for undefined types, missing interface fields and unused types, validate query fields, arguments and variables against the schema, and format both SDL and queries.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Schema: undefined type references, missing interface implementations, duplicates, input / output type rules, unused types","Query: unknown fields (with suggestions), missing required arguments, variable types, fragments, selection-set rules","Type table: kind, field / value count, implements relations and line numbers","Re-printed, consistently formatted SDL and query","Hints that can be turned off"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does it implement every GraphQL validation rule?","acceptedAnswer":{"@type":"Answer","text":"It covers the common schema and query rules but not all of graphql-js. Verify with the official library before deploying."}},{"@type":"Question","name":"Can I paste only a schema?","acceptedAnswer":{"@type":"Answer","text":"Yes. With an empty query box only the schema check and formatting run."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"GraphQL Workbench","item":"https://wooadev.wooahouse.com/en/graphql-workbench.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../graphql-workbench.html">KO</a>
+        <span>|</span>
+        <a href="graphql-workbench.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>GraphQL Workbench</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧬</span>
+    <h1>GraphQL Schema &amp; Query Workbench</h1>
+    <p>Paste GraphQL SDL to get a type table, schema errors (undefined types, missing interface fields, unused types) and tidy formatted output. Add a query to validate its fields, arguments, variables and fragments against the schema, with did-you-mean suggestions for typos.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>⛔ 6 error(s), 1 warning(s) — 8 type(s)</p>
+<h3>Input — Schema (SDL)</h3><pre>schema { query: Query mutation: Mutation }
+
+"""사용자"""
+type User implements Node {
+  id: ID!
+  name: String!
+  email: String
+  posts(first: Int = 10, after: String): [Post!]!
+  role: Role!
+}
+type Post { id: ID! title: String! author: User! tags: [String!] }
+interface Node { id: ID! }
+enum Role { ADMIN EDITOR VIEWER }
+union SearchResult = User | Post | Comment
+input NewPost { title: String! body: String authorId: ID! }
+type Query {
+  user(id: ID!): User
+  users(role: Role): [User!]!
+  search(term: String!): [SearchResult!]!
+}
+type Mutation { createPost(input: NewPost!): Post! }
+</pre>
+<h3>Input — Query / mutation (optional)</h3><pre>query GetUser($id: ID!, $unused: Int) {
+  user(id: $id) {
+    id
+    nane
+    role { name }
+    posts(first: "5") { title author { email } }
+    ...UserBits
+  }
+}
+fragment UserBits on User { email, missing }
+mutation { createPost(input: { title: "Hi" }) { id } }
+</pre>
+<h3>Result — Schema types</h3><pre>Type | Kind | Members | Role / implements | Line
+User | type | 5 | → Node | 4
+Post | type | 4 |  | 11
+Node | interface | 1 |  | 12
+Role | enum | 3 |  | 13
+SearchResult | union | 3 |  | 14
+NewPost | input | 3 |  | 15
+Query | type | 3 | Query  | 16
+Mutation | type | 1 | Mutation  | 21</pre>
+<h3>Result — Findings</h3><pre>⛔ Schema line 14: Union SearchResult member Comment is not defined
+⚠️ Query line 1: Variable $unused is never used
+⛔ Query line 4: Cannot query field "nane" on type User — did you mean "name"?
+⛔ Query line 5: "role" is a leaf type (Role) and cannot have a selection set
+⛔ Query line 6: Argument first has value "5" which does not match type Int
+⛔ Query line 10: Cannot query field "missing" on type User
+⛔ Query line 11: Argument input has value {title: "Hi"} which does not match type NewPost!</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Validate schemas and queries in the browser without a server. Your input is not uploaded.</p>
+<ul><li>Schema: undefined type references, missing interface implementations, duplicates, input / output type rules, unused types</li><li>Query: unknown fields (with suggestions), missing required arguments, variable types, fragments, selection-set rules</li><li>Type table: kind, field / value count, implements relations and line numbers</li><li>Re-printed, consistently formatted SDL and query</li><li>Hints that can be turned off</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="graphql-schema-diff.html" class="related-card"><span class="related-icon">🧮</span><span>GraphQL Schema Diff</span></a>
+    <a href="openapi-editor.html" class="related-card"><span class="related-icon">📘</span><span>OpenAPI Validator</span></a>
+    <a href="json-schema-validator.html" class="related-card"><span class="related-icon">🛡️</span><span>JSON Schema Validator</span></a>
+    <a href="jsonpath-tester.html" class="related-card"><span class="related-icon">🧭</span><span>JSONPath Tester</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>A misspelled field name gets a 'did you mean ...?' suggestion with the closest match.</li><li>extend type and directive definitions are understood, so you can paste part of a federated schema.</li><li>Use the formatted SDL to keep your team's .graphql files consistent.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Does it implement every GraphQL validation rule?</summary><p>It covers the common schema and query rules but not all of graphql-js. Verify with the official library before deploying.</p></details><details><summary>Can I paste only a schema?</summary><p>Yes. With an empty query box only the schema check and formatting run.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-graphql.js"></script>
+<script src="../js/tools/graphql-workbench.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

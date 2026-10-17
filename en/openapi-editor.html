@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenAPI Validator – Find Swagger Document Errors by Line Number | WooaDev</title>
+  <meta name="description" content="Validate OpenAPI 3.x and Swagger 2.0 documents: missing $ref targets, path variable mismatches, duplicate operationIds, invalid response codes, missing items and unused components, with line numbers.">
+  <meta name="keywords" content="OpenAPI validator, Swagger validator, OpenAPI editor, swagger editor online, $ref error, duplicate operationId">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/openapi-editor.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/openapi-editor.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/openapi-editor.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/openapi-editor.html">
+  <meta property="og:title" content="OpenAPI Validator – Find Swagger Document Errors by Line Number | WooaDev">
+  <meta property="og:description" content="Validate OpenAPI 3.x and Swagger 2.0 documents: missing $ref targets, path variable mismatches, duplicate operationIds, invalid response codes, missing items and unused components, with line numbers.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/openapi-editor.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="OpenAPI Validator – Find Swagger Document Errors by Line Number | WooaDev">
+  <meta name="twitter:description" content="Validate OpenAPI 3.x and Swagger 2.0 documents: missing $ref targets, path variable mismatches, duplicate operationIds, invalid response codes, missing items and unused components, with line numbers.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"OpenAPI Validator","url":"https://wooadev.wooahouse.com/en/openapi-editor.html","description":"Validate OpenAPI 3.x and Swagger 2.0 documents: missing $ref targets, path variable mismatches, duplicate operationIds, invalid response codes, missing items and unused components, with line numbers.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Formats: OpenAPI 3.0, 3.1 and Swagger 2.0 in YAML or JSON","Errors: missing required fields, unresolved $ref, path variables without an in: path parameter, duplicate operationId, invalid response codes","Schemas: array without items, required names missing from properties, non-standard format, references to undefined security schemes","Hints (can be hidden): missing summary or operationId, unused components, no security scheme defined","Endpoint table with method, path, operationId, responses, tags and line numbers"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this the same as Spectral or the official validator?","acceptedAnswer":{"@type":"Answer","text":"It is a fast checker for common structure, reference and rule mistakes. It does not perform full JSON Schema validation (unevaluatedProperties and so on), so run Spectral or similar before releasing."}},{"@type":"Question","name":"Does it follow external file $refs?","acceptedAnswer":{"@type":"Answer","text":"No. Only internal references starting with #/ inside the same document are checked; references to other files are skipped."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"OpenAPI Validator","item":"https://wooadev.wooahouse.com/en/openapi-editor.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../openapi-editor.html">KO</a>
+        <span>|</span>
+        <a href="openapi-editor.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>OpenAPI Validator</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📘</span>
+    <h1>OpenAPI &amp; Swagger Validator</h1>
+    <p>Paste an OpenAPI 3.0 / 3.1 or Swagger 2.0 document (YAML or JSON) to get an endpoint table and line-numbered checks for $ref targets, path variables vs path parameters, duplicate operationIds, response codes, schema mistakes and security definitions.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>⛔ 9 error(s), 1 warning(s) — OpenAPI 3.0.3, 3 endpoint(s)</p>
+<h3>Input — OpenAPI / Swagger document (YAML or JSON)</h3><pre>openapi: 3.0.3
+info:
+  title: Pet Store
+paths:
+  /pets/{petId}:
+    get:
+      operationId: getPet
+      parameters:
+        - name: limit
+          in: query
+          schema: { type: integer, minimum: 1 }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Pet" }
+        "404": { $ref: "#/components/responses/Missing" }
+    delete:
+      operationId: getPet
+      requestBody: { content: { application/json: { schema: { type: object } } } }
+      responses: {}
+  /pets:
+    post:
+      security: [{ apiKey: [] }]
+      responses:
+        "201": { description: Created }
+        "2xx": { description: Any }
+components:
+  schemas:
+    Pet:
+      type: object
+      required: [id, name]
+      properties:
+        id: { type: integer, format: int64 }
+        tags: { type: array }
+…</pre>
+<h3>Result — Endpoints</h3><pre>Method | Path | operationId | Responses | Tags | Line
+GET | /pets/{petId} | getPet | 200, 404 | — | 7
+DELETE | /pets/{petId} | getPet | — | — | 20
+POST | /pets | — | 201, 2xx | — | 25</pre>
+<h3>Result — Findings</h3><pre>⛔ Line 3: info.version is required
+⛔ Line 7: GET /pets/{petId}: no in: path parameter for {petId}
+ℹ️ Line 7: GET /pets/{petId} has no summary or description
+⛔ Line 18: $ref #/components/responses/Missing cannot be resolved
+⛔ Line 20: DELETE /pets/{petId}: no in: path parameter for {petId}
+⛔ Line 20: operationId "getPet" duplicates GET /pets/{petId}
+⛔ Line 20: DELETE /pets/{petId}: responses needs at least one response
+ℹ️ Line 20: DELETE /pets/{petId} has no summary or description
+ℹ️ Line 21: requestBody on DELETE has undefined semantics (some servers and proxies drop it)
+ℹ️ Line 25: POST /pets has no operationId (needed by SDK generators)
+⛔ Line 25: security "apiKey" is not defined in securitySchemes
+ℹ️ Line 25: POST /pets has no summary or description
+⛔ Line 28: Invalid response code "2xx" (100–599, 1XX–5XX or default)
+⚠️ Line 33: required "name" is not in properties
+⛔ Line 36: type: array needs items
+ℹ️ Line 37: format "int32" does not fit type string or is not a standard format
+ℹ️ Line 38: schemas "Unused" is never referenced
+This checks OpenAPI structure, references and common rules, not full JSON Schema validation (unevaluatedProperties …); also run Spectral or an official validator before publishing</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Find structure and reference errors in the browser before publishing your API docs. The document is not uploaded.</p>
+<ul><li>Formats: OpenAPI 3.0, 3.1 and Swagger 2.0 in YAML or JSON</li><li>Errors: missing required fields, unresolved $ref, path variables without an in: path parameter, duplicate operationId, invalid response codes</li><li>Schemas: array without items, required names missing from properties, non-standard format, references to undefined security schemes</li><li>Hints (can be hidden): missing summary or operationId, unused components, no security scheme defined</li><li>Endpoint table with method, path, operationId, responses, tags and line numbers</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="json-schema-validator.html" class="related-card"><span class="related-icon">🛡️</span><span>JSON Schema Validator</span></a>
+    <a href="openapi-diff.html" class="related-card"><span class="related-icon">🔀</span><span>OpenAPI Diff</span></a>
+    <a href="openapi-mock-generator.html" class="related-card"><span class="related-icon">🎭</span><span>OpenAPI Mock Generator</span></a>
+    <a href="postman-converter.html" class="related-card"><span class="related-icon">📮</span><span>Postman Converter</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Every {id} in a path needs an in: path, required: true parameter with the same name. This is the most common error.</li><li>operationId becomes the SDK method name, so keep it unique across the whole document.</li><li>Move shared responses and schemas into components and reference them with $ref to keep the document short and easy to check.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Is this the same as Spectral or the official validator?</summary><p>It is a fast checker for common structure, reference and rule mistakes. It does not perform full JSON Schema validation (unevaluatedProperties and so on), so run Spectral or similar before releasing.</p></details><details><summary>Does it follow external file $refs?</summary><p>No. Only internal references starting with #/ inside the same document are checked; references to other files are skipped.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-yamlx.js"></script>
+<script src="../js/tk-openapi.js"></script>
+<script src="../js/lib/yaml.min.js"></script>
+<script src="../js/tools/openapi-editor.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

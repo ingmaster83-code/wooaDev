@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IAM Policy Viewer – Risky Permission Check &amp; Access Simulation | WooaDev</title>
+  <meta name="description" content="Tabulate AWS IAM policy statements, flag Action:* admin access, privilege escalation and S3 ARN mistakes, and simulate whether an action on a resource is allowed or denied.">
+  <meta name="keywords" content="IAM policy viewer, IAM policy analyzer, IAM policy checker, AWS policy simulator, least privilege, iam policy validator">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/iam-policy-viewer.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/iam-policy-viewer.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/iam-policy-viewer.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/iam-policy-viewer.html">
+  <meta property="og:title" content="IAM Policy Viewer – Risky Permission Check &amp; Access Simulation | WooaDev">
+  <meta property="og:description" content="Tabulate AWS IAM policy statements, flag Action:* admin access, privilege escalation and S3 ARN mistakes, and simulate whether an action on a resource is allowed or denied.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/iam-policy-viewer.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="IAM Policy Viewer – Risky Permission Check &amp; Access Simulation | WooaDev">
+  <meta name="twitter:description" content="Tabulate AWS IAM policy statements, flag Action:* admin access, privilege escalation and S3 ARN mistakes, and simulate whether an action on a resource is allowed or denied.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"IAM Policy Viewer","url":"https://wooadev.wooahouse.com/en/iam-policy-viewer.html","description":"Tabulate AWS IAM policy statements, flag Action:* admin access, privilege escalation and S3 ARN mistakes, and simulate whether an action on a resource is allowed or denied.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Table: Sid, Effect, Action, Resource / Principal and Condition per statement (a single Statement object is accepted)","Risks: Action:* with Resource:*, service-wide wildcards, privilege escalation paths such as iam:PassRole or iam:*, public Principal:*","Format: Effect values, NotAction / NotResource, Version, bucket vs object ARN confusion for S3","Simulation: enter 'action [resource]' for an explicit allow / explicit deny / implicit deny verdict with the matching statements","Hints that can be turned off"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is it the same as the IAM Policy Simulator?","acceptedAnswer":{"@type":"Answer","text":"No. It evaluates this one policy in a simple way; SCPs, permission boundaries, session policies, resource policies and condition keys are not included. Use AWS's Policy Simulator for an exact verdict."}},{"@type":"Question","name":"Are conditions evaluated?","acceptedAnswer":{"@type":"Answer","text":"Conditions are shown in the table but their values are not evaluated; statements with conditions are marked as conditional in the simulation."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"IAM Policy Viewer","item":"https://wooadev.wooahouse.com/en/iam-policy-viewer.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../iam-policy-viewer.html">KO</a>
+        <span>|</span>
+        <a href="iam-policy-viewer.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>IAM Policy Viewer</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🛡️</span>
+    <h1>AWS IAM Policy Viewer &amp; Analyzer</h1>
+    <p>Paste an IAM policy JSON to see each statement's Effect, Action, Resource and Condition in a table, and get warnings for wildcard admin access, privilege escalation paths and S3 ARN mistakes. Enter an action and resource to simulate allow or deny for this policy.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>⛔ 2 error(s), 5 warning(s) — 5 statement(s)</p>
+<h3>Input — IAM policy (JSON)</h3><pre>{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadBucket",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": "arn:aws:s3:::my-bucket"
+    },
+    {
+      "Sid": "Wide",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:*",
+        "iam:PassRole"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "Wide",
+      "Effect": "Allow",
+      "NotAction": "iam:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "Deny",
+      "Effect": "Deny",
+      "Action": "s3:DeleteObject",
+      "Resource": "arn:aws:s3:::my-bucket/*",
+      "Condition": {
+        "Bool": {
+          "aws:SecureTransport": "false"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": "sts:AssumeRole",
+      "Resource": "*",
+      "Principal": "*"
+    }
+  ]
+}</pre>
+<h3>Input — Access simulation (optional): action [resource]  e.g. s3:GetObject arn:aws:s3:::my-bucket/a.txt</h3><pre>s3:GetObject arn:aws:s3:::my-bucket/a.txt</pre>
+<h3>Result — Statements</h3><pre># | Sid | Effect | Actions | Resources / principal | Conditions
+1 | ReadBucket | Allow | s3:GetObject, s3:ListBucket | arn:aws:s3:::my-bucket | —
+2 | Wide | Allow | ec2:*, iam:PassRole | * | —
+3 | Wide | Allow | not: iam:* | * | —
+4 | Deny | Deny | s3:DeleteObject | arn:aws:s3:::my-bucket/* | Bool {"aws:SecureTransport":"false"}
+5 | — | Allow | sts:AssumeRole | P:"*" * | —</pre>
+<h3>Result — Simulation</h3><pre>Action | Resource | Result | Matching statements
+s3:GetObject | arn:aws:s3:::my-bucket/a.txt | ✅ Allowed | #3 (Wide) Allow</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Review intent and risk in the browser before applying a policy. The policy is not uploaded.</p>
+<ul><li>Table: Sid, Effect, Action, Resource / Principal and Condition per statement (a single Statement object is accepted)</li><li>Risks: Action:* with Resource:*, service-wide wildcards, privilege escalation paths such as iam:PassRole or iam:*, public Principal:*</li><li>Format: Effect values, NotAction / NotResource, Version, bucket vs object ARN confusion for S3</li><li>Simulation: enter 'action [resource]' for an explicit allow / explicit deny / implicit deny verdict with the matching statements</li><li>Hints that can be turned off</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="aws-arn-parser.html" class="related-card"><span class="related-icon">☁️</span><span>AWS ARN Parser &amp; Builder</span></a>
+    <a href="aws-signature-debugger.html" class="related-card"><span class="related-icon">✍️</span><span>AWS Signature Debugger</span></a>
+    <a href="cloudformation-validator.html" class="related-card"><span class="related-icon">☁️</span><span>CloudFormation Template Validator</span></a>
+    <a href="kubernetes-rbac-viewer.html" class="related-card"><span class="related-icon">🛡️</span><span>Kubernetes RBAC Analyzer</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>An explicit Deny always beats any Allow. Check the matching statements shown in the simulation.</li><li>s3:GetObject applies to object ARNs such as arn:aws:s3:::bucket/*, not the bucket ARN.</li><li>Before using wildcards, narrow the Action list using the calls CloudTrail actually recorded.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Is it the same as the IAM Policy Simulator?</summary><p>No. It evaluates this one policy in a simple way; SCPs, permission boundaries, session policies, resource policies and condition keys are not included. Use AWS's Policy Simulator for an exact verdict.</p></details><details><summary>Are conditions evaluated?</summary><p>Conditions are shown in the table but their values are not evaluated; statements with conditions are marked as conditional in the simulation.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tools/iam-policy-viewer.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

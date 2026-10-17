@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IAM 정책 뷰어 — 위험한 권한 점검과 접근 시뮬레이션 | WooaDev</title>
+  <meta name="description" content="AWS IAM 정책 JSON 의 Effect·Action·Resource·조건을 표로 정리하고 Action:* 같은 과도한 권한, S3 ARN 실수를 점검합니다. 작업과 리소스로 허용 여부도 시뮬레이션합니다.">
+  <meta name="keywords" content="IAM 정책 뷰어, IAM policy viewer, IAM 정책 검사, AWS 정책 시뮬레이터, 최소 권한, iam policy analyzer">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/iam-policy-viewer.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/iam-policy-viewer.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/iam-policy-viewer.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/iam-policy-viewer.html">
+  <meta property="og:title" content="IAM 정책 뷰어 — 위험한 권한 점검과 접근 시뮬레이션 | WooaDev">
+  <meta property="og:description" content="AWS IAM 정책 JSON 의 Effect·Action·Resource·조건을 표로 정리하고 Action:* 같은 과도한 권한, S3 ARN 실수를 점검합니다. 작업과 리소스로 허용 여부도 시뮬레이션합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/iam-policy-viewer.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="IAM 정책 뷰어 — 위험한 권한 점검과 접근 시뮬레이션 | WooaDev">
+  <meta name="twitter:description" content="AWS IAM 정책 JSON 의 Effect·Action·Resource·조건을 표로 정리하고 Action:* 같은 과도한 권한, S3 ARN 실수를 점검합니다. 작업과 리소스로 허용 여부도 시뮬레이션합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"IAM 정책 뷰어","url":"https://wooadev.wooahouse.com/iam-policy-viewer.html","description":"AWS IAM 정책 JSON 의 Effect·Action·Resource·조건을 표로 정리하고 Action:* 같은 과도한 권한, S3 ARN 실수를 점검합니다. 작업과 리소스로 허용 여부도 시뮬레이션합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["표: 문장별 Sid·Effect·Action·Resource/Principal·Condition (Statement 단일 객체도 지원)","위험: Action:* 와 Resource:*, 서비스 전체 와일드카드, iam:PassRole·iam:* 같은 권한 상승 경로, Principal:* 공개 허용","형식: Effect 값, NotAction/NotResource, 버전, S3 버킷/객체 ARN 혼동","시뮬레이션: 'action [resource]' 를 넣으면 명시적 허용/명시적 거부/암묵적 거부 판정과 근거 문장","권고(끌 수 있음)"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"IAM Policy Simulator 와 같은가요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 이 정책 하나만 단순 평가합니다. SCP, 권한 경계, 세션 정책, 리소스 정책, 조건 키 평가는 포함되지 않으므로 정확한 판정은 AWS 의 Policy Simulator 를 쓰세요."}},{"@type":"Question","name":"조건(Condition)도 평가하나요?","acceptedAnswer":{"@type":"Answer","text":"조건은 표에 보여 주지만 값을 평가하지는 않습니다. 조건이 있는 문장은 시뮬레이션에서 조건부로 표시합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"IAM 정책 뷰어","item":"https://wooadev.wooahouse.com/iam-policy-viewer.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="iam-policy-viewer.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/iam-policy-viewer.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>IAM 정책 뷰어</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🛡️</span>
+    <h1>AWS IAM 정책 뷰어 · 점검기</h1>
+    <p>IAM 정책 JSON 을 붙여 넣으면 문장별 Effect·Action·Resource·조건을 표로 보여 주고, 와일드카드 관리자 권한, 권한 상승 가능성, S3 ARN 실수 같은 위험을 점검합니다. 작업과 리소스를 입력하면 이 정책 기준의 허용·거부 여부를 시뮬레이션합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>⛔ 오류 2건 · 경고 5건 — 문장 5개</p>
+<h3>입력 — IAM 정책 (JSON)</h3><pre>{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadBucket",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": "arn:aws:s3:::my-bucket"
+    },
+    {
+      "Sid": "Wide",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:*",
+        "iam:PassRole"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "Wide",
+      "Effect": "Allow",
+      "NotAction": "iam:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "Deny",
+      "Effect": "Deny",
+      "Action": "s3:DeleteObject",
+      "Resource": "arn:aws:s3:::my-bucket/*",
+      "Condition": {
+        "Bool": {
+          "aws:SecureTransport": "false"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": "sts:AssumeRole",
+      "Resource": "*",
+      "Principal": "*"
+    }
+  ]
+}</pre>
+<h3>입력 — 접근 시뮬레이션 (선택): 작업 [리소스]  예) s3:GetObject arn:aws:s3:::my-bucket/a.txt</h3><pre>s3:GetObject arn:aws:s3:::my-bucket/a.txt</pre>
+<h3>결과 — 문장(Statement) 해석</h3><pre># | Sid | Effect | 작업 | 리소스 / 주체 | 조건
+1 | ReadBucket | Allow | s3:GetObject, s3:ListBucket | arn:aws:s3:::my-bucket | —
+2 | Wide | Allow | ec2:*, iam:PassRole | * | —
+3 | Wide | Allow | 제외: iam:* | * | —
+4 | Deny | Deny | s3:DeleteObject | arn:aws:s3:::my-bucket/* | Bool {"aws:SecureTransport":"false"}
+5 | — | Allow | sts:AssumeRole | P:"*" * | —</pre>
+<h3>결과 — 시뮬레이션 결과</h3><pre>작업 | 리소스 | 결과 | 근거 문장
+s3:GetObject | arn:aws:s3:::my-bucket/a.txt | ✅ 허용 | #3 (Wide) Allow</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>정책을 적용하기 전에 의도와 위험을 브라우저에서 확인합니다. 정책은 서버로 전송되지 않습니다.</p>
+<ul><li>표: 문장별 Sid·Effect·Action·Resource/Principal·Condition (Statement 단일 객체도 지원)</li><li>위험: Action:* 와 Resource:*, 서비스 전체 와일드카드, iam:PassRole·iam:* 같은 권한 상승 경로, Principal:* 공개 허용</li><li>형식: Effect 값, NotAction/NotResource, 버전, S3 버킷/객체 ARN 혼동</li><li>시뮬레이션: 'action [resource]' 를 넣으면 명시적 허용/명시적 거부/암묵적 거부 판정과 근거 문장</li><li>권고(끌 수 있음)</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="aws-arn-parser.html" class="related-card"><span class="related-icon">☁️</span><span>AWS ARN 분석·생성기</span></a>
+    <a href="aws-signature-debugger.html" class="related-card"><span class="related-icon">✍️</span><span>AWS 서명 디버거</span></a>
+    <a href="cloudformation-validator.html" class="related-card"><span class="related-icon">☁️</span><span>CloudFormation 템플릿 검증기</span></a>
+    <a href="kubernetes-rbac-viewer.html" class="related-card"><span class="related-icon">🛡️</span><span>쿠버네티스 RBAC 권한 분석기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>명시적 Deny 는 어떤 Allow 보다 우선합니다. 시뮬레이션 결과의 근거 문장을 확인하세요.</li><li>s3:GetObject 는 버킷 ARN 이 아니라 arn:aws:s3:::bucket/* 객체 ARN 에 적용해야 합니다.</li><li>와일드카드를 쓰기 전에 필요한 Action 목록을 CloudTrail 의 실제 호출로 좁혀 최소 권한에 가깝게 만드세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>IAM Policy Simulator 와 같은가요?</summary><p>아니요. 이 정책 하나만 단순 평가합니다. SCP, 권한 경계, 세션 정책, 리소스 정책, 조건 키 평가는 포함되지 않으므로 정확한 판정은 AWS 의 Policy Simulator 를 쓰세요.</p></details><details><summary>조건(Condition)도 평가하나요?</summary><p>조건은 표에 보여 주지만 값을 평가하지는 않습니다. 조건이 있는 문장은 시뮬레이션에서 조건부로 표시합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/iam-policy-viewer.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

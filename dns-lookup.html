@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DNS 조회 — DoH 로 레코드·DNSSEC·TTL 확인 | WooaDev</title>
+  <meta name="description" content="DoH(DNS over HTTPS)로 도메인의 A, AAAA, MX, TXT, NS, CAA 레코드와 TTL, RCODE, DNSSEC 상태를 조회하고 Cloudflare 와 Google 응답을 비교합니다. IP 는 PTR 역조회합니다.">
+  <meta name="keywords" content="DNS 조회, DNS lookup, DoH 조회, MX 레코드 확인, TXT 레코드 조회, DNSSEC 확인, 역방향 DNS, dig 온라인">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/dns-lookup.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/dns-lookup.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/dns-lookup.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/dns-lookup.html">
+  <meta property="og:title" content="DNS 조회 — DoH 로 레코드·DNSSEC·TTL 확인 | WooaDev">
+  <meta property="og:description" content="DoH(DNS over HTTPS)로 도메인의 A, AAAA, MX, TXT, NS, CAA 레코드와 TTL, RCODE, DNSSEC 상태를 조회하고 Cloudflare 와 Google 응답을 비교합니다. IP 는 PTR 역조회합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/dns-lookup.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DNS 조회 — DoH 로 레코드·DNSSEC·TTL 확인 | WooaDev">
+  <meta name="twitter:description" content="DoH(DNS over HTTPS)로 도메인의 A, AAAA, MX, TXT, NS, CAA 레코드와 TTL, RCODE, DNSSEC 상태를 조회하고 Cloudflare 와 Google 응답을 비교합니다. IP 는 PTR 역조회합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"DNS 조회","url":"https://wooadev.wooahouse.com/dns-lookup.html","description":"DoH(DNS over HTTPS)로 도메인의 A, AAAA, MX, TXT, NS, CAA 레코드와 TTL, RCODE, DNSSEC 상태를 조회하고 Cloudflare 와 Google 응답을 비교합니다. IP 는 PTR 역조회합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["유형: A, AAAA, CNAME, MX, TXT, NS, SOA, CAA, SRV, PTR, DS, DNSKEY, HTTPS, SVCB, TLSA, NAPTR, 주요 유형 일괄","리졸버: Cloudflare(1.1.1.1), Google(8.8.8.8), 두 곳 비교(응답이 다르면 알림)","응답: 이름·유형·TTL·값 표, RCODE(NXDOMAIN, SERVFAIL 등)와 AD/RD/RA 플래그, 원본 JSON","DNSSEC: DO 비트 요청, 검증 끄기(CD), AD 플래그 확인","IP 입력은 자동으로 in-addr.arpa / ip6.arpa 의 PTR 역조회로 처리"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"dig 와 결과가 다른 이유는요?","acceptedAnswer":{"@type":"Answer","text":"dig 는 로컬 리졸버를 쓰지만 이 도구는 공개 DoH 리졸버를 씁니다. 캐시와 지역별 응답이 달라 결과가 다를 수 있습니다."}},{"@type":"Question","name":"조회가 실패하면 어떻게 하나요?","acceptedAnswer":{"@type":"Answer","text":"회사망이나 확장 프로그램이 DoH 도메인을 막으면 실패할 수 있습니다. 다른 리졸버를 고르거나 네트워크 정책을 확인하세요."}},{"@type":"Question","name":"조회한 도메인이 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"이 도구는 우아하우스 서버가 아니라 선택한 공개 DoH 리졸버(Cloudflare 또는 Google)에 브라우저가 직접 질의합니다. 조회한 도메인 이름은 해당 리졸버로 전달되므로 비공개 사내 도메인은 입력하지 마세요. 우아하우스는 입력값을 저장하지 않습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"DNS 조회","item":"https://wooadev.wooahouse.com/dns-lookup.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="dns-lookup.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/dns-lookup.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>DNS 조회</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🔍</span>
+    <h1>DNS 레코드 조회 (DoH)</h1>
+    <p>도메인이나 IP 를 입력하면 Cloudflare 또는 Google 의 DoH 리졸버로 A·AAAA·CNAME·MX·TXT·NS·SOA·CAA 같은 레코드를 조회합니다. TTL, RCODE, DNSSEC(AD) 플래그와 원본 JSON 을 보여 주고 두 리졸버의 응답을 비교할 수도 있습니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 1건 조회 · 응답 레코드 2개</p>
+<h3>입력 — 도메인 또는 IP (한 줄에 하나, 최대 5개)</h3><pre>example.com</pre>
+<h3>결과 — 응답 레코드</h3><pre>이름 | 유형 | TTL(초) | 값 | 리졸버
+example.com. | A | 300 | 93.184.216.34 | cloudflare
+example.com. | A | 300 | 93.184.216.35 | cloudflare</pre>
+<h3>결과 — 응답 상태</h3><pre>조회 | 유형 | 리졸버 | RCODE | 플래그 | 응답 | 권한 | 설명
+example.com | A | cloudflare | NOERROR | RA RD | 2 | 0 | 정상</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>dig 없이 브라우저에서 DNS 를 확인합니다. 질의는 우아하우스가 아니라 선택한 공개 DoH 리졸버로 직접 갑니다.</p>
+<ul><li>유형: A, AAAA, CNAME, MX, TXT, NS, SOA, CAA, SRV, PTR, DS, DNSKEY, HTTPS, SVCB, TLSA, NAPTR, 주요 유형 일괄</li><li>리졸버: Cloudflare(1.1.1.1), Google(8.8.8.8), 두 곳 비교(응답이 다르면 알림)</li><li>응답: 이름·유형·TTL·값 표, RCODE(NXDOMAIN, SERVFAIL 등)와 AD/RD/RA 플래그, 원본 JSON</li><li>DNSSEC: DO 비트 요청, 검증 끄기(CD), AD 플래그 확인</li><li>IP 입력은 자동으로 in-addr.arpa / ip6.arpa 의 PTR 역조회로 처리</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="dns-zone-editor.html" class="related-card"><span class="related-icon">🗂️</span><span>DNS 존 파일 편집기</span></a>
+    <a href="domain-validator.html" class="related-card"><span class="related-icon">✔️</span><span>도메인·호스트 이름 검증기</span></a>
+    <a href="reverse-dns-generator.html" class="related-card"><span class="related-icon">↩️</span><span>역방향 DNS 이름 생성기</span></a>
+    <a href="dmarc-builder.html" class="related-card"><span class="related-icon">🛂</span><span>DMARC 레코드 생성기·분석기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>SERVFAIL 이 나오면 'DNSSEC 검증 끄기'로 다시 조회해 서명 문제인지 리졸버 문제인지 구분해 보세요.</li><li>TXT 가 여러 문자열로 나뉘어 있으면 하나로 이어 붙여 보여 줍니다. SPF·DKIM 확인에 편합니다.</li><li>DNS 변경 직후에는 캐시 때문에 두 리졸버의 결과가 다를 수 있습니다. TTL 만큼 기다린 뒤 다시 확인하세요.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>dig 와 결과가 다른 이유는요?</summary><p>dig 는 로컬 리졸버를 쓰지만 이 도구는 공개 DoH 리졸버를 씁니다. 캐시와 지역별 응답이 달라 결과가 다를 수 있습니다.</p></details><details><summary>조회가 실패하면 어떻게 하나요?</summary><p>회사망이나 확장 프로그램이 DoH 도메인을 막으면 실패할 수 있습니다. 다른 리졸버를 고르거나 네트워크 정책을 확인하세요.</p></details><details><summary>조회한 도메인이 서버로 전송되나요?</summary><p>이 도구는 우아하우스 서버가 아니라 선택한 공개 DoH 리졸버(Cloudflare 또는 Google)에 브라우저가 직접 질의합니다. 조회한 도메인 이름은 해당 리졸버로 전달되므로 비공개 사내 도메인은 입력하지 마세요. 우아하우스는 입력값을 저장하지 않습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tools/dns-lookup.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

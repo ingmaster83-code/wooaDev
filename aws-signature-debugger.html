@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AWS Signature V4 디버거 — SignatureDoesNotMatch 원인 찾기 | WooaDev</title>
+  <meta name="description" content="AWS SigV4 서명을 단계별로 계산합니다. 정규 요청, 서명 문자열, 키 파생, 최종 서명과 Authorization 헤더·사전 서명 URL 을 만들고 기대 서명과 비교해 불일치 원인을 찾습니다.">
+  <meta name="keywords" content="AWS Signature V4, SigV4 디버거, SignatureDoesNotMatch, 사전 서명 URL 생성, aws 서명 계산, presigned url, canonical request">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/aws-signature-debugger.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/aws-signature-debugger.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/aws-signature-debugger.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/aws-signature-debugger.html">
+  <meta property="og:title" content="AWS Signature V4 디버거 — SignatureDoesNotMatch 원인 찾기 | WooaDev">
+  <meta property="og:description" content="AWS SigV4 서명을 단계별로 계산합니다. 정규 요청, 서명 문자열, 키 파생, 최종 서명과 Authorization 헤더·사전 서명 URL 을 만들고 기대 서명과 비교해 불일치 원인을 찾습니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/aws-signature-debugger.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AWS Signature V4 디버거 — SignatureDoesNotMatch 원인 찾기 | WooaDev">
+  <meta name="twitter:description" content="AWS SigV4 서명을 단계별로 계산합니다. 정규 요청, 서명 문자열, 키 파생, 최종 서명과 Authorization 헤더·사전 서명 URL 을 만들고 기대 서명과 비교해 불일치 원인을 찾습니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"AWS 서명 디버거","url":"https://wooadev.wooahouse.com/aws-signature-debugger.html","description":"AWS SigV4 서명을 단계별로 계산합니다. 정규 요청, 서명 문자열, 키 파생, 최종 서명과 Authorization 헤더·사전 서명 URL 을 만들고 기대 서명과 비교해 불일치 원인을 찾습니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["모드: Authorization 헤더 서명, 사전 서명 URL(쿼리 문자열)","단계: 정규 URI(S3 외에는 이중 인코딩), 정규 쿼리, 서명 헤더, 페이로드 해시, 서명 문자열, kDate→kRegion→kService→kSigning, 최종 서명","페이로드: 본문 SHA-256, UNSIGNED-PAYLOAD, STREAMING 모드","기대 서명을 넣으면 어느 입력(헤더·쿼리·본문·시각)이 다른지 진단","AWS 공식 테스트 벡터(get-vanilla 등)로 검증됨"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"실제 Secret Access Key 를 넣어도 되나요?","acceptedAnswer":{"@type":"Answer","text":"계산은 브라우저 안에서만 이루어지고 전송되지 않지만, 안전을 위해 테스트용 키만 쓰세요. 실제 키를 입력했다면 교체(rotate)하세요."}},{"@type":"Question","name":"AWS SDK 없이 서명이 필요한 경우는요?","acceptedAnswer":{"@type":"Answer","text":"직접 HTTP 로 AWS API 를 호출하거나 임베디드 기기·다른 언어에서 서명을 구현할 때, 이 도구의 중간값을 구현 결과와 비교해 디버깅하세요."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"AWS 서명 디버거","item":"https://wooadev.wooahouse.com/aws-signature-debugger.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="aws-signature-debugger.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/aws-signature-debugger.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>AWS 서명 디버거</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">✍️</span>
+    <h1>AWS Signature V4 디버거</h1>
+    <p>요청 URL·헤더·본문과 테스트 키를 넣으면 SigV4 의 정규 요청, 서명할 문자열, 날짜→리전→서비스→서명 키 파생, 최종 서명과 Authorization 헤더(또는 사전 서명 URL)를 단계별로 보여 줍니다. 기대 서명과 비교해 어디서 달라지는지도 진단합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>✅ 서명 계산 완료: 5fa00fa31553b73ebf1942676e86291e8372ff2a2260956d9b8aae1d763fbf31</p>
+<h3>입력 — 요청 URL</h3><pre>https://example.amazonaws.com/</pre>
+<h3>입력 — 헤더 (한 줄에 이름: 값)</h3><pre>Host: example.amazonaws.com
+X-Amz-Date: 20150830T123600Z</pre>
+<h3>입력 — Access Key ID (테스트 키만)</h3><pre>AKIDEXAMPLE</pre>
+<h3>입력 — Secret Access Key (테스트 키만)</h3><pre>wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY</pre>
+<h3>입력 — 비교할 Authorization 헤더 또는 서명 (선택)</h3><pre>AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20150830/us-east-1/service/aws4_request, SignedHeaders=host;x-amz-date, Signature=5fa00fa31553b73ebf1942676e86291e8372ff2a2260956d9b8aae1d763fbf31</pre>
+<h3>결과 — 서명 단계 요약</h3><pre>단계 | 값
+정규 URI | /  (S3 이외 서비스는 경로를 한 번 더 인코딩)
+정규 쿼리 | —
+SignedHeaders | host;x-amz-date
+페이로드 해시 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+Credential scope | 20150830/us-east-1/service/aws4_request
+kDate | 0138c7a6cbd60aa727b2f653a522567439dfb9f3e72b21f9b25941a42f04a7cd
+kRegion | f33d5808504bf34812e5fade63308b424b244c59189be2a591dd2282c7cb563f
+kService | f7fd819348e53789a8474fb1aebea778f5af85c40612e0f064eecd5642c81bc1
+kSigning | 938127b5336810ddb6a5d6af445fcac9e371f9ed418ed386b022aed82901be75
+서명 | 5fa00fa31553b73ebf1942676e86291e8372ff2a2260956d9b8aae1d763fbf31</pre>
+<h3>결과 — ① 정규 요청 (Canonical Request)</h3><pre>GET
+/
+
+host:example.amazonaws.com
+x-amz-date:20150830T123600Z
+
+host;x-amz-date
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>403 SignatureDoesNotMatch 가 날 때 어느 단계가 틀렸는지 비교해 봅니다. 키와 요청은 브라우저 밖으로 전송되지 않습니다.</p>
+<ul><li>모드: Authorization 헤더 서명, 사전 서명 URL(쿼리 문자열)</li><li>단계: 정규 URI(S3 외에는 이중 인코딩), 정규 쿼리, 서명 헤더, 페이로드 해시, 서명 문자열, kDate→kRegion→kService→kSigning, 최종 서명</li><li>페이로드: 본문 SHA-256, UNSIGNED-PAYLOAD, STREAMING 모드</li><li>기대 서명을 넣으면 어느 입력(헤더·쿼리·본문·시각)이 다른지 진단</li><li>AWS 공식 테스트 벡터(get-vanilla 등)로 검증됨</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="iam-policy-viewer.html" class="related-card"><span class="related-icon">🛡️</span><span>IAM 정책 뷰어</span></a>
+    <a href="aws-arn-parser.html" class="related-card"><span class="related-icon">☁️</span><span>AWS ARN 분석·생성기</span></a>
+    <a href="hmac-generator.html" class="related-card"><span class="related-icon">🔏</span><span>HMAC 생성기</span></a>
+    <a href="s3-url-converter.html" class="related-card"><span class="related-icon">🪣</span><span>S3 URL 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>Host 헤더와 X-Amz-Date 는 서명 헤더에 포함되어야 하고 실제 요청에 보낸 값과 같아야 합니다.</li><li>S3 가 아닌 서비스는 정규 URI 를 한 번 더 인코딩합니다. 경로에 특수문자가 있으면 이 차이로 자주 틀립니다.</li><li>서명 시각이 서버와 15분 이상 어긋나면 서명이 맞아도 거부됩니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>실제 Secret Access Key 를 넣어도 되나요?</summary><p>계산은 브라우저 안에서만 이루어지고 전송되지 않지만, 안전을 위해 테스트용 키만 쓰세요. 실제 키를 입력했다면 교체(rotate)하세요.</p></details><details><summary>AWS SDK 없이 서명이 필요한 경우는요?</summary><p>직접 HTTP 로 AWS API 를 호출하거나 임베디드 기기·다른 언어에서 서명을 구현할 때, 이 도구의 중간값을 구현 결과와 비교해 디버깅하세요.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-hash.js"></script>
+<script src="js/tools/aws-signature-debugger.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

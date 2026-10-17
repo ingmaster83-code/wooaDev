@@ -232,7 +232,7 @@
       hideOutputs();
       showStatus('error', '❌ ' + (e && e.message ? e.message : String(e)));
     }
-    function schedule() { clearTimeout(timer); timer = setTimeout(run, def.delay || 220); }
+    function schedule() { if (def.auto === false) return; clearTimeout(timer); timer = setTimeout(run, def.delay || 220); }
 
     inputs.forEach(function (i) {
       var el = $('tk-in-' + i.id);

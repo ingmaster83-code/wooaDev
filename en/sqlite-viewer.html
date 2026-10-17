@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQLite Viewer – Open .db Files Read-only Without Uploading | WooaDev</title>
+  <meta name="description" content="Inspect a SQLite .db file in your browser: page size, encoding and user_version header, schema SQL and table rows. The file is read-only and is never uploaded to a server.">
+  <meta name="keywords" content="SQLite viewer, open sqlite file online, view .db file, SQLite browser online, sqlite_master, sqlite online viewer">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/en/sqlite-viewer.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/sqlite-viewer.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/sqlite-viewer.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/sqlite-viewer.html">
+  <meta property="og:title" content="SQLite Viewer – Open .db Files Read-only Without Uploading | WooaDev">
+  <meta property="og:description" content="Inspect a SQLite .db file in your browser: page size, encoding and user_version header, schema SQL and table rows. The file is read-only and is never uploaded to a server.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/en/sqlite-viewer.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SQLite Viewer – Open .db Files Read-only Without Uploading | WooaDev">
+  <meta name="twitter:description" content="Inspect a SQLite .db file in your browser: page size, encoding and user_version header, schema SQL and table rows. The file is read-only and is never uploaded to a server.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SQLite Viewer","url":"https://wooadev.wooahouse.com/en/sqlite-viewer.html","description":"Inspect a SQLite .db file in your browser: page size, encoding and user_version header, schema SQL and table rows. The file is read-only and is never uploaded to a server.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Header: page size and count, text encoding (UTF-8 / UTF-16), journal mode (WAL), user_version, application_id, freelist, SQLite version","Schema: tables, indexes, views and triggers from sqlite_master with CREATE statements, root pages and row counts","Rows: choose a table, skip / limit, value search, INTEGER PRIMARY KEY alias restored, large values reassembled from overflow pages","BLOBs shown as hex with length; WITHOUT ROWID and virtual tables show schema only","A note that uncommitted changes in a WAL file are not visible"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is the file modified or uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. The browser reads the file into memory and parses it; nothing is sent to a server and the original is never changed."}},{"@type":"Question","name":"Can it open encrypted databases?","acceptedAnswer":{"@type":"Answer","text":"Encrypted databases such as SQLCipher do not have a plain SQLite header and cannot be opened. Very large files may be slow depending on browser memory."}},{"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/en/index.html"},{"@type":"ListItem","position":2,"name":"SQLite Viewer","item":"https://wooadev.wooahouse.com/en/sqlite-viewer.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="../js/ad-dev-placeholder.js"></script>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">All Tools ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="../sqlite-viewer.html">KO</a>
+        <span>|</span>
+        <a href="sqlite-viewer.html" class="active">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">About</a>
+    </div>
+  </div>
+</header>
+<script src="../js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>SQLite Viewer</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🗃️</span>
+    <h1>SQLite File Viewer (Read-only)</h1>
+    <p>Choose a SQLite 3 database file, or paste it as Base64 / hex, to see the header, the tables, indexes, views and triggers from sqlite_master, the schema SQL and table rows. It reads the b-tree directly in plain JavaScript, with no install and no WebAssembly.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">This tool needs JavaScript. Please enable it in your browser.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>Example</h2>
+<p>✅ SQLite 3 file — 6 page(s) · UTF-8 · 2 table(s) · showing users</p>
+<h3>Input — SQLite file (Base64 or hex) — or choose a file below</h3><pre>U1FMaXRlIGZvcm1hdCAzAAIAAQEAQCAgAAAADAAAAAYAAAAAAAAAAAAAAAUAAAAEAAAAAAAAAAAAAAABAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAC6GKQUAAAAAAgAAAAAABgC4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIENAwcXGRkBgXV0YWJsZW9yZGVyc29yZGVycwRDUkVBVEUgVEFCTEUgb3JkZXJzIChpZCBJTlRFR0VSIFBSSU1BUlkgS0VZLCB1c2VyX2lkIElOVEVHRVIgUkVGRVJFTkNFUyB1c2VycyhpZCksIGl0ZW0gVEVYVCwgcXR5IElOVEVHRVIgREVGQVVMVCAxKYECAQcXFxcBgWN0YWJsZXVzZXJzdXNlcnMCQ1JFQVRFIFRBQkxFIHVzZXJzIChpZCBJTlRFR0VSIFBSSU1BUlkgS0VZLCBuYW1lIFRFWFQgTk9UIE5VTEwsIGVtYWlsIFRFWFQgVU5JUVVFLCBzY29yZSBSRUFMLCBhdmF0YXIgQkxPQikpAgYXPRcBAGluZGV4c3FsaXRlX2F1dG9pbmRleF91c2Vyc18xdXNlcnMDAAAACAAAAAANAAAAAwGjAAHdAcUBowAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+…</pre>
+<h3>Result — File info</h3><pre>Page size: 512 B
+Page count: 6
+File size: 3072 B
+Text encoding: UTF-8
+Reserved bytes/page: 0
+Journal mode (write/read): rollback (1/1)
+File change counter: 12
+Schema cookie: 5
+Schema format: 4
+user_version: 3
+application_id: 0x00000000
+Auto-vacuum: none
+Freelist pages: 0
+Last SQLite version: 3.49.1
+Objects: 2 table(s), 2 index(es), 1 view(s), 0 trigger(s)</pre>
+<h3>Result — Schema objects (sqlite_master)</h3><pre>Type | Name | Table | Root page | Rows
+table | users | users | 2 | 3
+index | sqlite_autoindex_users_1 | users | 3 | —
+table | orders | orders | 4 | 3
+index | idx_orders_user | orders | 5 | —
+view | v_big | v_big | — | —</pre>
+</section>
+  <section class="tk-about">
+<h2>What this tool does</h2>
+<p>Open an app's .db file without installing anything to check its structure and data. The file is neither uploaded nor modified.</p>
+<ul><li>Header: page size and count, text encoding (UTF-8 / UTF-16), journal mode (WAL), user_version, application_id, freelist, SQLite version</li><li>Schema: tables, indexes, views and triggers from sqlite_master with CREATE statements, root pages and row counts</li><li>Rows: choose a table, skip / limit, value search, INTEGER PRIMARY KEY alias restored, large values reassembled from overflow pages</li><li>BLOBs shown as hex with length; WITHOUT ROWID and virtual tables show schema only</li><li>A note that uncommitted changes in a WAL file are not visible</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>Related Tools</h2>
+  <div class="related-grid">
+    <a href="sql-ddl-viewer.html" class="related-card"><span class="related-icon">🗺️</span><span>SQL DDL Viewer</span></a>
+    <a href="sql-insert-converter.html" class="related-card"><span class="related-icon">🗃️</span><span>SQL INSERT Converter</span></a>
+    <a href="file-type-detector.html" class="related-card"><span class="related-icon">🔎</span><span>File Type Detector</span></a>
+    <a href="bson-viewer.html" class="related-card"><span class="related-icon">🍃</span><span>BSON &amp; Extended JSON Viewer</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>For small .db files, 'Choose a file' is easier than pasting Base64.</li><li>A WAL-mode database may be missing recent changes from the -wal file; checkpoint before copying if you need them.</li><li>For tables with many rows, use value search and skip to look at just the part you need.</li></ul></div>
+<div class="faq-section"><h2>Frequently Asked Questions</h2><details><summary>Is the file modified or uploaded?</summary><p>No. The browser reads the file into memory and parses it; nothing is sent to a server and the original is never changed.</p></details><details><summary>Can it open encrypted databases?</summary><p>Encrypted databases such as SQLCipher do not have a plain SQLite header and cannot be opened. Very large files may be slow depending on browser memory.</p></details><details><summary>Is my data uploaded to a server?</summary><p>No. Everything is processed inside your browser; what you enter is never sent to or stored on a server, so you can safely paste data containing personal information, internal settings or API keys.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="../js/tk.js"></script>
+<script src="../js/tk-binin.js"></script>
+<script src="../js/tools/sqlite-viewer.js"></script>
+<script src="../js/wooahouse-originals-tool-en.js"></script>
+<script src="../js/pwa-install.js"></script>
+<script src="../js/wooa-sidebar-en.js"></script>
+<script src="../js/wooa-footer-en.js"></script>
+</body>
+</html>

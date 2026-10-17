@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GraphQL 작업대 — 스키마 검사와 쿼리 검증, 정리 | WooaDev</title>
+  <meta name="description" content="GraphQL SDL 의 미정의 타입, 인터페이스 구현 누락, 미사용 타입을 검사하고 쿼리의 필드·인자·변수를 스키마에 맞춰 검증합니다. SDL 과 쿼리를 보기 좋게 정리합니다.">
+  <meta name="keywords" content="GraphQL 스키마 검사, GraphQL 쿼리 검증, SDL 포맷터, graphql validator, graphql formatter, graphql playground 대체">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/graphql-workbench.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/graphql-workbench.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/graphql-workbench.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/graphql-workbench.html">
+  <meta property="og:title" content="GraphQL 작업대 — 스키마 검사와 쿼리 검증, 정리 | WooaDev">
+  <meta property="og:description" content="GraphQL SDL 의 미정의 타입, 인터페이스 구현 누락, 미사용 타입을 검사하고 쿼리의 필드·인자·변수를 스키마에 맞춰 검증합니다. SDL 과 쿼리를 보기 좋게 정리합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/graphql-workbench.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GraphQL 작업대 — 스키마 검사와 쿼리 검증, 정리 | WooaDev">
+  <meta name="twitter:description" content="GraphQL SDL 의 미정의 타입, 인터페이스 구현 누락, 미사용 타입을 검사하고 쿼리의 필드·인자·변수를 스키마에 맞춰 검증합니다. SDL 과 쿼리를 보기 좋게 정리합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"GraphQL 작업대","url":"https://wooadev.wooahouse.com/graphql-workbench.html","description":"GraphQL SDL 의 미정의 타입, 인터페이스 구현 누락, 미사용 타입을 검사하고 쿼리의 필드·인자·변수를 스키마에 맞춰 검증합니다. SDL 과 쿼리를 보기 좋게 정리합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["스키마: 미정의 타입 참조, 인터페이스 구현 누락, 중복 정의, 입력/출력 타입 규칙, 미사용 타입","쿼리: 존재하지 않는 필드(추천 이름 제시), 필수 인자 누락, 변수 타입, 프래그먼트, 선택 집합 규칙","타입 표: 종류, 필드·값 수, 구현 관계, 줄 번호","SDL 과 쿼리를 정렬해 다시 출력","권고(끌 수 있음)"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"모든 GraphQL 검증 규칙을 구현했나요?","acceptedAnswer":{"@type":"Answer","text":"자주 쓰는 스키마·쿼리 규칙을 구현했지만 graphql-js 의 전체 규칙은 아닙니다. 서버에 배포하기 전 공식 라이브러리로 한 번 더 확인하세요."}},{"@type":"Question","name":"쿼리 없이 스키마만 넣어도 되나요?","acceptedAnswer":{"@type":"Answer","text":"네. 쿼리 칸이 비어 있으면 스키마 검사와 정리만 수행합니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"GraphQL 작업대","item":"https://wooadev.wooahouse.com/graphql-workbench.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="graphql-workbench.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/graphql-workbench.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>GraphQL 작업대</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">🧬</span>
+    <h1>GraphQL 스키마 · 쿼리 작업대</h1>
+    <p>GraphQL SDL 을 붙여 넣으면 타입 표와 스키마 오류(미정의 타입, 인터페이스 구현 누락, 미사용 타입)를 알려 주고 보기 좋게 정리합니다. 쿼리를 함께 넣으면 필드·인자·변수·프래그먼트를 스키마에 맞춰 검증하고 오타에는 추천 이름을 보여 줍니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>⛔ 오류 6건 · 경고 1건 — 타입 8개</p>
+<h3>입력 — 스키마 (SDL)</h3><pre>schema { query: Query mutation: Mutation }
+
+"""사용자"""
+type User implements Node {
+  id: ID!
+  name: String!
+  email: String
+  posts(first: Int = 10, after: String): [Post!]!
+  role: Role!
+}
+type Post { id: ID! title: String! author: User! tags: [String!] }
+interface Node { id: ID! }
+enum Role { ADMIN EDITOR VIEWER }
+union SearchResult = User | Post | Comment
+input NewPost { title: String! body: String authorId: ID! }
+type Query {
+  user(id: ID!): User
+  users(role: Role): [User!]!
+  search(term: String!): [SearchResult!]!
+}
+type Mutation { createPost(input: NewPost!): Post! }
+</pre>
+<h3>입력 — 쿼리 · 뮤테이션 (선택)</h3><pre>query GetUser($id: ID!, $unused: Int) {
+  user(id: $id) {
+    id
+    nane
+    role { name }
+    posts(first: "5") { title author { email } }
+    ...UserBits
+  }
+}
+fragment UserBits on User { email, missing }
+mutation { createPost(input: { title: "Hi" }) { id } }
+</pre>
+<h3>결과 — 스키마 타입 목록</h3><pre>타입 | 종류 | 필드·값 수 | 역할·구현 | 줄
+User | type | 5 | → Node | 4
+Post | type | 4 |  | 11
+Node | interface | 1 |  | 12
+Role | enum | 3 |  | 13
+SearchResult | union | 3 |  | 14
+NewPost | input | 3 |  | 15
+Query | type | 3 | Query  | 16
+Mutation | type | 1 | Mutation  | 21</pre>
+<h3>결과 — 점검 결과</h3><pre>⛔ 스키마 줄 14: union SearchResult 의 멤버 Comment 이(가) 정의되지 않았습니다
+⚠️ 쿼리 줄 1: 변수 $unused 이(가) 사용되지 않습니다
+⛔ 쿼리 줄 4: 타입 User 에 필드 "nane" 이(가) 없습니다 — "name" 을(를) 말씀하셨나요?
+⛔ 쿼리 줄 5: "role" 은(는) 리프 타입(Role)이라 하위 선택을 할 수 없습니다
+⛔ 쿼리 줄 6: 인자 first 의 값 "5" 이(가) 타입 Int 와 맞지 않습니다
+⛔ 쿼리 줄 10: 타입 User 에 필드 "missing" 이(가) 없습니다
+⛔ 쿼리 줄 11: 인자 input 의 값 {title: "Hi"} 이(가) 타입 NewPost! 와 맞지 않습니다</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>서버 없이 스키마와 쿼리를 브라우저에서 검증합니다. 입력은 서버로 전송되지 않습니다.</p>
+<ul><li>스키마: 미정의 타입 참조, 인터페이스 구현 누락, 중복 정의, 입력/출력 타입 규칙, 미사용 타입</li><li>쿼리: 존재하지 않는 필드(추천 이름 제시), 필수 인자 누락, 변수 타입, 프래그먼트, 선택 집합 규칙</li><li>타입 표: 종류, 필드·값 수, 구현 관계, 줄 번호</li><li>SDL 과 쿼리를 정렬해 다시 출력</li><li>권고(끌 수 있음)</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="graphql-schema-diff.html" class="related-card"><span class="related-icon">🧮</span><span>GraphQL 스키마 비교기</span></a>
+    <a href="openapi-editor.html" class="related-card"><span class="related-icon">📘</span><span>OpenAPI 검사기</span></a>
+    <a href="json-schema-validator.html" class="related-card"><span class="related-icon">🛡️</span><span>JSON 스키마 검증기</span></a>
+    <a href="jsonpath-tester.html" class="related-card"><span class="related-icon">🧭</span><span>JSONPath 테스터</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>필드 이름에 오타가 있으면 '~을(를) 말씀하셨나요?' 로 가장 비슷한 이름을 알려 줍니다.</li><li>extend type 과 directive 정의도 해석하므로 연합(federation) 스키마의 일부를 붙여 넣어도 됩니다.</li><li>정리된 SDL 은 팀의 .graphql 파일 형식을 통일하는 데 쓸 수 있습니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>모든 GraphQL 검증 규칙을 구현했나요?</summary><p>자주 쓰는 스키마·쿼리 규칙을 구현했지만 graphql-js 의 전체 규칙은 아닙니다. 서버에 배포하기 전 공식 라이브러리로 한 번 더 확인하세요.</p></details><details><summary>쿼리 없이 스키마만 넣어도 되나요?</summary><p>네. 쿼리 칸이 비어 있으면 스키마 검사와 정리만 수행합니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-graphql.js"></script>
+<script src="js/tools/graphql-workbench.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>

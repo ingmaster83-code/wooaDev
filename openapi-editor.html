@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9ZGENFSXWC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9ZGENFSXWC');</script>
+  <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="naver-site-verification" content="f7ccc594bf37726a6f1b3a4e527cb60221370820">
+  <meta name="google-site-verification" content="tNM8tmr_6DFold03YSScWz4KEtu5Zo0Fsqc03u5Afms">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenAPI 검사기 — Swagger 문서 오류를 줄 번호로 찾기 | WooaDev</title>
+  <meta name="description" content="OpenAPI 3.x·Swagger 2.0 문서의 $ref 누락, 경로 변수 불일치, operationId 중복, 잘못된 응답 코드, items 누락, 미사용 컴포넌트를 줄 번호와 함께 검사합니다.">
+  <meta name="keywords" content="OpenAPI 검사, Swagger 검증, OpenAPI 에디터, openapi validator, swagger editor, $ref 오류, operationId 중복">
+  <link rel="canonical" href="https://wooadev.wooahouse.com/openapi-editor.html">
+  <link rel="alternate" hreflang="ko" href="https://wooadev.wooahouse.com/openapi-editor.html">
+  <link rel="alternate" hreflang="en" href="https://wooadev.wooahouse.com/en/openapi-editor.html">
+  <link rel="alternate" hreflang="x-default" href="https://wooadev.wooahouse.com/en/openapi-editor.html">
+  <meta property="og:title" content="OpenAPI 검사기 — Swagger 문서 오류를 줄 번호로 찾기 | WooaDev">
+  <meta property="og:description" content="OpenAPI 3.x·Swagger 2.0 문서의 $ref 누락, 경로 변수 불일치, operationId 중복, 잘못된 응답 코드, items 누락, 미사용 컴포넌트를 줄 번호와 함께 검사합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wooadev.wooahouse.com/openapi-editor.html">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="https://wooadev.wooahouse.com/og-image.png">
+  <meta property="og:site_name" content="WooaDev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="OpenAPI 검사기 — Swagger 문서 오류를 줄 번호로 찾기 | WooaDev">
+  <meta name="twitter:description" content="OpenAPI 3.x·Swagger 2.0 문서의 $ref 누락, 경로 변수 불일치, operationId 중복, 잘못된 응답 코드, items 누락, 미사용 컴포넌트를 줄 번호와 함께 검사합니다.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"OpenAPI 검사기","url":"https://wooadev.wooahouse.com/openapi-editor.html","description":"OpenAPI 3.x·Swagger 2.0 문서의 $ref 누락, 경로 변수 불일치, operationId 중복, 잘못된 응답 코드, items 누락, 미사용 컴포넌트를 줄 번호와 함께 검사합니다.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"featureList":["형식: OpenAPI 3.0 · 3.1 · Swagger 2.0, YAML 과 JSON 모두 지원","오류: 필수 필드 누락, 존재하지 않는 $ref, 경로 변수에 해당하는 in: path 파라미터 없음, operationId 중복, 올바르지 않은 응답 코드","스키마: type: array 의 items 누락, required 가 properties 에 없음, 표준과 맞지 않는 format, 정의되지 않은 보안 스킴 참조","권고(끌 수 있음): summary 없음, operationId 없음, 사용되지 않는 components, 인증 방식 미정의","엔드포인트 표: 메서드·경로·operationId·응답 코드·태그와 줄 번호"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Spectral 이나 공식 검증기와 같은가요?","acceptedAnswer":{"@type":"Answer","text":"자주 쓰는 구조·참조·규칙을 점검하는 빠른 검사기입니다. JSON Schema 전체 검증(unevaluatedProperties 등)은 하지 않으므로 배포 전에는 Spectral 같은 도구로 한 번 더 확인하세요."}},{"@type":"Question","name":"외부 파일 $ref 도 따라가나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 한 문서 안의 #/ 로 시작하는 내부 참조만 확인합니다. 다른 파일을 가리키는 참조는 건너뜁니다."}},{"@type":"Question","name":"입력한 데이터가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"WooaDev","item":"https://wooadev.wooahouse.com/"},{"@type":"ListItem","position":2,"name":"OpenAPI 검사기","item":"https://wooadev.wooahouse.com/openapi-editor.html"}]}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6464921081676309" crossorigin="anonymous"></script>
+<script src="js/ad-dev-placeholder.js"></script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#C4956A">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tk.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">WooaDev</a>
+    <nav>
+      <a href="base64.html">Base64</a><a href="hash-generator.html">Hash</a>
+      <a href="jwt-decoder.html">JWT</a><a href="regex-tester.html">Regex</a>
+      <a href="json-formatter.html">JSON</a><a href="index.html">전체 도구 ›</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang-switcher">
+        <a href="openapi-editor.html" class="active">KO</a>
+        <span>|</span>
+        <a href="en/openapi-editor.html">EN</a>
+      </div>
+      <a href="about.html" style="color:rgba(255,255,255,0.85); font-size:0.85rem; text-decoration:none; margin-left:8px;">소개</a>
+    </div>
+  </div>
+</header>
+<script src="js/wooa-sites-bar.js"></script>
+<div class="mobile-top-ad">
+  <ins class="adsbygoogle" style="display:block;width:100%;height:80px" data-ad-client="ca-pub-6464921081676309" data-ad-slot="7080296704" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="page-with-sidebar">
+<div class="tool-page">
+  <div class="breadcrumb"><a href="index.html">WooaDev</a><span>›</span><span>OpenAPI 검사기</span></div>
+  <div class="tool-header">
+    <span class="tool-header-icon">📘</span>
+    <h1>OpenAPI · Swagger 검사기</h1>
+    <p>OpenAPI 3.0·3.1 또는 Swagger 2.0 문서(YAML·JSON)를 붙여 넣으면 엔드포인트 표를 만들고, $ref 대상, 경로 변수와 path 파라미터 일치, operationId 중복, 응답 코드, 스키마 오류, 인증 정의를 줄 번호와 함께 점검합니다.</p>
+  </div>
+
+  <div class="tk" id="tk-root"><noscript><div class="alert alert-info">이 도구는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 켜 주세요.</div></noscript></div>
+
+  <section class="tk-example">
+<h2>사용 예시</h2>
+<p>⛔ 오류 9건 · 경고 1건 — OpenAPI 3.0.3, 엔드포인트 3개</p>
+<h3>입력 — OpenAPI / Swagger 문서 (YAML 또는 JSON)</h3><pre>openapi: 3.0.3
+info:
+  title: Pet Store
+paths:
+  /pets/{petId}:
+    get:
+      operationId: getPet
+      parameters:
+        - name: limit
+          in: query
+          schema: { type: integer, minimum: 1 }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Pet" }
+        "404": { $ref: "#/components/responses/Missing" }
+    delete:
+      operationId: getPet
+      requestBody: { content: { application/json: { schema: { type: object } } } }
+      responses: {}
+  /pets:
+    post:
+      security: [{ apiKey: [] }]
+      responses:
+        "201": { description: Created }
+        "2xx": { description: Any }
+components:
+  schemas:
+    Pet:
+      type: object
+      required: [id, name]
+      properties:
+        id: { type: integer, format: int64 }
+        tags: { type: array }
+…</pre>
+<h3>결과 — 엔드포인트</h3><pre>메서드 | 경로 | operationId | 응답 | 태그 | 줄
+GET | /pets/{petId} | getPet | 200, 404 | — | 7
+DELETE | /pets/{petId} | getPet | — | — | 20
+POST | /pets | — | 201, 2xx | — | 25</pre>
+<h3>결과 — 점검 결과</h3><pre>⛔ 줄 3: info.version 이 필요합니다
+⛔ 줄 7: GET /pets/{petId}: 경로 변수 {petId} 에 해당하는 in: path 파라미터가 없습니다
+ℹ️ 줄 7: GET /pets/{petId} 에 summary/description 이 없습니다
+⛔ 줄 18: $ref #/components/responses/Missing 대상을 찾을 수 없습니다
+⛔ 줄 20: DELETE /pets/{petId}: 경로 변수 {petId} 에 해당하는 in: path 파라미터가 없습니다
+⛔ 줄 20: operationId "getPet" 가 GET /pets/{petId} 와 중복됩니다
+⛔ 줄 20: DELETE /pets/{petId}: responses 에 응답이 하나 이상 필요합니다
+ℹ️ 줄 20: DELETE /pets/{petId} 에 summary/description 이 없습니다
+ℹ️ 줄 21: DELETE 에 requestBody 는 의미가 정의되지 않았습니다 (일부 서버·프록시가 무시)
+ℹ️ 줄 25: POST /pets 에 operationId 가 없습니다 (SDK 생성 시 필요)
+⛔ 줄 25: security 의 "apiKey" 가 securitySchemes 에 정의되지 않았습니다
+ℹ️ 줄 25: POST /pets 에 summary/description 이 없습니다
+⛔ 줄 28: 응답 코드 "2xx" 가 올바르지 않습니다 (100~599, 1XX~5XX, default)
+⚠️ 줄 33: required 의 "name" 가 properties 에 없습니다
+⛔ 줄 36: type: array 에는 items 가 필요합니다
+ℹ️ 줄 37: format "int32" 은(는) type string 와 맞지 않거나 표준 포맷이 아닙니다
+ℹ️ 줄 38: schemas "Unused" 를 참조하는 곳이 없습니다
+이 검사는 OpenAPI 의 구조·참조·자주 쓰는 규칙을 확인하며 JSON Schema 전체 검증(unevaluatedProperties 등)은 하지 않습니다. 배포 전에는 Spectral 이나 공식 검증기로 한 번 더 확인하세요</pre>
+</section>
+  <section class="tk-about">
+<h2>이 도구로 할 수 있는 일</h2>
+<p>API 문서를 배포하기 전에 구조와 참조 오류를 브라우저에서 바로 찾습니다. 문서는 서버로 전송되지 않습니다.</p>
+<ul><li>형식: OpenAPI 3.0 · 3.1 · Swagger 2.0, YAML 과 JSON 모두 지원</li><li>오류: 필수 필드 누락, 존재하지 않는 $ref, 경로 변수에 해당하는 in: path 파라미터 없음, operationId 중복, 올바르지 않은 응답 코드</li><li>스키마: type: array 의 items 누락, required 가 properties 에 없음, 표준과 맞지 않는 format, 정의되지 않은 보안 스킴 참조</li><li>권고(끌 수 있음): summary 없음, operationId 없음, 사용되지 않는 components, 인증 방식 미정의</li><li>엔드포인트 표: 메서드·경로·operationId·응답 코드·태그와 줄 번호</li></ul>
+</section>
+  <div class="related-tools">
+  <h2>함께 쓰면 좋은 도구</h2>
+  <div class="related-grid">
+    <a href="json-schema-validator.html" class="related-card"><span class="related-icon">🛡️</span><span>JSON 스키마 검증기</span></a>
+    <a href="openapi-diff.html" class="related-card"><span class="related-icon">🔀</span><span>OpenAPI 비교기</span></a>
+    <a href="openapi-mock-generator.html" class="related-card"><span class="related-icon">🎭</span><span>OpenAPI Mock 생성기</span></a>
+    <a href="postman-converter.html" class="related-card"><span class="related-icon">📮</span><span>Postman 변환기</span></a>
+  </div>
+</div>
+<div class="wooa-orig-anchor"></div>
+<div class="tips-panel"><h3>💡 Tips</h3><ul><li>경로의 {id} 마다 같은 이름의 in: path, required: true 파라미터가 있어야 합니다. 가장 흔한 오류입니다.</li><li>operationId 는 SDK 메서드 이름이 되므로 문서 전체에서 고유하게 정하세요.</li><li>공통 응답과 스키마는 components 로 빼고 $ref 로 참조하면 문서가 짧아지고 검사하기 쉬워집니다.</li></ul></div>
+<div class="faq-section"><h2>자주 묻는 질문</h2><details><summary>Spectral 이나 공식 검증기와 같은가요?</summary><p>자주 쓰는 구조·참조·규칙을 점검하는 빠른 검사기입니다. JSON Schema 전체 검증(unevaluatedProperties 등)은 하지 않으므로 배포 전에는 Spectral 같은 도구로 한 번 더 확인하세요.</p></details><details><summary>외부 파일 $ref 도 따라가나요?</summary><p>아니요. 한 문서 안의 #/ 로 시작하는 내부 참조만 확인합니다. 다른 파일을 가리키는 참조는 건너뜁니다.</p></details><details><summary>입력한 데이터가 서버로 전송되나요?</summary><p>아니요. 모든 처리는 브라우저 안에서만 이루어지며 입력한 내용은 서버로 전송되거나 저장되지 않습니다. 개인정보나 사내 설정값, API 키가 들어 있는 데이터도 안심하고 붙여 넣을 수 있습니다.</p></details></div>
+</div>
+<aside class="tool-sidebar"></aside>
+</div>
+<footer class="footer"></footer>
+<script src="js/tk.js"></script>
+<script src="js/tk-yamlx.js"></script>
+<script src="js/tk-openapi.js"></script>
+<script src="js/lib/yaml.min.js"></script>
+<script src="js/tools/openapi-editor.js"></script>
+<script src="js/wooahouse-originals-tool.js"></script>
+<script src="js/pwa-install.js"></script>
+<script src="js/wooa-sidebar.js"></script>
+<script src="js/wooa-footer.js"></script>
+</body>
+</html>
